@@ -155,6 +155,43 @@ See `projects.md` for current list with paths, git links, and deployment URLs.
 
 ## Workflows
 
+### Terminal Profile Management
+
+**File:** `terminal-profiles.md` - Master configuration for Windows Terminal quick-launch profiles
+
+**Structure:** 18 Active Profiles organized in 3 groups:
+- **Main Projects (10)** - Direct keyboard shortcuts (Ctrl+Shift+1 through Ctrl+Shift+9)
+- **Coderef MCP Servers (6)** - Nested folder in new tab menu (🔌 system development)
+- **Personas (2)** - Nested folder in new tab menu (🎭 specialized agent environments)
+
+**To Add a New Profile:**
+
+1. **Update terminal-profiles.md:**
+   - Add entry to appropriate section (Main, Coderef, Personas)
+   - Assign next ID number
+   - Choose icon, color (from reference table at bottom)
+   - Set directory path
+
+2. **Update Windows Terminal settings.json:**
+   - Location: `C:\Users\willh\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`
+   - Generate new GUID: `[guid]::NewGuid()` in PowerShell
+   - Add profile entry with: name, guid, icon, startingDirectory, tabColor, tabTitle
+   - Add action entry: `User.open{ProfileName}`
+   - Add keybinding (optional): if assigning keyboard shortcut
+
+3. **Save & Reload:**
+   - Close Windows Terminal
+   - Edit settings.json
+   - Reopen - auto-loads new profiles
+
+4. **Update Documentation:**
+   - Update total count in header: "## Current Profiles (X Active)"
+   - Commit changes to git
+
+**Current Unbound Shortcuts:** Ctrl+Shift+2, Ctrl+Shift+3, Ctrl+Shift+4, Ctrl+Shift+5, Ctrl+Shift+6, Ctrl+Shift+7, Ctrl+Shift+8, Ctrl+Shift+9, Ctrl+Shift+N
+
+---
+
 ### `/stub [idea]`
 1. Create folder: `coderef/working/{feature-name}/`
 2. Assign next `STUB-XXX` from `projects.md`
