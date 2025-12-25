@@ -18,7 +18,7 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 
 ---
 
-## Current Profiles (14 Active)
+## Current Profiles (18 Active)
 
 ### Main Projects (8)
 
@@ -47,6 +47,15 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 | 16 | **Coderef-System** | 💻 | (No binding) | `Desktop/projects/coderef-system` | #EAB308 (Yellow) | ✅ Active |
 
 **Note:** The 6 Coderef-related tabs are nested in the "Coderef" folder in the new tab menu for organization.
+
+### Personas (Nested folder in new tab menu - 2)
+
+| # | Profile | Icon | Shortcut | Directory | Color | Status |
+|---|---------|------|----------|-----------|-------|--------|
+| 17 | **Personas > Scout** | 🔍 | (No binding) | `Desktop/MCLVI/scout` | #06B6D4 (Cyan) | ✅ Active |
+| 18 | **Personas > Assistant** | 🤖 | (No binding) | `Desktop/assistant` | #3B82F6 (Blue) | ✅ Active |
+
+**Note:** The 2 Personas tabs are nested in the "Personas" folder in the new tab menu for organization.
 
 ---
 
