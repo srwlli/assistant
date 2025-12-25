@@ -1,0 +1,319 @@
+{
+  "stub_id": "STUB-062",
+  "tldr": "Add real-time workorder/stub tracking to HTML Tools. Monitor coderef/workorder/WO-*.json and stubs/ files with chokidar file watcher. Broadcast changes via SSE to Orchestrator dashboard. Cache in IndexedDB with conflict detection (file hashing). Multi-tab sync via Broadcast Channel.",
+  "feature_name": "realtime-sync-system",
+  "description": "Build a real-time data synchronization system for HTML Tools that syncs workorders and stubs from coderef/workorder/ directory. Monitor workorder status changes, stub creation/completion across all connected clients and tools. When one user/agent updates a workorder, all other users see the change immediately.",
+  "category": "feature",
+  "priority": "high",
+  "tags": ["realtime", "sync", "websocket", "collaboration", "dashboard"],
+  "created": "2025-12-25T00:00:00Z",
+  "status": "stub",
+  "problem": [
+    "HTML Tools dashboard shows stale workorder/stub data - requires manual refresh",
+    "Multi-agent workflows have no awareness of concurrent workorder changes",
+    "Workorder status updates in coderef/workorder/*.json not reflected until page reload",
+    "Stub creation/completion not visible to other users in real-time",
+    "No way to see which agents are working on which workorders"
+  ],
+  "solution": {
+    "transport": {
+      "primary": "Server-Sent Events (SSE) - one-way server→client, simpler than WebSocket",
+      "fallback": "Polling with exponential backoff (10s, 30s, 60s)",
+      "reason": "No frame dependencies, works with vanilla JS, simpler server"
+    },
+    "local_storage": {
+      "cache": "IndexedDB for workorders/plans/projects (offline-first)",
+      "queue": "Store failed updates locally, retry when online",
+      "version": "Track data version for conflict detection"
+    },
+    "multi_tab": {
+      "sync": "Broadcast Channel API to sync between tabs same origin",
+      "leader": "First tab becomes leader, establishes SSE connection",
+      "broadcast": "Leader broadcasts server updates to other tabs"
+    },
+    "conflict_resolution": {
+      "strategy": "Last-write-wins with server as source of truth",
+      "detection": "Compare local version vs server version",
+      "merging": "For plan progress: merge completed tasks, detect conflicts"
+    },
+    "events_to_sync": [
+      "Workorder status changes (pending→implementing→complete→verified)",
+      "Workorder file updates (coderef/workorder/WO-*.json changes)",
+      "Stub creation (coderef/workorder/stubs/*.json new files)",
+      "Stub status changes (stub→in-progress→blocked→completed)",
+      "Agent assignment changes (which agent owns which workorder)",
+      "Workorder metadata updates (progress, dependencies, timestamps)"
+    ]
+  },
+  "architecture": {
+    "frontend": {
+      "api_client_extension": "Extend api-client.js with sync capabilities",
+      "sync_manager": "New SyncManager class to handle all sync logic",
+      "data_store": "IndexedDB wrapper for caching + versioning",
+      "event_emitter": "Emit 'data-changed' events when sync updates occur",
+      "ui_updates": "Components listen for data-changed, re-render automatically"
+    },
+    "backend": {
+      "sse_endpoint": "GET /api/sync/stream - server sends workorder/stub updates",
+      "file_watcher": "Monitor coderef/workorder/WO-*.json and coderef/workorder/stubs/ for changes",
+      "change_detection": "Use chokidar or fs.watch to detect file modifications in real-time",
+      "broadcast": "When workorder/stub file changes, notify all connected clients via SSE",
+      "versioning": "Track mtime and hash of each workorder/stub file for conflict detection"
+    },
+    "data_flow": [
+      "Agent/User updates workorder status in Orchestrator tool",
+      "Frontend writes to coderef/workorder/WO-*.json via API",
+      "Server file watcher detects coderef/workorder/WO-*.json change",
+      "Server reads updated workorder and stub files",
+      "Server broadcasts 'workorder-updated' event via SSE stream",
+      "All connected clients receive update with workorder data",
+      "IndexedDB cache updated locally with new workorder state",
+      "Orchestrator dashboard re-renders with updated status",
+      "Broadcast Channel notifies other tabs of change",
+      "All tools show same workorder/stub state in real-time"
+    ]
+  },
+  "implementation_phases": {
+    "phase_1": {
+      "name": "Workorder/Stub Tracking Foundation",
+      "focus": "Track workorders and stubs from coderef/workorder/ directory",
+      "tasks": [
+        "Create WorkorderStore class to load coderef/workorder/WO-*.json files",
+        "Create StubStore class to load coderef/workorder/stubs/*.json files",
+        "Create WorkorderSyncManager in shared/js/ (extends api-client)",
+        "Implement IndexedDB workorder cache with versioning (mtime + hash)",
+        "Add workorder-changed event system to document",
+        "Build Orchestrator tool API to read/write workorder files"
+      ]
+    },
+    "phase_2": {
+      "name": "Backend File Watcher & SSE",
+      "focus": "Monitor coderef/workorder/ for changes and broadcast updates",
+      "tasks": [
+        "Build SSE /api/sync/workorders endpoint",
+        "Implement chokidar file watcher for coderef/workorder/WO-*.json",
+        "Implement chokidar file watcher for coderef/workorder/stubs/",
+        "Create workorder change detector (mtime + hash tracking)",
+        "Add SSE event broadcasting (workorder-updated, stub-created, stub-completed)",
+        "Create metadata extractor (parse workorder status, agent, timestamps)"
+      ]
+    },
+    "phase_3": {
+      "name": "Multi-Tab & Real-Time UI",
+      "focus": "Sync workorder/stub data across tabs and update Orchestrator dashboard",
+      "tasks": [
+        "Add Broadcast Channel API for multi-tab sync",
+        "Integrate SSE listener into Orchestrator tool",
+        "Create auto-refresh handler for workorder grid",
+        "Add 'synced' indicator (green = connected to stream, red = offline)",
+        "Add sync status in Orchestrator footer (last sync time)",
+        "Update workorder cards in real-time as status changes"
+      ]
+    },
+    "phase_4": {
+      "name": "Offline & Conflict Resolution",
+      "focus": "Handle network issues and concurrent workorder edits",
+      "tasks": [
+        "Implement offline queue for workorder updates",
+        "Add conflict detection (version mismatch on concurrent updates)",
+        "Implement retry logic with exponential backoff",
+        "Add conflict warning dialog (notify user of conflicts)",
+        "Implement last-write-wins merge strategy",
+        "Test multi-user scenarios (Agent 1, Agent 2 updating same workorder)"
+      ]
+    }
+  },
+  "code_example": {
+    "frontend_usage": `
+// In shared/js/workorder-sync-manager.js
+class WorkorderSyncManager {
+  constructor() {
+    this.eventSource = null;
+    this.cache = new IndexedDBStore('workorders');
+    this.fileVersions = {};  // Track mtime + hash
+  }
+
+  // Connect to SSE workorder stream
+  async connect() {
+    this.eventSource = new EventSource('/api/sync/workorders');
+
+    // Workorder status changed
+    this.eventSource.addEventListener('workorder-updated', (e) => {
+      const workorder = JSON.parse(e.data);
+      const id = workorder.id;
+
+      // Check for conflicts
+      if (this.fileVersions[id] && this.fileVersions[id].hash !== workorder._hash) {
+        this.handleConflict(workorder);
+        return;
+      }
+
+      // Update cache
+      this.cache.set(id, workorder);
+      this.fileVersions[id] = { mtime: workorder._mtime, hash: workorder._hash };
+
+      // Notify all listeners
+      Events.emit(document, 'workorder-changed', {
+        type: 'updated',
+        workorder: workorder
+      });
+
+      // Broadcast to other tabs
+      this.broadcastToTabs('workorder-updated', workorder);
+    });
+
+    // Stub created
+    this.eventSource.addEventListener('stub-created', (e) => {
+      const stub = JSON.parse(e.data);
+      this.cache.set('stub-' + stub.id, stub);
+      Events.emit(document, 'stub-changed', {
+        type: 'created',
+        stub: stub
+      });
+    });
+
+    // Stub completed
+    this.eventSource.addEventListener('stub-completed', (e) => {
+      const stub = JSON.parse(e.data);
+      this.cache.set('stub-' + stub.id, stub);
+      Events.emit(document, 'stub-changed', {
+        type: 'completed',
+        stub: stub
+      });
+    });
+  }
+
+  handleConflict(remoteWorkorder) {
+    Events.emit(document, 'workorder-conflict', {
+      workorder: remoteWorkorder,
+      resolution: 'last-write-wins'
+    });
+  }
+
+  broadcastToTabs(type, data) {
+    const channel = new BroadcastChannel('html-tools-workorder-sync');
+    channel.postMessage({ type, data });
+  }
+}
+
+// In Orchestrator tool
+document.addEventListener('workorder-changed', (e) => {
+  if (e.detail.type === 'updated') {
+    updateWorkorderCard(e.detail.workorder);  // Re-render single workorder
+    updateDashboard();  // Update stats
+  }
+});
+    `,
+    "backend_example": `
+// Node.js backend (Express with chokidar)
+const chokidar = require('chokidar');
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+app.get('/api/sync/workorders', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  // Watch coderef/workorder/WO-*.json files
+  const workorderWatcher = chokidar.watch('**/coderef/workorder/WO-*.json');
+
+  workorderWatcher.on('change', (filepath) => {
+    const workorder = readWorkorderFile(filepath);
+    workorder._mtime = fs.statSync(filepath).mtime.getTime();
+    workorder._hash = hashFile(filepath);
+
+    res.write('event: workorder-updated\\n');
+    res.write(\`data: \${JSON.stringify(workorder)}\\n\\n\`);
+  });
+
+  // Watch coderef/workorder/stubs/ files
+  const stubWatcher = chokidar.watch('**/coderef/workorder/stubs/*.json');
+
+  stubWatcher.on('add', (filepath) => {
+    const stub = readStubFile(filepath);
+    res.write('event: stub-created\\n');
+    res.write(\`data: \${JSON.stringify(stub)}\\n\\n\`);
+  });
+
+  stubWatcher.on('change', (filepath) => {
+    const stub = readStubFile(filepath);
+    if (stub.status === 'completed') {
+      res.write('event: stub-completed\\n');
+      res.write(\`data: \${JSON.stringify(stub)}\\n\\n\`);
+    }
+  });
+
+  // Cleanup on disconnect
+  req.on('close', () => {
+    workorderWatcher.close();
+    stubWatcher.close();
+  });
+});
+
+function readWorkorderFile(filepath) {
+  return JSON.parse(fs.readFileSync(filepath, 'utf8'));
+}
+
+function readStubFile(filepath) {
+  return JSON.parse(fs.readFileSync(filepath, 'utf8'));
+}
+
+function hashFile(filepath) {
+  const content = fs.readFileSync(filepath, 'utf8');
+  return crypto.createHash('md5').update(content).digest('hex');
+}
+    `
+  },
+  "technology_stack": {
+    "frontend": "Vanilla JS (shared in HTML Tools) + IndexedDB + SSE + Broadcast Channel",
+    "backend": "Node.js/Express + chokidar (file watching) + crypto (hashing)",
+    "file_monitoring": "chokidar watches coderef/workorder/WO-*.json and coderef/workorder/stubs/",
+    "no_frameworks": "Stays true to zero-dependency philosophy (frontend)",
+    "compatibility": "Works in all modern browsers"
+  },
+  "benefits": [
+    "Real-time awareness of workorder/stub status across all users",
+    "Instant feedback when workorders are updated (no page refresh needed)",
+    "See which agent is working on which workorder",
+    "Offline-first: queues updates locally, syncs when back online",
+    "Multi-tab sync: changes in one tab appear in others immediately",
+    "Conflict detection: warns if two agents edit same workorder",
+    "Dashboard always current with live status updates",
+    "Perfect for multi-agent coordination scenarios"
+  ],
+  "complexity": "medium",
+  "estimated_effort": "3-4 weeks",
+  "dependencies": [
+    "Node.js/Express for SSE /api/sync/workorders endpoint",
+    "chokidar npm for file watching coderef/workorder/ directory",
+    "crypto (Node.js built-in) for file hashing"
+  ],
+  "risks": [
+    "SSE connection drops on network issues",
+    "Multiple clients writing same workorder file simultaneously",
+    "Conflict resolution complexity if agents edit same workorder",
+    "File system watching lag (slight delay between write and broadcast)",
+    "IndexedDB storage limits (50MB+)"
+  ],
+  "mitigation": [
+    "Implement SSE reconnect with exponential backoff (1s, 5s, 30s, 60s)",
+    "Use file hashing (MD5) to detect concurrent changes",
+    "Implement last-write-wins merge strategy (simple but known limitation)",
+    "Debounce file watch events (batch updates from same file)",
+    "Implement IndexedDB cleanup for workorders older than 30 days"
+  ],
+  "directory_structure": {
+    "monitored": [
+      "coderef/workorder/WO-*.json (individual workorder files)",
+      "coderef/workorder/stubs/*.json (stub files)"
+    ],
+    "not_monitored": [
+      "coderef/working/ (deprecated, no longer tracked)",
+      "coderef/archived/ (historical, no real-time tracking needed)"
+    ]
+  },
+  "related_stubs": ["STUB-030 (internal-plan-tracking)", "STUB-057 (CodeRef Dashboard)"],
+  "notes": "This Phase 1 focuses specifically on workorder/stub tracking from coderef/workorder/ directory. Makes HTML Tools a true real-time command center where agents can coordinate work instantly. Transforms dashboard from static view to live monitoring."
+}
