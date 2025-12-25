@@ -18,9 +18,9 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 
 ---
 
-## Current Profiles (18 Active)
+## Current Profiles (19 Active)
 
-### Main Projects (8)
+### Main Projects (9)
 
 | # | Profile | Icon | Shortcut | Directory | Color | Status |
 |---|---------|------|----------|-----------|-------|--------|
@@ -32,19 +32,20 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 | 6 | **Selector** | 🔍 | `Ctrl+Shift+Y` | `Desktop/app_documents` | #06B6D4 (Cyan) | ✅ Active |
 | 7 | **CodeRef** | 💻 | `Ctrl+Shift+U` | `Desktop/projects/coderef-system` | #64748B (Slate) | ✅ Active |
 | 8 | **MultiTenant** | 🏢 | `Ctrl+Shift+I` | `Desktop/Business-Dash/latest-app` | #EC4899 (Pink) | ✅ Active |
-| 9 | **Stats Backed** | 📊 | `Ctrl+Shift+B` | `Desktop/projects/next-scraper` | #14B8A6 (Teal) | ✅ Active |
-| 10 | **Scout** | 🌐 | (No binding) | `Desktop/projects/scout` | #F97316 (Orange) | ✅ Active |
+| 9 | **CodeRef Dashboard** | 📊 | `Ctrl+Shift+D` | `Desktop/coderef-dashboard` | #8B5CF6 (Purple) | ✅ Active |
+| 10 | **Stats Backed** | 📊 | `Ctrl+Shift+B` | `Desktop/projects/next-scraper` | #14B8A6 (Teal) | ✅ Active |
+| 11 | **Scout** | 🌐 | (No binding) | `Desktop/projects/scout` | #F97316 (Orange) | ✅ Active |
 
 ### Coderef MCP Servers (Nested folder in new tab menu - 6)
 
 | # | Profile | Icon | Shortcut | Directory | Color | Status |
 |---|---------|------|----------|-----------|-------|--------|
-| 11 | **Coderef-Context** | 🔍 | (No binding) | `.mcp-servers/coderef-context` | #EAB308 (Yellow) | ✅ Active |
-| 12 | **Coderef-Docs** | 📚 | (No binding) | `.mcp-servers/coderef-docs` | #EAB308 (Yellow) | ✅ Active |
-| 13 | **Coderef-MCP** | 🔌 | (No binding) | `.mcp-servers` (root) | #EAB308 (Yellow) | ✅ Active |
-| 14 | **Coderef-Workflow** | 📋 | (No binding) | `.mcp-servers/coderef-workflow` | #EAB308 (Yellow) | ✅ Active |
-| 15 | **Coderef-Personas** | 🎭 | (No binding) | `.mcp-servers/coderef-personas` | #EAB308 (Yellow) | ✅ Active |
-| 16 | **Coderef-System** | 💻 | (No binding) | `Desktop/projects/coderef-system` | #EAB308 (Yellow) | ✅ Active |
+| 12 | **Coderef-Context** | 🔍 | (No binding) | `.mcp-servers/coderef-context` | #EAB308 (Yellow) | ✅ Active |
+| 13 | **Coderef-Docs** | 📚 | (No binding) | `.mcp-servers/coderef-docs` | #EAB308 (Yellow) | ✅ Active |
+| 14 | **Coderef-MCP** | 🔌 | (No binding) | `.mcp-servers` (root) | #EAB308 (Yellow) | ✅ Active |
+| 15 | **Coderef-Workflow** | 📋 | (No binding) | `.mcp-servers/coderef-workflow` | #EAB308 (Yellow) | ✅ Active |
+| 16 | **Coderef-Personas** | 🎭 | (No binding) | `.mcp-servers/coderef-personas` | #EAB308 (Yellow) | ✅ Active |
+| 17 | **Coderef-System** | 💻 | (No binding) | `Desktop/projects/coderef-system` | #EAB308 (Yellow) | ✅ Active |
 
 **Note:** The 6 Coderef-related tabs are nested in the "Coderef" folder in the new tab menu for organization.
 
@@ -52,8 +53,8 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 
 | # | Profile | Icon | Shortcut | Directory | Color | Status |
 |---|---------|------|----------|-----------|-------|--------|
-| 17 | **Personas > Scout** | 🔍 | (No binding) | `Desktop/MCLVI/scout` | #06B6D4 (Cyan) | ✅ Active |
-| 18 | **Personas > Assistant** | 🤖 | (No binding) | `Desktop/assistant` | #3B82F6 (Blue) | ✅ Active |
+| 18 | **Personas > Scout** | 🔍 | (No binding) | `Desktop/MCLVI/scout` | #06B6D4 (Cyan) | ✅ Active |
+| 19 | **Personas > Assistant** | 🤖 | (No binding) | `Desktop/assistant` | #3B82F6 (Blue) | ✅ Active |
 
 **Note:** The 2 Personas tabs are nested in the "Personas" folder in the new tab menu for organization.
 
