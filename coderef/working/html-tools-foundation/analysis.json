@@ -1,0 +1,126 @@
+{
+  "foundation_docs": {
+    "available": [
+      "README.md (root)",
+      "API.md (coderef/foundation-docs)",
+      "ARCHITECTURE.md (coderef/foundation-docs)",
+      "COMPONENTS.md (coderef/foundation-docs)",
+      "SCHEMA.md (coderef/foundation-docs)"
+    ],
+    "missing": [
+      "USER-GUIDE.md"
+    ]
+  },
+  "foundation_doc_content": {
+    "ARCHITECTURE.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# Architecture Documentation\n\n## Module Dependency Graph\n\n```mermaid\ngraph TB\n    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_DELIVERABLES_md_84_to[\"Deliverables.Md\"]\n    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_plan_json_114_to[\"Planon\"]\n    C__Users_willh_Desktop_assistant_HANDOFF_WO_FILE_DISCOVERY_ENHANCEMENT_001_md_43_to[\"Handoff-Wo-File-Discovery-Enhancement-001.Md\"]\n```\n\n## Metrics\n\n- **Total Files:** 3\n- **Total Elements:*",
+      "headers": [
+        "Architecture Documentation",
+        "Module Dependency Graph",
+        "Metrics",
+        "Code Patterns"
+      ],
+      "size": 692
+    },
+    "API.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# API Documentation\n\n## Overview\n\n- **Framework:** Unknown\n- **Authentication:** Unknown\n- **Error Format:** Unknown\n- **Total Endpoints:** 0\n\n## Endpoints\n\n*No API endpoints detected.*\n\n## Authentication\n\n*Authentication method not detected.*\n\n## Error Handling\n\n*Error format not detected.*\n\n*Generated: 2025-12-19T18:35:35.102013*",
+      "headers": [
+        "API Documentation",
+        "Overview",
+        "Endpoints",
+        "Authentication",
+        "Error Handling"
+      ],
+      "size": 333
+    },
+    "COMPONENTS.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# Project Components\n\n## Summary\n\n- **Total Elements:** 3 (from coderef scan)\n- **Functions:** 3\n\n## Dependency Diagram\n\n<!-- AGENT: Generate Mermaid diagram from relationships -->\n\n## Services (0 detected)\n\n*No *Service classes found*\n\n## Utilities (3 detected)\n\n| Utility | File | Purpose |\n|---------|------|---------|\n| to | `C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/DELIVERABLES.md` | <!-- AGENT: Purpose --> |\n| to | `C:/Users/willh/Desktop/assistant/coderef/",
+      "headers": [
+        "Project Components",
+        "Summary",
+        "Dependency Diagram",
+        "Services (0 detected)",
+        "Utilities (3 detected)"
+      ],
+      "size": 730
+    },
+    "SCHEMA.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# Schema Documentation\n\n*No database models detected.*\n\n\n*Generated: 2025-12-19T18:35:35.100060*",
+      "headers": [
+        "Schema Documentation"
+      ],
+      "size": 96
+    },
+    "README.md": {
+      "location": "root",
+      "preview": "# assistant\n\n## Overview\n\n<!-- AGENT: Describe what this project does -->\n\n## Quick Stats\n\n| Metric | Value |\n|--------|-------|\n| Functions | 3 |\n\n## Architecture Overview\n\n```mermaid\ngraph TB\n    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_DELIVERABLES_md_84_to[\"Deliverables.Md\"]\n    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_plan_json_114_to[\"Planon\"]\n    C__Users_willh_Desktop_assistant_HANDOFF_WO_FILE_DISCOVERY_ENHANCEMENT_001",
+      "headers": [
+        "assistant",
+        "Overview",
+        "Quick Stats",
+        "Architecture Overview",
+        "Quick Start",
+        "Documentation"
+      ],
+      "size": 903
+    }
+  },
+  "inventory_data": {
+    "available": [],
+    "missing": [
+      "Run /quick-inventory to generate inventory data"
+    ]
+  },
+  "coding_standards": {
+    "available": [],
+    "missing": [
+      "BEHAVIOR-STANDARDS.md",
+      "COMPONENT-PATTERN.md",
+      "UI-STANDARDS.md",
+      "UX-PATTERNS.md",
+      "COMPONENT-INDEX.md"
+    ]
+  },
+  "reference_components": {
+    "primary": null,
+    "secondary": [],
+    "total_found": 0,
+    "note": "Using fallback - coderef tools unavailable"
+  },
+  "key_patterns_identified": [],
+  "technology_stack": {
+    "language": "unknown",
+    "framework": "unknown",
+    "database": "unknown",
+    "testing": "unknown",
+    "build": "unknown"
+  },
+  "project_structure": {
+    "main_directories": [
+      "coderef\\working\\mcp-docs-workflow-refactor"
+    ],
+    "file_counts": {
+      "coderef\\working\\mcp-docs-workflow-refactor": 15,
+      "coderef\\foundation-docs": 5,
+      "coderef\\working": 3,
+      ".coderef": 2,
+      "coderef\\working\\file-discovery-enhancement": 2,
+      "coderef\\working\\mcp-config-investigation": 2,
+      "coderef\\working\\tool-inventory-workflow": 2,
+      ".claude": 1,
+      "coderef": 1,
+      "coderef\\working\\agent-completion-workflow": 1
+    },
+    "organization_pattern": "unknown"
+  },
+  "gaps_and_risks": [
+    "Missing foundation docs: USER-GUIDE.md",
+    "No coding standards directory found (coderef/standards/)",
+    "No test directory found (tests/, test/, or __tests__/)",
+    "No CI configuration found (.github/workflows/, .gitlab-ci.yml, etc.)"
+  ]
+}

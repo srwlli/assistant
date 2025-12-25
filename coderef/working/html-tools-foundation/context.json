@@ -1,0 +1,41 @@
+{
+  "feature_name": "html-tools-foundation",
+  "description": "Build a modular HTML tools platform with shared CSS and components. Create homepage with sticky header, collapsible sidebar, and sticky footer. Establish foundation for multiple tool applications (orchestrator, coderef-context, coderef-workflow, coderef-docs) using vanilla JavaScript.",
+  "goal": "Create a shared HTML/CSS/JS architecture that all web tools can build upon, with consistent design system, reusable components, and maintainable structure.",
+  "requirements": [
+    "Shared CSS variables system with dark theme palette",
+    "Reusable component library (buttons, cards, inputs, modals, badges)",
+    "Sticky header with navigation",
+    "Collapsible sidebar with smooth animations",
+    "Sticky footer for status/actions",
+    "Responsive layout (mobile, tablet, desktop)",
+    "Vanilla JavaScript utilities (no framework dependencies)",
+    "Component documentation and usage guide",
+    "Homepage landing page",
+    "Tool directory structure",
+    "Icon library (SVG)",
+    "Font assets"
+  ],
+  "out_of_scope": [
+    "Framework integration (React, Vue, etc.)",
+    "Build process automation",
+    "TypeScript implementation",
+    "Server-side rendering",
+    "Database integration",
+    "Authentication system"
+  ],
+  "constraints": [
+    "Use CSS variables for theming",
+    "Pure CSS/JS (no dependencies)",
+    "Vanilla HTML/JS only",
+    "Mobile-first responsive design",
+    "Follow existing coderef-system design from packages/web/styles.css"
+  ],
+  "decisions": {},
+  "success_criteria": {},
+  "_metadata": {
+    "workorder_id": "WO-HTML-TOOLS-FOUNDATION-001",
+    "workorder_assigned_at": "2025-12-25T06:06:30.331594+00:00",
+    "workorder_assigned_by": "gather_context"
+  }
+}
