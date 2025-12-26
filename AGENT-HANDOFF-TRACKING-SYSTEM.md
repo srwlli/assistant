@@ -361,18 +361,148 @@ All errors should follow this format:
 
 ---
 
+## Step 4b: Graceful Degradation
+
+**API Behavior: Optional Files Philosophy**
+
+All files are optional. The API discovers workorders based on **folder existence**, not file presence. This enables agents to create workorders immediately and add files as work progresses.
+
+### **Behavior by Scenario**
+
+**Missing communication.json:**
+- ✓ Return 200 (workorder exists)
+- Use folder stats for timestamps (creation time, last modified)
+- Status: null or inferred from other files
+- Impact: Low (status is informational, not critical)
+
+```typescript
+{
+  success: true,
+  data: {
+    workorder: {
+      id: "feature-name",  // derived from folder name
+      status: null,        // no communication.json = no explicit status
+      created: "2025-12-26T11:00:00Z",  // from folder.birthtimeMs
+      updated: "2025-12-26T11:00:00Z",  // from folder.mtimeMs
+      files: {
+        communication_json: null,
+        plan_json: null,
+        deliverables_md: null
+      }
+    }
+  }
+}
+```
+
+**Missing plan.json:**
+- ✓ Return 200 (workorder exists)
+- Tasks array is empty
+- Status inference: no plan.json = "pending" (not planned yet)
+- Impact: Low (just means planning hasn't started)
+
+**Missing DELIVERABLES.md:**
+- ✓ Return 200 (workorder exists)
+- Deliverables array is empty
+- Status inference: has plan.json but no DELIVERABLES.md = "planned" (planning done, not implementing yet)
+- Impact: Low (deliverables tracked separately from status)
+
+**Empty workorder folder (no files at all):**
+- ✓ Return 200 (workorder exists) — **Key decision**
+- All file fields are null/empty
+- Use folder stats for all metadata
+- Status: "pending" (just created)
+- Impact: None (valid intermediate state while agent prepares)
+
+```typescript
+{
+  success: true,
+  data: {
+    workorder: {
+      id: "new-feature",
+      status: "pending",
+      path: "{project}/coderef/workorder/new-feature",
+      files: {},  // all empty
+      created: "2025-12-26T11:00:00Z",
+      updated: "2025-12-26T11:00:00Z"
+    },
+    tasks: [],
+    deliverables: [],
+    communication_log: []
+  }
+}
+```
+
+**Workorder folder not found:**
+- ✗ Return 404 (workorder doesn't exist)
+- This is the only failure case for workorders
+- Error: `{ code: "WORKORDER_NOT_FOUND", ... }`
+
+### **Status Inference Logic**
+
+When communication.json missing, infer status from file presence:
+
+```
+No files → "pending"
+Has plan.json → "planned"
+Has plan.json + DELIVERABLES.md → "implementing"
+Has all files + communication.json marked complete → "complete"
+```
+
+### **Timestamp Fallback Strategy**
+
+When JSON files don't have timestamps, use file system stats:
+
+```typescript
+timestamps = {
+  created: folder.birthtimeMs,      // folder creation time
+  updated: folder.mtimeMs,          // folder last modification
+  last_status_update: folder.mtimeMs // same as updated (no better source)
+}
+```
+
+### **Why This Matters**
+
+This design enables **agent autonomy without friction:**
+
+1. Agent creates `coderef/workorder/{feature}/` → API discovers it immediately (200)
+2. Agent adds `plan.json` → API shows "planned" status
+3. Agent adds `DELIVERABLES.md` → API shows "implementing" status
+4. Agent updates `communication.json` → Full details available
+
+**No registration step. No orchestrator coordination. Just folder creation triggers discovery.**
+
+---
+
 ## Step 5: Testing
 
-Test these scenarios:
-
+### **Core Functionality**
 - [ ] GET /api/stubs returns all stubs from assistant/coderef/working/ folders
 - [ ] GET /api/workorders scans all projects' coderef/workorder/ folders
 - [ ] GET /api/workorders/:id returns complete workorder with all files found in folder
-- [ ] Folder scan discovers workorders even without communication.json
 - [ ] All responses match defined TypeScript types
 - [ ] Error responses are consistent and descriptive
 - [ ] Large workorder lists load efficiently
-- [ ] Handles empty workorder folders gracefully
+
+### **Graceful Degradation (Optional Files)**
+- [ ] Folder scan discovers workorders even without communication.json
+- [ ] Missing communication.json → status: null, use folder stats for timestamps
+- [ ] Missing plan.json → tasks array empty, infer "pending" status
+- [ ] Missing DELIVERABLES.md → deliverables array empty, infer "planned" status
+- [ ] Completely empty workorder folder → Return 200 with all fields empty
+- [ ] Empty folder gets timestamps from fs.stat() (birthtimeMs, mtimeMs)
+- [ ] Status inference logic works correctly (file presence → status)
+
+### **Error Cases**
+- [ ] Workorder folder not found → Return 404 with WORKORDER_NOT_FOUND
+- [ ] Invalid JSON in files → Return 500 with JSON_PARSE_ERROR details
+- [ ] Permission denied on folder → Return 403
+- [ ] projects.config.json missing → Return 500
+
+### **Edge Cases**
+- [ ] Multiple agents create workorder folders simultaneously (race condition handling)
+- [ ] Workorder folder disappears mid-scan (ENOENT handling)
+- [ ] Very large workorder with many files in folder
+- [ ] Folder with only hidden files (should be treated as "has files")
 
 ---
 
