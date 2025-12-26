@@ -49,35 +49,7 @@ body {
 
 /* Header removed - using full space for content */
 
-/* Toggle button for sidebar collapse/expand */
-.sidebar-toggle {
-    position: fixed;
-    top: var(--spacing-lg);
-    left: var(--spacing-lg);
-    z-index: 1000;
-    width: 40px;
-    height: 40px;
-    background: var(--color-primary);
-    color: #fff;
-    border: none;
-    border-radius: var(--border-radius);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all var(--transition-speed);
-    display: none;  /* Hidden by default on desktop */
-}
-
-.sidebar-toggle:hover {
-    background: var(--color-primary-light);
-    transform: scale(1.1);
-}
-
-/* Visibility toggle - button shown when sidebar is hidden on mobile */
-.sidebar-toggle.visible {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* Header removed - using full space for content */
 
 /* Layout grid - sidebar + main content */
 .layout {
@@ -88,26 +60,72 @@ body {
     transition: grid-template-columns var(--transition-speed);  /* Smooth animation when collapsing */
 }
 
-/* Collapsed state - sidebar hidden, content full width */
+/* Collapsed state - sidebar minimized to show only chevron, content expands */
 .layout.sidebar-collapsed {
-    grid-template-columns: 0 1fr;  /* Sidebar width becomes 0 */
+    grid-template-columns: 60px 1fr;  /* Sidebar collapses to minimal width (chevron only) */
 }
 
-/* Sidebar - sticky navigation */
+/* Sidebar - sticky navigation with smooth width transition */
 .sidebar {
     position: sticky;
     top: var(--spacing-lg);
     height: fit-content;
-    overflow: hidden;  /* Hide overflow when collapsed */
-    transition: all var(--transition-speed);  /* Smooth collapse animation */
-    min-width: 320px;  /* Prevent shrinking when collapsed */
+    width: 320px;  /* Default expanded width */
+    transition: width var(--transition-speed);  /* Smooth width animation on collapse */
+    overflow: hidden;  /* Hide document list when sidebar collapses */
 }
 
+/* When sidebar is collapsed, shrink to minimal width */
+.layout.sidebar-collapsed .sidebar {
+    width: 60px;  /* Minimal width - shows only header with chevron */
+}
+
+/* Sidebar header - flex container for title and chevron */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xl);
+    padding-right: var(--spacing-sm);  /* Space for chevron button */
+}
+
+/* Sidebar title - documents label */
 .sidebar-title {
     font-size: 1rem;
     font-weight: 600;
     color: var(--color-primary);
-    margin-bottom: var(--spacing-xl);
+    white-space: nowrap;  /* Prevent title wrapping when sidebar collapses */
+}
+
+/* When collapsed, hide title text - only chevron shows */
+.layout.sidebar-collapsed .sidebar-title {
+    display: none;
+}
+
+/* Chevron toggle button - rotates to show collapsed/expanded state */
+.sidebar-chevron {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-speed);  /* Smooth rotation */
+    flex-shrink: 0;  /* Prevent button from shrinking */
+}
+
+.sidebar-chevron:hover {
+    color: var(--color-primary-light);
+}
+
+/* When collapsed, rotate chevron 180° (< becomes >) */
+.layout.sidebar-collapsed .sidebar-chevron {
+    transform: scaleX(-1);
 }
 
 /* Document list */
@@ -145,37 +163,18 @@ body {
     font-weight: 600;
 }
 
+/* Content area - displays markdown document only */
 .content-area {
 }
 
-.content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-xl);
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 2px solid var(--color-primary);
-}
-
-.content-title {
-    font-size: 1.3rem;
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.content-meta {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-top: var(--spacing-sm);
-}
-
-/* Markdown content area */
+/* Markdown content area - document display with full height */
 .markdown-content {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     padding: var(--spacing-3xl);
-    max-height: calc(100vh - 300px);  /* Dynamic height based on viewport, increased from fixed 800px */
+    /* Dynamic height: viewport minus padding/margins */
+    max-height: calc(100vh - 100px);
     overflow-y: auto;
 }
 
@@ -342,23 +341,16 @@ footer {
 
 /* ========== RESPONSIVE DESIGN ========== */
 
-/* Mobile screens: sidebar hidden by default */
+/* Mobile screens: sidebar collapsed by default to maximize document space */
 @media (max-width: 768px) {
-    /* Mobile: sidebar starts collapsed (hidden) */
+    /* Mobile: sidebar starts in collapsed state (minimal width, chevron only) */
     .layout {
-        grid-template-columns: 0 1fr;  /* Sidebar hidden by default on mobile */
+        grid-template-columns: 60px 1fr;
     }
 
-    /* Show toggle button on mobile - allows user to reveal sidebar */
-    .sidebar-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* When user expands sidebar on mobile, show it as overlay */
+    /* When user expands sidebar on mobile, show full width */
     .layout:not(.sidebar-collapsed) {
-        grid-template-columns: 1fr;  /* Single column - sidebar stacks */
+        grid-template-columns: 320px 1fr;
     }
 
     /* Adjust content for mobile */
@@ -368,17 +360,10 @@ footer {
     }
 }
 
-/* Desktop screens: sidebar visible by default */
+/* Desktop screens: sidebar fully visible by default */
 @media (min-width: 769px) {
-    /* Desktop: hide toggle button, sidebar visible */
-    .sidebar-toggle {
-        display: none !important;
-    }
-
-    /* Always show sidebar on desktop, ignore collapse state for toggle button */
-    .layout.sidebar-collapsed .sidebar-toggle {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
+    /* Desktop: sidebar expanded (full width) by default */
+    .layout {
+        grid-template-columns: 320px 1fr;
     }
 }

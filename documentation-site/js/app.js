@@ -1,33 +1,41 @@
 // ========== SIDEBAR COLLAPSE STATE MANAGEMENT ==========
 /**
- * Manages sidebar collapse/expand state
- * - Persists state to localStorage
- * - Responds to user toggle clicks
- * - Responsive: shows toggle on mobile, hides on desktop
+ * Manages sidebar collapse/expand state via chevron button in sidebar header
+ * - Chevron button toggles between < (expanded) and > (collapsed)
+ * - Sidebar width animates smoothly from 320px (full) to 60px (minimal)
+ * - State persists to localStorage
+ *
+ * Alignment:
+ * - Expanded: "📄 Documents" label + document list visible
+ * - Collapsed: chevron only visible, document list hidden via overflow
+ * - Chevron rotates 180° to show state
  */
 
 function initializeSidebarToggle() {
-    const sidebarToggle = document.getElementById('sidebarToggle');
+    const chevronBtn = document.getElementById('sidebarToggle');
     const layout = document.getElementById('layout');
-    const sidebar = document.getElementById('sidebar');
 
     // State key for localStorage persistence
     const STATE_KEY = 'sidebar-collapsed';
 
-    // Load saved state from localStorage (defaults to false = sidebar visible)
+    // Load saved state from localStorage (defaults to false = expanded)
     const savedState = localStorage.getItem(STATE_KEY);
     const isCollapsed = savedState === 'true';
 
     // Apply saved state on page load
     if (isCollapsed) {
         layout.classList.add('sidebar-collapsed');
-        sidebarToggle.classList.add('visible');
     }
 
-    // Handle toggle button click - collapse/expand sidebar
-    sidebarToggle.addEventListener('click', () => {
+    // Handle chevron click - collapse/expand sidebar
+    chevronBtn.addEventListener('click', () => {
+        // Toggle the sidebar-collapsed class on layout
+        // This triggers CSS to:
+        // 1. Change grid: 320px 1fr <-> 60px 1fr
+        // 2. Sidebar width: 320px <-> 60px
+        // 3. Hide/show title via display: none
+        // 4. Rotate chevron 180° via transform
         layout.classList.toggle('sidebar-collapsed');
-        sidebarToggle.classList.toggle('visible');
 
         // Persist new state to localStorage
         const newState = layout.classList.contains('sidebar-collapsed');
@@ -98,13 +106,12 @@ async function loadDocument(docId, documents) {
     document.querySelectorAll('.doc-item a').forEach(el => el.classList.remove('active'));
     document.querySelector(`[data-id="${docId}"]`).classList.add('active');
 
-    // Show loading
+    // Show loading state while fetching document
     const content = document.getElementById('content');
     content.innerHTML = '<div class="loading">Loading...</div>';
-    document.getElementById('docTitle').textContent = doc.title;
-    document.getElementById('docMeta').textContent = doc.path;
 
     try {
+        // Fetch markdown document from path
         const response = await fetch(doc.path);
         if (!response.ok) throw new Error('Document not found');
 
