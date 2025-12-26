@@ -1,0 +1,1145 @@
+{
+  "session": "MCP-Server-Capabilities-Deep-Dive",
+  "created": "2025-12-25",
+  "status": "active",
+  "phase": 2,
+
+  "servers": {
+    "coderef-context": {
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-context",
+      "agent_status": "complete",
+      "tools": [
+        {
+          "name": "coderef_scan",
+          "parameters": ["project_path", "languages", "use_ast"],
+          "purpose": "Discover all code elements (functions, classes, components, hooks) in a project",
+          "limitation": "Defaults to ts,tsx,js,jsx; CLI availability required; large codebases may timeout after 120s; AST mode at 99% accuracy, regex fallback at 85%"
+        },
+        {
+          "name": "coderef_query",
+          "parameters": ["project_path", "query_type", "target", "source", "max_depth"],
+          "purpose": "Query code relationships (what-calls, what-imports, depends-on, depends-on-me, imports-me, calls-me)",
+          "limitation": "Max depth default 3 (configurable); requires element to already exist in index; no transitive closure beyond depth; project_path required but query runs from cwd"
+        },
+        {
+          "name": "coderef_impact",
+          "parameters": ["project_path", "element", "operation", "max_depth"],
+          "purpose": "Analyze impact of modifying, deleting, or refactoring a code element",
+          "limitation": "Operation parameter documented but not used in handler; max depth 3; doesn't predict runtime impact; static analysis only"
+        },
+        {
+          "name": "coderef_complexity",
+          "parameters": ["project_path", "element"],
+          "purpose": "Get complexity metrics for a code element (cyclomatic complexity, LOC, dependencies)",
+          "limitation": "Currently proxies through context command (not ideal); no element-level filtering; returns full project context; workaround, not native implementation"
+        },
+        {
+          "name": "coderef_patterns",
+          "parameters": ["project_path", "pattern_type", "limit"],
+          "purpose": "Discover code patterns and test coverage gaps in the codebase",
+          "limitation": "Pattern_type ignored, returns all patterns; proxies through context command; no filtering by pattern type; limit parameter not enforced"
+        },
+        {
+          "name": "coderef_coverage",
+          "parameters": ["project_path", "format"],
+          "purpose": "Analyze test coverage in the codebase (summary or detailed)",
+          "limitation": "Requires coverage reports to exist; format parameter supported (summary/detailed); project_path provided but not used in command"
+        },
+        {
+          "name": "coderef_context",
+          "parameters": ["project_path", "languages", "output_format"],
+          "purpose": "Generate comprehensive codebase context including structure, dependencies, patterns, test coverage",
+          "limitation": "Output_format parameter parsed but not passed to CLI; defaults to whatever CLI outputs; can be memory-intensive for large projects; 120s timeout"
+        },
+        {
+          "name": "coderef_validate",
+          "parameters": ["project_path", "pattern"],
+          "purpose": "Validate CodeRef2 references in codebase against actual code",
+          "limitation": "Glob pattern support limited; only checks references, doesn't fix issues; requires .coderef-index.json to exist"
+        },
+        {
+          "name": "coderef_drift",
+          "parameters": ["project_path", "index_path"],
+          "purpose": "Detect drift between CodeRef index and current code (stale references, missing elements)",
+          "limitation": "Requires existing index file; only detects drift, doesn't auto-repair; index path must be explicitly provided"
+        },
+        {
+          "name": "coderef_diagram",
+          "parameters": ["project_path", "diagram_type", "format", "depth"],
+          "purpose": "Generate visual dependency diagrams in Mermaid or Graphviz format",
+          "limitation": "Diagram_type parameter defined but not passed to CLI; limited to Mermaid or DOT output; max depth 2; visual output not always readable for complex graphs"
+        }
+      ],
+      "capabilities": [
+        "AST-based code element discovery with 99% accuracy",
+        "Multi-directional dependency analysis (calls, imports, depends-on relationships)",
+        "Change impact assessment for refactoring decisions",
+        "Test coverage gap identification",
+        "Comprehensive codebase context generation",
+        "Drift detection between index and current code",
+        "Visual diagram generation for architecture understanding",
+        "Non-blocking async execution prevents event loop blocking",
+        "JSON output format standardization for agent consumption",
+        "Configurable language support (ts, tsx, js, jsx by default)"
+      ],
+      "limitations": [
+        "Completely dependent on @coderef/core CLI availability - no fallback",
+        "Fixed CLI path dependency (C:/Users/willh/Desktop/projects/coderef-system/packages/cli)",
+        "120-second timeout on all operations - large codebases will fail",
+        "No caching/memoization - every call re-executes the full analysis",
+        "Several tools use workarounds (e.g., complexity & patterns proxy through context command)",
+        "JSON parsing fragile - relies on specific CLI output format without validation",
+        "Language support hard-coded to ts, tsx, js, jsx - no other language support",
+        "No incremental analysis - always full scans, no delta analysis",
+        "Element-level operations limited - complexity metrics not granular enough",
+        "No configuration validation at startup - CLI availability unknown until first tool call",
+        "Memory-intensive for large projects - all results held in memory before JSON serialization",
+        "Error messages generic - doesn't distinguish between CLI errors and subprocess failures"
+      ],
+      "gaps": [
+        "No caching layer - should memoize scan results during a session to avoid redundant CLI calls",
+        "No streaming/chunking - large outputs must fit in memory and be serialized to JSON",
+        "Missing parameter validation - several parameters defined but not used (e.g., operation in impact, diagram_type in diagram)",
+        "No CLI health check - should verify CLI exists and is executable at server startup",
+        "No change tracking - doesn't know what files changed since last run or last index update",
+        "No batching support - can't query multiple elements in one call",
+        "Missing fallback for when CLI unavailable - could provide cached/stale results or graceful degradation",
+        "No rate limiting - no protection against rapid-fire tool calls exhausting resources",
+        "Parameter pass-through issues - output_format, diagram_type, operation not passed to CLI in all cases"
+      ],
+      "dependencies_on": [
+        "@coderef/core CLI (external TypeScript package at C:/Users/willh/Desktop/projects/coderef-system/packages/cli)",
+        "Node.js runtime (to execute cli.js)"
+      ],
+      "provides_to": [
+        "coderef-workflow (uses scan, query, impact during planning)",
+        "Claude agents implementing features (primary consumers of all tools)",
+        "Code intelligence queries during feature execution"
+      ],
+      "performance_profile": {
+        "speed": "medium",
+        "scalability": "medium",
+        "accuracy": "high",
+        "details": "Each tool call spawns async subprocess and waits up to 120 seconds. Small projects (<1000 elements) complete in 1-5 seconds. Large projects may timeout. AST-based analysis (use_ast=true) slower but more accurate (99% vs 85%). Subprocess overhead adds ~500ms. No caching means repeated queries are expensive. Memory usage scales with codebase size - comprehensive context can be 10-50MB for large projects."
+      },
+      "analysis_complete": true,
+      "notes": "coderef-context is a clean wrapper pattern around @coderef/core CLI, successfully isolating agent code from external dependency. Architecture is sound but implementation has optimization opportunities: caching, batching, parameter validation, CLI health checks. Key blocker: complete dependency on CLI availability with no fallback. Several tools use workarounds (proxying through context command) indicating incomplete CLI command coverage in server.py. Most critical issue: no streaming/chunking for large outputs may cause memory issues in large codebases."
+    },
+    "coderef-workflow": {
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-workflow",
+      "version": "1.1.0",
+      "agent_status": "complete",
+      "tools": [
+        {
+          "name": "gather_context",
+          "parameters": ["project_path", "feature_name", "description", "goal", "requirements", "constraints", "out_of_scope?", "success_criteria?"],
+          "purpose": "Collect feature requirements, goals, constraints via interactive Q&A. Stores context.json for feature planning phase",
+          "limitation": "Requires user to answer Q&A prompts interactively. Creates coderef/workorder/{feature}/context.json only - doesn't generate analysis or plan"
+        },
+        {
+          "name": "analyze_project_for_planning",
+          "parameters": ["project_path", "feature_name"],
+          "purpose": "Deep analyze project for planning - calls coderef-context via coderef_scan, detects patterns, tech stack, gaps",
+          "limitation": "Depends on coderef-context availability. Requires feature_name to save results. Calls external @coderef/core CLI. Large projects may timeout (120s)"
+        },
+        {
+          "name": "get_planning_template",
+          "parameters": ["section?"],
+          "purpose": "Returns feature-implementation-planning-standard.json template (10-section plan structure) or specific section",
+          "limitation": "Template only - doesn't generate plans. Returns JSON structure reference, not a generated plan"
+        },
+        {
+          "name": "create_plan",
+          "parameters": ["project_path", "feature_name", "multi_agent?", "workorder_id?"],
+          "purpose": "Create complete 10-section implementation plan. Calls coderef-context for code intelligence. Generates plan.json + DELIVERABLES.md template",
+          "limitation": "Depends on context.json and analysis.json existing. Requires coderef-context (query, patterns). Plan validation not automatic - requires separate validate_implementation_plan call"
+        },
+        {
+          "name": "validate_implementation_plan",
+          "parameters": ["project_path", "plan_file_path"],
+          "purpose": "Score plan quality 0-100 against 22-point quality checklist. Returns issues by severity (critical/major/minor) with fix suggestions",
+          "limitation": "Only validates plan structure - doesn't test feasibility. Requires manual fixes if score < 90. Max 3 auto-fix iterations recommended"
+        },
+        {
+          "name": "generate_plan_review_report",
+          "parameters": ["project_path", "plan_file_path", "output_path?"],
+          "purpose": "Transform validation results into human-readable markdown review report. Saves to coderef/reviews/",
+          "limitation": "Requires validation to run first. Markdown output only - no JSON export. Purely reporting tool, no state changes"
+        },
+        {
+          "name": "execute_plan",
+          "parameters": ["project_path", "feature_name"],
+          "purpose": "Read plan.json and generate TodoWrite task list with WO-ID | TASK-ID: Description format for Lloyd's CLI checklist",
+          "limitation": "Converts plan to todos - doesn't execute work. Requires manual task tracking. No automatic status sync with plan.json"
+        },
+        {
+          "name": "update_task_status",
+          "parameters": ["project_path", "feature_name", "task_id", "status", "notes?"],
+          "purpose": "Track individual task progress in plan.json. Updates task status and calculates overall progress summary",
+          "limitation": "Manual updates only - no automation of status detection. Requires agent to track and report completion"
+        },
+        {
+          "name": "generate_handoff_context",
+          "parameters": ["project_path", "feature_name", "mode?"],
+          "purpose": "Auto-generate claude.md handoff file from plan + analysis + git history for agent context. Mode: full vs minimal",
+          "limitation": "Reads from plan/analysis files - requires these to exist. Minimal mode is basic. Template-based, not AI-generated content"
+        },
+        {
+          "name": "assign_agent_task",
+          "parameters": ["project_path", "feature_name", "agent_number", "phase_id?"],
+          "purpose": "Assign task to specific agent (1-10) in communication.json. Updates agent assignment and generates agent-scoped workorder ID",
+          "limitation": "Updates communication.json only - doesn't execute work. Requires communication.json to exist. Only tracks assignment, not progress"
+        },
+        {
+          "name": "verify_agent_completion",
+          "parameters": ["project_path", "feature_name", "agent_number"],
+          "purpose": "Validate agent completion with automated git diff checks and success criteria validation. Updates agent status to VERIFIED",
+          "limitation": "Checks git diffs and forbidden files - requires git repo. Doesn't validate output quality, only change scope"
+        },
+        {
+          "name": "generate_deliverables_template",
+          "parameters": ["project_path", "feature_name"],
+          "purpose": "Create DELIVERABLES.md template with phase/task checklists and metric placeholders. Auto-called by create_plan",
+          "limitation": "Template only with placeholders - agent must fill in actual metrics. No auto-population from git history"
+        },
+        {
+          "name": "update_deliverables",
+          "parameters": ["project_path", "feature_name"],
+          "purpose": "Update DELIVERABLES.md with actual metrics from git history (LOC, commits, time spent). Parses git log for feature commits",
+          "limitation": "Requires git repo. Searches for feature name in commit messages - naming consistency required. No structured metrics format"
+        },
+        {
+          "name": "aggregate_agent_deliverables",
+          "parameters": ["project_path", "feature_name"],
+          "purpose": "Combine metrics from multiple agent DELIVERABLES.md files into single report. Sums LOC, counts commits, merges contributors",
+          "limitation": "Multi-agent only. Requires all agents to have updated DELIVERABLES.md. Text-based aggregation, no structured output"
+        },
+        {
+          "name": "generate_agent_communication",
+          "parameters": ["project_path", "feature_name"],
+          "purpose": "Create communication.json from plan.json for multi-agent coordination. Auto-generates task array, forbidden files, success criteria, agent workorder IDs",
+          "limitation": "Template-based from plan - doesn't validate feasibility. Requires plan.json to exist. Single source: agent updates task status manually in JSON"
+        },
+        {
+          "name": "track_agent_status",
+          "parameters": ["project_path", "feature_name?"],
+          "purpose": "Real-time coordination dashboard showing all agent status (per-feature or project-wide). Reads from communication.json",
+          "limitation": "Requires communication.json to exist and be updated by agents. Text-based status display only - no structured queries"
+        },
+        {
+          "name": "coderef_foundation_docs",
+          "parameters": ["project_path", "deep_extraction?", "force_regenerate?", "include_components?", "use_coderef?"],
+          "purpose": "Unified foundation docs generator - creates ARCHITECTURE.md, SCHEMA.md, COMPONENTS.md, project-context.json with code intelligence",
+          "limitation": "Calls coderef-context if use_coderef=true. Generates docs - requires manual review/editing. Large projects may timeout"
+        },
+        {
+          "name": "archive_feature",
+          "parameters": ["project_path", "feature_name", "force?"],
+          "purpose": "Move completed feature from coderef/workorder/ to coderef/archived/. Checks DELIVERABLES.md status. Updates archive index.json",
+          "limitation": "Requires DELIVERABLES.md to indicate completion. Prompts user unless force=true. Permanent move - no rollback"
+        },
+        {
+          "name": "generate_features_inventory",
+          "parameters": ["project_path", "format?", "include_archived?", "save_to_file?"],
+          "purpose": "Generate inventory of all features in coderef/workorder/ and coderef/archived/. Returns list with status, progress, workorder tracking",
+          "limitation": "Reads directory structure - no deep analysis. JSON or markdown output. No filtering or search capability"
+        },
+        {
+          "name": "audit_plans",
+          "parameters": ["project_path", "include_archived?", "stale_days?"],
+          "purpose": "Health check on all plans in coderef/workorder/. Validates plan format, checks progress, detects stale plans (7+ days old)",
+          "limitation": "Format validation only - doesn't assess plan quality. Returns health score but no actionable fixes. Stale detection is arbitrary threshold"
+        },
+        {
+          "name": "log_workorder",
+          "parameters": ["project_path", "workorder_id", "project_name", "description", "timestamp?"],
+          "purpose": "Add entry to global workorder log (coderef/workorder-log.txt). Thread-safe with file locking. One-line format: WO-ID | Project | Description | Timestamp",
+          "limitation": "Append-only log - no deletion or modification. Plain text format - no structured queries. Global path only"
+        },
+        {
+          "name": "get_workorder_log",
+          "parameters": ["project_path", "workorder_pattern?", "project_name?", "limit?"],
+          "purpose": "Query global workorder log (coderef/workorder-log.txt). Filter by project, workorder ID pattern, or date. Returns reverse chronological",
+          "limitation": "Text-based log parsing - no full-text search. Pattern matching only on workorder ID. No sorting by date (reverse chrono only)"
+        },
+        {
+          "name": "update_all_documentation",
+          "parameters": ["project_path", "change_type", "feature_description", "workorder_id", "version?", "feature_name?", "files_changed?"],
+          "purpose": "Agentic workflow - auto-update README/CHANGELOG/CLAUDE.md after feature completion. Auto-increments version based on change_type",
+          "limitation": "Requires structured agent context (change_type, files_changed). Version auto-bump: breaking→major, feature→minor, bugfix→patch. Manual doc updates still needed"
+        },
+        {
+          "name": "assess_risk",
+          "parameters": ["project_path", "proposed_change", "options?", "threshold?", "feature_name?"],
+          "purpose": "AI-powered risk assessment 0-100 across 5 dimensions (breaking changes, security, performance, maintainability, reversibility). Go/no-go recommendations",
+          "limitation": "Heuristic scoring - not deterministic. Requires manual change context. Options comparison supported but limited to 5 total"
+        }
+      ],
+      "capabilities": [
+        "full_feature_lifecycle_orchestration - gather context → analyze → plan → validate → execute → document → archive",
+        "context_based_planning - Interactive Q&A for requirements gathering with coderef-context code intelligence",
+        "10_section_implementation_plans - Comprehensive plans with 10 sections (prep, summary, risk, analysis, features, tasks, phases, testing, success criteria, metadata)",
+        "plan_validation_and_scoring - Automated quality gate 0-100 with issue triage (critical/major/minor) and fix suggestions",
+        "multi_agent_coordination - communication.json protocol for parallel task execution with agent-specific workorder IDs (WO-{FEATURE}-{CATEGORY}-###)",
+        "workorder_id_tracking - Global audit trail (coderef/workorder-log.txt) for complete feature lifecycle tracing",
+        "git_integrated_deliverables - Auto-capture LOC, commits, contributors, time from git history",
+        "cross_project_feature_archival - Centralized archive with index.json, enables feature reference and recovery",
+        "foundation_docs_generation - Unified ARCHITECTURE/SCHEMA/COMPONENTS/project-context generation with code intelligence",
+        "risk_assessment_automation - AI-powered 5-dimension risk scoring with go/no-go decisions",
+        "agentic_documentation_updates - Auto-version-bump and documentation sync at feature completion"
+      ],
+      "limitations": [
+        "context_depends_on_user_input - No auto-context generation. Gather_context requires interactive Q&A responses",
+        "analyze_depends_on_coderef_context - Blocks if coderef-context unavailable. 120s timeout for large projects. No fallback analysis",
+        "plan_validation_is_manual - Scores 0-100 but doesn't auto-fix. Agent must read issues and make changes. Max 3 iterations recommended",
+        "task_tracking_is_manual - Execute_plan converts to todos but status updates require agent to manually call update_task_status",
+        "no_automatic_execution - Tools orchestrate workflow but don't actually implement features. Agents do the coding",
+        "communication_json_requires_manual_updates - Multi-agent tasks tracked in JSON but agents must manually update task.status",
+        "git_metrics_depend_on_commit_naming - Update_deliverables searches for feature name in commit messages. Inconsistent naming breaks metrics",
+        "archive_is_permanent - Move to coderef/archived/ is one-way. No easy rollback or restore",
+        "plan_generation_requires_context_and_analysis - Must complete analyze_project_for_planning first. No shortcuts",
+        "no_real_time_progress_tracking - Agent status only reflects what agents write to communication.json manually",
+        "risk_assessment_is_heuristic - 0-100 scoring is AI-powered estimation, not deterministic. Threshold tuning required",
+        "workorder_log_is_append_only - Can't edit or delete entries. Permanent audit trail limits correction options",
+        "deliverables_aggregation_is_manual - Multi-agent work requires all agents to complete and update DELIVERABLES.md",
+        "no_automatic_phase_dependencies - Implementation phases can have dependencies but execution doesn't enforce them"
+      ],
+      "gaps": [
+        "missing_automatic_context_generation - Could call coderef-context to auto-populate requirements from codebase patterns",
+        "missing_plan_auto_fixing - Validation identifies issues but agent must fix manually. Could suggest specific changes for auto-apply",
+        "missing_real_time_progress_dashboard - Agents update communication.json manually. No WebSocket or polling for live status updates",
+        "missing_intelligent_task_breakdown - Plan.json has phases/tasks but no automatic decomposition. Agent-written task lists are rigid",
+        "missing_dependency_enforcement - implementation_phases.tasks can have dependencies but execution doesn't validate or enforce ordering",
+        "missing_impact_analysis_on_code_changes - Risk assessment is heuristic. Could call coderef-impact for actual dependency analysis",
+        "missing_automatic_rollback - No git rollback capability if agent work is incomplete. Archive is permanent",
+        "missing_cross_feature_dependency_tracking - No way to express that Feature A blocks Feature B. WOs are independent",
+        "missing_smart_workorder_ids - WO-{FEATURE}-{CATEGORY}-### is manual input. No auto-generation from feature name",
+        "missing_deadline_tracking - No temporal constraints in plans. No way to set feature deadlines or milestones",
+        "missing_team_assignment - No assignment of features to humans (only agents via communication.json)",
+        "missing_budget_tracking - No LOC budget, time estimate validation, or cost tracking for features",
+        "missing_continuous_documentation - DELIVERABLES.md updated only at end. No in-progress documentation sync",
+        "missing_automated_test_generation - No integration with testing tools. Testing strategy in plan.json but not executed",
+        "missing_smart_plan_reuse - Similar features in coderef/archived/ could be used as templates but no search/suggestion"
+      ],
+      "dependencies_on": [
+        "coderef-context - For code intelligence during planning (coderef_scan, coderef_query, coderef_patterns, coderef_impact)",
+        "coderef-docs - For documentation generation (foundation docs, changelog, standards)",
+        "coderef-personas - For expert personas during execution (Lloyd coordinator, Ava frontend, Marcus backend, etc.)",
+        "git - For deliverables metrics extraction, agent verification, workorder logging",
+        "File system - For coderef/workorder/, coderef/archived/, coderef/foundation-docs/ storage",
+        "JSON files - For plan.json, context.json, analysis.json, communication.json, DELIVERABLES.md"
+      ],
+      "provides_to": [
+        "coderef-docs - Provides plan structure and feature metadata for documentation generation",
+        "coderef-personas - Provides workorder context and agent assignments via communication.json",
+        "AI agents - Complete planning, execution, and coordination infrastructure for feature implementation",
+        "Human orchestrators - Global workorder log and feature inventory for project tracking"
+      ],
+      "automation_potential": {
+        "ready_now": [
+          "Auto-version-bump based on change_type - Already implemented in update_all_documentation",
+          "Git-based deliverables extraction - Already implemented in update_deliverables (LOC, commits, contributors)",
+          "Workorder audit trail - Already implemented via coderef/workorder-log.txt (global, immutable)",
+          "Multi-agent task coordination - Already implemented via communication.json protocol with agent workorder IDs",
+          "Plan quality validation - Already implemented with 0-100 scoring and issue triage"
+        ],
+        "needs_work": [
+          "Automatic context generation from codebase - Currently requires interactive Q&A. Could use coderef-context to auto-populate",
+          "Intelligent task breakdown - Currently manual. Could use AST analysis to auto-decompose complex tasks",
+          "Real-time progress dashboard - Currently manual JSON updates. Could poll communication.json for live status",
+          "Smart risk assessment with impact analysis - Currently heuristic. Could integrate coderef-impact for actual dependency analysis",
+          "Automatic phase dependency enforcement - Currently optional. Could block task execution until dependencies complete",
+          "Cross-feature dependency tracking - Currently per-feature only. Could implement feature graph/DAG for project-wide sequencing",
+          "Intelligent plan reuse from archive - Currently flat archive. Could use semantic search to find similar completed features as templates",
+          "Budget/deadline enforcement - Currently no time/LOC constraints. Could add plan validation against budgets",
+          "Continuous documentation sync - Currently EOL only. Could sync DELIVERABLES.md during execution with incremental updates"
+        ]
+      },
+      "critical_integrations": {
+        "coderef_context": "REQUIRED for planning phase (analyze_project_for_planning, create_plan, risk assessment). Blocks if unavailable",
+        "coderef_docs": "REQUIRED for documentation phase (update_all_documentation). Optional for planning",
+        "git": "REQUIRED for agent verification, deliverables extraction, workorder logging. Blocks if not git repo",
+        "communication_json": "REQUIRED for multi-agent mode. Manually updated by agents - no auto-sync",
+        "plan_json": "REQUIRED for execution. Central source of truth. Manual updates by agents"
+      },
+      "analysis_complete": true,
+      "notes": "coderef-workflow v1.1.0 is a sophisticated orchestration engine that successfully implements a complete feature lifecycle (PLAN → EXECUTE → DOCUMENT → ARCHIVE). Core strengths: (1) Workorder-centric architecture with global audit trail enables multi-agent coordination, (2) 10-section plans provide comprehensive coverage, (3) Plan validation enforces quality gate (0-100 scoring), (4) Git integration auto-captures deliverables metrics, (5) Multi-agent coordination via communication.json protocol is elegant. Key architectural insight: The system is ORCHESTRATION-CENTRIC not AUTOMATION-CENTRIC. It guides agents through phases but agents do the actual work. Plan generation, context gathering, and deliverables tracking are all semi-automated (templates + agent input). Critical dependency: Complete reliance on coderef-context for planning intelligence (blocks without it). Performance: I/O bound (file ops, git calls), not CPU bound. Scales well horizontally (independent feature workorders). Bottleneck: Manual task status tracking in communication.json (agents must remember to update). Automation potential is VERY HIGH: (1) Auto-context from codebase analysis, (2) Intelligent task breakdown using AST, (3) Real-time progress tracking (poll communication.json), (4) Smart plan reuse from archive (semantic search), (5) Budget/deadline enforcement, (6) Cross-feature dependency graph. Integration opportunity: Deep coupling with coderef-context + coderef-docs + coderef-personas creates a complete AI-native feature development platform. Could extend with: (1) CI/CD integration for automated testing/deployment, (2) Semantic search for plan templates, (3) Real-time agent dashboards, (4) Automatic sprint planning from feature inventory. Overall assessment: Architecture is sound. V1.1.0 is production-ready for structured feature work. Main gaps are around real-time tracking and intelligent automation. System successfully solves 'how to plan complex features' but could do more to 'execute them automatically'. Recommendation: Phase 2 should focus on automation of task breakdown and intelligent reuse of archived features."
+    },
+    "coderef-docs": {
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-docs",
+      "agent_status": "complete",
+      "tools": [
+        {
+          "name": "list_templates",
+          "parameters": [],
+          "purpose": "Lists all available POWER framework templates",
+          "limitation": "Only shows static list of 7 templates, no filtering or search capability"
+        },
+        {
+          "name": "get_template",
+          "parameters": ["template_name"],
+          "purpose": "Retrieves content of a specific documentation template by name",
+          "limitation": "Fixed enum of 7 templates (readme, architecture, api, components, my-guide, schema, user-guide) - no custom templates"
+        },
+        {
+          "name": "generate_foundation_docs",
+          "parameters": ["project_path"],
+          "purpose": "Returns plan and all 5 foundation documentation templates for generation",
+          "limitation": "⚠️ DEPRECATED - timeout issues with response size (~1,470 lines). Returns templates only - Claude must write actual documents"
+        },
+        {
+          "name": "generate_individual_doc",
+          "parameters": ["project_path", "template_name"],
+          "purpose": "Returns a single documentation template with generation plan",
+          "limitation": "Returns template only - Claude must write the actual file. No code analysis or auto-population"
+        },
+        {
+          "name": "get_changelog",
+          "parameters": ["project_path", "version?", "change_type?", "breaking_only?"],
+          "purpose": "Query changelog by version, change type, or breaking changes",
+          "limitation": "Requires CHANGELOG.json to exist. No support for XML/YAML formats - JSON only"
+        },
+        {
+          "name": "add_changelog_entry",
+          "parameters": ["project_path", "version", "change_type", "severity", "title", "description", "files", "reason", "impact", "breaking?", "migration?", "summary?", "contributors?"],
+          "purpose": "Manually add a single entry to the project changelog",
+          "limitation": "Requires all 7 core fields to be explicitly provided by agent. No auto-detection or suggestion"
+        },
+        {
+          "name": "record_changes",
+          "parameters": ["project_path", "version", "context?"],
+          "purpose": "Auto-detects changes from git, suggests change_type and severity, shows preview for agent confirmation",
+          "limitation": "2-step workflow: returns preview only. Agent must call add_changelog_entry to confirm. Not truly automated"
+        },
+        {
+          "name": "generate_quickref_interactive",
+          "parameters": ["project_path", "app_type?"],
+          "purpose": "Interactive workflow to generate universal quickref guide for any app type",
+          "limitation": "Returns interview questions only - no actual quickref generation. Claude must conduct interview and write file"
+        },
+        {
+          "name": "establish_standards",
+          "parameters": ["project_path", "scan_depth?", "focus_areas?"],
+          "purpose": "Scans codebase to discover and extract UI/behavior/UX patterns, creates standards documentation",
+          "limitation": "Limited to 3 pattern types (UI, behavior, UX). Missing: API standards, architecture standards, security standards, testing patterns"
+        },
+        {
+          "name": "audit_codebase",
+          "parameters": ["project_path", "standards_dir?", "severity_filter?", "scope?", "generate_fixes?"],
+          "purpose": "Audits codebase against established standards, generates compliance score (0-100), suggests fixes",
+          "limitation": "Requires standards to exist (from establish_standards). Text-based reports only - no JSON export of violations"
+        },
+        {
+          "name": "check_consistency",
+          "parameters": ["project_path", "files?", "standards_dir?", "severity_threshold?", "scope?", "fail_on_violations?"],
+          "purpose": "Pre-commit quality gate - checks staged files against standards with severity thresholds",
+          "limitation": "Auto-detects from git staging area only. Text-based output. No integration with CI/CD or structured failure reporting"
+        }
+      ],
+      "capabilities": [
+        "foundation_doc_generation - Generate README, ARCHITECTURE, SCHEMA, API, COMPONENTS, my-guide, user-guide templates",
+        "changelog_crud_operations - Full CRUD + version/type filtering + breaking change detection",
+        "standards_establishment - Discover UI patterns, behavior patterns, UX patterns from codebase",
+        "codebase_auditing - Validate code against standards with 0-100 compliance score",
+        "pre_commit_consistency_gates - Git-integrated quality checks for staged changes",
+        "universal_quickref_generation - Interactive workflow for CLI, Web, API, Desktop, Library apps",
+        "smart_changelog_recording - Git auto-detection + commit analysis + severity calculation + agent preview"
+      ],
+      "limitations": [
+        "templates_are_placeholders_only - Foundation docs return {PLACEHOLDER} templates. No code analysis or auto-population",
+        "record_changes_requires_manual_confirmation - 2-step workflow: preview + add_changelog_entry. Not truly agentic",
+        "standards_limited_to_3_pattern_types - Scans UI/behavior/UX only. Missing: API, architecture, database, security standards",
+        "fixed_template_enum - Only 7 templates. No custom doc types without code changes",
+        "quickref_not_automated - Returns interview questions only. No actual generation logic",
+        "audit_reports_text_only - No JSON export of violations or structured machine-readable format",
+        "no_coderef_context_integration - Standards auditing doesn't leverage code intelligence/dependency graphs",
+        "changelog_project_scoped - No cross-project consistency checking",
+        "no_auto_changelog_generation - Requires manual entry. No detection of commit types for auto-population"
+      ],
+      "gaps": [
+        "missing_deployment_guide_template - No template for deployment instructions, runbooks, infrastructure docs",
+        "missing_auto_changelog_from_commits - Could offer 'auto-detect commits since last version' workflow",
+        "missing_custom_template_support - Users can't add their own doc types. System rigid to 7 templates",
+        "missing_documentation_versioning - No doc history tracking, version comparison, or diff management",
+        "missing_code_reference_extraction - Could leverage coderef-context to auto-pull code examples, signatures into docs",
+        "missing_multi_language_support - English-only. No i18n infrastructure",
+        "missing_integration_guide_template - No webhook docs, API client libraries, third-party patterns"
+      ],
+      "dependencies_on": [
+        "git - For record_changes, check_consistency auto-detection",
+        "coderef/standards/ directory - For audit_codebase and check_consistency operations",
+        "CHANGELOG.json format - For changelog CRUD operations"
+      ],
+      "provides_to": [
+        "coderef-workflow - Documentation generation at feature completion (Phase 3: /record-changes, /update-docs)",
+        "ai_agents - All doc generation, standards setup, auditing workflows",
+        "end_users - Manual doc generation, standards compliance verification"
+      ],
+      "coverage_profile": {
+        "fully_supported": [
+          "README.md - POWER template exists, full lifecycle support",
+          "ARCHITECTURE.md - POWER template exists, full lifecycle support",
+          "SCHEMA.md - POWER template exists, full lifecycle support",
+          "changelog_crud - Get, add, record, filter, query all supported",
+          "standards_discovery - UI patterns, behavior patterns, UX patterns fully scanned",
+          "compliance_auditing - Full audit with 0-100 score and fix suggestions"
+        ],
+        "partially_supported": [
+          "api_reference - Template exists but no code analysis. Manual mapping required",
+          "components - Template exists but no component detection. Manual mapping required",
+          "my_guide - Generic template, high flexibility but low guidance",
+          "user_guide - Generic template, high flexibility but low guidance",
+          "quickref - Interview workflow exists but no automated generation logic"
+        ],
+        "not_supported": [
+          "deployment_guide",
+          "troubleshooting_guide",
+          "security_compliance_docs",
+          "integration_guide",
+          "migration_guide",
+          "performance_tuning_guide",
+          "faq_knowledge_base",
+          "multi_language_docs",
+          "auto_changelog_from_commits",
+          "doc_version_management",
+          "cross_project_consistency"
+        ]
+      },
+      "analysis_complete": true,
+      "phase_2_review": {
+        "intelligence_gap": {
+          "issue": "coderef-docs templates are static placeholders - Claude writes content manually. No code intelligence.",
+          "opportunity": "coderef-context CAN provide: (1) API signatures/endpoints for API.md, (2) Component definitions for COMPONENTS.md, (3) Schema/entity extraction for SCHEMA.md, (4) Code patterns for standards discovery",
+          "gap_severity": "CRITICAL",
+          "impact": "Currently: User/Claude manually maps code → docs. With integration: Auto-extract signatures, examples, patterns → auto-populate docs",
+          "recommendation": "Priority P1: Integrate coderef-context into generate_individual_doc for code-dependent templates (API, SCHEMA, COMPONENTS)"
+        },
+        "workflow_integration": {
+          "current_usage": "coderef-workflow calls update_all_documentation at Phase 3 (feature completion only)",
+          "gaps": [
+            "No automatic doc generation triggered during implementation (only at end)",
+            "No real-time doc updates as code changes (generates once at finish)",
+            "No doc validation against code changes (can become stale)"
+          ],
+          "opportunities": [
+            "Docs should update incrementally as phases complete (Phase 2 backend → update API docs)",
+            "SCHEMA.md should auto-refresh if database models change during implementation",
+            "COMPONENTS.md should sync when new components added",
+            "Continuous changelog vs end-of-feature changelog"
+          ],
+          "recommendation": "Priority P2: Add workflow hooks for mid-phase doc updates (trigger docs after major milestones, not just at end)"
+        },
+        "standards_gaps": {
+          "current": "3 pattern types (UI components, behavior patterns, UX flows)",
+          "missing": [
+            "API standards - endpoint naming, response formats, error codes",
+            "Architecture patterns - layering, dependency directions, component interaction",
+            "Database patterns - schema conventions, naming, relationships",
+            "Security patterns - authentication, authorization, data protection",
+            "Testing patterns - unit/integration/e2e testing conventions",
+            "Deployment patterns - infrastructure as code, CI/CD, rollout strategies"
+          ],
+          "opportunity": "coderef-context.coderef_patterns can discover additional pattern types beyond UI/behavior/UX. Scope is unlimited.",
+          "recommendation": "Priority P2: Expand establish_standards to discover 6+ pattern types. Leverage coderef-context for comprehensive pattern detection."
+        },
+        "template_limitations": {
+          "issue": "Fixed enum of 7 templates prevents extensibility. Adding new doc type requires code changes.",
+          "templates": ["readme", "architecture", "api", "components", "my-guide", "schema", "user-guide"],
+          "missing_types": [
+            "Deployment Guide - infrastructure, environment setup, deployment procedures",
+            "Troubleshooting Guide - common issues, debugging, support procedures",
+            "Security & Compliance - security architecture, compliance mappings, threat models",
+            "Integration Guide - webhooks, API client libraries, third-party integration",
+            "Migration Guide - version upgrades, data migrations, breaking changes",
+            "Performance Tuning - optimization tips, configuration, benchmarking",
+            "FAQ / Knowledge Base - common questions, patterns, best practices"
+          ],
+          "opportunity": "Implement custom template support via template marketplace. Allow users to define own doc types.",
+          "recommendation": "Priority P2: Build template builder (define custom doc types via JSON schema). Support dynamic template enum."
+        },
+        "automation_opportunities": [
+          {
+            "opportunity": "Auto-changelog from git commits",
+            "current": "record_changes requires manual title/description entry. 2-step process.",
+            "proposed": "Parse commit messages (conventional commits: feat/fix/breaking/docs) → auto-populate changelog fields",
+            "impact": "HIGH - eliminates manual changelog entry",
+            "effort": "low",
+            "priority": "P1"
+          },
+          {
+            "opportunity": "Code reference extraction",
+            "current": "API.md template has placeholders. Claude manually maps endpoints.",
+            "proposed": "Call coderef-context → extract API signatures → auto-populate with examples and parameter docs",
+            "impact": "HIGH - auto-generates API docs from code",
+            "effort": "medium",
+            "priority": "P1"
+          },
+          {
+            "opportunity": "Auto-SCHEMA generation from models",
+            "current": "SCHEMA.md template is manual. Requires user to map database → doc",
+            "proposed": "If coderef-context finds DB models/entities → auto-generate schema diagrams, relationships, field docs",
+            "impact": "MEDIUM - auto-generates schema docs from code",
+            "effort": "high",
+            "priority": "P2"
+          },
+          {
+            "opportunity": "Auto-COMPONENTS from registry",
+            "current": "COMPONENTS.md template is manual. No component detection.",
+            "proposed": "Call coderef-context → extract React/Vue components → auto-generate component library docs",
+            "impact": "MEDIUM - auto-generates component catalog",
+            "effort": "high",
+            "priority": "P2"
+          },
+          {
+            "opportunity": "Continuous doc sync",
+            "current": "Docs generated once at end. Don't refresh if code changes.",
+            "proposed": "Watch for code changes → incrementally re-generate affected docs (API.md if endpoints change, SCHEMA.md if models change)",
+            "impact": "MEDIUM - docs stay in sync with code",
+            "effort": "high",
+            "priority": "P3"
+          }
+        ],
+        "dependencies_analysis": {
+          "currently_depends_on": [
+            "git - for record_changes, check_consistency auto-detection",
+            "coderef/standards/ directory - for audit/consistency operations",
+            "CHANGELOG.json format - for changelog CRUD",
+            "File system - for template loading, standards storage"
+          ],
+          "should_depend_on": [
+            "coderef-context - For code intelligence (critical gap)"
+          ],
+          "blocker_resolved": "Phase 2 analysis identified 'coderef_docs_to_coderef_context: MISSING' and recommended as P1 integration"
+        },
+        "role_in_ecosystem": "Documentation generation layer of CodeRef Ecosystem. Currently: Template-driven (POWER framework provides structure, Claude writes content). Should be: Content-driven (auto-extracts from code via coderef-context). Critical gap: No code intelligence integration despite coderef-context availability.",
+        "recommendations": [
+          {
+            "title": "Integrate coderef-context for code-driven docs",
+            "priority": "P1",
+            "effort": "medium",
+            "description": "Add coderef-context calls to generate_individual_doc for API/SCHEMA/COMPONENTS templates. Extract signatures, examples, patterns automatically.",
+            "impact": "Transforms docs from manual template-filling to smart code extraction"
+          },
+          {
+            "title": "Auto-changelog from conventional commits",
+            "priority": "P1",
+            "effort": "low",
+            "description": "Parse git commits for feat:/fix:/breaking: patterns → auto-populate changelog fields (type, severity, title). Eliminate manual entry.",
+            "impact": "Reduces changelog entry time by 80%"
+          },
+          {
+            "title": "Expand standards to 6+ pattern types",
+            "priority": "P2",
+            "effort": "medium",
+            "description": "Use coderef-context.coderef_patterns to discover API, architecture, database, security, testing, deployment patterns. Not just UI/behavior/UX.",
+            "impact": "Comprehensive standards coverage across all code layers"
+          },
+          {
+            "title": "Implement custom template support",
+            "priority": "P2",
+            "effort": "high",
+            "description": "Allow users to define custom doc types via JSON schema (template marketplace). Remove fixed 7-template enum.",
+            "impact": "System becomes extensible for domain-specific documentation"
+          },
+          {
+            "title": "Add mid-phase documentation triggers",
+            "priority": "P2",
+            "effort": "medium",
+            "description": "Workflow should trigger doc updates after phase completion (Phase 2 → update API.md, Phase 3 → finalize all docs), not just at end.",
+            "impact": "Docs stay current during implementation, not just at feature completion"
+          },
+          {
+            "title": "Implement continuous doc sync",
+            "priority": "P3",
+            "effort": "high",
+            "description": "Watch for code changes → incrementally re-generate affected docs. Keep docs in sync with evolving codebase.",
+            "impact": "Docs never become stale relative to code"
+          }
+        ],
+        "critical_insights": [
+          "coderef-docs is the documentation CONSUMER but not the documentation SOURCE. POWER templates provide structure but no content. coderef-context should be the content source.",
+          "Phase 2 analysis confirmed 'coderef_docs_to_coderef_context: MISSING' - exact gap identified here.",
+          "System is 95% complete at Phase 1-2 but 5% gap (no code intelligence in docs) blocks full automation.",
+          "Record_changes 2-step workflow (preview + add_changelog_entry) works but could be 1-step with commit parsing.",
+          "Standards system is sound architecturally but scope limited (3 types vs unlimited patterns in codebase).",
+          "Biggest opportunity: Leverage coderef-context for content extraction. Biggest blocker: Currently no integration despite dependency gap identified in Phase 2."
+        ]
+      },
+      "notes": "coderef-docs is a focused, 11-tool documentation system with strong POWER framework template infrastructure but limited intelligence. Key insight: System is template-driven (returns templates, Claude writes content) rather than content-driven (auto-generates from code). Phase 2 analysis confirms critical gap: 'coderef_docs_to_coderef_context: MISSING' - should integrate but doesn't. Biggest gaps: (1) No integration with coderef-context for code intelligence (CRITICAL), (2) Fixed template enum prevents extensibility (blocks custom doc types), (3) Standards limited to 3 pattern types, (4) Record_changes requires manual confirmation. Integration opportunities (P1): Auto-changelog from commits, code reference extraction via coderef-context, auto-SCHEMA/COMPONENTS generation. Phase 2 recommends P1 integration with coderef-context as 'high-value integration opportunity'. Performance: All tools are I/O operations (file read/write, git calls), no timeout issues. Strengths: Modular architecture, clear separation of concerns, clean MCP interface. Phase 2 role: Documentation generation layer in critical path coderef-context → coderef-workflow → coderef-docs. Currently sole documentation provider (redundancy: complete). Recommendation: Phase 3 should prioritize coderef-context integration (P1) to unlock auto-generated docs."
+    },
+    "coderef-personas": {
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-personas",
+      "version": "1.4.0",
+      "agent_status": "complete",
+      "tools": [
+        {
+          "name": "use_persona",
+          "parameters": ["name"],
+          "purpose": "Activate an expert persona to gain specialized knowledge and behavior. Returns the persona's system prompt and expertise.",
+          "limitation": "Single persona active at a time (no stacking in v1.4.0, future feature). Returns full system prompt (can be 1000-6000+ lines) which increases response size. No persona validation at activation time"
+        },
+        {
+          "name": "get_active_persona",
+          "parameters": [],
+          "purpose": "Get information about the currently active persona (name, version, description, expertise, activation time)",
+          "limitation": "Read-only operation. Returns no-op message if no persona active. Doesn't show personality stack or composition"
+        },
+        {
+          "name": "clear_persona",
+          "parameters": [],
+          "purpose": "Deactivate the current persona and return to default behavior",
+          "limitation": "Simple reset - no state preservation. Can't rollback to previous persona. Returns confirmation message only"
+        },
+        {
+          "name": "list_personas",
+          "parameters": [],
+          "purpose": "List all available personas with descriptions, versions, and first 5 expertise areas",
+          "limitation": "Shows first 5 expertise areas only (no full list). No filtering or search capability. Scans both base/ and custom/ directories but no differentiation in output"
+        },
+        {
+          "name": "generate_todo_list",
+          "parameters": ["plan_path", "workorder_id", "mode"],
+          "purpose": "Convert plan task breakdown to TodoWrite format for Lloyd. Part of docs-expert v2.0 Phase 1 Lloyd Integration",
+          "limitation": "Requires valid plan.json at specified path. Mode parameter (all/remaining) filters tasks. Depends on external plan.json structure. No validation of workorder_id format"
+        },
+        {
+          "name": "track_plan_execution",
+          "parameters": ["plan_path", "workorder_id", "todo_status"],
+          "purpose": "Sync plan progress with todo status in real-time. Tracks completed/in-progress/pending tasks",
+          "limitation": "Requires plan.json to exist and be valid JSON. todo_status must be array of objects. Updates plan file in-place. No transactional rollback on failure"
+        },
+        {
+          "name": "execute_plan_interactive",
+          "parameters": ["plan_path", "workorder_id", "mode"],
+          "purpose": "Execute plan with guided step-by-step (interactive) or batch mode. Provides task guidance, dependencies, and acceptance criteria",
+          "limitation": "Mode parameter changes output significantly (step-by-step vs batch). Requires valid plan structure. Step-by-step requires manual progression. Batch mode returns all todos but requires separate tracking"
+        },
+        {
+          "name": "create_custom_persona",
+          "parameters": ["name", "description", "expertise", "use_cases", "communication_style", "problem_solving?", "tool_usage?", "specializations?", "key_principles?", "example_responses?"],
+          "purpose": "Create a custom persona with guided workflow, multi-stage validation, and automatic system prompt generation",
+          "limitation": "Requires 5 mandatory fields + 5 optional. Expertise/use_cases limited to 3-10 items each. Accepts string (comma-separated or JSON array) but parsing is fragile. Generates 1000+ line system prompt. Saves to personas/custom/ only"
+        }
+      ],
+      "capabilities": [
+        "persona_activation_with_system_prompt - Load expert personas with 1000-6000+ line system prompts influencing AI behavior",
+        "expert_specialization - 7 independent personas covering MCP protocol, project coordination, frontend, backend, testing, research, coderef tools",
+        "custom_persona_creation - User-defined personas with multi-stage validation (schema, semantic, quality), template-based system prompt generation",
+        "persona_state_tracking - Session-scoped persona state (active persona, activation time), no persistence across sessions",
+        "lloyid_integration_phase_1 - Tools for plan-to-todo conversion, execution tracking, interactive execution with guidance",
+        "workorder_coordination - Support for multi-agent coordination via communication.json protocol (8 personas total including future agents)",
+        "domain_specialization - Specialist personas (Ava, Marcus, Quinn) with domain boundary detection and refusal protocols",
+        "pattern_based_generation - Templates for persona creation with conditional sections and placeholder replacement",
+        "portable_persona_definitions - JSON-based persona storage in personas/base/ and personas/custom/ directories"
+      ],
+      "limitations": [
+        "single_active_persona_only - v1.4.0 supports only one active persona at a time. Persona stacking deferred to future (add_persona, get_active_personas)",
+        "no_persona_hierarchy - All personas independent (parent: null). Future plan includes hierarchical personas (mcp-expert:docs-mcp)",
+        "response_size_impact - System prompts are 1000-6000+ lines. use_persona returns full prompt which can cause response size issues for clients",
+        "large_system_prompts - Lloyd (1.4.0): 3000+ lines, Ava (1.4.0): 5000+ lines, Marcus/Quinn: 1500+ lines each. Impacts token usage heavily",
+        "no_persona_composition - Can't mix multiple personas. No way to activate 'mcp-expert' + 'docs-expert' together",
+        "fragile_custom_persona_parsing - Supports comma-separated strings OR JSON arrays for expertise/use_cases, but parsing logic is brittle",
+        "template_based_generation_limits - System prompt generation uses {{placeholder}} templates. Customization depth limited by template coverage",
+        "no_runtime_persona_validation - Personas loaded without validation at activation. Invalid JSON or missing required fields discovered at use time",
+        "stateless_across_sessions - Persona state not persisted. Session restart clears active persona. No memory of previous activations",
+        "no_persona_versioning_conflict_detection - Multiple persona versions possible (lloyd v1.2.0, v1.4.0). No detection of incompatible versions",
+        "custom_persona_saves_to_one_location - All custom personas save to personas/custom/. No organization by category or owner",
+        "no_persona_metadata_queries - Can't search personas by expertise area or use case. Must manually review list_personas output",
+        "generation_output_fixed_format - Custom persona generation always outputs to specific JSON structure. No alternate formats"
+      ],
+      "gaps": [
+        "missing_persona_stacking - add_persona() and get_active_personas() not implemented. Blocks composition of multiple expert perspectives",
+        "missing_persona_search_metadata - No way to search personas by expertise area, use case, or domain. list_personas is dump only",
+        "missing_persona_recommendations - No system to suggest appropriate persona for given task. Would require semantic matching",
+        "missing_persona_versioning_management - No upgrade paths or migration logic when persona definitions change. Potential compatibility issues",
+        "missing_runtime_persona_validation - Schemas not validated at server startup. Could catch invalid persona files early",
+        "missing_persona_inheritance - Future plan mentions parent field, but no inheritance implementation. Custom personas can't extend base personas",
+        "missing_custom_template_support - Persona generation uses fixed template. No way for users to customize system prompt structure",
+        "missing_persona_performance_optimization - No caching of system prompts. Every use_persona loads from disk and parses full JSON",
+        "missing_cross_persona_consistency - No validation that related personas (e.g., Ava + Marcus) are compatible versions",
+        "missing_persona_deactivation_hooks - No cleanup or transition logic when clear_persona is called. Could support persona lifecycle events",
+        "missing_communication_protocol_validation - communication.json protocol for multi-agent work not validated or documented in personas-mcp itself",
+        "missing_workorder_id_validation - WO-{FEATURE}-{CATEGORY}-### format not validated in tools. Accepts any string"
+      ],
+      "dependencies_on": [
+        "personas/base/ and personas/custom/ directories - For persona storage and discovery",
+        "JSON file format and validation - PersonaDefinition Pydantic schema (required fields: name, version, description, system_prompt, expertise, use_cases, behavior)",
+        "coderef-docs tools (generate_todo_list, track_plan_execution, execute_plan_interactive) - Lloyd Integration Phase 1 externally implemented",
+        "communication.json protocol - Multi-agent coordination assumes communication.json exists (external dependency on coderef-workflow)"
+      ],
+      "provides_to": [
+        "Claude Code (main consumer) - Activates personas via /use-persona slash command, applies persona knowledge to all tool usage",
+        "coderef-workflow - Persona list for agent assignment, Lloyd persona for coordination",
+        "Multi-agent system - All agents use personas: Lloyd (coordinator), Ava (frontend), Marcus (backend), Quinn (testing), Taylor (general), others",
+        "AI agents implementing features - Personas influence behavior, tool selection, communication style, expertise application"
+      ],
+      "specialization_potential": {
+        "current_depth": "HIGH - 7 independent personas with 1000-6000+ line system prompts. Each persona has 12-25 expertise areas, custom tool preferences, domain boundaries. Specialists (Ava, Marcus, Quinn) have role-specific refusal protocols and domain boundary detection.",
+        "possible_specializations": [
+          "DevOps Specialist - Infrastructure, CI/CD, containerization, Kubernetes, deployment patterns (would be Agent 5)",
+          "Data Engineer - ETL, data modeling, analytics, SQL optimization, data pipelines (would be Agent 6)",
+          "Mobile Developer - React Native, Swift/Kotlin native, cross-platform development, mobile-specific patterns (would be Agent 7)",
+          "Security Specialist - Penetration testing, threat modeling, compliance audits, secure coding practices",
+          "Database Architect - Schema design, query optimization, replication, sharding, NoSQL patterns",
+          "ML Engineer - TensorFlow, PyTorch, model training, feature engineering, MLOps",
+          "Product Manager - Requirements gathering, user research, feature prioritization, roadmapping",
+          "UX Researcher - User testing, usability analysis, interaction patterns, accessibility audits",
+          "Performance Engineer - Profiling, optimization, load testing, monitoring, SRE practices",
+          "Documentation Specialist - Technical writing, knowledge base curation, API documentation, runbooks",
+          "QA Engineer - Test strategy, automation, regression testing, quality metrics",
+          "Architecture Reviewer - System design, scalability review, tech debt analysis, architectural decisions"
+        ],
+        "custom_persona_capability": "FULL - create_custom_persona supports arbitrary expertise areas (3-10), use cases (3-10), communication styles, problem-solving approaches, specializations (5), key principles (10), example responses (3). Template-based generation creates 1000+ line system prompts automatically. Any domain specialization can be captured in JSON format.",
+        "blocking_factors": [
+          "Single active persona - Can't combine specialists (need Ava + Marcus + Quinn for full-stack work). Workaround: activate sequentially and manually aggregate knowledge",
+          "No persona composition/stacking - Each activation replaces previous. Blocks multi-expert coordination",
+          "Large system prompt overhead - 5000+ line prompts increase token usage per activation. Scaling to 20+ personas becomes expensive",
+          "No semantic persona matching - Can't automatically recommend best persona for given task. Human must choose activation",
+          "Fixed template generation - System prompt structure locked. Hard to customize prompt style per domain",
+          "No cross-persona consistency validation - Adding 20 personas risks inconsistency. Need governance framework",
+          "Session-scoped state only - Persona learnings not persisted across sessions. Each session starts fresh"
+        ]
+      },
+      "notes": "coderef-personas is a sophisticated persona system (v1.4.0) that successfully implements identity-based AI behavior modification. Core strengths: (1) System prompts are comprehensive 1000-6000+ lines with deep domain knowledge, (2) Custom persona creation with validation pipeline enables unlimited specialization, (3) Specialist personas (Ava, Marcus, Quinn) have domain boundaries preventing out-of-scope work, (4) Lloyd persona optimized (1,017 → 153 lines, 85% reduction) with reference docs extracted. Key insights: (1) Personas are context providers not tool wrappers - they influence AI behavior through system prompts, (2) v1.4.0 optimized for single-agent activation but architecture supports multi-agent (Lloyd assigns workorder IDs WO-{FEATURE}-001/002/003/004), (3) Lloyd Integration Phase 1 added plan execution tools but these proxy to external implementations, (4) Persona storage is elegant (base/ vs custom/ directories), (5) Pydantic schema validation prevents invalid personas. Critical limitation: Single active persona blocks expert composition (can't activate Ava + Marcus + Quinn simultaneously for full-stack work). Performance concern: Large system prompts (5000+ lines) increase token cost per activation. Roadmap blocker: Persona stacking deferred to v2.0 (add_persona, get_active_personas). Specialization potential is VERY HIGH - custom_persona_capability is unrestricted. System can support 20-50+ specialized personas for ultra-specialized agent networks. Integration opportunity: Combine with communication.json protocol to enable multi-agent personas where each agent activates own specialist. Overall assessment: Architectural foundation is sound. Implementation is clean. Specialization is unlimited. Main gap is composition/stacking.",
+      "phase_2_review": {
+        "critical_gap_persona_composition": {
+          "issue": "Single active persona only - blocks multi-expert coordination",
+          "blocker": true,
+          "severity": "CRITICAL",
+          "impact_on_workflow": "coderef-workflow assigns WO-{FEATURE}-001/002/003/004 to multiple agents (Lloyd, Ava, Marcus, Quinn) but each can only activate ONE persona. Full-stack features need frontend (Ava) + backend (Marcus) + testing (Quinn) = 3 personas simultaneously = IMPOSSIBLE",
+          "concrete_example": "Feature: 'User authentication with JWT and UI login form'. Lloyd assigns: WO-AUTH-001 (Lloyd), WO-AUTH-002 (Ava frontend), WO-AUTH-003 (Marcus backend), WO-AUTH-004 (Quinn tests). System works for single-domain tasks, but full-stack work is blocked.",
+          "workaround": "Activate Ava, do frontend, context-switch. Activate Marcus, do backend, context-switch. Manual knowledge aggregation. ERROR-PRONE and inefficient.",
+          "solution": "Implement add_persona() and get_active_personas() to enable persona stacking (add_persona composition validation to check compatibility)"
+        },
+        "workflow_integration_gap": {
+          "issue": "No explicit link between agent_number and default_persona in communication.json",
+          "problem": "workflow creates communication.json with agent assignments but NO guidance on which persona to activate. Agents infer from hardcoded defaults (Agent 2 assumes 'ava', Agent 3 assumes 'marcus'). No validation that assigned agent's domain matches task type.",
+          "risk": "Frontend agent (Ava) could be assigned backend task with no warning or recommendation",
+          "solution": "Add 'agent_recommended_persona' field to communication.json. Populate with semantic matching service (task description → [recommended personas])"
+        },
+        "semantic_matching_gap": {
+          "issue": "No service to recommend persona based on task description",
+          "current": "Agent manually selects persona or uses default. No guidance.",
+          "example_failure": "Task: 'Implement Redis caching for user sessions'. Should suggest Marcus (backend expert). Currently: agent guesses.",
+          "solution": "Create personas-mcp → workflow integration: workflow queries 'what persona for task X' and personas responds with [persona_name, confidence_score, expertise_match]"
+        },
+        "persona_versioning_risk": {
+          "risk": "Multiple persona versions (lloyd v1.2.0 vs v1.4.0) could be incompatible",
+          "scenario": "Different agents activate different persona versions. Behavioral inconsistency, different tool lists, different expertise areas.",
+          "no_validation": "personas-mcp loads any version without checking compatibility",
+          "severity": "MEDIUM (becomes CRITICAL as persona count grows to 20+)",
+          "solution": "Implement persona version compatibility validation at activation time. Check all agents use compatible versions before execution."
+        },
+        "large_prompt_token_cost": {
+          "issue": "5000+ line system prompts increase token cost per activation",
+          "evidence": "Lloyd: 3000+ lines, Ava: 5000+ lines, Marcus/Quinn: 1500+ each",
+          "impact": "With 7-20 personas, token usage balloons 10-100x at scale. Unsustainable for multi-agent work.",
+          "current_mitigation": "Single active persona only (v1.4.0 limitation actually helps here)",
+          "solution": "Compress system prompts (extract reference docs, keep inline summaries), implement context windowing (load only relevant persona sections)"
+        },
+        "role_in_ecosystem": "Expert behavior modifier providing specialized knowledge through system prompts. Currently supports single-expert-per-activation. Limitation: single-expert-only blocks multi-expert coordination workflows that coderef-workflow orchestrates. Without persona stacking, system works for single-domain tasks (frontend-only, backend-only, test-only) but fails for full-stack/cross-cutting concerns.",
+        "integration_opportunities": [
+          "Add 'recommended_personas' field to communication.json generated by workflow. Populated by personas-mcp semantic matching service.",
+          "Create personas-mcp → workflow integration: workflow queries 'what persona for task X' and personas responds with [persona_name, confidence_score]",
+          "Implement persona discovery/search: agents query 'personas with expertise in Redis' → returns matching personas",
+          "Implement persona composition validation: when agent tries to activate 2+ personas, check compatibility",
+          "Build persona recommendation API for workflow task assignment (task keywords/domain → [recommended_personas])"
+        ],
+        "recommendations": [
+          "CRITICAL: Implement persona stacking (add_persona, get_active_personas) - blocks full-stack features",
+          "CRITICAL: Create semantic persona matching service - prevents agent guessing",
+          "MAJOR: Add task-type routing to communication.json - ensure frontend agent doesn't get backend task",
+          "MAJOR: Implement persona version compatibility validation - prevent behavioral inconsistency",
+          "MEDIUM: Create persona metadata search (find by expertise area, domain) - solve 50+ persona selection problem",
+          "MEDIUM: Compress system prompts or implement context windowing - solve token cost explosion at scale"
+        ]
+      }
+    }
+  },
+
+  "phase_2_analysis": {
+    "status": "complete",
+    "executive_summary": "CodeRef Ecosystem is a tightly integrated 4-server system with clear architectural layers: (1) Intelligence Layer (coderef-context), (2) Planning/Orchestration Layer (coderef-workflow), (3) Documentation Layer (coderef-docs), (4) Personality Layer (coderef-personas). Critical insight: The system is 95% dependent on coderef-context availability - 3/4 servers will fail without it. No redundancy or fallbacks. High-value integration opportunity: coderef-docs currently ignores code intelligence (gap). Phase 2 should prioritize: (1) Caching layer for coderef-context (repeated queries are expensive), (2) Loose coupling via message queues/events (reduce direct dependencies), (3) Real-time dashboard for agent coordination (replace manual JSON updates).",
+
+    "overlaps": [
+      {
+        "servers": ["coderef-context", "coderef-docs"],
+        "area": "Code analysis and pattern detection",
+        "issue": "coderef-docs scans UI/behavior/UX patterns independently. coderef-context already provides comprehensive pattern discovery. Duplication of effort.",
+        "severity": "medium",
+        "recommendation": "coderef-docs should call coderef-context instead of independent scanning. Unified intelligence source."
+      },
+      {
+        "servers": ["coderef-workflow", "coderef-personas"],
+        "area": "Planning and task assignment",
+        "issue": "Both handle planning: workflow creates 10-section plans, personas assign expert personas. No semantic integration - workflow doesn't consult personas for agent selection.",
+        "severity": "low",
+        "recommendation": "Add persona recommendation engine to workflow: after task creation, suggest appropriate specialist persona (Ava for UI, Marcus for backend, Quinn for tests)."
+      },
+      {
+        "servers": ["coderef-docs", "coderef-workflow"],
+        "area": "Plan quality validation",
+        "issue": "coderef-workflow validates plans (0-100 scoring). coderef-docs establishes standards. Both are quality gates but operate independently.",
+        "severity": "low",
+        "recommendation": "Unify quality gate: workflow validation should check against docs standards (consistency, naming, patterns)."
+      }
+    ],
+
+    "integration_opportunities": [
+      {
+        "opportunity": "Auto-document code intelligence from coderef-context",
+        "servers": ["coderef-context", "coderef-docs"],
+        "description": "coderef-docs has 'missing_code_reference_extraction' gap. Could call coderef-context to auto-pull code examples, function signatures, API endpoints into generated documentation.",
+        "impact": "HIGH - eliminates manual code mapping in docs generation",
+        "effort": "medium",
+        "priority": "P1"
+      },
+      {
+        "opportunity": "Real-time agent coordination dashboard",
+        "servers": ["coderef-workflow", "coderef-personas"],
+        "description": "communication.json requires manual status updates. Could implement WebSocket listener to poll JSON changes, display live agent status dashboard instead of static reports.",
+        "impact": "HIGH - enables true real-time multi-agent coordination",
+        "effort": "high",
+        "priority": "P1"
+      },
+      {
+        "opportunity": "Intelligent caching layer for code intelligence",
+        "servers": ["coderef-context"],
+        "description": "Every scan/query/impact call re-executes CLI with 120s timeout. Could implement session-scoped memoization (in-memory cache of scan results, query results). Dramatically reduces repeated work.",
+        "impact": "MEDIUM - 50-80% latency reduction for repeated queries",
+        "effort": "low",
+        "priority": "P1"
+      },
+      {
+        "opportunity": "Smart persona recommendation for tasks",
+        "servers": ["coderef-workflow", "coderef-personas"],
+        "description": "After task creation, automatically suggest appropriate specialist persona based on task keywords/domain. Eliminates manual persona selection.",
+        "impact": "MEDIUM - reduces agent context switching, ensures right expert per task",
+        "effort": "medium",
+        "priority": "P2"
+      },
+      {
+        "opportunity": "Unified standards validation across all servers",
+        "servers": ["coderef-docs", "coderef-workflow", "coderef-context"],
+        "description": "coderef-docs establishes standards. coderef-workflow validates plans. coderef-context analyzes code. Could create unified validation that checks plans against codebase standards AND docs standards.",
+        "impact": "MEDIUM - holistic quality assurance",
+        "effort": "high",
+        "priority": "P2"
+      },
+      {
+        "opportunity": "Semantic feature similarity search",
+        "servers": ["coderef-docs", "coderef-workflow"],
+        "description": "coderef/archived/ has completed features. Could implement semantic search to suggest similar archived features as templates for new planning. Reduces planning time by 30-50%.",
+        "impact": "HIGH - accelerates feature planning, improves consistency",
+        "effort": "high",
+        "priority": "P2"
+      },
+      {
+        "opportunity": "Automated risk assessment with actual impact analysis",
+        "servers": ["coderef-workflow", "coderef-context"],
+        "description": "coderef-workflow.assess_risk is heuristic (AI-guessed scoring). Could integrate coderef-context.impact to provide actual dependency analysis (12 files affected vs estimated).",
+        "impact": "MEDIUM - risk assessment becomes deterministic not heuristic",
+        "effort": "low",
+        "priority": "P2"
+      }
+    ],
+
+    "critical_blockers": [
+      {
+        "blocker": "coderef-context CLI availability is single point of failure",
+        "severity": "CRITICAL",
+        "affected_servers": ["coderef-context", "coderef-workflow", "coderef-docs"],
+        "description": "If @coderef/core CLI unavailable: coderef-context fails entirely (0 tools work) → coderef-workflow can't plan (analyze_project_for_planning, create_plan blocked) → coderef-docs can't generate docs (no code intelligence). System-wide failure.",
+        "current_mitigation": "None - relies 100% on CLI availability",
+        "proposed_solutions": [
+          "Graceful degradation: Return cached results from previous session",
+          "Async/background CLI invocations: Don't block MCP server on CLI availability",
+          "Fallback mode: Reduced functionality when CLI unavailable (template-only docs, no code analysis)",
+          "Health check at startup: Verify CLI exists before accepting tool calls"
+        ]
+      },
+      {
+        "blocker": "Manual task status tracking prevents real-time progress",
+        "severity": "HIGH",
+        "affected_servers": ["coderef-workflow", "coderef-personas"],
+        "description": "communication.json requires agents to manually update task.status. No automation. Agents must remember to call update_task_status. No enforcement or verification. Progress tracking is hours/days behind actual work.",
+        "current_mitigation": "Manual discipline (agent must remember)",
+        "proposed_solutions": [
+          "Implement communication.json listener that detects file changes and auto-syncs",
+          "Add WebSocket server for real-time status pushes from agents",
+          "Implement git hook to auto-update task status on commits (if commit message contains task_id)",
+          "Auto-detect completion from code changes (new files, modifications to expected files)"
+        ]
+      },
+      {
+        "blocker": "No feedback loop from execution back to planning",
+        "severity": "HIGH",
+        "affected_servers": ["coderef-workflow"],
+        "description": "Plans are created based on static analysis. Execution happens. But actual complexity/effort discovered during execution doesn't feed back to refine future plans. Missed learning opportunity.",
+        "current_mitigation": "Manual post-mortems (optional)",
+        "proposed_solutions": [
+          "Auto-capture execution metrics (actual LOC, time, complexity) and feed back to plan scoring algorithm",
+          "Track plan prediction accuracy over time (estimated tasks vs actual completion time)",
+          "Build ML model from archived features to improve future estimates"
+        ]
+      },
+      {
+        "blocker": "Large system prompts cause token cost explosion at scale",
+        "severity": "HIGH",
+        "affected_servers": ["coderef-personas"],
+        "description": "Lloyd (3000+ lines), Ava (5000+ lines), each persona activation sends full system prompt. With 7-20 personas, token usage balloons 10-100x. Unsustainable for multi-agent work.",
+        "current_mitigation": "Single active persona only (v1.4.0 limitation)",
+        "proposed_solutions": [
+          "Compress system prompts: Extract reference docs, keep inline summaries only",
+          "Implement persona composition: Mix smaller persona fragments instead of full prompts",
+          "Context windowing: Only load relevant persona sections for current task",
+          "Persona versioning: Retired prompts are deprecated, new v2.0 prompts are 50% smaller"
+        ]
+      },
+      {
+        "blocker": "No enforcement of phase dependencies in workflows",
+        "severity": "MEDIUM",
+        "affected_servers": ["coderef-workflow"],
+        "description": "Implementation phases can have dependencies (Phase 2 depends on Phase 1). But execution doesn't enforce ordering. Agents can start Phase 2 before Phase 1 completes, causing failures.",
+        "current_mitigation": "Manual discipline (agents must follow plan)",
+        "proposed_solutions": [
+          "Add phase state machine: mark phases as blocked/ready/in-progress/complete",
+          "Prevent task execution if dependencies not met",
+          "Auto-detect blockers from communication.json and warn agent"
+        ]
+      }
+    ],
+
+    "dependency_graph": {
+      "coderef-context": {
+        "depends_on": [
+          {"server": "@coderef/core CLI", "type": "external", "criticality": "CRITICAL", "blocking": true, "services": ["coderef_scan", "coderef_query", "coderef_impact", "coderef_complexity", "coderef_patterns", "coderef_coverage", "coderef_context", "coderef_validate", "coderef_drift", "coderef_diagram"]}
+        ],
+        "provides_to": [
+          {"server": "coderef-workflow", "type": "internal", "services": ["analyze_project_for_planning", "create_plan", "assess_risk"], "criticality": "CRITICAL"},
+          {"server": "coderef-docs", "type": "internal", "services": ["establish_standards", "audit_codebase", "coderef_foundation_docs"], "criticality": "MEDIUM", "gap": "not_implemented"},
+          {"server": "ai_agents", "type": "external", "services": ["all_feature_implementation"], "criticality": "CRITICAL"}
+        ],
+        "redundancy": "none - single provider of code intelligence"
+      },
+      "coderef-workflow": {
+        "depends_on": [
+          {"server": "coderef-context", "type": "internal", "criticality": "CRITICAL", "blocking": true, "services": ["scan", "query", "patterns", "impact"]},
+          {"server": "coderef-docs", "type": "internal", "criticality": "MEDIUM", "blocking": false, "services": ["foundation_docs", "changelog"]},
+          {"server": "coderef-personas", "type": "internal", "criticality": "MEDIUM", "blocking": false, "services": ["agent_assignment"]},
+          {"server": "git", "type": "external", "criticality": "HIGH", "blocking": true, "services": ["deliverables_extraction", "agent_verification", "workorder_logging"]},
+          {"server": "file_system", "type": "external", "criticality": "HIGH", "blocking": true, "services": ["plan_storage", "workorder_tracking"]}
+        ],
+        "provides_to": [
+          {"server": "coderef-docs", "type": "internal", "services": ["feature_metadata", "documentation_triggers"]},
+          {"server": "coderef-personas", "type": "internal", "services": ["communication_json", "task_assignments"]},
+          {"server": "ai_agents", "type": "external", "services": ["planning_infrastructure", "coordination_protocol"]}
+        ],
+        "redundancy": "none - sole orchestration engine"
+      },
+      "coderef-docs": {
+        "depends_on": [
+          {"server": "git", "type": "external", "criticality": "MEDIUM", "blocking": false, "services": ["record_changes", "check_consistency"]},
+          {"server": "file_system", "type": "external", "criticality": "MEDIUM", "blocking": false, "services": ["standards_storage", "template_loading"]},
+          {"server": "coderef-context", "type": "internal", "criticality": "LOW", "blocking": false, "gap": "not_implemented", "services": ["code_reference_extraction", "standards_auditing"]}
+        ],
+        "provides_to": [
+          {"server": "coderef-workflow", "type": "internal", "services": ["documentation_at_completion"]},
+          {"server": "ai_agents", "type": "external", "services": ["doc_generation", "standards_validation"]},
+          {"server": "end_users", "type": "external", "services": ["generated_documentation"]}
+        ],
+        "redundancy": "complete - is sole documentation provider. Gap: should integrate with coderef-context but doesn't"
+      },
+      "coderef-personas": {
+        "depends_on": [
+          {"server": "file_system", "type": "external", "criticality": "HIGH", "blocking": true, "services": ["persona_definitions"]},
+          {"server": "coderef-workflow", "type": "internal", "criticality": "MEDIUM", "blocking": false, "services": ["communication_json", "workorder_tracking"]}
+        ],
+        "provides_to": [
+          {"server": "Claude Code", "type": "external", "services": ["persona_activation", "behavior_modification"]},
+          {"server": "coderef-workflow", "type": "internal", "services": ["agent_behavior", "specialization"]},
+          {"server": "ai_agents", "type": "external", "services": ["domain_expertise", "task_execution"]}
+        ],
+        "redundancy": "complete - sole personality/behavior provider"
+      },
+      "summary": {
+        "critical_path": "coderef-context → coderef-workflow → coderef-docs → ai_agents",
+        "single_points_of_failure": [
+          "@coderef/core CLI (blocks coderef-context, which blocks workflow, which blocks everything)",
+          "git repository (blocks deliverables tracking, agent verification)",
+          "file_system (blocks plan storage, persona definitions)"
+        ],
+        "high_value_dependencies": [
+          "coderef-context provides to workflow (CRITICAL)",
+          "coderef-workflow provides to docs and personas (MEDIUM/MEDIUM)",
+          "workflow provides coordination to agents (CRITICAL)"
+        ],
+        "missing_integrations": [
+          "coderef-docs should call coderef-context (gap identified, LOW effort to implement)",
+          "coderef-workflow should recommend personas (gap identified, MEDIUM effort)",
+          "Real-time dashboard should exist (gap identified, HIGH effort)"
+        ]
+      }
+    },
+
+    "integration_metrics": {
+      "coupling_analysis": {
+        "coderef_context_to_coderef_workflow": "TIGHT (workflow can't plan without context)",
+        "coderef_workflow_to_coderef_docs": "LOOSE (docs optional at completion)",
+        "coderef_workflow_to_coderef_personas": "LOOSE (personas optional for execution)",
+        "coderef_docs_to_coderef_context": "MISSING (should be TIGHT)",
+        "inter_server_overall": "TIGHTLY_COUPLED (critical path is rigid)"
+      },
+      "redundancy_score": {
+        "coderef_context": 0,
+        "coderef_workflow": 0,
+        "coderef_docs": 0,
+        "coderef_personas": 0,
+        "overall_ecosystem": "ZERO_REDUNDANCY"
+      },
+      "fault_tolerance": {
+        "if_context_fails": "SYSTEM_WIDE_FAILURE",
+        "if_workflow_fails": "PLANNING_ONLY_FAILURE",
+        "if_docs_fails": "DOCUMENTATION_ONLY_FAILURE",
+        "if_personas_fails": "BEHAVIOR_ONLY_FAILURE",
+        "overall": "SINGLE_POINT_OF_FAILURE_EXISTS"
+      }
+    }
+  },
+
+  "phase_3_roadmap": {
+    "status": "complete",
+    "document": "PHASE-3-ROADMAP-SYNTHESIS.md",
+    "executive_summary": "CodeRef Ecosystem is 95% mature, production-ready for single-domain features. Roadmap transforms to 100% ready for multi-expert full-stack AI-native development in 12 weeks. Critical path: Phase 0 (stabilization) → Phase 2 (persona composition) → Phase 1 (real-time coordination)",
+    "priorities": {
+      "p1_immediate": ["CLI health check", "Session memoization", "coderef-docs ↔ coderef-context integration", "Real-time dashboard", "Auto-changelog"],
+      "p2_next": ["Persona composition", "Semantic persona matching", "Compress prompts", "Expand standards", "Custom templates"],
+      "p3_later": ["Metrics capture", "ML planning model", "Message queue decoupling", "Fallback provider", "Semantic search"]
+    },
+    "strengths": [
+      "Clean 4-layer architecture (intelligence, orchestration, docs, personality)",
+      "Comprehensive feature lifecycle management (plan → execute → document → archive)",
+      "Sophisticated persona system enabling specialized expertise",
+      "Git-integrated deliverables tracking",
+      "Multi-agent coordination protocol (communication.json)",
+      "Tightly integrated stack for AI-native development"
+    ],
+    "improvement_focus": [
+      "Eliminate single point of failure (coderef-context CLI)",
+      "Enable multi-expert composition (persona stacking)",
+      "Replace manual tracking with real-time coordination",
+      "Integrate code intelligence into doc generation",
+      "Build feedback loop from execution back to planning"
+    ],
+    "next_actions": [
+      "Week 1: CLI health check + graceful degradation (coderef-context)",
+      "Week 1: Session memoization for query caching (coderef-context)",
+      "Week 2: coderef-docs ↔ coderef-context integration (both)",
+      "Week 2: Auto-changelog from commits (coderef-docs)",
+      "Week 3-4: Real-time coordination dashboard (coderef-workflow)",
+      "Week 5-6: Persona composition implementation (coderef-personas)"
+    ]
+  },
+
+  "communication_log": []
+}
