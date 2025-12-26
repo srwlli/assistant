@@ -40,43 +40,67 @@ body {
     transition: all var(--transition-speed);
 }
 
+/* Main container - use most of screen space */
 .container {
-    max-width: 1200px;
+    max-width: 1800px;  /* Increased from 1200px for wider screens */
     margin: 0 auto;
     padding: var(--spacing-4xl) var(--spacing-lg);
 }
 
-header {
-    text-align: center;
-    margin-bottom: var(--spacing-4xl);
+/* Header removed - using full space for content */
+
+/* Toggle button for sidebar collapse/expand */
+.sidebar-toggle {
+    position: fixed;
+    top: var(--spacing-lg);
+    left: var(--spacing-lg);
+    z-index: 1000;
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: none;  /* Hidden by default on desktop */
 }
 
-h1 {
-    font-size: 2rem;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: var(--spacing-lg);
+.sidebar-toggle:hover {
+    background: var(--color-primary-light);
+    transform: scale(1.1);
 }
 
-.tagline {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    margin-bottom: var(--spacing-xl);
+/* Visibility toggle - button shown when sidebar is hidden on mobile */
+.sidebar-toggle.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Layout grid - sidebar + main content */
 .layout {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 320px 1fr;  /* Default: sidebar visible */
     gap: var(--spacing-3xl);
-    margin-top: var(--spacing-3xl);
+    margin-top: var(--spacing-lg);
+    transition: grid-template-columns var(--transition-speed);  /* Smooth animation when collapsing */
 }
 
+/* Collapsed state - sidebar hidden, content full width */
+.layout.sidebar-collapsed {
+    grid-template-columns: 0 1fr;  /* Sidebar width becomes 0 */
+}
+
+/* Sidebar - sticky navigation */
 .sidebar {
     position: sticky;
     top: var(--spacing-lg);
     height: fit-content;
+    overflow: hidden;  /* Hide overflow when collapsed */
+    transition: all var(--transition-speed);  /* Smooth collapse animation */
+    min-width: 320px;  /* Prevent shrinking when collapsed */
 }
 
 .sidebar-title {
@@ -86,6 +110,7 @@ h1 {
     margin-bottom: var(--spacing-xl);
 }
 
+/* Document list */
 .doc-list {
     list-style: none;
 }
@@ -144,12 +169,13 @@ h1 {
     margin-top: var(--spacing-sm);
 }
 
+/* Markdown content area */
 .markdown-content {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     padding: var(--spacing-3xl);
-    max-height: 800px;
+    max-height: calc(100vh - 300px);  /* Dynamic height based on viewport, increased from fixed 800px */
     overflow-y: auto;
 }
 
@@ -314,21 +340,45 @@ footer {
     border-top: 1px solid var(--border-color);
 }
 
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Mobile screens: sidebar hidden by default */
 @media (max-width: 768px) {
+    /* Mobile: sidebar starts collapsed (hidden) */
     .layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: 0 1fr;  /* Sidebar hidden by default on mobile */
     }
 
-    .sidebar {
-        display: none;
+    /* Show toggle button on mobile - allows user to reveal sidebar */
+    .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    h1 {
-        font-size: 1.5rem;
+    /* When user expands sidebar on mobile, show it as overlay */
+    .layout:not(.sidebar-collapsed) {
+        grid-template-columns: 1fr;  /* Single column - sidebar stacks */
     }
 
+    /* Adjust content for mobile */
     .markdown-content {
         max-height: 600px;
         padding: var(--spacing-xl);
+    }
+}
+
+/* Desktop screens: sidebar visible by default */
+@media (min-width: 769px) {
+    /* Desktop: hide toggle button, sidebar visible */
+    .sidebar-toggle {
+        display: none !important;
+    }
+
+    /* Always show sidebar on desktop, ignore collapse state for toggle button */
+    .layout.sidebar-collapsed .sidebar-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
     }
 }

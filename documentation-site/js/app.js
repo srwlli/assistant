@@ -1,7 +1,48 @@
+// ========== SIDEBAR COLLAPSE STATE MANAGEMENT ==========
+/**
+ * Manages sidebar collapse/expand state
+ * - Persists state to localStorage
+ * - Responds to user toggle clicks
+ * - Responsive: shows toggle on mobile, hides on desktop
+ */
+
+function initializeSidebarToggle() {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const layout = document.getElementById('layout');
+    const sidebar = document.getElementById('sidebar');
+
+    // State key for localStorage persistence
+    const STATE_KEY = 'sidebar-collapsed';
+
+    // Load saved state from localStorage (defaults to false = sidebar visible)
+    const savedState = localStorage.getItem(STATE_KEY);
+    const isCollapsed = savedState === 'true';
+
+    // Apply saved state on page load
+    if (isCollapsed) {
+        layout.classList.add('sidebar-collapsed');
+        sidebarToggle.classList.add('visible');
+    }
+
+    // Handle toggle button click - collapse/expand sidebar
+    sidebarToggle.addEventListener('click', () => {
+        layout.classList.toggle('sidebar-collapsed');
+        sidebarToggle.classList.toggle('visible');
+
+        // Persist new state to localStorage
+        const newState = layout.classList.contains('sidebar-collapsed');
+        localStorage.setItem(STATE_KEY, newState.toString());
+    });
+}
+
+// ========== DOCUMENT LOADING AND RENDERING ==========
+
 // Load documents manifest and initialize app
 async function init() {
+    // Initialize sidebar toggle functionality first
+    initializeSidebarToggle();
     try {
-        const response = await fetch('./docs.json');
+        const response = await fetch('/documentation-site/docs.json');
         if (!response.ok) throw new Error('Failed to load documents manifest');
 
         const data = await response.json();
@@ -41,7 +82,7 @@ async function loadDocument(docId, documents) {
     // Fetch documents if not provided
     if (!documents) {
         try {
-            const response = await fetch('./docs.json');
+            const response = await fetch('/documentation-site/docs.json');
             const data = await response.json();
             documents = data.documents;
         } catch (error) {
