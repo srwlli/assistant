@@ -1,0 +1,87 @@
+{
+  "version": "1.0.0",
+  "created": "2025-12-26T13:00:00Z",
+  "description": "Source of truth for all tracked projects. Used by API to discover workorders and stubs.",
+  "projects": [
+    {
+      "id": "mcp-coderef-context",
+      "name": "CodeRef Context MCP",
+      "type": "mcp_server",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-context",
+      "has_workorders": true,
+      "workorder_dir": "coderef/workorder",
+      "status": "active",
+      "description": "MCP server for code context analysis and scanning"
+    },
+    {
+      "id": "mcp-coderef-workflow",
+      "name": "CodeRef Workflow MCP",
+      "type": "mcp_server",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-workflow",
+      "has_workorders": true,
+      "workorder_dir": "coderef/workorder",
+      "status": "active",
+      "description": "MCP server for implementation planning and workflow management"
+    },
+    {
+      "id": "mcp-coderef-docs",
+      "name": "CodeRef Docs MCP",
+      "type": "mcp_server",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-docs",
+      "has_workorders": true,
+      "workorder_dir": "coderef/workorder",
+      "status": "active",
+      "description": "MCP server for documentation generation and management"
+    },
+    {
+      "id": "mcp-coderef-personas",
+      "name": "CodeRef Personas MCP",
+      "type": "mcp_server",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-personas",
+      "has_workorders": true,
+      "workorder_dir": "coderef/workorder",
+      "status": "active",
+      "description": "MCP server for persona creation and management"
+    },
+    {
+      "id": "mcp-servers",
+      "name": "MCP Servers Root",
+      "type": "system",
+      "path": "C:\\Users\\willh\\.mcp-servers",
+      "has_workorders": true,
+      "workorder_dir": "coderef/workorder",
+      "status": "active",
+      "description": "Root directory for all MCP servers and system-level workorders"
+    },
+    {
+      "id": "coderef-dashboard",
+      "name": "CodeRef Dashboard",
+      "type": "application",
+      "path": "C:\\Users\\willh\\Desktop\\coderef-dashboard",
+      "has_workorders": true,
+      "workorder_dir": "coderef/workorder",
+      "status": "active",
+      "description": "Dashboard application with /coderef-assistant and /coderef-scout routes",
+      "routes": [
+        {
+          "path": "/coderef-assistant",
+          "description": "AI Assistant dashboard - displays workorders, stubs, and documentation"
+        },
+        {
+          "path": "/coderef-scout",
+          "description": "Scout agent dashboard - research and task scouting interface"
+        }
+      ]
+    }
+  ],
+  "centralized": {
+    "stubs_dir": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working",
+    "description": "All stubs (ideas/backlog items) centralized in orchestrator, regardless of origin project"
+  },
+  "discovery_rules": {
+    "stub_discovery": "Scan {stubs_dir}/*/ for stub.json files",
+    "workorder_discovery": "Scan {project_path}/coderef/workorder/*/ for any workorder folders",
+    "workorder_trigger": "Folder existence = workorder exists (files optional)",
+    "file_discovery": "Read communication.json, plan.json, DELIVERABLES.md if present"
+  }
+}
