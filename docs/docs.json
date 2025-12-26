@@ -1,0 +1,34 @@
+{
+  "documents": [
+    {
+      "id": "roadmap",
+      "title": "Phase 3 Roadmap Synthesis",
+      "path": "../PHASE-3-ROADMAP-SYNTHESIS.md",
+      "icon": "🗺️"
+    },
+    {
+      "id": "claude",
+      "title": "Claude.md - Project Instructions",
+      "path": "../CLAUDE.md",
+      "icon": "📋"
+    },
+    {
+      "id": "readme",
+      "title": "README",
+      "path": "../README.md",
+      "icon": "📖"
+    },
+    {
+      "id": "terminal",
+      "title": "Terminal Profiles",
+      "path": "../terminal-profiles.md",
+      "icon": "⌨️"
+    },
+    {
+      "id": "projects",
+      "title": "Projects List",
+      "path": "../projects.md",
+      "icon": "📦"
+    }
+  ]
+}
