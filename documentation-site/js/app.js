@@ -1,14 +1,16 @@
 // ========== SIDEBAR COLLAPSE STATE MANAGEMENT ==========
 /**
- * Manages sidebar collapse/expand state via chevron button in sidebar header
- * - Chevron button toggles between < (expanded) and > (collapsed)
- * - Sidebar width animates smoothly from 320px (full) to 60px (minimal)
+ * Manages sidebar collapse/expand state - exact CodeRef Prompts design pattern
+ * - Chevron button toggles sidebar between expanded (icons + labels) and collapsed (icons only)
+ * - Sidebar width animates smoothly: 250px (expanded) to 70px (collapsed)
+ * - Icons always visible, labels hide when collapsed
  * - State persists to localStorage
  *
- * Alignment:
- * - Expanded: "📄 Documents" label + document list visible
- * - Collapsed: chevron only visible, document list hidden via overflow
- * - Chevron rotates 180° to show state
+ * Alignment (matches CodeRef design):
+ * - Expanded: icons (left) + labels (right) side-by-side
+ * - Collapsed: icons only visible, labels hidden via display: none
+ * - Chevron rotates 180° to show expand/collapse state
+ * - All document items remain clickable when collapsed (icon-only nav)
  */
 
 function initializeSidebarToggle() {
@@ -27,14 +29,14 @@ function initializeSidebarToggle() {
         layout.classList.add('sidebar-collapsed');
     }
 
-    // Handle chevron click - collapse/expand sidebar
+    // Handle chevron click - collapse/expand sidebar labels
     chevronBtn.addEventListener('click', () => {
         // Toggle the sidebar-collapsed class on layout
         // This triggers CSS to:
-        // 1. Change grid: 320px 1fr <-> 60px 1fr
-        // 2. Sidebar width: 320px <-> 60px
-        // 3. Hide/show title via display: none
-        // 4. Rotate chevron 180° via transform
+        // 1. Change grid columns: 250px 1fr <-> 70px 1fr
+        // 2. Sidebar width: 250px <-> 70px
+        // 3. Hide/show labels via display: none
+        // 4. Rotate chevron 180° via transform: rotate(180deg)
         layout.classList.toggle('sidebar-collapsed');
 
         // Persist new state to localStorage
@@ -73,13 +75,19 @@ async function init() {
     }
 }
 
-// Render document list in sidebar
+// Render document list in sidebar with icons and labels
+// Icons always visible, labels hide when sidebar collapsed
 function renderDocList(documents) {
     const docList = document.getElementById('docList');
     docList.innerHTML = documents.map(doc => `
         <li class="doc-item">
             <a href="#" onclick="loadDocument('${doc.id}', null); return false;" data-id="${doc.id}">
-                ${doc.icon} ${doc.title}
+                <!-- Icon wrapper - always visible -->
+                <span class="doc-icon">
+                    <i class="fas ${doc.iconClass}"></i>
+                </span>
+                <!-- Label wrapper - hides when sidebar collapsed -->
+                <span class="doc-label">${doc.title}</span>
             </a>
         </li>
     `).join('');

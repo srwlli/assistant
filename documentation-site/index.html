@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation Site</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Font Awesome icons - for document list items -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/documentation-site/css/style.css">
 </head>
 <body>
     <div class="container">
         <div class="layout" id="layout">
-            <!-- Sidebar with document list - collapsible to minimal width showing only chevron -->
+            <!-- Sidebar with collapsible document navigation - icons always visible -->
             <div class="sidebar" id="sidebar">
-                <!-- Sidebar header with documents label and collapse chevron toggle -->
+                <!-- Sidebar header with chevron toggle - collapses/expands document labels -->
                 <div class="sidebar-header">
-                    <div class="sidebar-title">📄 Documents</div>
-                    <button class="sidebar-chevron" id="sidebarToggle" aria-label="Toggle document list">
-                        ‹
+                    <button class="sidebar-chevron" id="sidebarToggle" aria-label="Toggle sidebar labels">
+                        <i class="fas fa-chevron-left"></i>
                     </button>
                 </div>
-                <!-- Document list - hides when sidebar collapsed -->
+                <!-- Document list - icons visible always, labels hide when collapsed -->
                 <ul class="doc-list" id="docList"></ul>
             </div>
 

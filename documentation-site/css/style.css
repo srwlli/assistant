@@ -60,46 +60,33 @@ body {
     transition: grid-template-columns var(--transition-speed);  /* Smooth animation when collapsing */
 }
 
-/* Collapsed state - sidebar minimized to show only chevron, content expands */
+/* Collapsed state - sidebar shows icons only, content expands */
 .layout.sidebar-collapsed {
-    grid-template-columns: 60px 1fr;  /* Sidebar collapses to minimal width (chevron only) */
+    grid-template-columns: 70px 1fr;  /* Minimal sidebar width (icons + padding) */
 }
 
-/* Sidebar - sticky navigation with smooth width transition */
+/* Sidebar - sticky navigation with icons always visible */
 .sidebar {
     position: sticky;
     top: var(--spacing-lg);
     height: fit-content;
-    width: 320px;  /* Default expanded width */
-    transition: width var(--transition-speed);  /* Smooth width animation on collapse */
-    overflow: hidden;  /* Hide document list when sidebar collapses */
+    width: 250px;  /* Default expanded width - shows icons + labels */
+    transition: width var(--transition-speed);  /* Smooth width animation */
+    overflow: hidden;  /* Prevent overflow when collapsing */
 }
 
-/* When sidebar is collapsed, shrink to minimal width */
+/* When sidebar is collapsed, shrink to icon-only width */
 .layout.sidebar-collapsed .sidebar {
-    width: 60px;  /* Minimal width - shows only header with chevron */
+    width: 70px;  /* Icon-only width with padding */
 }
 
-/* Sidebar header - flex container for title and chevron */
+/* Sidebar header - chevron toggle button only (no title) */
 .sidebar-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: var(--spacing-xl);
-    padding-right: var(--spacing-sm);  /* Space for chevron button */
-}
-
-/* Sidebar title - documents label */
-.sidebar-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    white-space: nowrap;  /* Prevent title wrapping when sidebar collapses */
-}
-
-/* When collapsed, hide title text - only chevron shows */
-.layout.sidebar-collapsed .sidebar-title {
-    display: none;
+    padding: var(--spacing-md);
 }
 
 /* Chevron toggle button - rotates to show collapsed/expanded state */
@@ -107,7 +94,6 @@ body {
     background: none;
     border: none;
     color: var(--color-primary);
-    font-size: 1.5rem;
     cursor: pointer;
     padding: 0;
     width: 30px;
@@ -116,30 +102,34 @@ body {
     align-items: center;
     justify-content: center;
     transition: transform var(--transition-speed);  /* Smooth rotation */
-    flex-shrink: 0;  /* Prevent button from shrinking */
+    flex-shrink: 0;
 }
 
 .sidebar-chevron:hover {
     color: var(--color-primary-light);
 }
 
-/* When collapsed, rotate chevron 180° (< becomes >) */
+/* When collapsed, rotate chevron (< becomes >) */
 .layout.sidebar-collapsed .sidebar-chevron {
-    transform: scaleX(-1);
+    transform: rotate(180deg);
 }
 
-/* Document list */
+/* Document list - vertical stack of navigation items */
 .doc-list {
     list-style: none;
 }
 
+/* Document list item - icon + label layout */
 .doc-item {
     margin-bottom: var(--spacing-sm);
 }
 
+/* Document link - flex container for icon and label */
 .doc-item a {
-    display: block;
-    padding: var(--spacing-lg) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-md);
     background: var(--bg-secondary);
     border-left: 3px solid var(--border-color);
     text-decoration: none;
@@ -153,7 +143,6 @@ body {
     background: var(--bg-tertiary);
     border-left-color: var(--color-primary);
     color: var(--color-primary);
-    transform: translateX(4px);
 }
 
 .doc-item a.active {
@@ -161,6 +150,33 @@ body {
     border-left-color: var(--color-primary);
     color: var(--color-primary);
     font-weight: 600;
+}
+
+/* Document icon - always visible, consistent width */
+.doc-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;  /* Prevent icon from shrinking */
+    font-size: 1.1rem;
+    color: var(--color-primary);
+}
+
+.doc-item a:hover .doc-icon,
+.doc-item a.active .doc-icon {
+    color: var(--color-primary-light);
+}
+
+/* Document label - hides when sidebar collapsed */
+.doc-label {
+    white-space: nowrap;  /* Prevent label wrapping */
+}
+
+/* When collapsed, hide all labels - icons only visible */
+.layout.sidebar-collapsed .doc-label {
+    display: none;
 }
 
 /* Content area - displays markdown document only */
@@ -333,16 +349,26 @@ body {
 
 /* ========== RESPONSIVE DESIGN ========== */
 
-/* Mobile screens: sidebar collapsed by default to maximize document space */
+/* Mobile screens: sidebar icon-only by default to maximize document space */
 @media (max-width: 768px) {
-    /* Mobile: sidebar starts in collapsed state (minimal width, chevron only) */
+    /* Mobile: sidebar starts in collapsed state (icons only) */
     .layout {
-        grid-template-columns: 60px 1fr;
+        grid-template-columns: 70px 1fr;
     }
 
-    /* When user expands sidebar on mobile, show full width */
+    /* When user expands sidebar on mobile, show full width with labels */
     .layout:not(.sidebar-collapsed) {
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 250px 1fr;
+    }
+
+    /* On mobile: hide labels by default */
+    .doc-label {
+        display: none;
+    }
+
+    /* When expanded, show labels */
+    .layout:not(.sidebar-collapsed) .doc-label {
+        display: inline;
     }
 
     /* Adjust content for mobile */
@@ -352,10 +378,10 @@ body {
     }
 }
 
-/* Desktop screens: sidebar fully visible by default */
+/* Desktop screens: sidebar with icons and labels by default */
 @media (min-width: 769px) {
-    /* Desktop: sidebar expanded (full width) by default */
+    /* Desktop: sidebar expanded (icons + labels) by default */
     .layout {
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 250px 1fr;
     }
 }
