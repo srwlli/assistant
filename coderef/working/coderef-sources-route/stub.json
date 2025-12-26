@@ -1,0 +1,175 @@
+{
+  "feature_name": "coderef-sources-route",
+  "title": "Add /coderef-sources Route - Knowledge Base for Agentic Team",
+  "description": "Create centralized knowledge base route displaying internal and external sources: standards, guides, documentation, references for agentic team with categorized links and searchable interface",
+  "category": "feature",
+  "priority": "high",
+  "created": "2025-12-26T10:30:00Z",
+  "status": "stub",
+  "context": {
+    "motivation": "Provide agentic team unified access to all standards, guides, and reference materials. Eliminate scattered documentation and create single source of truth for team resources.",
+    "problem_statement": "Team members lack centralized knowledge base:\n- Standards scattered across multiple locations\n- No unified search across guides\n- Unclear which docs are current vs. deprecated\n- No distinction between internal (project) and external (framework/library) resources\n- No categorization or tagging system\n- Manual tracking of reference links",
+    "requirements": [
+      "Create /coderef-sources route in Next.js app directory",
+      "Build categorized source library with sections: Internal, External",
+      "Implement source categories: Standards, Guides, API References, Architecture, Patterns, Tools, Frameworks",
+      "Display sources as linked cards (title, description, category, link, last_updated)",
+      "Add search functionality across all sources",
+      "Add filter by category (Standards, Guides, etc.)",
+      "Add filter by source type (Internal, External)",
+      "Support marking sources as favorite/bookmark",
+      "Display source metadata: last_updated, category, access_level, owner",
+      "Integrate with existing dashboard theme, sidebar, header",
+      "Persist user preferences (favorites, filters) to localStorage"
+    ],
+    "source_structure": {
+      "internal_sources": {
+        "standards": [
+          "UDS (Universal Documentation Standards)",
+          "CodeRef Architecture Patterns",
+          "MCP Server Design Standards",
+          "Documentation Templates",
+          "Commit Message Standards",
+          "File Naming Conventions"
+        ],
+        "guides": [
+          "MCP Implementation Guide",
+          "Feature Development Workflow",
+          "Terminal Profile Management",
+          "Workorder Handoff Protocol",
+          "Agent Coordination Guidelines",
+          "Stub Workflow Guide"
+        ],
+        "documentation": [
+          "CLAUDE.md (Project Instructions)",
+          "PHASE-3-ROADMAP-SYNTHESIS.md (Strategic Plan)",
+          "README.md (Project Overview)",
+          "architecture.md (System Design)",
+          "API.md (MCP Tool Reference)"
+        ],
+        "project_configs": [
+          "coderef-dashboard.config.json",
+          "MCP Server Configuration",
+          "Terminal Profiles Configuration",
+          "Git Configuration"
+        ]
+      },
+      "external_sources": {
+        "frameworks": [
+          "Next.js Documentation",
+          "React Documentation",
+          "TypeScript Documentation",
+          "Tailwind CSS Documentation"
+        ],
+        "libraries": [
+          "Lucide React Icons",
+          "Marked.js (Markdown Parser)",
+          "Font Awesome Icons"
+        ],
+        "standards": [
+          "Semantic Versioning",
+          "CommonMark Specification",
+          "JSON Schema",
+          "REST API Best Practices"
+        ],
+        "references": [
+          "MDN Web Docs",
+          "Node.js Documentation",
+          "GitHub Copilot Documentation",
+          "Claude API Documentation"
+        ]
+      }
+    },
+    "data_model": {
+      "source_object": {
+        "id": "unique-identifier",
+        "title": "Source Name",
+        "description": "Brief description of the source",
+        "url": "https://link-to-resource",
+        "category": "Standards|Guides|API References|Architecture|Patterns|Tools|Frameworks",
+        "source_type": "Internal|External",
+        "section": "Which subsection (e.g., 'MCP Servers', 'Documentation', 'Frameworks')",
+        "owner": "Team or person responsible",
+        "last_updated": "ISO 8601 timestamp",
+        "access_level": "Public|Team|Internal",
+        "tags": ["tag1", "tag2"],
+        "icon": "lucide-react icon name"
+      }
+    },
+    "ui_components": [
+      "SourceCard.tsx (individual source display)",
+      "SourceList.tsx (grid/list of sources)",
+      "SearchBar.tsx (search functionality)",
+      "FilterPanel.tsx (category + type filters)",
+      "FavoritesSidebar.tsx (bookmarked sources)",
+      "SourceDetail.tsx (expanded view with metadata)",
+      "CategoryBadge.tsx (visual category identifier)"
+    ],
+    "features": {
+      "search": "Real-time search across title, description, tags",
+      "filtering": "Multi-select filters: category, source_type, owner",
+      "favorites": "Bookmark sources for quick access (localStorage)",
+      "sorting": "By title, category, date_updated, recently_viewed",
+      "export": "Share source lists as JSON/markdown",
+      "metadata_display": "Last updated, owner, access level, tag badges",
+      "open_external": "Open source in new tab with tracking"
+    },
+    "data_sources": [
+      "Internal: Local sources.json file with curated list",
+      "Internal: Scan project documentation files (.md, config files)",
+      "External: Links to framework documentation (hardcoded)",
+      "Future: Integration with bookmarking service"
+    ],
+    "navigation_entry": {
+      "label": "Sources",
+      "href": "/coderef-sources",
+      "icon": "BookOpen or Library"
+    },
+    "integration_points": [
+      "Reuse existing Dashboard Sidebar (add Sources nav item)",
+      "Reuse existing Header (sticky, consistent styling)",
+      "Reuse existing Theme + AccentColor contexts",
+      "Reuse existing search patterns from Prompts page",
+      "Integrate with documentation-site (link to full docs)"
+    ],
+    "success_criteria": [
+      "All team standards easily discoverable",
+      "Search finds sources by title, description, tags within 500ms",
+      "Users can bookmark 5+ favorite sources",
+      "Internal vs. External sources clearly distinguished",
+      "All broken links identified and highlighted",
+      "Last_updated dates keep sources current",
+      "Team adopts as reference during development"
+    ],
+    "example_sources": {
+      "internal": [
+        {
+          "title": "CodeRef Feature Development Workflow",
+          "description": "Step-by-step guide for implementing new features using MCP ecosystem",
+          "category": "Guides",
+          "url": "file:///C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/CLAUDE.md"
+        },
+        {
+          "title": "Universal Documentation Standards",
+          "description": "UDS templates and guidelines for consistent documentation",
+          "category": "Standards",
+          "url": "file:///C:/Users/willh/Desktop/ARCHIVED/projects - back up/Universal-Documentation-Standards/"
+        }
+      ],
+      "external": [
+        {
+          "title": "Next.js Documentation",
+          "description": "Official Next.js framework documentation",
+          "category": "Frameworks",
+          "url": "https://nextjs.org/docs"
+        },
+        {
+          "title": "React Best Practices",
+          "description": "Official React documentation and best practices",
+          "category": "Frameworks",
+          "url": "https://react.dev"
+        }
+      ]
+    }
+  }
+}
