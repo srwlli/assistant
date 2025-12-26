@@ -14,9 +14,10 @@ Implement a file system-based API layer that provides live access to workorders 
 
 **Why This Matters:**
 - Dashboard needs real-time visibility of what's being worked on
-- Stubs are scattered across orchestrator (`assistant/coderef/working/`)
-- Workorders are scattered across multiple projects
+- Stubs are stored in orchestrator (`assistant/coderef/working/`)
+- Workorders are scattered across multiple projects (in `coderef/workorder/` folders)
 - Without this API, the UI team can't display live data
+- Agent-created workorders are autonomous (no orchestrator dependency)
 
 ---
 
@@ -68,7 +69,7 @@ packages/dashboard/src/
       "name": "Scrapper Project",
       "path": "C:\\Users\\willh\\Desktop\\scrapper",
       "has_workorders": true,
-      "workorder_dir": "coderef/working",
+      "workorder_dir": "coderef/workorder",
       "status": "active",
       "description": "Web scraping tool"
     },
@@ -77,7 +78,7 @@ packages/dashboard/src/
       "name": "Gridiron Franchise Simulator",
       "path": "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise",
       "has_workorders": true,
-      "workorder_dir": "coderef/working",
+      "workorder_dir": "coderef/workorder",
       "status": "active",
       "description": "Sports franchise simulation"
     },
@@ -86,7 +87,7 @@ packages/dashboard/src/
       "name": "CodeRef Dashboard",
       "path": "C:\\Users\\willh\\Desktop\\coderef-dashboard",
       "has_workorders": true,
-      "workorder_dir": "coderef/working",
+      "workorder_dir": "coderef/workorder",
       "status": "active",
       "description": "Multi-agent orchestration dashboard"
     },
@@ -117,8 +118,8 @@ packages/dashboard/src/
 
 **Implementation:**
 1. Read from `projects.config.json` (get stubs_dir)
-2. Scan `C:\Users\willh\Desktop\assistant\coderef\working\*/stub.json`
-3. Parse each stub.json file
+2. Scan `C:\Users\willh\Desktop\assistant\coderef\working\*/` (list folders)
+3. For each folder, read `stub.json` if present
 4. Return standardized response
 
 **Response:**
@@ -152,14 +153,15 @@ packages/dashboard/src/
 
 ### GET /api/workorders
 
-**Purpose:** Fetch all active workorders from all projects + centralized log
+**Purpose:** Fetch all active workorders from all projects
 
 **Implementation:**
 1. Read projects.config.json
 2. For each project with has_workorders=true:
-   - Scan `{project_path}/coderef/working/*/communication.json`
-   - Extract workorder status, metadata
-3. Merge with central `workorder-log.txt` (for historical tracking)
+   - Scan `{project_path}/coderef/workorder/` (list folders)
+   - If folder exists → workorder exists
+   - Read any files in folder (communication.json, plan.json, DELIVERABLES.md)
+3. Extract workorder metadata and status
 4. Return aggregated list
 
 **Response:**
@@ -209,13 +211,13 @@ packages/dashboard/src/
 **Purpose:** Fetch complete workorder with all files and status details
 
 **Implementation:**
-1. Parse workorderId (e.g., "WO-TRACKING-SYSTEM-001")
-2. Find workorder across all projects
-3. Read all associated files:
-   - communication.json (workflow status, logs)
+1. Parse workorderId from URL parameter
+2. Search all projects: `{project_path}/coderef/workorder/{feature-name}/`
+3. Read all files in the folder:
+   - communication.json (if exists - workflow status, logs)
    - plan.json (if exists)
    - DELIVERABLES.md (if exists)
-4. Return fully populated workorder object
+4. Return fully populated workorder object with all available files
 
 **Response:**
 ```typescript
@@ -339,9 +341,10 @@ Handle these scenarios gracefully:
 
 - **projects.config.json missing:** Return 500 with clear message
 - **project path inaccessible:** Return 404 with project details
-- **Invalid JSON files:** Return 500 with parsing error
-- **Workorder not found:** Return 404 with searched locations
+- **workorder folder not found:** Return 404 with searched locations
+- **Invalid JSON files in folder:** Return 500 with parsing error details
 - **File permission denied:** Return 403 with path info
+- **Empty workorder folder (no files):** Return 200 with empty files object
 
 All errors should follow this format:
 ```typescript
@@ -362,12 +365,14 @@ All errors should follow this format:
 
 Test these scenarios:
 
-- [ ] GET /api/stubs returns all stubs with correct schema
-- [ ] GET /api/workorders aggregates from all projects
-- [ ] GET /api/workorders/:id returns complete workorder with all files
+- [ ] GET /api/stubs returns all stubs from assistant/coderef/working/ folders
+- [ ] GET /api/workorders scans all projects' coderef/workorder/ folders
+- [ ] GET /api/workorders/:id returns complete workorder with all files found in folder
+- [ ] Folder scan discovers workorders even without communication.json
 - [ ] All responses match defined TypeScript types
 - [ ] Error responses are consistent and descriptive
 - [ ] Large workorder lists load efficiently
+- [ ] Handles empty workorder folders gracefully
 
 ---
 

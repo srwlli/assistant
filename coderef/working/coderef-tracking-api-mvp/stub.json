@@ -8,7 +8,7 @@
   "status": "stub",
   "context": {
     "motivation": "Enable coderef-assistant and coderef-sources routes to display live workorder/stub data without hard-coding. Create API abstraction layer for future backend migration.",
-    "problem_statement": "Currently:\n- No unified API to fetch stubs and workorders\n- Data scattered across multiple project directories\n- No project registry\n- coderef-assistant route has no data source\n- No schema contracts for frontend consumption",
+    "problem_statement": "Currently:\n- No unified API to fetch stubs and workorders\n- Stubs centralized in assistant/coderef/working/\n- Workorders scattered across multiple projects in coderef/workorder/\n- No project registry\n- coderef-assistant route has no data source\n- No schema contracts for frontend consumption",
     "solution_approach": "File system-based MVP:\n1. Create projects.config.json (source of truth for all projects)\n2. Build API routes that scan file system\n3. Return consistent JSON schemas\n4. Design for future WebSocket real-time features\n5. Later: migrate to dedicated backend service",
     "deliverables": [
       "Create projects.config.json in assistant root",
@@ -29,7 +29,7 @@
             "name": "Scrapper Project",
             "path": "C:\\Users\\willh\\Desktop\\scrapper",
             "has_workorders": true,
-            "workorder_dir": "coderef/working",
+            "workorder_dir": "coderef/workorder",
             "status": "active",
             "description": "Web scraping tool"
           },
@@ -38,7 +38,7 @@
             "name": "Gridiron Franchise Simulator",
             "path": "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise",
             "has_workorders": true,
-            "workorder_dir": "coderef/working",
+            "workorder_dir": "coderef/workorder",
             "status": "active",
             "description": "Sports franchise simulation"
           },
@@ -47,7 +47,7 @@
             "name": "CodeRef Dashboard",
             "path": "C:\\Users\\willh\\Desktop\\coderef-dashboard",
             "has_workorders": true,
-            "workorder_dir": "coderef/working",
+            "workorder_dir": "coderef/workorder",
             "status": "active",
             "description": "Multi-agent orchestration dashboard"
           },
@@ -61,9 +61,7 @@
           }
         ],
         "centralized": {
-          "stubs_dir": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working",
-          "workorder_log": "C:\\Users\\willh\\Desktop\\assistant\\workorder-log.txt",
-          "workorders_json": "C:\\Users\\willh\\Desktop\\assistant\\workorders.json"
+          "stubs_dir": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working"
         }
       }
     },
@@ -72,21 +70,21 @@
         "path": "/api/stubs",
         "method": "GET",
         "description": "Fetch all stubs from centralized orchestrator",
-        "implementation": "Scan assistant/coderef/working/ directories, read stub.json files",
+        "implementation": "1. Scan assistant/coderef/working/ (list folders)\n2. For each folder, read stub.json if present\n3. Return aggregated list",
         "returns": "StubListResponse (array of stubs with metadata)"
       },
       "get_workorders": {
         "path": "/api/workorders",
         "method": "GET",
-        "description": "Fetch all workorders from all projects + centralized log",
-        "implementation": "1. Read projects.config.json\n2. For each active project, scan coderef/working/ for communication.json\n3. Merge with assistant/workorders.json (centralized status)\n4. Return combined list",
+        "description": "Fetch all workorders from all projects",
+        "implementation": "1. Read projects.config.json\n2. For each active project, scan {project_path}/coderef/workorder/ (list folders)\n3. If folder exists → workorder exists\n4. Read any files in folder (communication.json, plan.json, DELIVERABLES.md)\n5. Return combined list",
         "returns": "WorkorderListResponse (array of workorders)"
       },
       "get_workorder_detail": {
         "path": "/api/workorders/:workorderId",
         "method": "GET",
         "description": "Fetch specific workorder with all files and status",
-        "implementation": "1. Find workorder in projects.config.json or communication.json\n2. Read all files from feature directory\n3. Parse communication.json, plan.json, DELIVERABLES.md\n4. Return full workorder context",
+        "implementation": "1. Parse workorderId from URL parameter\n2. Search all projects: {project_path}/coderef/workorder/{feature-name}/\n3. Read all files in folder (communication.json, plan.json, DELIVERABLES.md)\n4. Return full workorder context with all available files",
         "returns": "WorkorderDetailResponse (complete workorder with all data)"
       }
     },

@@ -72,8 +72,8 @@ Required before UI routes can function.
 7. □ Add error handling and validation
 
 **Data Sources:**
-- Stubs: `C:\Users\willh\Desktop\assistant\coderef\working\*/stub.json`
-- Workorders: Distributed across projects + central `workorder-log.txt`
+- Stubs: `C:\Users\willh\Desktop\assistant\coderef\working\*/` (folder scan + stub.json)
+- Workorders: Distributed across projects in `coderef/workorder\*/` (folder scan)
 - Projects registry: NEW `projects.config.json` to be created
 
 **Dependencies:**
@@ -173,7 +173,7 @@ Required before UI routes can function.
       "name": "Scrapper Project",
       "path": "C:\\Users\\willh\\Desktop\\scrapper",
       "has_workorders": true,
-      "workorder_dir": "coderef/working",
+      "workorder_dir": "coderef/workorder",
       "status": "active",
       "description": "Web scraping tool"
     },
@@ -182,7 +182,7 @@ Required before UI routes can function.
       "name": "Gridiron Franchise Simulator",
       "path": "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise",
       "has_workorders": true,
-      "workorder_dir": "coderef/working",
+      "workorder_dir": "coderef/workorder",
       "status": "active",
       "description": "Sports franchise simulation"
     },
@@ -191,7 +191,7 @@ Required before UI routes can function.
       "name": "CodeRef Dashboard",
       "path": "C:\\Users\\willh\\Desktop\\coderef-dashboard",
       "has_workorders": true,
-      "workorder_dir": "coderef/working",
+      "workorder_dir": "coderef/workorder",
       "status": "active",
       "description": "Multi-agent orchestration dashboard"
     },
@@ -205,9 +205,7 @@ Required before UI routes can function.
     }
   ],
   "centralized": {
-    "stubs_dir": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working",
-    "workorder_log": "C:\\Users\\willh\\Desktop\\assistant\\workorder-log.txt",
-    "workorders_json": "C:\\Users\\willh\\Desktop\\assistant\\workorders.json"
+    "stubs_dir": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working"
   }
 }
 ```
