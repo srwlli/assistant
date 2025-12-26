@@ -330,14 +330,6 @@ body {
     margin-bottom: var(--spacing-xl);
 }
 
-footer {
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    margin-top: var(--spacing-4xl);
-    padding-top: var(--spacing-xl);
-    border-top: 1px solid var(--border-color);
-}
 
 /* ========== RESPONSIVE DESIGN ========== */
 
