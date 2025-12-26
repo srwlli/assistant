@@ -1,0 +1,54 @@
+{
+  "stub_id": "STUB-047",
+  "name": "coderef-directory-rename",
+  "category": "refactor",
+  "description": "Rename coderef/working to coderef/work-order across all projects for clarity",
+  "created": "2025-12-20",
+  "scope": "multi-project",
+  "impact": {
+    "projects_affected": [
+      "assistant",
+      "scriptboard",
+      "gridiron",
+      "scrapper",
+      "app-documents",
+      "noted",
+      "coderef-system",
+      "next-multi-tenant",
+      "docs-mcp",
+      "personas-mcp",
+      "coderef-mcp",
+      "scriptboard-mcp"
+    ],
+    "files_affected": [
+      "CLAUDE.md",
+      "projects.md",
+      "workorders.json",
+      "orchestrator.py (scriptboard)",
+      "docs-mcp tools referencing paths"
+    ],
+    "breaking_changes": true
+  },
+  "rationale": "working is ambiguous - work-order better reflects that this directory contains delegated workorders, not general work-in-progress",
+  "considerations": [
+    "All MCP tools referencing coderef/working/ need path updates",
+    "All documentation referencing coderef/working/ needs updates",
+    "workorders.json location fields need updates",
+    "Backward compatibility: keep symlinks or hard-cutover?",
+    "Git history: rename via git mv to preserve history",
+    "Orchestrator tracking: update all communication.json location references"
+  ],
+  "tasks": [
+    "Audit all files referencing coderef/working across all projects",
+    "Update docs-mcp tool default paths",
+    "Update scriptboard orchestrator.py scan paths",
+    "Update CLAUDE.md in assistant and all projects",
+    "Rename directories via git mv (if git repos) or standard mv",
+    "Update workorders.json location fields",
+    "Test orchestrator discovery after rename",
+    "Update projects.md key paths section"
+  ],
+  "priority": "medium",
+  "status": "pending",
+  "created_by": "Archer"
+}

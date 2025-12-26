@@ -1,0 +1,268 @@
+{
+  "META_DOCUMENTATION": {
+    "feature_name": "file-discovery-enhancement",
+    "schema_version": "1.0.0",
+    "version": "1.0.0",
+    "status": "complete",
+    "generated_by": "Lloyd (AI Assistant)",
+    "has_context": false,
+    "has_analysis": false,
+    "created_at": "2025-12-17T20:00:00Z"
+  },
+  "UNIVERSAL_PLANNING_STRUCTURE": {
+    "0_preparation": {
+      "foundation_docs": [
+        "orchestrator/CLAUDE.md",
+        "scriptboard/backend/orchestrator.py",
+        "orchestrator/workorders.json"
+      ],
+      "reference_implementations": [
+        "scan_json_files() in orchestrator.py",
+        "os.walk() pattern for coderef scanning"
+      ],
+      "constraints": [
+        "Must work with existing orchestrator.py endpoints",
+        "No breaking changes to current API responses",
+        "Must handle missing/malformed JSON gracefully"
+      ]
+    },
+    "1_executive_summary": {
+      "feature_name": "File Discovery Enhancement",
+      "goal": "Enhance the Scriptboard orchestrator backend to automatically discover and register internal workorders, detect stale plans, and sync with workorders.json central tracking",
+      "scope": "Add new scanning capabilities, stale detection, and workorders.json integration to orchestrator.py",
+      "estimated_complexity": "medium",
+      "files_affected": 3,
+      "target_project": "scriptboard (backend)"
+    },
+    "2_risk_assessment": {
+      "overall_risk": "low",
+      "risks": [
+        {
+          "risk": "Performance degradation with many projects",
+          "mitigation": "Add caching layer, scan on-demand or with TTL",
+          "severity": "medium"
+        },
+        {
+          "risk": "Race conditions updating workorders.json",
+          "mitigation": "File locking or atomic writes",
+          "severity": "low"
+        }
+      ]
+    },
+    "3_current_state_analysis": {
+      "existing_functionality": [
+        "scan_json_files() scans for pattern matches in coderef folders",
+        "/orchestrator/stats returns aggregate counts",
+        "/orchestrator/plans returns all plan.json files",
+        "/orchestrator/workorders returns communication.json with handoff field"
+      ],
+      "gaps": [
+        "Does not read workorders.json central tracking",
+        "Does not detect internal plans (no communication.json)",
+        "No stale detection based on timestamps",
+        "No auto-registration of discovered internal workorders"
+      ],
+      "files_to_modify": [
+        { "path": "backend/orchestrator.py", "purpose": "Add new scanning functions and endpoints" }
+      ],
+      "files_to_create": [
+        { "path": "backend/orchestrator_cache.py", "purpose": "Optional caching layer for scan results" }
+      ]
+    },
+    "4_key_features": {
+      "features": [
+        {
+          "id": "F1",
+          "name": "Workorders.json Integration",
+          "description": "Read and expose workorders.json via API endpoint"
+        },
+        {
+          "id": "F2",
+          "name": "Internal Workorder Detection",
+          "description": "Scan plan.json files for workorder_id field, identify internal workorders"
+        },
+        {
+          "id": "F3",
+          "name": "Stale Detection",
+          "description": "Check file modification timestamps, flag plans older than 7 days with no updates"
+        },
+        {
+          "id": "F4",
+          "name": "Auto-Registration",
+          "description": "Optionally auto-register discovered internal workorders to workorders.json"
+        }
+      ]
+    },
+    "5_task_id_system": {
+      "workorder": {
+        "id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+        "name": "File Discovery Enhancement",
+        "feature_dir": "coderef/working/file-discovery-enhancement"
+      },
+      "tasks": [
+        {
+          "id": "SCAN-001",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Add /orchestrator/workorders-master endpoint to read workorders.json",
+          "feature": "F1",
+          "estimated_effort": "small",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-002",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Create get_workorders_master() function to parse workorders.json",
+          "feature": "F1",
+          "estimated_effort": "small",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-003",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Enhance scan_json_files() to extract workorder_id from plan.json",
+          "feature": "F2",
+          "estimated_effort": "small",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-004",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Add /orchestrator/internal-workorders endpoint for plans with workorder_id but no communication.json",
+          "feature": "F2",
+          "estimated_effort": "medium",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-005",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Add get_file_age() utility to check modification timestamps",
+          "feature": "F3",
+          "estimated_effort": "small",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-006",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Add stale_days parameter to /orchestrator/plans endpoint",
+          "feature": "F3",
+          "estimated_effort": "small",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-007",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Create /orchestrator/stale endpoint to return only stale plans",
+          "feature": "F3",
+          "estimated_effort": "small",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-008",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Add POST /orchestrator/register-internal endpoint to auto-register discovered workorders",
+          "feature": "F4",
+          "estimated_effort": "medium",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-009",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Add atomic write helper for workorders.json updates",
+          "feature": "F4",
+          "estimated_effort": "small",
+          "status": "pending"
+        },
+        {
+          "id": "SCAN-010",
+          "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+          "description": "Update /orchestrator/stats to include stale_count and internal_count",
+          "feature": "F3",
+          "estimated_effort": "small",
+          "status": "pending"
+        }
+      ]
+    },
+    "6_implementation_phases": {
+      "phases": [
+        {
+          "phase": 1,
+          "name": "Workorders.json Integration",
+          "description": "Add ability to read and expose workorders.json via API",
+          "tasks": ["SCAN-001", "SCAN-002"],
+          "deliverables": ["/orchestrator/workorders-master endpoint working"]
+        },
+        {
+          "phase": 2,
+          "name": "Internal Workorder Detection",
+          "description": "Detect plans with workorder_id that lack communication.json",
+          "tasks": ["SCAN-003", "SCAN-004"],
+          "deliverables": ["/orchestrator/internal-workorders endpoint working"]
+        },
+        {
+          "phase": 3,
+          "name": "Stale Detection",
+          "description": "Add timestamp-based stale detection to plan scanning",
+          "tasks": ["SCAN-005", "SCAN-006", "SCAN-007", "SCAN-010"],
+          "deliverables": ["/orchestrator/stale endpoint working", "stale_days filter on /plans"]
+        },
+        {
+          "phase": 4,
+          "name": "Auto-Registration",
+          "description": "Enable automatic registration of internal workorders",
+          "tasks": ["SCAN-008", "SCAN-009"],
+          "deliverables": ["POST /orchestrator/register-internal working"]
+        }
+      ]
+    },
+    "7_testing_strategy": {
+      "unit_tests": [
+        "Test get_workorders_master() parses valid JSON",
+        "Test stale detection with various timestamps",
+        "Test atomic write doesn't corrupt file"
+      ],
+      "integration_tests": [
+        "Test /orchestrator/workorders-master returns correct data",
+        "Test /orchestrator/stale with 7-day threshold",
+        "Test register-internal adds to workorders.json"
+      ],
+      "manual_tests": [
+        "Verify dashboard displays stale plans",
+        "Verify internal workorders appear in tracking"
+      ]
+    },
+    "8_success_criteria": {
+      "functional": [
+        "All new endpoints return valid JSON responses",
+        "Stale detection correctly identifies plans > 7 days old",
+        "Internal workorders can be registered to workorders.json"
+      ],
+      "quality": [
+        "No performance regression on existing endpoints",
+        "Graceful handling of missing/malformed files"
+      ]
+    },
+    "9_implementation_checklist": {
+      "phase_1": [
+        "[ ] Add get_workorders_master() function",
+        "[ ] Add /orchestrator/workorders-master endpoint",
+        "[ ] Test endpoint returns workorders.json content"
+      ],
+      "phase_2": [
+        "[ ] Enhance scan_json_files() for workorder_id extraction",
+        "[ ] Add /orchestrator/internal-workorders endpoint",
+        "[ ] Test detection of internal workorders"
+      ],
+      "phase_3": [
+        "[ ] Add get_file_age() utility",
+        "[ ] Add stale_days parameter to /plans",
+        "[ ] Add /orchestrator/stale endpoint",
+        "[ ] Update /stats with stale_count"
+      ],
+      "phase_4": [
+        "[ ] Add atomic_write_json() helper",
+        "[ ] Add POST /orchestrator/register-internal endpoint",
+        "[ ] Test registration updates workorders.json"
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "stub_id": "STUB-012",
+  "feature_name": "mcp-server-cleanup",
+  "description": "Audit MCP servers (docs-mcp, coderef-mcp, personas-mcp), identify unused tools, consolidate overlapping functionality, and remove what's not needed.",
+  "category": "refactor",
+  "priority": "medium",
+  "tags": ["mcp", "workflow"],
+  "created": "2025-12-16T00:00:00.000Z",
+  "status": "stub",
+  "notes": {
+    "servers_to_audit": [
+      "docs-mcp (36 tools)",
+      "coderef-mcp (8 tools)",
+      "personas-mcp (4+ tools)",
+      "scriptboard-mcp (4 tools)"
+    ],
+    "goals": [
+      "Identify unused/redundant tools",
+      "Consolidate overlapping functionality",
+      "Remove dead code",
+      "Document what remains"
+    ],
+    "process": [
+      "1. List all tools per server",
+      "2. Track actual usage",
+      "3. Identify overlap",
+      "4. Propose consolidation",
+      "5. Remove unused"
+    ],
+    "related_to": [
+      "STUB-002 (tool-inventory-workflow)"
+    ]
+  }
+}

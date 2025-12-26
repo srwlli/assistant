@@ -1,0 +1,249 @@
+{
+  "last_updated": "2025-12-20",
+  "active_workorders": [
+    {
+      "workorder_id": "WO-TERMINAL-SETTINGS-SYNC-001",
+      "stub_id": "STUB-020",
+      "feature_name": "terminal-settings-sync",
+      "target_project": "scriptboard",
+      "location": "C:\\Users\\willh\\Desktop\\clipboard_compannion\\next\\coderef\\working\\terminal-settings-sync\\communication.json",
+      "status": "pending_plan",
+      "next_action": "Agent: Run /create-plan workflow",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-TOOL-INVENTORY-001",
+      "stub_id": "STUB-002",
+      "feature_name": "tool-inventory-workflow",
+      "target_project": "scriptboard",
+      "location": "C:\\Users\\willh\\Desktop\\clipboard_compannion\\next\\coderef\\working\\tool-inventory-workflow\\communication.json",
+      "status": "approved",
+      "next_action": "Agent: Generate coderef/user/features.md",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-ORCHESTRATOR-DASHBOARD-001",
+      "stub_id": "STUB-023",
+      "feature_name": "orchestrator-dashboard",
+      "target_project": "scriptboard",
+      "location": "C:\\Users\\willh\\Desktop\\clipboard_compannion\\next\\coderef\\working\\orchestrator-dashboard\\communication.json",
+      "status": "pending_plan",
+      "next_action": "Agent: Run /create-plan workflow for 4-tab dashboard",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-PLAN-AUDIT-SCRIPTBOARD-001",
+      "type": "audit",
+      "target_project": "scriptboard",
+      "location": "C:\\Users\\willh\\Desktop\\clipboard_compannion\\next\\coderef\\orchestration.json",
+      "status": "pending",
+      "next_action": "Agent: Review working/ plans, report status, suggest archives",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-PLAN-AUDIT-SCRAPPER-001",
+      "type": "audit",
+      "target_project": "scrapper",
+      "location": "C:\\Users\\willh\\Desktop\\scrapper\\coderef\\orchestration.json",
+      "status": "pending",
+      "next_action": "Agent: Review working/ plans, report status, suggest archives",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-PLAN-AUDIT-GRIDIRON-001",
+      "type": "audit",
+      "target_project": "gridiron",
+      "location": "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise\\coderef\\orchestration.json",
+      "status": "complete",
+      "results": {
+        "active": 1,
+        "stale": 1,
+        "archive_candidates": 3,
+        "blocked": 0
+      },
+      "next_action": "Orchestrator: Review archive candidates, approve archival",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-PLAN-AUDIT-CODEREF-001",
+      "type": "audit",
+      "target_project": "coderef-system",
+      "location": "C:\\Users\\willh\\Desktop\\projects\\coderef-system\\coderef\\orchestration.json",
+      "status": "pending",
+      "next_action": "Agent: Review working/ plans, report status, suggest archives",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-PLAN-AUDIT-MULTITENANT-001",
+      "type": "audit",
+      "target_project": "multi-tenant",
+      "location": "C:\\Users\\willh\\Desktop\\Business-Dash\\latest-app\\coderef\\orchestration.json",
+      "status": "pending",
+      "next_action": "Agent: Review working/ plans, report status, suggest archives",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-PLAN-AUDIT-APPDOCS-001",
+      "type": "audit",
+      "target_project": "app-documents",
+      "location": "C:\\Users\\willh\\Desktop\\app_documents\\coderef\\orchestration.json",
+      "status": "pending",
+      "next_action": "Agent: Review working/ plans, report status, suggest archives",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-PLAN-AUDIT-NOTED-001",
+      "type": "audit",
+      "target_project": "noted",
+      "location": "C:\\Users\\willh\\Desktop\\projects\\noted\\coderef\\orchestration.json",
+      "status": "pending",
+      "next_action": "Agent: Review working/ plans, report status, suggest archives",
+      "created": "2025-12-16"
+    },
+    {
+      "workorder_id": "WO-TEAM-PAGE-ENHANCEMENT-001",
+      "type": "internal",
+      "feature_name": "team-page-enhancement",
+      "target_project": "gridiron",
+      "location": "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise\\coderef\\working\\team-page-enhancement\\plan.json",
+      "status": "plan_created",
+      "next_action": "Agent: Implement Phase 1 (Data Layer)",
+      "created": "2025-12-17",
+      "scope": "3 phases, 8 tasks - TeamRosterCard, TeamRecordCard components",
+      "related_stub": "STUB-029"
+    },
+    {
+      "workorder_id": "WO-PAGE-CONTENT-001",
+      "type": "delegated",
+      "feature_name": "page-content",
+      "target_project": "gridiron",
+      "location": "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise\\coderef\\working\\page-content\\communication.json",
+      "status": "pending_audit",
+      "next_action": "Agent: Audit dashboard routes, create page-inventory.md",
+      "created": "2025-12-17"
+    },
+    {
+      "workorder_id": "WO-CODEREF-SCRIPTBOARD-INTEGRATION-001",
+      "type": "internal",
+      "feature_name": "coderef-scriptboard-integration",
+      "target_project": "scriptboard",
+      "location": "C:\\Users\\willh\\Desktop\\clipboard_compannion\\next\\coderef\\working\\coderef-scriptboard-integration\\plan.json",
+      "status": "plan_created",
+      "next_action": "Agent: Implement Phase 1 (Backend API)",
+      "created": "2025-12-17",
+      "scope": "CodeRef GUI panel - scan, dashboard, query, impact via FastAPI + React"
+    },
+    {
+      "workorder_id": "WO-MCP-TOOLS-REVIEW-001",
+      "type": "internal",
+      "feature_name": "mcp-tools-review",
+      "target_project": "docs-mcp",
+      "location": "docs\\MCP-TOOLS-INVENTORY.md",
+      "status": "complete",
+      "next_action": "None - inventory generated",
+      "created": "2025-12-17",
+      "scope": "MCP tools inventory documentation"
+    },
+    {
+      "workorder_id": "WO-AGENT-COMPLETION-WORKFLOW-001",
+      "type": "delegated",
+      "stub_id": "STUB-049",
+      "feature_name": "agent-completion-workflow",
+      "target_project": "docs-mcp",
+      "location": "C:\\Users\\willh\\.mcp-servers\\docs-mcp\\coderef\\working\\agent-completion-workflow\\communication.json",
+      "status": "pending",
+      "next_action": "Agent: Document workflow where agent archives, orchestrator only verifies",
+      "created": "2025-12-20",
+      "delegated": "2025-12-20",
+      "scope": "3 tasks - Update CLAUDE.md, update handoff template, create workflow documentation"
+    }
+  ],
+  "completed_workorders": [
+    {
+      "workorder_id": "WO-PERSONA-MANAGEMENT-001",
+      "type": "delegated",
+      "feature_name": "persona-management",
+      "target_project": "personas-mcp",
+      "location": "C:\\Users\\willh\\.mcp-servers\\personas-mcp\\coderef\\working\\persona-management\\communication.json",
+      "status": "complete",
+      "completed": "2025-12-20",
+      "created": "2025-12-20",
+      "delegated": "2025-12-20",
+      "scope": "2 tasks - Remove nfl-scraper-expert, create research-scout persona (research & reporting specialist, no coding)",
+      "summary": "Successfully removed nfl-scraper-expert persona and created research-scout persona (v1.0.0) focused on research and reporting without code execution",
+      "deliverables": [
+        "Removed nfl-scraper-expert persona files",
+        "Created research-scout persona with 8 expertise areas",
+        "Configured research-scout for read-only tool usage (WebFetch, WebSearch, Read, Grep)",
+        "Validated persona available via list_personas"
+      ]
+    },
+    {
+      "workorder_id": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+      "type": "delegated",
+      "feature_name": "file-discovery-enhancement",
+      "target_project": "scriptboard",
+      "location": "C:\\Users\\willh\\Desktop\\clipboard_compannion\\next\\coderef\\working\\file-discovery-enhancement\\communication.json",
+      "status": "complete",
+      "completed": "2025-12-19",
+      "created": "2025-12-17",
+      "delegated": "2025-12-19",
+      "scope": "4 phases, 10 tasks - workorders.json integration, internal WO detection, stale detection, auto-registration",
+      "summary": "Implemented 5 new endpoints in Scriptboard orchestrator backend: GET /workorders-master, GET /internal-workorders, GET /stale, enhanced GET /plans and /stats with stale detection, POST /register-internal for auto-registration",
+      "deliverables": [
+        "GET /orchestrator/workorders-master endpoint",
+        "GET /orchestrator/internal-workorders endpoint",
+        "GET /orchestrator/stale endpoint",
+        "Enhanced /orchestrator/plans with stale_days parameter",
+        "Enhanced /orchestrator/stats with stale_count and internal_count",
+        "POST /orchestrator/register-internal endpoint",
+        "Atomic write helper for workorders.json updates"
+      ]
+    },
+    {
+      "workorder_id": "WO-CREATE-WORKORDER-COMMAND-001",
+      "type": "internal",
+      "feature_name": "create-workorder-command",
+      "target_project": "docs-mcp",
+      "location": "C:\\Users\\willh\\.mcp-servers\\docs-mcp\\coderef\\working\\create-workorder-command\\plan.json",
+      "status": "complete",
+      "completed": "2025-12-17",
+      "summary": "5 tasks: renamed /start-feature to /create-workorder, added dual logging to orchestrator",
+      "related_stubs": ["STUB-041", "STUB-043"]
+    },
+    {
+      "workorder_id": "WO-WORKFLOW-IMPROVEMENTS-001",
+      "type": "internal",
+      "feature_name": "create-plan-workflow-improvements",
+      "target_project": "docs-mcp",
+      "location": "C:\\Users\\willh\\.mcp-servers\\docs-mcp\\coderef\\working\\create-plan-workflow-improvements\\plan.json",
+      "status": "complete",
+      "completed": "2025-12-17",
+      "summary": "22 tasks: timestamps, plan enforcement, progress tracking, audit tools, git workflow, handoff protocol, features inventory",
+      "related_stubs": ["STUB-002", "STUB-008", "STUB-009", "STUB-010", "STUB-028", "STUB-032", "STUB-036", "STUB-038", "STUB-039", "STUB-040", "STUB-041", "STUB-042"],
+      "new_tools": ["update_task_status", "audit_plans", "generate_features_inventory"],
+      "new_commands": ["/audit-plans", "/git-release", "/features-inventory"]
+    },
+    {
+      "workorder_id": "WO-INSIGHT-OPTIMIZATION-001",
+      "type": "internal",
+      "feature_name": "insight-engine-optimization",
+      "target_project": "app-documents",
+      "location": "C:\\Users\\willh\\Desktop\\app_documents\\working\\optimization\\plan.json",
+      "status": "complete",
+      "summary": "Optimized Football Insight Engine from timeout to <10s via batch queries, caching, and detector refactor",
+      "completed": "2025-12-16"
+    }
+  ],
+  "status_legend": {
+    "pending": "Waiting for agent to start",
+    "pending_plan": "Waiting for agent to submit plan",
+    "plan_submitted": "Agent submitted plan, awaiting approval",
+    "changes_requested": "Orchestrator requested plan changes",
+    "approved": "Plan approved, ready to implement",
+    "implementing": "Agent is executing plan",
+    "complete": "Agent finished implementation",
+    "verified": "Orchestrator verified deliverables",
+    "closed": "Workorder complete"
+  }
+}

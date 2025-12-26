@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    {
+      "id": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/DELIVERABLES.md:84:to",
+      "type": "function",
+      "name": "to",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/DELIVERABLES.md",
+      "line": 84
+    },
+    {
+      "id": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/plan.json:114:to",
+      "type": "function",
+      "name": "to",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/plan.json",
+      "line": 114
+    },
+    {
+      "id": "C:/Users/willh/Desktop/assistant/HANDOFF-WO-FILE-DISCOVERY-ENHANCEMENT-001.md:43:to",
+      "type": "function",
+      "name": "to",
+      "file": "C:/Users/willh/Desktop/assistant/HANDOFF-WO-FILE-DISCOVERY-ENHANCEMENT-001.md",
+      "line": 43
+    }
+  ],
+  "edges": [],
+  "metadata": {
+    "source_dir": "C:\\Users\\willh\\Desktop\\assistant",
+    "languages": [
+      "py",
+      "js",
+      "json",
+      "md"
+    ],
+    "analyzer": "ast",
+    "element_count": 3,
+    "scanned_at": "2025-12-19T23:33:21.522589"
+  }
+}

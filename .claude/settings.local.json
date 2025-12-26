@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(xargs:*)",
+      "mcp__coderef-mcp__mcp__coderef__scan_realtime",
+      "mcp__personas-mcp__use_persona",
+      "mcp__docs-mcp__get_workorder_log",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Fix orchestrator log path and add working stubs\n\n- Update orchestrator path from ~/.mcp-servers/coderef/ to assistant/coderef/\n- Add fix-orchestrator-log-path stub \\(complete\\)\n- Add multiple workflow improvement stubs\n- Update create-plan.md and create-workorder.md commands\n- Add features-inventory, audit-plans, git-release commands\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(where claude:*)",
+      "Bash(test:*)",
+      "Bash(curl:*)",
+      "Bash(cat:*)",
+      "Bash(python:*)",
+      "mcp__docs-mcp__generate_features_inventory",
+      "Bash(ls:*)",
+      "Bash(env)",
+      "mcp__docs-mcp__archive_feature",
+      "mcp__docs-mcp__list_templates",
+      "mcp__docs-mcp__get_template",
+      "mcp__docs-mcp__log_workorder",
+      "mcp__coderef-workflow__coderef_foundation_docs",
+      "mcp__coderef-workflow__analyze_project_for_planning",
+      "mcp__coderef-workflow__generate_deliverables_template",
+      "mcp__coderef-workflow__validate_implementation_plan",
+      "Bash(git init:*)",
+      "Bash(git config:*)",
+      "Bash(git commit:*)",
+      "Bash(powershell -Command \"New-Item -ItemType Directory -Force -Path ''C:\\Users\\willh\\Desktop\\html-tools\\tools\\orchestrator'',''C:\\Users\\willh\\Desktop\\html-tools\\tools\\coderef-context'',''C:\\Users\\willh\\Desktop\\html-tools\\tools\\coderef-workflow'',''C:\\Users\\willh\\Desktop\\html-tools\\tools\\coderef-docs'' | Out-Null; Get-ChildItem ''C:\\Users\\willh\\Desktop\\html-tools\\tools\\'' | Select-Object Name\")",
+      "mcp__coderef-workflow__create_plan",
+      "mcp__coderef-workflow__log_workorder"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "coderef-context",
+    "coderef-personas",
+    "coderef-docs",
+    "coderef-workflow"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "stub_id": "STUB-007",
+  "feature_name": "mcp-saas-platform",
+  "description": "Lloyd.ai - AI-native development workflow platform built on MCP. Full SaaS with project dashboards, workorder tracking, multi-agent coordination, and team collaboration.",
+  "category": "feature",
+  "priority": "high",
+  "created": "2025-12-16T00:00:00.000Z",
+  "status": "stub",
+  "notes": {
+    "codename": "Lloyd.ai",
+    "has_spec": true,
+    "spec_location": "C:\\Users\\willh\\.mcp-servers\\coderef\\working\\mcp-saas-platform\\SPEC.md",
+    "maturity": "Detailed spec exists - ready for implementation planning",
+    "key_features": [
+      "Project Dashboard",
+      "Feature Workspace (workorder tracking)",
+      "AI Chat Interface",
+      "Standards & Auditing",
+      "Team Collaboration",
+      "Analytics Dashboard"
+    ],
+    "tech_stack": {
+      "frontend": "Next.js 14 + shadcn/ui + Tailwind",
+      "backend": "FastAPI (Python)",
+      "database": "PostgreSQL (Supabase)",
+      "auth": "Clerk",
+      "ai": "Claude API",
+      "mcp": "docs-mcp, coderef-mcp, personas-mcp"
+    },
+    "pricing_tiers": ["Free", "Pro ($29/user)", "Team ($79/user)", "Enterprise"],
+    "mvp_timeline": "12 weeks",
+    "related_to": [
+      "saas-mvp-candidates",
+      "scriptboard-assistant-integration"
+    ]
+  }
+}

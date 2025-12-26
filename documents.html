@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant - Documentation Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { font-size: 2rem; color: #8b5cf6; margin-bottom: 8px; }
+        .tagline { color: #666; font-size: 1rem; margin-bottom: 15px; }
+
+        .nav { display: flex; justify-content: center; gap: 20px; padding: 15px; background: #2c3e50; margin-bottom: 30px; border-radius: 8px; flex-wrap: wrap; }
+        .nav a { color: #fff; text-decoration: none; font-size: 0.9rem; padding: 5px 12px; border-radius: 4px; }
+        .nav a:hover { background: rgba(255,255,255,0.1); }
+        .nav a.active { background: rgba(255,255,255,0.2); font-weight: 600; }
+
+        .layout { display: grid; grid-template-columns: 280px 1fr; gap: 30px; margin-top: 30px; }
+
+        .sidebar { }
+        .sidebar-title { font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 15px; }
+        .doc-list { list-style: none; }
+        .doc-item { margin-bottom: 8px; }
+        .doc-item a {
+            display: block;
+            padding: 10px 12px;
+            background: #fff;
+            border-left: 3px solid #e1e8ed;
+            text-decoration: none;
+            color: #555;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .doc-item a:hover {
+            background: #f3f4f6;
+            border-left-color: #8b5cf6;
+            color: #8b5cf6;
+        }
+        .doc-item a.active {
+            background: #f3e8ff;
+            border-left-color: #8b5cf6;
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+
+        .content-area { }
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #8b5cf6;
+        }
+        .content-title { font-size: 1.3rem; color: #2c3e50; font-weight: 600; }
+        .content-meta { font-size: 0.8rem; color: #999; }
+
+        .markdown-content {
+            background: #fff;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 30px;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+        .markdown-content::-webkit-scrollbar { width: 8px; }
+        .markdown-content::-webkit-scrollbar-track { background: #f1f1f1; }
+        .markdown-content::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 4px; }
+
+        /* Markdown Styles */
+        .markdown-content h1 { font-size: 1.5rem; color: #2c3e50; margin: 20px 0 15px 0; }
+        .markdown-content h2 { font-size: 1.3rem; color: #2c3e50; margin: 18px 0 12px 0; border-bottom: 1px solid #e1e8ed; padding-bottom: 8px; }
+        .markdown-content h3 { font-size: 1.1rem; color: #555; margin: 15px 0 10px 0; }
+        .markdown-content h4 { font-size: 1rem; color: #555; margin: 12px 0 8px 0; }
+        .markdown-content p { margin-bottom: 12px; }
+        .markdown-content ul, .markdown-content ol { margin: 12px 0 12px 20px; }
+        .markdown-content li { margin-bottom: 6px; }
+        .markdown-content blockquote {
+            border-left: 3px solid #8b5cf6;
+            padding: 12px 15px;
+            background: #f3e8ff;
+            margin: 15px 0;
+            color: #6b21a8;
+        }
+        .markdown-content code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #8b5cf6;
+        }
+        .markdown-content pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+            color: #ecf0f1;
+        }
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+        .markdown-content table th {
+            background: #2c3e50;
+            color: #fff;
+            padding: 10px;
+            text-align: left;
+        }
+        .markdown-content table td {
+            border: 1px solid #e1e8ed;
+            padding: 10px;
+        }
+        .markdown-content a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+        .markdown-content hr {
+            border: none;
+            border-top: 1px solid #e1e8ed;
+            margin: 20px 0;
+        }
+
+        .loading { text-align: center; color: #999; padding: 40px; }
+        .error { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 15px; border-radius: 6px; }
+
+        .placeholder { text-align: center; color: #999; padding: 60px 20px; }
+        .placeholder-icon { font-size: 3rem; margin-bottom: 15px; }
+
+        @media (max-width: 768px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+
+        footer { text-align: center; color: #999; font-size: 0.85rem; margin-top: 50px; padding-top: 20px; border-top: 1px solid #e1e8ed; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a href="./index.html">Assistant</a>
+            <a href="./documents.html" class="active">Documents</a>
+            <a href="file:///C:/Users/willh/.mcp-servers/index.html">MCP Servers</a>
+            <a href="file:///C:/Users/willh/Desktop/App_Documents/index.html">Selector</a>
+        </nav>
+
+        <header>
+            <h1>Documentation Hub</h1>
+            <p class="tagline">Project documentation, guides, and references</p>
+        </header>
+
+        <div class="layout">
+            <div class="sidebar">
+                <div class="sidebar-title">📄 Documents</div>
+                <ul class="doc-list" id="docList"></ul>
+            </div>
+
+            <div class="content-area">
+                <div class="content-header">
+                    <div>
+                        <div class="content-title" id="docTitle">Select a Document</div>
+                        <div class="content-meta" id="docMeta"></div>
+                    </div>
+                </div>
+                <div class="markdown-content" id="content">
+                    <div class="placeholder">
+                        <div class="placeholder-icon">📚</div>
+                        <p>Select a document from the list to view</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Documentation Hub | Assistant Orchestrator</p>
+            <p>Last updated: 2025-12-25</p>
+        </footer>
+    </div>
+
+    <script>
+        // Define documents to display
+        const documents = [
+            {
+                id: 'roadmap',
+                title: 'Phase 3 Roadmap Synthesis',
+                path: './PHASE-3-ROADMAP-SYNTHESIS.md',
+                icon: '🗺️'
+            },
+            {
+                id: 'claude',
+                title: 'Claude.md - Project Instructions',
+                path: './CLAUDE.md',
+                icon: '📋'
+            },
+            {
+                id: 'readme',
+                title: 'README',
+                path: './README.md',
+                icon: '📖'
+            },
+            {
+                id: 'terminal',
+                title: 'Terminal Profiles',
+                path: './terminal-profiles.md',
+                icon: '⌨️'
+            },
+            {
+                id: 'projects',
+                title: 'Projects List',
+                path: './projects.md',
+                icon: '📦'
+            }
+        ];
+
+        // Initialize
+        function init() {
+            renderDocList();
+
+            // Load first doc by default
+            if (documents.length > 0) {
+                loadDocument(documents[0].id);
+            }
+        }
+
+        // Render document list
+        function renderDocList() {
+            const docList = document.getElementById('docList');
+            docList.innerHTML = documents.map(doc => `
+                <li class="doc-item">
+                    <a href="#" onclick="loadDocument('${doc.id}'); return false;" data-id="${doc.id}">
+                        ${doc.icon} ${doc.title}
+                    </a>
+                </li>
+            `).join('');
+        }
+
+        // Load and display document
+        async function loadDocument(docId) {
+            const doc = documents.find(d => d.id === docId);
+            if (!doc) return;
+
+            // Update active state
+            document.querySelectorAll('.doc-item a').forEach(el => el.classList.remove('active'));
+            document.querySelector(`[data-id="${docId}"]`).classList.add('active');
+
+            // Show loading
+            const content = document.getElementById('content');
+            content.innerHTML = '<div class="loading">Loading...</div>';
+            document.getElementById('docTitle').textContent = doc.title;
+            document.getElementById('docMeta').textContent = doc.path;
+
+            try {
+                const response = await fetch(doc.path);
+                if (!response.ok) throw new Error('Document not found');
+
+                const markdown = await response.text();
+                const html = marked.parse(markdown);
+                content.innerHTML = html;
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="error">
+                        <strong>Error loading document:</strong> ${error.message}<br>
+                        <small>Path: ${doc.path}</small>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

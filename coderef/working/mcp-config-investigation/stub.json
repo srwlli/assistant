@@ -1,0 +1,99 @@
+{
+  "stub_id": "STUB-046",
+  "feature_name": "mcp-config-investigation",
+  "category": "investigation",
+  "priority": "high",
+  "created": "2025-12-19",
+  "created_by": "Archer (Orchestrator)",
+  "target_project": "assistant",
+  "description": "Investigate and fix MCP server configuration to enable scriptboard-mcp globally",
+  "problem": {
+    "summary": "scriptboard-mcp exists but is not loaded in Claude Code sessions",
+    "current_state": [
+      "docs-mcp, coderef-mcp, personas-mcp are loaded and working",
+      "scriptboard-mcp exists at C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\",
+      "scriptboard-mcp has 8 tools (prompt management + coderef integration)",
+      "ListMcpResourcesTool shows only 3 servers, not 4",
+      "Global MCP config file location unknown"
+    ],
+    "impact": "Agents cannot use scriptboard-mcp tools for prompt export and coderef workflows"
+  },
+  "investigation_tasks": [
+    {
+      "task": "Find the actual MCP configuration file",
+      "locations_to_check": [
+        "C:\\Users\\willh\\.claude\\mcp.json (not found)",
+        "C:\\Users\\willh\\AppData\\Roaming\\Claude\\mcp.json",
+        "C:\\Users\\willh\\AppData\\Local\\Claude\\mcp.json",
+        ".claude/mcp.json in project roots",
+        "Claude Code settings files"
+      ]
+    },
+    {
+      "task": "Verify scriptboard-mcp server is runnable",
+      "steps": [
+        "Check server.py exists and is executable",
+        "Verify Python dependencies installed",
+        "Test manual server startup"
+      ]
+    },
+    {
+      "task": "Compare working MCP config to scriptboard-mcp",
+      "compare": [
+        "How are docs-mcp, coderef-mcp, personas-mcp registered?",
+        "What's different about scriptboard-mcp?",
+        "Is it a path issue, config format, or startup command?"
+      ]
+    },
+    {
+      "task": "Add scriptboard-mcp to global config",
+      "expected_format": {
+        "mcpServers": {
+          "scriptboard-mcp": {
+            "command": "python",
+            "args": ["C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\server.py"],
+            "env": {}
+          }
+        }
+      }
+    },
+    {
+      "task": "Verify scriptboard-mcp loads after config update",
+      "validation": [
+        "Restart Claude Code session",
+        "Run ListMcpResourcesTool - should show 4 servers",
+        "Test mcp__scriptboard__coderef_status tool"
+      ]
+    }
+  ],
+  "scriptboard_mcp_tools": [
+    "mcp__scriptboard__set_prompt",
+    "mcp__scriptboard__clear_prompt",
+    "mcp__scriptboard__add_attachment",
+    "mcp__scriptboard__clear_attachments",
+    "mcp__scriptboard__coderef_status",
+    "mcp__scriptboard__coderef_scan",
+    "mcp__scriptboard__coderef_query",
+    "mcp__scriptboard__coderef_impact"
+  ],
+  "desired_outcome": {
+    "summary": "scriptboard-mcp globally enabled in all Claude Code sessions",
+    "success_criteria": [
+      "ListMcpResourcesTool returns 4 servers (including scriptboard-mcp)",
+      "Agents can call mcp__scriptboard__* tools",
+      "Scriptboard integration works for prompt export workflows",
+      "Configuration persists across sessions"
+    ]
+  },
+  "related_stubs": [
+    "STUB-001 (scriptboard-assistant-integration)"
+  ],
+  "estimated_effort": "small",
+  "estimated_complexity": "low",
+  "files_to_investigate": [
+    "Claude Code MCP configuration (location TBD)",
+    "C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\server.py",
+    "C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\http_client.py"
+  ],
+  "notes": "This is blocking STUB-001 (scriptboard-assistant-integration). Need to enable scriptboard-mcp before agents can use Scriptboard as visual UI."
+}

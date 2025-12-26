@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant - Orchestrator CLI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f8f9fa; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { font-size: 2rem; color: #8b5cf6; margin-bottom: 8px; }
+        .tagline { color: #666; font-size: 1rem; margin-bottom: 15px; }
+        .badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .badge { padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; }
+        .badge-role { background: #8b5cf6; color: #fff; }
+        .badge-stubs { background: #3b82f6; color: #fff; }
+        .badge-projects { background: #10b981; color: #fff; }
+
+        .nav { display: flex; justify-content: center; gap: 20px; padding: 15px; background: #2c3e50; margin-bottom: 30px; border-radius: 8px; flex-wrap: wrap; }
+        .nav a { color: #fff; text-decoration: none; font-size: 0.9rem; padding: 5px 12px; border-radius: 4px; }
+        .nav a:hover { background: rgba(255,255,255,0.1); }
+        .nav a.active { background: rgba(255,255,255,0.2); font-weight: 600; }
+
+        .principle-box { background: #8b5cf6; color: #fff; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center; }
+        .principle-box h3 { font-size: 0.9rem; font-weight: 400; margin-bottom: 10px; opacity: 0.9; }
+        .principle-text { font-size: 1.1rem; font-weight: 600; }
+
+        .section { margin: 40px 0; }
+        .section h2 { font-size: 1.1rem; color: #2c3e50; margin-bottom: 15px; border-bottom: 2px solid #8b5cf6; padding-bottom: 8px; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin: 20px 0; }
+        .stat { background: #fff; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; text-align: center; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: #8b5cf6; }
+        .stat-label { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        .projects-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e1e8ed; }
+        .projects-table th { background: #2c3e50; color: #fff; padding: 12px; text-align: left; font-size: 0.85rem; }
+        .projects-table td { padding: 12px; border-bottom: 1px solid #e1e8ed; font-size: 0.9rem; }
+        .projects-table tr:last-child td { border-bottom: none; }
+        .projects-table a { color: #8b5cf6; text-decoration: none; }
+        .projects-table a:hover { text-decoration: underline; }
+
+        .workflow-box { background: #fff; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; margin: 15px 0; }
+        .workflow-title { font-weight: 600; color: #2c3e50; margin-bottom: 10px; }
+        .workflow-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .workflow-flow .step { background: #f3e8ff; border: 1px solid #8b5cf6; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; color: #6b21a8; }
+        .workflow-flow .arrow { color: #8b5cf6; font-weight: bold; }
+
+        .stubs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+        .stub-card { background: #fff; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; }
+        .stub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .stub-id { font-family: monospace; font-size: 0.8rem; color: #8b5cf6; font-weight: 600; }
+        .stub-priority { font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; }
+        .priority-high { background: #fef2f2; color: #dc2626; }
+        .priority-medium { background: #fefce8; color: #ca8a04; }
+        .stub-name { font-weight: 600; color: #2c3e50; font-size: 0.95rem; }
+        .stub-desc { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        .does-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .does-card { background: #fff; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; }
+        .does-card h3 { font-size: 1rem; margin-bottom: 12px; }
+        .does-card.do h3 { color: #10b981; }
+        .does-card.dont h3 { color: #ef4444; }
+        .does-list { list-style: none; }
+        .does-list li { padding: 6px 0; font-size: 0.9rem; color: #555; border-bottom: 1px solid #f3f4f6; }
+        .does-list li:last-child { border-bottom: none; }
+
+        .workorder-card { background: #fff; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; margin-bottom: 12px; }
+        .workorder-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .workorder-id { font-family: monospace; font-size: 0.85rem; color: #2c3e50; font-weight: 600; }
+        .workorder-status { font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-approved { background: #d1fae5; color: #065f46; }
+        .status-implementing { background: #dbeafe; color: #1e40af; }
+        .status-complete { background: #d1fae5; color: #065f46; }
+        .workorder-feature { font-weight: 600; color: #2c3e50; font-size: 0.95rem; }
+        .workorder-project { font-size: 0.8rem; color: #8b5cf6; margin-top: 2px; }
+        .workorder-action { font-size: 0.8rem; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px solid #f3f4f6; }
+
+        footer { text-align: center; color: #999; font-size: 0.85rem; margin-top: 50px; padding-top: 20px; border-top: 1px solid #e1e8ed; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a href="./index.html" class="active">Assistant</a>
+            <a href="file:///C:/Users/willh/.mcp-servers/index.html">MCP Servers</a>
+            <a href="file:///C:/Users/willh/Desktop/App_Documents/index.html">Selector</a>
+            <a href="https://scrapper-teamhart.vercel.app/">Scrapper</a>
+            <a href="https://gridiron-franchise.vercel.app/">Gridiron</a>
+            <a href="https://frontend-ten-delta-77.vercel.app/">Scriptboard</a>
+            <a href="https://noted-bay-three.vercel.app/auth">Noted</a>
+        </nav>
+
+        <header>
+            <h1>Assistant</h1>
+            <p class="tagline">Orchestrator CLI - Identify, Delegate, Collect</p>
+            <div class="badges">
+                <span class="badge badge-role">Orchestrator</span>
+                <span class="badge badge-stubs">18 Stubs</span>
+                <span class="badge badge-projects">9 Projects</span>
+            </div>
+        </header>
+
+        <div class="principle-box">
+            <h3>Core Principle</h3>
+            <div class="principle-text">Do not execute work in other projects. Identify, delegate, collect.</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="stat-value">9</div>
+                <div class="stat-label">Active Projects</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">18</div>
+                <div class="stat-label">Stubs</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">10</div>
+                <div class="stat-label">Active WOs</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">9</div>
+                <div class="stat-label">High Priority</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Active Workorders (10)</h2>
+
+            <h3 style="font-size: 0.9rem; color: #8b5cf6; margin: 15px 0 10px 0;">Feature WOs (3)</h3>
+            <div class="workorder-card">
+                <div class="workorder-header">
+                    <span class="workorder-id">WO-ORCHESTRATOR-DASHBOARD-001</span>
+                    <span class="workorder-status status-pending">pending_plan</span>
+                </div>
+                <div class="workorder-feature">orchestrator-dashboard</div>
+                <div class="workorder-project">Target: scriptboard</div>
+                <div class="workorder-action">Next: Run /create-plan for 4-tab dashboard (Projects, WOs, Plans, Stubs)</div>
+            </div>
+            <div class="workorder-card">
+                <div class="workorder-header">
+                    <span class="workorder-id">WO-TERMINAL-SETTINGS-SYNC-001</span>
+                    <span class="workorder-status status-pending">pending_plan</span>
+                </div>
+                <div class="workorder-feature">terminal-settings-sync</div>
+                <div class="workorder-project">Target: scriptboard</div>
+                <div class="workorder-action">Next: Agent needs to run /create-plan</div>
+            </div>
+            <div class="workorder-card">
+                <div class="workorder-header">
+                    <span class="workorder-id">WO-TOOL-INVENTORY-001</span>
+                    <span class="workorder-status status-approved">approved</span>
+                </div>
+                <div class="workorder-feature">tool-inventory-workflow</div>
+                <div class="workorder-project">Target: scriptboard</div>
+                <div class="workorder-action">Next: Agent needs to generate coderef/user/features.md</div>
+            </div>
+
+            <h3 style="font-size: 0.9rem; color: #f59e0b; margin: 20px 0 10px 0;">Audit WOs (7)</h3>
+            <table class="projects-table" style="margin-bottom: 0;">
+                <tr>
+                    <th>Workorder</th>
+                    <th>Project</th>
+                    <th>Plans to Review</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>WO-PLAN-AUDIT-SCRIPTBOARD-001</td>
+                    <td>scriptboard</td>
+                    <td>5</td>
+                    <td><span class="workorder-status status-pending">pending</span></td>
+                </tr>
+                <tr>
+                    <td>WO-PLAN-AUDIT-SCRAPPER-001</td>
+                    <td>scrapper</td>
+                    <td>5</td>
+                    <td><span class="workorder-status status-pending">pending</span></td>
+                </tr>
+                <tr>
+                    <td>WO-PLAN-AUDIT-GRIDIRON-001</td>
+                    <td>gridiron</td>
+                    <td>4</td>
+                    <td><span class="workorder-status status-pending">pending</span></td>
+                </tr>
+                <tr>
+                    <td>WO-PLAN-AUDIT-CODEREF-001</td>
+                    <td>coderef-system</td>
+                    <td>5</td>
+                    <td><span class="workorder-status status-pending">pending</span></td>
+                </tr>
+                <tr>
+                    <td>WO-PLAN-AUDIT-MULTITENANT-001</td>
+                    <td>multi-tenant</td>
+                    <td>8</td>
+                    <td><span class="workorder-status status-pending">pending</span></td>
+                </tr>
+                <tr>
+                    <td>WO-PLAN-AUDIT-APPDOCS-001</td>
+                    <td>app-documents</td>
+                    <td>2</td>
+                    <td><span class="workorder-status status-pending">pending</span></td>
+                </tr>
+                <tr>
+                    <td>WO-PLAN-AUDIT-NOTED-001</td>
+                    <td>noted</td>
+                    <td>0</td>
+                    <td><span class="workorder-status status-pending">pending</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Active Projects</h2>
+            <table class="projects-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Deploy</th>
+                </tr>
+                <tr>
+                    <td>STUB-013</td>
+                    <td>app-documents</td>
+                    <td>Selector engine</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>STUB-014</td>
+                    <td>mcp-servers</td>
+                    <td>MCP servers home</td>
+                    <td><a href="file:///C:/Users/willh/.mcp-servers/index.html">local</a></td>
+                </tr>
+                <tr>
+                    <td>STUB-015</td>
+                    <td>scrapper</td>
+                    <td>NFL stats database</td>
+                    <td><a href="https://scrapper-teamhart.vercel.app/">vercel</a></td>
+                </tr>
+                <tr>
+                    <td>STUB-016</td>
+                    <td>assistant</td>
+                    <td>Orchestrator CLI</td>
+                    <td><a href="./index.html">local</a></td>
+                </tr>
+                <tr>
+                    <td>STUB-017</td>
+                    <td>gridiron-franchise</td>
+                    <td>Football sim</td>
+                    <td><a href="https://gridiron-franchise.vercel.app/">vercel</a></td>
+                </tr>
+                <tr>
+                    <td>STUB-018</td>
+                    <td>noted</td>
+                    <td>Notes app</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>STUB-019</td>
+                    <td>scriptboard</td>
+                    <td>Desktop utility + LLM workflows</td>
+                    <td><a href="https://frontend-ten-delta-77.vercel.app/">vercel</a></td>
+                </tr>
+                <tr>
+                    <td>STUB-021</td>
+                    <td>coderef-system</td>
+                    <td>CodeRef system</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>STUB-022</td>
+                    <td>next-multi-tenant</td>
+                    <td>Multi-tenant app</td>
+                    <td>—</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Workflow</h2>
+            <div class="workflow-box">
+                <div class="workflow-title">Stub to Completion</div>
+                <div class="workflow-flow">
+                    <span class="step">/stub "idea"</span>
+                    <span class="arrow">→</span>
+                    <span class="step">STUB-XXX created</span>
+                    <span class="arrow">→</span>
+                    <span class="step">/start-feature</span>
+                    <span class="arrow">→</span>
+                    <span class="step">WO-XXX assigned</span>
+                    <span class="arrow">→</span>
+                    <span class="step">Generate prompt</span>
+                    <span class="arrow">→</span>
+                    <span class="step">Paste in project agent</span>
+                    <span class="arrow">→</span>
+                    <span class="step">Collect results</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Role Definition</h2>
+            <div class="does-grid">
+                <div class="does-card do">
+                    <h3>This Assistant DOES</h3>
+                    <ul class="does-list">
+                        <li>Capture ideas as stubs</li>
+                        <li>Track projects and workorders</li>
+                        <li>Generate handoff prompts</li>
+                        <li>Maintain projects.md</li>
+                        <li>Update documentation</li>
+                    </ul>
+                </div>
+                <div class="does-card dont">
+                    <h3>This Assistant DOES NOT</h3>
+                    <ul class="does-list">
+                        <li>Execute code in other projects</li>
+                        <li>Deep-dive explore other codebases</li>
+                        <li>Make changes outside this folder</li>
+                        <li>Generate features.md for projects</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>High Priority Stubs</h2>
+            <div class="stubs-grid">
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-001</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">scriptboard-assistant-integration</div>
+                    <div class="stub-desc">Make Scriptboard the primary visual UI</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-002</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">tool-inventory-workflow</div>
+                    <div class="stub-desc">Orchestrator to delegate documentation</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-007</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">mcp-saas-platform</div>
+                    <div class="stub-desc">Lloyd.ai - full SaaS platform</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-008</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">workorder-handoff-protocol</div>
+                    <div class="stub-desc">Standard protocol for delegating</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-009</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">plan-progress-tracking</div>
+                    <div class="stub-desc">Agents update plan.json status</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-003</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">saas-mvp-candidates</div>
+                    <div class="stub-desc">Identify monetizable ideas</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-023</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">workorder-tracker-ui</div>
+                    <div class="stub-desc">Orchestrator + Scriptboard dashboard</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-027</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">orchestrator-mcp</div>
+                    <div class="stub-desc">MCP server with orchestrator tools + persona</div>
+                </div>
+                <div class="stub-card">
+                    <div class="stub-header">
+                        <span class="stub-id">STUB-028</span>
+                        <span class="stub-priority priority-high">high</span>
+                    </div>
+                    <div class="stub-name">plan-audit-workflow</div>
+                    <div class="stub-desc">Audit all plan.json across projects</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>ID Schemas</h2>
+            <div class="workflow-box">
+                <div class="workflow-title">Stub IDs</div>
+                <div class="workflow-flow">
+                    <span class="step">STUB-XXX</span>
+                    <span class="arrow">→</span>
+                    <span class="step">Auto-increment</span>
+                    <span class="arrow">→</span>
+                    <span class="step">Assigned at capture</span>
+                </div>
+            </div>
+            <div class="workflow-box">
+                <div class="workflow-title">Workorder IDs</div>
+                <div class="workflow-flow">
+                    <span class="step">WO-FEATURE-XXX</span>
+                    <span class="arrow">→</span>
+                    <span class="step">Assigned on promotion</span>
+                    <span class="arrow">→</span>
+                    <span class="step">Work begins</span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Assistant Orchestrator | Next STUB-ID: STUB-029 | Active WOs: 10</p>
+            <p>Last updated: 2025-12-16</p>
+        </footer>
+    </div>
+</body>
+</html>
