@@ -1,7 +1,7 @@
 # Projects
 
-> Last updated: 2025-12-24
-> Next STUB-ID: STUB-057
+> Last updated: 2025-12-26
+> Next STUB-ID: STUB-063
 
 ---
 
@@ -16,8 +16,10 @@
 | STUB-017 | gridiron-franchise | Football sim | `C:\Users\willh\Desktop\latest-sim\gridiron-franchise` | — | [vercel](https://gridiron-franchise.vercel.app/) |
 | STUB-018 | noted | Notes app | `C:\Users\willh\Desktop\projects\noted` | — | [vercel](https://noted-bay-three.vercel.app/auth) |
 | STUB-019 | scriptboard | Desktop utility + LLM workflows | `C:\Users\willh\Desktop\clipboard_compannion\next` | — | [vercel](https://frontend-ten-delta-77.vercel.app/) |
+| STUB-020 | documentation-site | Markdown documentation viewer | `C:\Users\willh\Desktop\assistant\documentation-site` | — | [local](http://localhost:8080) |
 | STUB-021 | coderef-system | CodeRef system | `C:\Users\willh\Desktop\projects\coderef-system` | — | — |
-| STUB-022 | next-multi-tenant | Multi-tenant app | `C:\Users\willh\Desktop\Business-Dash\latest-app` | — | — |
+| STUB-022 | coderef-dashboard | CodeRef orchestration dashboard | `C:\Users\willh\Desktop\coderef-dashboard` | — | [local](http://localhost:3000) |
+| STUB-023 | next-multi-tenant | Multi-tenant app | `C:\Users\willh\Desktop\Business-Dash\latest-app` | — | — |
 
 ---
 
@@ -44,6 +46,11 @@
 | STUB-054 | persona-role-context-system | feature | Build role-specific personas with dynamic context loading (Widget Architect proof-of-concept) |
 | STUB-055 | personas-ecosystem-architecture | feature | Comprehensive personas ecosystem: standardize structure, update all personas with coderef awareness, finalize architecture |
 | STUB-056 | known-issues-utility | feature | Known issues registry: agents log bugs + fixes for future reference, searchable by error/tag/project |
+| STUB-057 | coderef-assistant-route | feature | AI Assistant dashboard route in coderef-dashboard with workorders, stubs, and documentation viewer |
+| STUB-058 | mcp-doc-standards-integration | enhancement | Integrate UDS document standards into MCP servers (headers/footers with workorder tracking) |
+| STUB-059 | coderef-sources-route | feature | Knowledge base route with internal/external resources, search, filtering, and team resource management |
+| STUB-060 | coderef-tracking-api-mvp | CRITICAL | File system-based API for tracking workorders/stubs: projects.config.json + GET /api/{stubs,workorders} |
+| STUB-061 | stub-location-test | test | Validate stub centralization workflow - all stubs save to orchestrator regardless of origin project |
 
 ---
 
@@ -70,6 +77,7 @@
 | STUB-050 | work-order-folder-rename | refactor | Rename coderef/working/{feature}/ to coderef/work-order/{feature}/ for clarity |
 | STUB-051 | rename-execute-plan-to-align-plan | improvement | Rename /execute-plan to /align-plan for clarity (aligns plan with todo list) |
 | STUB-052 | websocket-live-update-test | test | Test WebSocket real-time updates in Scriptboard dashboard |
+| STUB-062 | align-plan-command-refactor | refactor | Align /create-plan command to standardize plan.json structure and coderef workflow |
 
 ---
 
