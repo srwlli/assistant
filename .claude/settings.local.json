@@ -33,13 +33,15 @@
       "Bash(dir /s /b \"C:\\Users\\willh\\Desktop\\assistant-docs\")",
       "Bash(dir:*)",
       "Bash(nul)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(git revert:*)"
     ]
   },
   "enabledMcpjsonServers": [
-    "coderef-context",
     "coderef-personas",
+    "coderef-context",
     "coderef-docs",
     "coderef-workflow"
-  ]
+  ],
+  "enableAllProjectMcpServers": true
 }
