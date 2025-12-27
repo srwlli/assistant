@@ -362,20 +362,102 @@
                     <span>/</span>
                     <span>workorder</span>
                     <span>/</span>
-                    <span>Active Workorders</span>
+                    <span>coderef-explorer-endpoints</span>
                     <span>/</span>
-                    <span style="color: var(--color-ind-accent); font-weight: 600;">Folder View</span>
+                    <span style="color: var(--color-ind-accent); font-weight: 600;">README.md</span>
                 </div>
-                <h2>coderef/workorder/</h2>
+                <h2>README.md</h2>
                 <div class="file-info">
-                    <span><span class="material-symbols-outlined sm">folder</span> Active Workorders</span>
-                    <span><span class="material-symbols-outlined sm">schedule</span> 7 folders</span>
+                    <span><span class="material-symbols-outlined sm">description</span> 3.1 KB</span>
+                    <span><span class="material-symbols-outlined sm">schedule</span> Modified Dec 25, 3:00 PM</span>
+                    <span><span class="material-symbols-outlined sm">folder</span> assistant/coderef/workorder/coderef-explorer-endpoints/</span>
                 </div>
             </div>
         </div>
 
-        <!-- Folder Contents -->
+        <!-- File Contents -->
         <div class="industrial-panel">
+            <div class="markdown-content">
+                <h1>CodeRef Explorer - API Endpoints</h1>
+
+                <p><strong>Feature stub defining the CodeRef Explorer workorder for dashboard integration.</strong></p>
+
+                <h2>Overview</h2>
+
+                <p>Implements 7 REST API endpoints for multi-project coderef browsing with folder-based discovery pattern.</p>
+
+                <h2>Key Files</h2>
+
+                <ul>
+                    <li><strong>stub.json</strong> - Feature metadata and requirements</li>
+                    <li><strong>plan.json</strong> - Implementation plan with tasks and phases</li>
+                    <li><strong>context.json</strong> - Technical context and constraints</li>
+                    <li><strong>DELIVERABLES.md</strong> - Completion checklist and metrics</li>
+                </ul>
+
+                <h2>API Endpoints</h2>
+
+                <p>The following endpoints provide access to coderef data:</p>
+
+                <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-lg) 0;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--color-ind-border);">
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Method</th>
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Endpoint</th>
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border);">
+                            <td style="padding: var(--spacing-md); font-weight: 600; color: #3b82f6;">GET</td>
+                            <td style="padding: var(--spacing-md); font-family: var(--font-mono); font-size: 12px;">/api/coderef/projects</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">List all registered projects</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border);">
+                            <td style="padding: var(--spacing-md); font-weight: 600; color: #3b82f6;">GET</td>
+                            <td style="padding: var(--spacing-md); font-family: var(--font-mono); font-size: 12px;">/api/coderef/tree</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Get folder tree for a project</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border);">
+                            <td style="padding: var(--spacing-md); font-weight: 600; color: #3b82f6;">GET</td>
+                            <td style="padding: var(--spacing-md); font-family: var(--font-mono); font-size: 12px;">/api/coderef/folder</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Get contents of a folder</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border);">
+                            <td style="padding: var(--spacing-md); font-weight: 600; color: #3b82f6;">GET</td>
+                            <td style="padding: var(--spacing-md); font-family: var(--font-mono); font-size: 12px;">/api/coderef/file</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Get file contents</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border);">
+                            <td style="padding: var(--spacing-md); font-weight: 600; color: #22c55e;">POST</td>
+                            <td style="padding: var(--spacing-md); font-family: var(--font-mono); font-size: 12px;">/api/coderef/projects</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Register a new project</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: var(--spacing-md); font-weight: 600; color: #ef4444;">DELETE</td>
+                            <td style="padding: var(--spacing-md); font-family: var(--font-mono); font-size: 12px;">/api/coderef/projects/:id</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Delete a project</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Implementation Status</h2>
+
+                <ul>
+                    <li>✅ API endpoint specification complete</li>
+                    <li>✅ Folder-based discovery pattern documented</li>
+                    <li>⏳ Backend implementation pending</li>
+                    <li>⏳ Frontend integration pending</li>
+                </ul>
+
+                <h2>Next Steps</h2>
+
+                <p>Once endpoints are implemented and tested, the UI team can build dashboard views that consume this API data for multi-project coderef browsing.</p>
+            </div>
+        </div>
+
+        <!-- Original Workorder Table (Hidden) -->
+        <div class="industrial-panel" style="display: none;">
             <div class="markdown-content">
                 <h2>Active Workorders</h2>
 
