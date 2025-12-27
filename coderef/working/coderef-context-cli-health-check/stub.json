@@ -1,0 +1,17 @@
+{
+  "feature_name": "coderef-context-cli-health-check",
+  "description": "Add CLI availability health check at coderef-context server startup. Verify @coderef/core CLI exists and is executable. Fail fast with clear error message if unavailable. Enable graceful degradation mode.",
+  "category": "improvement",
+  "priority": "high",
+  "source": "MCP-Server-Capabilities-Deep-Dive Phase 3 Roadmap - P1 Immediate",
+  "context": {
+    "roadmap_phase": "Phase 0 - Stabilization",
+    "effort": "Low (2 hours)",
+    "impact": "High - Eliminates single point of failure risk",
+    "target_server": "coderef-context",
+    "related_stubs": ["coderef-context-session-memoization", "coderef-context-graceful-degradation"],
+    "blocking_issue": "If @coderef/core CLI unavailable, entire coderef-context fails with generic error. No way to know if CLI exists before first tool call."
+  },
+  "created": "2025-12-25T16:30:00Z",
+  "status": "stub"
+}

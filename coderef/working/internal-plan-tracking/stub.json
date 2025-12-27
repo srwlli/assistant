@@ -1,0 +1,24 @@
+{
+  "stub_id": "STUB-030",
+  "tldr": "Auto-discover and track internal project plans (not delegated by orchestrator) by scanning coderef/working/*/plan.json periodically and registering them as 'internal' workorders in workorders.json.",
+  "feature_name": "internal-plan-tracking",
+  "description": "Track plan.json and workorders that originate inside projects without orchestrator involvement. Projects create their own plans - orchestrator should still be able to discover and track them.",
+  "category": "feature",
+  "priority": "high",
+  "tags": ["orchestrator", "workflow"],
+  "created": "2025-12-16T00:00:00Z",
+  "status": "stub",
+  "problem": "Some work starts inside projects directly (not delegated from orchestrator). These plans exist but aren't tracked in workorders.json.",
+  "solution": {
+    "discovery": "Orchestrator scans all project coderef/working/*/plan.json periodically",
+    "registration": "If plan.json exists without matching workorder, auto-register it",
+    "tracking": "Add to workorders.json with type: 'internal' to distinguish from delegated work"
+  },
+  "workflow": [
+    "1. Orchestrator scans project coderef/working/ folders",
+    "2. Finds plan.json files not in workorders.json",
+    "3. Creates workorder entry with type: 'internal'",
+    "4. Tracks status via plan.json progress field",
+    "5. Updates orchestration.json with discovery log"
+  ]
+}

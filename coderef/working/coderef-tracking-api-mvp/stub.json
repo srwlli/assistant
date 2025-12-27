@@ -1,0 +1,195 @@
+{
+  "feature_name": "coderef-tracking-api-mvp",
+  "title": "Workorder & Stub Tracking API - File System MVP",
+  "description": "Create Next.js API routes to track workorders and stubs across all projects. File system-based MVP with JSON response schemas, foundation for future WebSocket real-time updates",
+  "category": "feature",
+  "priority": "critical",
+  "created": "2025-12-26T11:00:00Z",
+  "status": "stub",
+  "context": {
+    "motivation": "Enable coderef-assistant and coderef-sources routes to display live workorder/stub data without hard-coding. Create API abstraction layer for future backend migration.",
+    "problem_statement": "Currently:\n- No unified API to fetch stubs and workorders\n- Stubs centralized in assistant/coderef/working/\n- Workorders scattered across multiple projects in coderef/workorder/\n- No project registry\n- coderef-assistant route has no data source\n- No schema contracts for frontend consumption",
+    "solution_approach": "File system-based MVP:\n1. Create projects.config.json (source of truth for all projects)\n2. Build API routes that scan file system\n3. Return consistent JSON schemas\n4. Design for future WebSocket real-time features\n5. Later: migrate to dedicated backend service",
+    "deliverables": [
+      "Create projects.config.json in assistant root",
+      "Create GET /api/stubs route handler",
+      "Create GET /api/workorders route handler",
+      "Create GET /api/workorders/:workorderId route handler",
+      "Define response schemas (JSON contracts)",
+      "Error handling and validation",
+      "Documentation for API consumers"
+    ],
+    "step_1_projects_config": {
+      "file": "C:\\Users\\willh\\Desktop\\assistant\\projects.config.json",
+      "purpose": "Single source of truth for all projects",
+      "structure": {
+        "projects": [
+          {
+            "id": "scrapper",
+            "name": "Scrapper Project",
+            "path": "C:\\Users\\willh\\Desktop\\scrapper",
+            "has_workorders": true,
+            "workorder_dir": "coderef/workorder",
+            "status": "active",
+            "description": "Web scraping tool"
+          },
+          {
+            "id": "gridiron",
+            "name": "Gridiron Franchise Simulator",
+            "path": "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise",
+            "has_workorders": true,
+            "workorder_dir": "coderef/workorder",
+            "status": "active",
+            "description": "Sports franchise simulation"
+          },
+          {
+            "id": "coderef-dashboard",
+            "name": "CodeRef Dashboard",
+            "path": "C:\\Users\\willh\\Desktop\\coderef-dashboard",
+            "has_workorders": true,
+            "workorder_dir": "coderef/workorder",
+            "status": "active",
+            "description": "Multi-agent orchestration dashboard"
+          },
+          {
+            "id": "documentation-site",
+            "name": "Documentation Site",
+            "path": "C:\\Users\\willh\\Desktop\\assistant\\documentation-site",
+            "has_workorders": false,
+            "status": "active",
+            "description": "Markdown documentation viewer"
+          }
+        ],
+        "centralized": {
+          "stubs_dir": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working"
+        }
+      }
+    },
+    "step_2_api_routes": {
+      "get_stubs": {
+        "path": "/api/stubs",
+        "method": "GET",
+        "description": "Fetch all stubs from centralized orchestrator",
+        "implementation": "1. Scan assistant/coderef/working/ (list folders)\n2. For each folder, read stub.json if present\n3. Return aggregated list",
+        "returns": "StubListResponse (array of stubs with metadata)"
+      },
+      "get_workorders": {
+        "path": "/api/workorders",
+        "method": "GET",
+        "description": "Fetch all workorders from all projects",
+        "implementation": "1. Read projects.config.json\n2. For each active project, scan {project_path}/coderef/workorder/ (list folders)\n3. If folder exists → workorder exists\n4. Read any files in folder (communication.json, plan.json, DELIVERABLES.md)\n5. Return combined list",
+        "returns": "WorkorderListResponse (array of workorders)"
+      },
+      "get_workorder_detail": {
+        "path": "/api/workorders/:workorderId",
+        "method": "GET",
+        "description": "Fetch specific workorder with all files and status",
+        "implementation": "1. Parse workorderId from URL parameter\n2. Search all projects: {project_path}/coderef/workorder/{feature-name}/\n3. Read all files in folder (communication.json, plan.json, DELIVERABLES.md)\n4. Return full workorder context with all available files",
+        "returns": "WorkorderDetailResponse (complete workorder with all data)"
+      }
+    },
+    "step_3_response_schemas": {
+      "stub_object": {
+        "id": "string (feature-name)",
+        "feature_name": "string",
+        "title": "string",
+        "description": "string",
+        "category": "feature|fix|improvement|idea|refactor|test",
+        "priority": "low|medium|high|critical",
+        "status": "stub|planned|in_progress|completed",
+        "created": "ISO 8601 timestamp",
+        "updated": "ISO 8601 timestamp",
+        "path": "file system path to stub.json"
+      },
+      "stub_list_response": {
+        "success": "boolean",
+        "data": {
+          "stubs": "[StubObject]",
+          "total": "number",
+          "location": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working"
+        },
+        "timestamp": "ISO 8601"
+      },
+      "workorder_object": {
+        "id": "string (workorder-id)",
+        "project_id": "string (from projects.config.json)",
+        "project_name": "string",
+        "feature_name": "string",
+        "status": "pending|in_progress|review|approved|implementing|complete|verified|closed",
+        "path": "file system path to workorder directory",
+        "files": {
+          "communication_json": "parsed communication.json content",
+          "plan_json": "parsed plan.json if exists",
+          "deliverables_md": "parsed DELIVERABLES.md if exists"
+        },
+        "created": "ISO 8601",
+        "updated": "ISO 8601",
+        "last_status_update": "ISO 8601"
+      },
+      "workorder_list_response": {
+        "success": "boolean",
+        "data": {
+          "workorders": "[WorkorderObject]",
+          "total": "number",
+          "by_project": "{ project_id: count }",
+          "by_status": "{ status: count }"
+        },
+        "timestamp": "ISO 8601"
+      },
+      "workorder_detail_response": {
+        "success": "boolean",
+        "data": {
+          "workorder": "WorkorderObject (expanded with all files)",
+          "tasks": "[task array from plan.json]",
+          "deliverables": "[deliverables from DELIVERABLES.md]",
+          "communication_log": "[message log from communication.json]"
+        },
+        "timestamp": "ISO 8601"
+      }
+    },
+    "step_4_file_structure": {
+      "api_routes": [
+        "packages/dashboard/src/app/api/stubs/route.ts",
+        "packages/dashboard/src/app/api/workorders/route.ts",
+        "packages/dashboard/src/app/api/workorders/[workorderId]/route.ts"
+      ],
+      "utilities": [
+        "packages/dashboard/src/lib/api/stubs.ts (StubReader)",
+        "packages/dashboard/src/lib/api/workorders.ts (WorkorderReader)",
+        "packages/dashboard/src/lib/api/projects.ts (ProjectsConfig)"
+      ],
+      "types": [
+        "packages/dashboard/src/types/stubs.ts",
+        "packages/dashboard/src/types/workorders.ts",
+        "packages/dashboard/src/types/api.ts"
+      ]
+    },
+    "error_handling": [
+      "File not found (communication.json missing)",
+      "Invalid JSON parsing",
+      "Project path inaccessible",
+      "Workorder ID not found",
+      "projects.config.json missing or invalid"
+    ],
+    "future_enhancements": [
+      "WebSocket /ws/workorders for real-time updates",
+      "POST /api/workorders/:workorderId/status to update status",
+      "Migrate from file system to dedicated backend database",
+      "Add filtering: /api/workorders?status=in_progress&project=coderef-dashboard",
+      "Add pagination for large workorder lists"
+    ],
+    "dependencies": [
+      "projects.config.json must exist before API routes run",
+      "Requires read access to all project directories",
+      "No external database required for MVP"
+    ],
+    "acceptance_criteria": [
+      "GET /api/stubs returns all stubs with correct schema",
+      "GET /api/workorders returns workorders from all projects",
+      "GET /api/workorders/:id returns full workorder with all files parsed",
+      "All responses match defined schemas",
+      "Error handling returns consistent error format",
+      "API documentation (endpoint, params, response) complete"
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "stub_id": "STUB-050",
+  "feature_name": "work-order-folder-rename",
+  "description": "Rename coderef/working/{feature}/ to coderef/work-order/{feature}/ to better reflect that folders contain workorder artifacts (plan.json, communication.json, etc.) not general work-in-progress",
+  "category": "refactor",
+  "priority": "medium",
+  "created": "2025-12-20",
+  "status": "stub",
+  "scope": "multi-project",
+  "rationale": "'working' is ambiguous - 'work-order' clearly indicates these folders contain workorder artifacts like plan.json, communication.json, context.json, DELIVERABLES.md",
+  "impact": {
+    "projects_affected": [
+      "assistant (orchestrator)",
+      "scriptboard",
+      "gridiron",
+      "scrapper",
+      "app-documents",
+      "noted",
+      "coderef-system",
+      "next-multi-tenant",
+      "docs-mcp",
+      "personas-mcp",
+      "coderef-mcp",
+      "scriptboard-mcp"
+    ],
+    "files_affected": [
+      "CLAUDE.md templates",
+      "projects.md",
+      "workorders.json",
+      "orchestrator.py (scriptboard)",
+      "docs-mcp tool paths",
+      "All workflow documentation"
+    ]
+  },
+  "proposed_structure": {
+    "current": "coderef/working/{feature}/",
+    "new": "coderef/work-order/{feature}/",
+    "contents": [
+      "plan.json",
+      "communication.json",
+      "context.json",
+      "DELIVERABLES.md",
+      "HANDOFF.md",
+      "analysis.json"
+    ]
+  },
+  "migration_strategy": [
+    "Audit all references to coderef/working/ across all projects",
+    "Update docs-mcp tool default paths",
+    "Update scriptboard orchestrator.py file scanner",
+    "Update CLAUDE.md in assistant and all project templates",
+    "Rename directories via git mv (preserve history)",
+    "Update workorders.json location fields",
+    "Test orchestrator discovery after rename",
+    "Update all workflow documentation"
+  ],
+  "benefits": [
+    "Clearer naming: work-order indicates structured workorder artifacts",
+    "Distinguishes from general work-in-progress folders",
+    "Aligns with workorder-centric workflow",
+    "More intuitive for new developers/agents"
+  ],
+  "related_stubs": [
+    "STUB-047 (coderef-directory-rename - similar but more general)"
+  ],
+  "note": "This is more specific than STUB-047 - focuses on the folder name itself, not the entire directory structure"
+}

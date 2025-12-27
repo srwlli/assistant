@@ -1,0 +1,123 @@
+{
+  "stub_id": "STUB-056",
+  "feature_name": "known-issues-utility",
+  "title": "Known Issues Utility: Agent-Logged Bug Fixes & Context Library",
+  "description": "Build a utility system where agents log issues they encounter with their fixes and context. Creates a searchable, learnable database so future agents skip repeated debugging and have immediate solutions.",
+  "category": "feature",
+  "priority": "high",
+  "status": "stub",
+  "created_at": "2025-12-24T00:00:00Z",
+  "problem": "Agents repeatedly encounter the same bugs, spend time debugging, discover the same fixes. No institutional knowledge transfer. Each agent starts from zero.",
+  "vision": "Central known issues registry where agents (or orchestrator) log: issue description, error message, root cause, fix applied, prevention tips. Future agents query this before debugging.",
+  "use_case": "Agent hits 'Python path not found' error → queries known-issues → finds 3 similar cases with solutions → applies fix immediately",
+  "scope": {
+    "what_gets_logged": [
+      "Issue: Clear description of the problem",
+      "Error message: Exact error text or stack trace",
+      "Root cause: Why it happened (missing dependency, config, path, etc.)",
+      "Fix applied: Exact steps to resolve",
+      "Prevention: How to avoid it next time",
+      "Project/context: Which project, which tool, which environment",
+      "Timestamp: When it was encountered",
+      "Agent: Who fixed it (for accountability)",
+      "Tags: Error type, tool affected, severity (blocker/annoying/minor)"
+    ],
+    "access_patterns": [
+      "Query by error message (text search)",
+      "Query by tag (python, path, import, etc.)",
+      "Query by project/tool",
+      "Query by severity",
+      "Browse all issues for a tool/project",
+      "Sort by frequency (most common issues first)"
+    ],
+    "workflow": [
+      "Agent encounters error",
+      "Agent queries: /known-issues search 'error message'",
+      "System returns matching issues + fixes",
+      "If found: Agent applies known fix, no debugging needed",
+      "If not found: Agent debugs, discovers fix",
+      "Agent logs: /known-issues log-fix 'issue details'",
+      "System stores in registry for future agents"
+    ]
+  },
+  "technical_considerations": {
+    "storage": "JSON files in coderef/known-issues/ (searchable, version-able, git-trackable)",
+    "format": {
+      "issue_id": "KI-001, KI-002, etc.",
+      "title": "Short issue name",
+      "description": "Full problem description",
+      "error_message": "Exact error text",
+      "root_cause": "Why it happened",
+      "fix": "Steps to fix it",
+      "prevention": "How to avoid it",
+      "severity": "blocker|annoying|minor",
+      "tags": ["python", "path", "import", "windows", "environment", "setup"],
+      "project": "Which project(s) affected",
+      "tool": "Which tool (git, python, npm, etc.)",
+      "logged_by": "Agent name",
+      "logged_at": "ISO timestamp",
+      "fixed_at": "When it was encountered",
+      "frequency": "Number of times encountered",
+      "last_seen": "Latest occurrence"
+    },
+    "integration_points": [
+      "/known-issues search <query>  - Search by error message or keywords",
+      "/known-issues tag <tag>  - Search by tag",
+      "/known-issues project <project>  - Show issues for specific project",
+      "/known-issues log-fix <details>  - Log a new issue + fix",
+      "/known-issues update <issue-id>  - Update frequency, last-seen for existing",
+      "/known-issues top <count>  - Show most frequent issues",
+      "Dashboard widget: Top 10 known issues in your projects"
+    ]
+  },
+  "example_entry": {
+    "issue_id": "KI-001",
+    "title": "Python not found in Windows PATH",
+    "description": "When running Python scripts via subprocess or shell commands on Windows, get 'python' is not recognized error even though Python is installed.",
+    "error_message": "'python' is not recognized as an internal or external command, operable program or batch file.",
+    "root_cause": "Python installation not added to Windows PATH environment variable. System can't locate python.exe.",
+    "fix": "1. Verify Python installed: python --version in CMD\n2. Add Python to PATH: setx PATH '%PATH%;C:\\Users\\<user>\\AppData\\Local\\Programs\\Python\\Python311'\n3. Restart terminal/IDE\n4. Verify: python --version",
+    "prevention": "When installing Python on Windows, check 'Add Python to PATH' during installation setup.",
+    "severity": "blocker",
+    "tags": ["python", "path", "windows", "environment", "setup"],
+    "project": "Multiple",
+    "tool": "Python",
+    "logged_by": "Lloyd",
+    "logged_at": "2025-12-24T10:00:00Z",
+    "fixed_at": "2025-12-20T14:30:00Z",
+    "frequency": 3,
+    "last_seen": "2025-12-24T09:45:00Z"
+  },
+  "benefits": [
+    "Knowledge transfer: Fixes preserved across agents and time",
+    "Speed: No repeated debugging of known issues",
+    "Learning: Agents see patterns (most common issues, prevention tips)",
+    "Accountability: Track who fixed what and when",
+    "Metrics: Identify systemic issues (repeated same bug = real problem)",
+    "Training: New agents can pre-learn common pitfalls"
+  ],
+  "success_criteria": [
+    "✅ Known issues can be logged by agents or orchestrator",
+    "✅ Issues can be searched by error message, tag, project",
+    "✅ System returns matching issues with fixes immediately",
+    "✅ Frequency tracking shows most common issues",
+    "✅ Issues are version-controlled (git-tracked)",
+    "✅ Dashboard shows top issues per project",
+    "✅ Slash commands exist: /known-issues search, log-fix, top, etc.",
+    "✅ Integration with agent workflows (suggest fixes when error encountered)"
+  ],
+  "next_steps": [
+    "Design issue entry schema (what fields are needed?)",
+    "Build slash commands: search, log-fix, update, top",
+    "Create storage system (coderef/known-issues/ JSON files)",
+    "Build search/query logic (text search, tag filtering, sorting)",
+    "Add dashboard widget for top issues",
+    "Integrate with error handling (suggest fixes when agents hit errors)"
+  ],
+  "related_projects": [
+    "assistant",
+    "coderef-system"
+  ],
+  "related_stubs": [],
+  "notes": "This is institutional knowledge that compounds over time. First few weeks will be sparse, but after months of agent work, becomes invaluable troubleshooting resource. Consider this an investment in agent productivity and reliability."
+}

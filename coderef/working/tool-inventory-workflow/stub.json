@@ -1,0 +1,32 @@
+{
+  "stub_id": "STUB-002",
+  "feature_name": "tool-inventory-workflow",
+  "description": "Orchestrator workflow to identify projects, delegate to embedded Lloyd agents for documentation, collect formatted results, and aggregate into master inventory.",
+  "category": "feature",
+  "priority": "high",
+  "tags": ["orchestrator", "workflow"],
+  "created": "2025-12-16T00:00:00.000Z",
+  "status": "stub",
+  "notes": {
+    "problem": "I create things and then don't know what they can do",
+    "architecture": {
+      "this_assistant": "Orchestrator - identify, delegate, collect, aggregate",
+      "embedded_lloyd": "Executor - has project context, generates output",
+      "scriptboard": "Display - visual inventory dashboard"
+    },
+    "key_insight": "Don't duplicate context. Delegate to where context lives.",
+    "existing_patterns": [
+      "/agentic-workflow",
+      "communication.json"
+    ],
+    "workflow": [
+      "1. Discover projects with embedded agents",
+      "2. Send structured prompt via communication.json",
+      "3. Embedded Lloyd generates features.md",
+      "4. Collect formatted responses",
+      "5. Aggregate into master inventory",
+      "6. Surface in Scriptboard"
+    ],
+    "related_to": "scriptboard-assistant-integration"
+  }
+}

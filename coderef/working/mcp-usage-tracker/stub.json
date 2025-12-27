@@ -1,0 +1,11 @@
+{
+  "stub_id": "STUB-026",
+  "feature_name": "mcp-usage-tracker",
+  "description": "Track tool and slash command usage across MCP servers. Monitor which tools are being called, frequency, and patterns to understand actual usage.",
+  "category": "feature",
+  "priority": "medium",
+  "tags": ["mcp", "workflow"],
+  "created": "2025-12-16T00:00:00Z",
+  "status": "stub",
+  "notes": "Could be built into MCP server infrastructure or as standalone analytics layer."
+}

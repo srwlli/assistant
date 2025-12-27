@@ -1,0 +1,9 @@
+{
+  "feature_name": "stub-workflow-validation",
+  "description": "Enforce 7-field stub schema and add JSON validation to prevent invalid stubs from breaking the API. Fixed two invalid stub files with backticks and unquoted values.",
+  "category": "fix",
+  "priority": "high",
+  "context": "Discovered that stub.json files were being created with over-engineered fields containing JavaScript code examples with backticks, causing JSON parse errors in the dashboard API. Fixed realtime-sync-system and known-issues-utility stubs by removing invalid code_example fields and quoting unquoted array values. Created stub.md command documentation enforcing strict 7-field schema. Enhanced StubReader with field validation and specific error messages for JSON parse failures and missing required fields.",
+  "created": "2025-12-27T14:00:00Z",
+  "status": "stub"
+}

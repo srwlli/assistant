@@ -1,0 +1,76 @@
+{
+  "stub_id": "STUB-049",
+  "name": "agent-completion-workflow",
+  "category": "improvement",
+  "description": "Clarify agent vs orchestrator responsibilities for completing workorders - agent archives, orchestrator only verifies",
+  "created": "2025-12-20",
+  "scope": "workflow-documentation",
+  "problem": {
+    "summary": "Unclear who should archive features after completion",
+    "current_state": [
+      "Agents complete work but don't run /update-deliverables or /archive-feature",
+      "Orchestrator steps in and does archival (wrong role)",
+      "DELIVERABLES.md left with TBD metrics",
+      "communication.json not updated to 'complete' by agent"
+    ],
+    "example": "WO-PERSONA-MANAGEMENT-001: Agent completed both tasks but orchestrator had to archive"
+  },
+  "proposed_workflow": {
+    "agent_responsibilities": [
+      "Execute approved plan tasks",
+      "Update plan.json task statuses during work",
+      "Update communication.json: status to 'implementing'",
+      "After completion: Run /update-deliverables to populate metrics",
+      "After completion: Run /archive-feature to move to coderef/archived/",
+      "After completion: Update communication.json: status to 'complete' + archived to true",
+      "Notify orchestrator work is complete"
+    ],
+    "orchestrator_responsibilities": [
+      "Verify communication.json shows status = 'complete'",
+      "Verify DELIVERABLES.md has actual metrics (not TBD)",
+      "Verify feature moved to coderef/archived/",
+      "Validate deliverables match requirements",
+      "Update workorders.json: move to completed_workorders",
+      "Add summary and deliverables list to workorders.json"
+    ],
+    "key_principle": "Agent executes ALL implementation tasks including completion tasks. Orchestrator ONLY verifies and updates tracking."
+  },
+  "documentation_updates_needed": {
+    "files": [
+      "CLAUDE.md (orchestrator)",
+      "CLAUDE.md (all project templates)",
+      "docs-mcp workflow documentation",
+      "Handoff prompt templates"
+    ],
+    "changes": {
+      "CLAUDE.md_phase_3": "Add 'Agent must run /update-deliverables and /archive-feature before marking complete'",
+      "CLAUDE.md_phase_4": "Change 'Orchestrator closes workorder' to 'Orchestrator verifies closure'",
+      "handoff_templates": "Add completion checklist: update-deliverables → archive-feature → update communication.json",
+      "workflow_diagrams": "Update to show agent doing archival, orchestrator doing verification only"
+    }
+  },
+  "tools_affected": [
+    "archive_feature (docs-mcp)",
+    "update_deliverables (docs-mcp)",
+    "update_task_status (docs-mcp)"
+  ],
+  "benefits": [
+    "Clear separation of concerns: agent = executor, orchestrator = tracker",
+    "Agent has full context when archiving (knows what was done)",
+    "Orchestrator stays true to role: identify, delegate, collect (not execute)",
+    "DELIVERABLES.md always populated with metrics before archival",
+    "communication.json always reflects true completion status"
+  ],
+  "validation": {
+    "success_criteria": [
+      "All agents complete /update-deliverables before /archive-feature",
+      "All features in coderef/archived/ have populated DELIVERABLES.md",
+      "Orchestrator never touches files in target projects",
+      "communication.json always updated to 'complete' by agent, not orchestrator"
+    ]
+  },
+  "priority": "high",
+  "status": "pending",
+  "target_agent": "docs-mcp",
+  "created_by": "Archer"
+}

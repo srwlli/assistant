@@ -1,0 +1,66 @@
+{
+  "workorder_id": "WO-CODEREF-CONTEXT-HEALTH-001",
+  "session": "MCP-Server-Capabilities-Deep-Dive-Phase-3-Roadmap",
+  "phase": 0,
+  "task": "Phase 0 - Stabilization, Task 1: CLI Health Check Implementation",
+  "feature_name": "coderef-context-cli-health-check",
+  "target_server": "coderef-context",
+  "priority": "P1",
+  "effort_estimate": "2 hours",
+  "impact": "High - Eliminates single point of failure",
+
+  "context": {
+    "blocker_source": "MCP Ecosystem Phase 2 Analysis - Critical Blocker #1",
+    "blocker_summary": "coderef-context CLI (@coderef/core) is single point of failure. If CLI unavailable, entire system fails.",
+    "roadmap_reference": "PHASE-3-ROADMAP-SYNTHESIS.md - Phase 0: Stabilization, Quick Win #1",
+    "shared_analysis": "session-mcp-capabilities.json"
+  },
+
+  "instructions": [
+    "Read HANDOFF-WO-CONTEXT-HEALTH-CHECK.md for full context",
+    "Review session-mcp-capabilities.json for ecosystem analysis findings",
+    "Review PHASE-3-ROADMAP-SYNTHESIS.md for 12-week strategic roadmap",
+    "Implement CLI health check in coderef-context server startup",
+    "Verify @coderef/core CLI exists and is executable",
+    "Return clear error message if CLI unavailable (not generic error)",
+    "Set server-level flag for graceful degradation (Phase 0 Task 2)",
+    "Test with CLI present and CLI missing scenarios"
+  ],
+
+  "success_criteria": [
+    "Server startup checks CLI existence",
+    "Warning logged if CLI missing",
+    "Clear error message returned to users",
+    "No subprocess spawned if CLI unavailable",
+    "Graceful degradation flag can be set without code changes"
+  ],
+
+  "handoff": {
+    "status": "pending_agent_assignment",
+    "shared_documents": [
+      "C:\\Users\\willh\\Desktop\\assistant\\session-mcp-capabilities.json",
+      "C:\\Users\\willh\\Desktop\\assistant\\PHASE-3-ROADMAP-SYNTHESIS.md",
+      "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\coderef-context-cli-health-check\\HANDOFF-WO-CONTEXT-HEALTH-CHECK.md"
+    ],
+    "related_stubs": [
+      "coderef-context-session-memoization",
+      "coderef-context-graceful-degradation",
+      "coderef-docs-coderef-context-integration",
+      "coderef-docs-auto-changelog"
+    ]
+  },
+
+  "tracking": {
+    "created": "2025-12-25T16:35:00Z",
+    "agent_status": "pending",
+    "task_status": "pending",
+    "completion_checklist": [
+      {"item": "CLI health check implemented", "status": "pending"},
+      {"item": "Error handling for missing CLI", "status": "pending"},
+      {"item": "Graceful degradation flag set", "status": "pending"},
+      {"item": "Testing complete (CLI present)", "status": "pending"},
+      {"item": "Testing complete (CLI missing)", "status": "pending"}
+    ],
+    "communication_log": []
+  }
+}
