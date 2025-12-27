@@ -51,7 +51,7 @@
       "fix": "Steps to fix it",
       "prevention": "How to avoid it",
       "severity": "blocker|annoying|minor",
-      "tags": ["python", "path", "import", "windows", etc.],
+      "tags": ["python", "path", "import", "windows", "environment", "setup"],
       "project": "Which project(s) affected",
       "tool": "Which tool (git, python, npm, etc.)",
       "logged_by": "Agent name",
