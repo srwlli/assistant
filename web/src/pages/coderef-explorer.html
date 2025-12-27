@@ -275,70 +275,77 @@
                 </button>
             </div>
 
-            <!-- File Tree -->
+            <!-- CodeRef Folder Tree -->
             <div style="border-top: 1px solid var(--color-ind-border); padding-top: var(--spacing-md);">
-                <p class="text-muted text-sm uppercase font-weight-700 mb-md" style="font-size: 11px; letter-spacing: 1px;">PROJECT FILES</p>
+                <p class="text-muted text-sm uppercase font-weight-700 mb-md" style="font-size: 11px; letter-spacing: 1px;">CODEREF</p>
 
-                <div class="tree-item" onclick="loadFile('README.md', this)">
-                    <span class="material-symbols-outlined sm">description</span>
-                    <span>README.md</span>
-                </div>
-
-                <div class="tree-item" onclick="loadFile('CLAUDE.md', this)">
-                    <span class="material-symbols-outlined sm">description</span>
-                    <span>CLAUDE.md</span>
-                </div>
-
-                <!-- CodeRef Folder -->
-                <div class="tree-item coderef-folder" onclick="toggleFolder(this)">
-                    <span class="material-symbols-outlined sm chevron">chevron_right</span>
+                <!-- CodeRef Folder (Expanded by default) -->
+                <div class="tree-item coderef-folder active" onclick="toggleFolder(this)">
+                    <span class="material-symbols-outlined sm chevron expanded">chevron_right</span>
                     <span class="material-symbols-outlined sm fill-1">folder_special</span>
                     <span style="flex: 1;">coderef/</span>
                     <span class="badge">CODEREF</span>
                 </div>
-                <div class="tree-children">
+                <div class="tree-children show">
                     <!-- Workorder Subfolder -->
                     <div class="tree-item" onclick="toggleFolder(this)">
                         <span class="material-symbols-outlined sm chevron">chevron_right</span>
                         <span class="material-symbols-outlined sm">work</span>
                         <span style="flex: 1;">workorder/</span>
-                        <span class="text-muted" style="font-size: 11px; margin-left: auto;">2</span>
                     </div>
                     <div class="tree-children">
-                        <div class="tree-item active" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/stub.json', this)">
+                        <div class="tree-item" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/', this)">
                             <span class="material-symbols-outlined sm">folder</span>
                             <span>coderef-explorer-endpoints/</span>
                         </div>
-                        <div class="tree-item" onclick="loadFile('docs/handoffs/HANDOFF-DASHBOARD-TRACKING-API.md', this)">
+                        <div class="tree-item" onclick="loadFile('coderef/workorder/dashboard-tracking/', this)">
                             <span class="material-symbols-outlined sm">folder</span>
                             <span>dashboard-tracking/</span>
                         </div>
                     </div>
 
-                    <!-- Working Subfolder -->
-                    <div class="tree-item" onclick="loadFile('coderef/working', this)">
-                        <span class="material-symbols-outlined sm">construction</span>
-                        <span>working/</span>
-                        <span class="text-muted" style="font-size: 11px; margin-left: auto;">3</span>
+                    <!-- Foundation Docs Subfolder -->
+                    <div class="tree-item" onclick="toggleFolder(this)">
+                        <span class="material-symbols-outlined sm chevron">chevron_right</span>
+                        <span class="material-symbols-outlined sm">description</span>
+                        <span style="flex: 1;">foundation-docs/</span>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-item" onclick="loadFile('coderef/foundation-docs/README.md', this)">
+                            <span class="material-symbols-outlined sm">description</span>
+                            <span>README.md</span>
+                        </div>
+                        <div class="tree-item" onclick="loadFile('coderef/foundation-docs/ARCHITECTURE.md', this)">
+                            <span class="material-symbols-outlined sm">description</span>
+                            <span>ARCHITECTURE.md</span>
+                        </div>
+                    </div>
+
+                    <!-- User Subfolder -->
+                    <div class="tree-item" onclick="toggleFolder(this)">
+                        <span class="material-symbols-outlined sm chevron">chevron_right</span>
+                        <span class="material-symbols-outlined sm">person</span>
+                        <span style="flex: 1;">user/</span>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-item" onclick="loadFile('coderef/user/features.md', this)">
+                            <span class="material-symbols-outlined sm">description</span>
+                            <span>features.md</span>
+                        </div>
                     </div>
 
                     <!-- Archived Subfolder -->
-                    <div class="tree-item" onclick="loadFile('coderef/archived', this)">
+                    <div class="tree-item" onclick="toggleFolder(this)">
+                        <span class="material-symbols-outlined sm chevron">chevron_right</span>
                         <span class="material-symbols-outlined sm">archive</span>
-                        <span>archived/</span>
-                        <span class="text-muted" style="font-size: 11px; margin-left: auto;">5</span>
+                        <span style="flex: 1;">archived/</span>
                     </div>
-                </div>
-
-                <!-- Other folders -->
-                <div class="tree-item" onclick="loadFile('docs/', this)">
-                    <span class="material-symbols-outlined sm">folder</span>
-                    <span>docs/</span>
-                </div>
-
-                <div class="tree-item" onclick="loadFile('web/', this)">
-                    <span class="material-symbols-outlined sm">folder</span>
-                    <span>web/</span>
+                    <div class="tree-children">
+                        <div class="tree-item" onclick="loadFile('coderef/archived/', this)">
+                            <span class="material-symbols-outlined sm">folder</span>
+                            <span>Archived Features</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
