@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRef Explorer - Project Manager</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 60px 1fr;
+            min-height: 100vh;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            grid-row: 1;
+            border-bottom: 1px solid var(--color-ind-border);
+            padding: 0 var(--spacing-lg);
+        }
+
+        aside {
+            grid-column: 1;
+            grid-row: 2;
+            border-right: 1px solid var(--color-ind-border);
+            overflow-y: auto;
+        }
+
+        main {
+            grid-column: 2;
+            grid-row: 2;
+            overflow-y: auto;
+            padding: var(--spacing-xl);
+        }
+
+        /* Custom styles for CodeRef Explorer */
+        .project-selector {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid var(--color-ind-border);
+        }
+
+        select {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--color-ind-panel);
+            border: 2px solid var(--color-ind-border);
+            border-radius: var(--radius-md);
+            color: var(--color-ind-text);
+            font-family: var(--font-display);
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--color-ind-accent);
+        }
+
+        .tree-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tree-item:hover {
+            background: rgba(255, 107, 0, 0.1);
+        }
+
+        .tree-item.active {
+            background: rgba(255, 107, 0, 0.2);
+            border-left: 3px solid var(--color-ind-accent);
+        }
+
+        .tree-item.coderef-folder {
+            background: rgba(255, 107, 0, 0.08);
+        }
+
+        .chevron {
+            transition: transform 0.2s;
+            font-size: 16px;
+        }
+
+        .chevron.expanded {
+            transform: rotate(90deg);
+        }
+
+        .tree-children {
+            display: none;
+            padding-left: var(--spacing-lg);
+        }
+
+        .tree-children.show {
+            display: block;
+        }
+
+        .badge {
+            font-size: 9px;
+            padding: 2px 4px;
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--color-ind-accent);
+            border-radius: 2px;
+            font-weight: 600;
+        }
+
+        .file-info {
+            display: flex;
+            gap: var(--spacing-lg);
+            font-size: 12px;
+            color: var(--color-ind-text-muted);
+            margin-top: var(--spacing-sm);
+        }
+
+        .markdown-content {
+            line-height: 1.8;
+        }
+
+        .markdown-content h1 {
+            font-size: 28px;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--color-ind-border);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .markdown-content h2 {
+            font-size: 22px;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .markdown-content h3 {
+            font-size: 18px;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .markdown-content p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .markdown-content code {
+            background: var(--color-ind-panel);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .markdown-content pre {
+            background: var(--color-ind-panel);
+            border: 1px solid var(--color-ind-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+        }
+
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin-left: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .markdown-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid var(--color-ind-accent);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            color: var(--color-ind-text-muted);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 50px 1fr;
+            }
+
+            aside {
+                grid-column: 1 / -1;
+                grid-row: 2;
+                border-right: none;
+                border-bottom: 1px solid var(--color-ind-border);
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            main {
+                grid-column: 1;
+                grid-row: 3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="flex flex-between items-center">
+        <div class="flex items-center gap-lg">
+            <h1 style="margin: 0; font-size: 20px;">
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 28px;">folder_open</span>
+                CodeRef Explorer
+            </h1>
+        </div>
+        <div class="flex gap-lg items-center">
+            <button class="industrial-button-secondary industrial-button-small" onclick="toggleTheme()">
+                <span class="material-symbols-outlined sm">dark_mode</span>
+            </button>
+            <button class="industrial-button-secondary industrial-button-small">
+                <span class="material-symbols-outlined sm">person</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="p-lg no-scrollbar">
+        <nav class="flex flex-col gap-md">
+            <!-- Project Selector -->
+            <div class="project-selector" style="padding: var(--spacing-md) 0;">
+                <p class="text-muted text-sm uppercase font-weight-700 mb-md" style="font-size: 11px; letter-spacing: 1px;">Select Project</p>
+                <select onchange="changeProject(this.value)">
+                    <option value="assistant">Assistant (Orchestrator)</option>
+                    <option value="coderef-workflow">coderef-workflow MCP</option>
+                    <option value="coderef-docs">coderef-docs MCP</option>
+                    <option value="coderef-context">coderef-context MCP</option>
+                </select>
+            </div>
+
+            <!-- File Tree -->
+            <div style="border-top: 1px solid var(--color-ind-border); padding-top: var(--spacing-md);">
+                <p class="text-muted text-sm uppercase font-weight-700 mb-md" style="font-size: 11px; letter-spacing: 1px;">PROJECT FILES</p>
+
+                <div class="tree-item" onclick="loadFile('README.md', this)">
+                    <span class="material-symbols-outlined sm">description</span>
+                    <span>README.md</span>
+                </div>
+
+                <div class="tree-item" onclick="loadFile('CLAUDE.md', this)">
+                    <span class="material-symbols-outlined sm">description</span>
+                    <span>CLAUDE.md</span>
+                </div>
+
+                <!-- CodeRef Folder -->
+                <div class="tree-item coderef-folder" onclick="toggleFolder(this)">
+                    <span class="material-symbols-outlined sm chevron">chevron_right</span>
+                    <span class="material-symbols-outlined sm fill-1">folder_special</span>
+                    <span style="flex: 1;">coderef/</span>
+                    <span class="badge">CODEREF</span>
+                </div>
+                <div class="tree-children">
+                    <!-- Workorder Subfolder -->
+                    <div class="tree-item" onclick="toggleFolder(this)">
+                        <span class="material-symbols-outlined sm chevron">chevron_right</span>
+                        <span class="material-symbols-outlined sm">work</span>
+                        <span style="flex: 1;">workorder/</span>
+                        <span class="text-muted" style="font-size: 11px; margin-left: auto;">2</span>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-item active" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/stub.json', this)">
+                            <span class="material-symbols-outlined sm">folder</span>
+                            <span>coderef-explorer-endpoints/</span>
+                        </div>
+                        <div class="tree-item" onclick="loadFile('docs/handoffs/HANDOFF-DASHBOARD-TRACKING-API.md', this)">
+                            <span class="material-symbols-outlined sm">folder</span>
+                            <span>dashboard-tracking/</span>
+                        </div>
+                    </div>
+
+                    <!-- Working Subfolder -->
+                    <div class="tree-item" onclick="loadFile('coderef/working', this)">
+                        <span class="material-symbols-outlined sm">construction</span>
+                        <span>working/</span>
+                        <span class="text-muted" style="font-size: 11px; margin-left: auto;">3</span>
+                    </div>
+
+                    <!-- Archived Subfolder -->
+                    <div class="tree-item" onclick="loadFile('coderef/archived', this)">
+                        <span class="material-symbols-outlined sm">archive</span>
+                        <span>archived/</span>
+                        <span class="text-muted" style="font-size: 11px; margin-left: auto;">5</span>
+                    </div>
+                </div>
+
+                <!-- Other folders -->
+                <div class="tree-item" onclick="loadFile('docs/', this)">
+                    <span class="material-symbols-outlined sm">folder</span>
+                    <span>docs/</span>
+                </div>
+
+                <div class="tree-item" onclick="loadFile('web/', this)">
+                    <span class="material-symbols-outlined sm">folder</span>
+                    <span>web/</span>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <div class="flex flex-between items-center mb-xl">
+            <div>
+                <h2>HANDOFF-DASHBOARD-TRACKING-API.md</h2>
+                <div class="file-info">
+                    <span><span class="material-symbols-outlined sm">description</span> 12.4 KB</span>
+                    <span><span class="material-symbols-outlined sm">schedule</span> Modified 1 day ago</span>
+                    <span><span class="material-symbols-outlined sm">folder</span> assistant/docs/handoffs/</span>
+                </div>
+            </div>
+            <div class="flex gap-lg">
+                <button class="industrial-button-secondary industrial-button-small">
+                    <span class="material-symbols-outlined sm">file_download</span>
+                </button>
+                <button class="industrial-button-secondary industrial-button-small">
+                    <span class="material-symbols-outlined sm">content_copy</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- File Content -->
+        <div class="industrial-panel">
+            <div class="markdown-content">
+                <h1>Handoff: Tracking API Implementation for Dashboard</h1>
+
+                <p><strong>To:</strong> Dashboard Agent (coderef-dashboard team)<br>
+                <strong>From:</strong> Orchestrator<br>
+                <strong>Status:</strong> Ready for Implementation<br>
+                <strong>Priority:</strong> CRITICAL (blocks all dashboard features)<br>
+                <strong>Date:</strong> 2025-12-26</p>
+
+                <h2>Your Mission</h2>
+
+                <p>Implement the file system-based API layer that powers the dashboard's workorder and stub tracking system.</p>
+
+                <p><strong>Why This Matters:</strong></p>
+                <ul>
+                    <li>Dashboard routes (<code>/coderef-assistant</code>, <code>/coderef-sources</code>) need live data</li>
+                    <li>You're building the <strong>data foundation</strong> everything else depends on</li>
+                    <li>This unblocks parallel work: you build API, UI team builds UI</li>
+                </ul>
+
+                <h2>What You're Building</h2>
+
+                <h3>3 API Endpoints</h3>
+
+                <pre><code>GET /api/stubs
+  ↓ Returns: All stubs from assistant/coderef/working/
+
+GET /api/workorders
+  ↓ Returns: All workorders from assistant/coderef/workorder/
+
+GET /api/projects
+  ↓ Returns: All registered projects from projects.config.json</code></pre>
+
+                <h3>File System Scan Pattern</h3>
+
+                <pre><code>assistant/coderef/
+├── working/              ← Scan for stub.json files
+│   ├── coderef-explorer/
+│   │   └── stub.json
+│   └── persona-system/
+│       └── stub.json
+│
+└── workorder/            ← Scan for plan.json + DELIVERABLES.md
+    ├── auth-system/
+    │   ├── plan.json
+    │   ├── context.json
+    │   └── DELIVERABLES.md
+    └── dashboard-api/
+        └── plan.json</code></pre>
+
+                <blockquote>
+                    <p><strong>Key Insight:</strong> Folder existence = workorder exists. Files inside are optional metadata. This "folder-based discovery" pattern is critical to understand.</p>
+                </blockquote>
+
+                <h3>Response Format Example</h3>
+
+                <pre><code>{
+  "stubs": [
+    {
+      "feature_name": "coderef-explorer-endpoints",
+      "description": "Wire coderef folders into dashboard",
+      "priority": "high",
+      "status": "stub",
+      "folder_path": "assistant/coderef/working/coderef-explorer-endpoints"
+    }
+  ],
+  "workorders": [
+    {
+      "workorder_id": "WO-AUTH-SYSTEM-001",
+      "feature_name": "user-authentication",
+      "status": "implementing",
+      "progress": 67,
+      "folder_path": "assistant/coderef/workorder/auth-system"
+    }
+  ]
+}</code></pre>
+
+                <h2>Success Criteria</h2>
+
+                <ul>
+                    <li>✅ All 3 endpoints return valid JSON</li>
+                    <li>✅ Folder-based discovery works (scans directories)</li>
+                    <li>✅ Graceful handling of missing files (stub.json, plan.json optional)</li>
+                    <li>✅ Fast response time (&lt; 200ms for typical project)</li>
+                    <li>✅ Can handle 50+ workorders/stubs without performance issues</li>
+                </ul>
+
+                <p style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; border-radius: var(--radius-md);"><strong>Next Step:</strong> Once these endpoints are live, the UI team can build the dashboard views that consume this data.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+
+            if (isDark) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function toggleFolder(element) {
+            element.classList.toggle('active');
+            const chevron = element.querySelector('.chevron');
+            const nextSibling = element.nextElementSibling;
+
+            if (chevron) {
+                chevron.classList.toggle('expanded');
+            }
+
+            if (nextSibling && nextSibling.classList.contains('tree-children')) {
+                nextSibling.classList.toggle('show');
+            }
+        }
+
+        function changeProject(projectId) {
+            console.log('Changed to project:', projectId);
+            // API call would go here: fetch(`/api/coderef/tree?project_id=${projectId}`)
+        }
+
+        function loadFile(filePath, element) {
+            // Remove active class from all tree items
+            document.querySelectorAll('.tree-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Add active to clicked item
+            element.classList.add('active');
+
+            console.log('Loading file:', filePath);
+            // API call would go here: fetch(`/api/coderef/file?project_id=assistant&file_path=${filePath}`)
+        }
+
+        // Initialize theme from localStorage
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            html.classList.remove('dark', 'light');
+            html.classList.add(savedTheme);
+        }
+
+        initTheme();
+    </script>
+</body>
+</html>
