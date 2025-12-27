@@ -94,6 +94,29 @@
             justify-content: center;
         }
 
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 12px;
+            color: var(--color-ind-text-muted);
+        }
+
+        .breadcrumbs span {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .breadcrumbs .separator {
+            color: var(--color-ind-border);
+        }
+
+        .breadcrumbs .active {
+            color: var(--color-ind-accent);
+            font-weight: 600;
+        }
+
         .tree-item {
             display: flex;
             align-items: center;
@@ -355,6 +378,16 @@
     <main>
         <div class="flex flex-between items-center mb-xl">
             <div>
+                <div class="breadcrumbs mb-md">
+                    <span>
+                        <span class="material-symbols-outlined sm">home</span>
+                        <span>Assistant</span>
+                    </span>
+                    <span class="separator">/</span>
+                    <span>coderef</span>
+                    <span class="separator">/</span>
+                    <span class="active">workorder</span>
+                </div>
                 <h2>coderef/workorder/</h2>
                 <div class="file-info">
                     <span><span class="material-symbols-outlined sm">folder</span> Active Workorders</span>
