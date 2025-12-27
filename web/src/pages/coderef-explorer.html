@@ -434,7 +434,73 @@
                     </tbody>
                 </table>
 
-                <h3>Status Legend</h3>
+                <h3 style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--color-ind-border);">Workorder Files (coderef-explorer-endpoints)</h3>
+
+                <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-lg) 0;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--color-ind-border);">
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">File</th>
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Size</th>
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Modified</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/stub.json', this)">
+                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>stub.json</strong></td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">2.3 KB</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 2:15 PM</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/plan.json', this)">
+                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>plan.json</strong></td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">8.7 KB</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 2:10 PM</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/context.json', this)">
+                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>context.json</strong></td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">1.9 KB</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 26, 10:30 PM</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/DELIVERABLES.md', this)">
+                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>DELIVERABLES.md</strong></td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">4.2 KB</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 1:45 PM</td>
+                        </tr>
+                        <tr style="cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/README.md', this)">
+                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>README.md</strong></td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">3.1 KB</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 25, 3:00 PM</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>README.md</h3>
+                <div style="background: var(--color-ind-panel); border: 1px solid var(--color-ind-border); border-radius: var(--radius-md); padding: var(--spacing-lg); margin: var(--spacing-lg) 0;">
+                    <h4 style="margin: 0 0 var(--spacing-md) 0;">CodeRef Explorer - API Endpoints</h4>
+                    <p style="margin: 0 0 var(--spacing-md) 0; color: var(--color-ind-text-muted); font-size: 12px;">Feature stub defining the CodeRef Explorer workorder for dashboard integration.</p>
+
+                    <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm) 0; font-size: 14px;">Overview</h4>
+                    <p style="margin: 0 0 var(--spacing-md) 0; font-size: 13px;">Implements 7 REST API endpoints for multi-project coderef browsing with folder-based discovery pattern.</p>
+
+                    <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm) 0; font-size: 14px;">Key Files</h4>
+                    <ul style="margin: 0 0 var(--spacing-md) 0; padding-left: var(--spacing-lg); font-size: 13px;">
+                        <li><strong>stub.json</strong> - Feature metadata and requirements</li>
+                        <li><strong>plan.json</strong> - Implementation plan with tasks and phases</li>
+                        <li><strong>context.json</strong> - Technical context and constraints</li>
+                        <li><strong>DELIVERABLES.md</strong> - Completion checklist and metrics</li>
+                    </ul>
+
+                    <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm) 0; font-size: 14px;">API Endpoints</h4>
+                    <ul style="margin: 0 0 var(--spacing-md) 0; padding-left: var(--spacing-lg); font-size: 13px;">
+                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/projects</code></li>
+                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/tree</code></li>
+                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/folder</code></li>
+                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/file</code></li>
+                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">POST /api/coderef/projects</code></li>
+                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">DELETE /api/coderef/projects/:id</code></li>
+                    </ul>
+                </div>
+
+                <h3 style="margin-top: var(--spacing-xl);">Status Legend</h3>
                 <div style="display: flex; gap: var(--spacing-lg); flex-wrap: wrap; margin-top: var(--spacing-md);">
                     <div style="display: flex; align-items: center; gap: var(--spacing-sm); font-size: 12px;">
                         <span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px;">complete</span>
