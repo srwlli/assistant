@@ -355,113 +355,81 @@
     <main>
         <div class="flex flex-between items-center mb-xl">
             <div>
-                <h2>HANDOFF-DASHBOARD-TRACKING-API.md</h2>
+                <h2>coderef/workorder/</h2>
                 <div class="file-info">
-                    <span><span class="material-symbols-outlined sm">description</span> 12.4 KB</span>
-                    <span><span class="material-symbols-outlined sm">schedule</span> Modified 1 day ago</span>
-                    <span><span class="material-symbols-outlined sm">folder</span> assistant/docs/handoffs/</span>
+                    <span><span class="material-symbols-outlined sm">folder</span> Active Workorders</span>
+                    <span><span class="material-symbols-outlined sm">schedule</span> 7 folders</span>
                 </div>
-            </div>
-            <div class="flex gap-lg">
-                <button class="industrial-button-secondary industrial-button-small">
-                    <span class="material-symbols-outlined sm">file_download</span>
-                </button>
-                <button class="industrial-button-secondary industrial-button-small">
-                    <span class="material-symbols-outlined sm">content_copy</span>
-                </button>
             </div>
         </div>
 
-        <!-- File Content -->
+        <!-- Folder Contents -->
         <div class="industrial-panel">
             <div class="markdown-content">
-                <h1>Handoff: Tracking API Implementation for Dashboard</h1>
+                <h2>Active Workorders</h2>
 
-                <p><strong>To:</strong> Dashboard Agent (coderef-dashboard team)<br>
-                <strong>From:</strong> Orchestrator<br>
-                <strong>Status:</strong> Ready for Implementation<br>
-                <strong>Priority:</strong> CRITICAL (blocks all dashboard features)<br>
-                <strong>Date:</strong> 2025-12-26</p>
+                <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-lg) 0;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--color-ind-border);">
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Workorder</th>
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Status</th>
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Progress</th>
+                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Files</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/', this)">
+                            <td style="padding: var(--spacing-md);"><strong>coderef-explorer-endpoints</strong></td>
+                            <td style="padding: var(--spacing-md);"><span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px; font-size: 12px;">complete</span></td>
+                            <td style="padding: var(--spacing-md);">100%</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">stub.json, plan.json</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/dashboard-tracking/', this)">
+                            <td style="padding: var(--spacing-md);"><strong>dashboard-tracking</strong></td>
+                            <td style="padding: var(--spacing-md);"><span style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 2px 8px; border-radius: 3px; font-size: 12px;">implementing</span></td>
+                            <td style="padding: var(--spacing-md);">65%</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">plan.json, context.json</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/persona-system/', this)">
+                            <td style="padding: var(--spacing-md);"><strong>persona-system</strong></td>
+                            <td style="padding: var(--spacing-md);"><span style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 2px 8px; border-radius: 3px; font-size: 12px;">planning</span></td>
+                            <td style="padding: var(--spacing-md);">30%</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">context.json</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/known-issues/', this)">
+                            <td style="padding: var(--spacing-md);"><strong>known-issues-utility</strong></td>
+                            <td style="padding: var(--spacing-md);"><span style="background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 2px 8px; border-radius: 3px; font-size: 12px;">pending</span></td>
+                            <td style="padding: var(--spacing-md);">5%</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">stub.json</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/auth-system/', this)">
+                            <td style="padding: var(--spacing-md);"><strong>auth-system</strong></td>
+                            <td style="padding: var(--spacing-md);"><span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px; font-size: 12px;">complete</span></td>
+                            <td style="padding: var(--spacing-md);">100%</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">plan.json, DELIVERABLES.md</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/dashboard-api/', this)">
+                            <td style="padding: var(--spacing-md);"><strong>dashboard-api</strong></td>
+                            <td style="padding: var(--spacing-md);"><span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px; font-size: 12px;">complete</span></td>
+                            <td style="padding: var(--spacing-md);">100%</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">plan.json, DELIVERABLES.md, communication.json</td>
+                        </tr>
+                        <tr style="cursor: pointer;" onclick="loadFile('coderef/workorder/ui-integration/', this)">
+                            <td style="padding: var(--spacing-md);"><strong>ui-integration</strong></td>
+                            <td style="padding: var(--spacing-md);"><span style="background: rgba(249, 115, 22, 0.2); color: #f97316; padding: 2px 8px; border-radius: 3px; font-size: 12px;">blocked</span></td>
+                            <td style="padding: var(--spacing-md);">0%</td>
+                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">context.json, communication.json</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <h2>Your Mission</h2>
-
-                <p>Implement the file system-based API layer that powers the dashboard's workorder and stub tracking system.</p>
-
-                <p><strong>Why This Matters:</strong></p>
+                <h3>Status Legend</h3>
                 <ul>
-                    <li>Dashboard routes (<code>/coderef-assistant</code>, <code>/coderef-sources</code>) need live data</li>
-                    <li>You're building the <strong>data foundation</strong> everything else depends on</li>
-                    <li>This unblocks parallel work: you build API, UI team builds UI</li>
+                    <li><span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px; font-size: 12px;">complete</span> - Ready for delivery/archived</li>
+                    <li><span style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 2px 8px; border-radius: 3px; font-size: 12px;">implementing</span> - Active development</li>
+                    <li><span style="background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 2px 8px; border-radius: 3px; font-size: 12px;">planning</span> - Design phase</li>
+                    <li><span style="background: rgba(249, 115, 22, 0.2); color: #f97316; padding: 2px 8px; border-radius: 3px; font-size: 12px;">blocked</span> - Waiting on dependencies</li>
                 </ul>
-
-                <h2>What You're Building</h2>
-
-                <h3>3 API Endpoints</h3>
-
-                <pre><code>GET /api/stubs
-  ↓ Returns: All stubs from assistant/coderef/working/
-
-GET /api/workorders
-  ↓ Returns: All workorders from assistant/coderef/workorder/
-
-GET /api/projects
-  ↓ Returns: All registered projects from projects.config.json</code></pre>
-
-                <h3>File System Scan Pattern</h3>
-
-                <pre><code>assistant/coderef/
-├── working/              ← Scan for stub.json files
-│   ├── coderef-explorer/
-│   │   └── stub.json
-│   └── persona-system/
-│       └── stub.json
-│
-└── workorder/            ← Scan for plan.json + DELIVERABLES.md
-    ├── auth-system/
-    │   ├── plan.json
-    │   ├── context.json
-    │   └── DELIVERABLES.md
-    └── dashboard-api/
-        └── plan.json</code></pre>
-
-                <blockquote>
-                    <p><strong>Key Insight:</strong> Folder existence = workorder exists. Files inside are optional metadata. This "folder-based discovery" pattern is critical to understand.</p>
-                </blockquote>
-
-                <h3>Response Format Example</h3>
-
-                <pre><code>{
-  "stubs": [
-    {
-      "feature_name": "coderef-explorer-endpoints",
-      "description": "Wire coderef folders into dashboard",
-      "priority": "high",
-      "status": "stub",
-      "folder_path": "assistant/coderef/working/coderef-explorer-endpoints"
-    }
-  ],
-  "workorders": [
-    {
-      "workorder_id": "WO-AUTH-SYSTEM-001",
-      "feature_name": "user-authentication",
-      "status": "implementing",
-      "progress": 67,
-      "folder_path": "assistant/coderef/workorder/auth-system"
-    }
-  ]
-}</code></pre>
-
-                <h2>Success Criteria</h2>
-
-                <ul>
-                    <li>✅ All 3 endpoints return valid JSON</li>
-                    <li>✅ Folder-based discovery works (scans directories)</li>
-                    <li>✅ Graceful handling of missing files (stub.json, plan.json optional)</li>
-                    <li>✅ Fast response time (&lt; 200ms for typical project)</li>
-                    <li>✅ Can handle 50+ workorders/stubs without performance issues</li>
-                </ul>
-
-                <p style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; border-radius: var(--radius-md);"><strong>Next Step:</strong> Once these endpoints are live, the UI team can build the dashboard views that consume this data.</p>
             </div>
         </div>
     </main>
