@@ -34,7 +34,8 @@
       "Bash(dir:*)",
       "Bash(nul)",
       "Bash(findstr:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(done)"
     ]
   },
   "enabledMcpjsonServers": [
