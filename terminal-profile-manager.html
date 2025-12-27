@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Profile Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            color: #222;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .profile-card {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .profile-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .profile-card.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .profile-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .profile-path {
+            font-size: 12px;
+            color: #666;
+            word-break: break-all;
+            margin-bottom: 8px;
+        }
+
+        .profile-icon {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .checkbox {
+            margin-right: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .color-picker-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: #333;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            flex: none;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-added {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-updated {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .summary {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .summary p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .emoji {
+            margin-right: 6px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .profiles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖥️ Terminal Profile Manager</h1>
+        <p class="subtitle">Add Coderef profiles to Windows Terminal - 6 new profiles to manage your development environment</p>
+
+        <div id="message"></div>
+
+        <!-- Profiles to Add Section -->
+        <div class="section">
+            <h2><span class="emoji">➕</span>Profiles to Add</h2>
+            <p style="color: #666; margin-bottom: 16px; font-size: 14px;">Select the profiles you want to add to Windows Terminal</p>
+
+            <div class="profiles-grid" id="profilesGrid"></div>
+
+            <div style="display: flex; gap: 12px; margin-top: 16px;">
+                <button class="btn-secondary btn-small" onclick="selectAllProfiles()">Select All</button>
+                <button class="btn-secondary btn-small" onclick="deselectAllProfiles()">Deselect All</button>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="section">
+            <h2><span class="emoji">⚙️</span>Settings</h2>
+
+            <div class="form-group">
+                <label>Windows Terminal Settings Path</label>
+                <input type="text" id="settingsPath" placeholder="C:\Users\[YourName]\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json">
+                <small style="color: #666; margin-top: 6px; display: block;">Leave empty to use default path</small>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="createBackup" checked> Create backup before adding profiles
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="createFolder" checked> Create "Coderef" folder in new tab menu
+                </label>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="section">
+            <h2><span class="emoji">📋</span>Summary</h2>
+            <div class="summary" id="summary">
+                <p><strong>Selected profiles:</strong> <span id="selectedCount">0</span></p>
+                <p><strong>Status:</strong> Ready to configure</p>
+            </div>
+        </div>
+
+        <!-- Actions Section -->
+        <div class="button-group">
+            <button class="btn-secondary" onclick="resetForm()">Reset</button>
+            <button class="btn-primary" onclick="applyProfiles()">Apply Profiles to Terminal</button>
+        </div>
+    </div>
+
+    <script>
+        // Profile definitions matching terminal-profiles.md
+        const profiles = [
+            {
+                name: "Coderef > Context",
+                icon: "🔍",
+                directory: ".mcp-servers/coderef-context",
+                color: "#EAB308",
+                description: "CodeRef Context MCP Server"
+            },
+            {
+                name: "Coderef > Docs",
+                icon: "📚",
+                directory: ".mcp-servers/coderef-docs",
+                color: "#EAB308",
+                description: "CodeRef Docs MCP Server"
+            },
+            {
+                name: "Coderef > Workflow",
+                icon: "📋",
+                directory: ".mcp-servers/coderef-workflow",
+                color: "#EAB308",
+                description: "CodeRef Workflow MCP Server"
+            },
+            {
+                name: "Coderef > Personas",
+                icon: "🎭",
+                directory: ".mcp-servers/coderef-personas",
+                color: "#EAB308",
+                description: "CodeRef Personas MCP Server"
+            },
+            {
+                name: "Coderef > Dashboard",
+                icon: "📊",
+                directory: ".mcp-servers/coderef-dashboard",
+                color: "#8B5CF6",
+                description: "CodeRef Dashboard MCP Server"
+            },
+            {
+                name: "Coderef > Testing",
+                icon: "🧪",
+                directory: ".mcp-servers/coderef-testing",
+                color: "#F59E0B",
+                description: "CodeRef Testing MCP Server"
+            }
+        ];
+
+        // Initialize UI
+        function initUI() {
+            renderProfiles();
+            updateSummary();
+        }
+
+        function renderProfiles() {
+            const grid = document.getElementById('profilesGrid');
+            grid.innerHTML = profiles.map((profile, idx) => `
+                <div class="profile-card" onclick="toggleProfile(${idx})">
+                    <div class="profile-icon">${profile.icon}</div>
+                    <div class="profile-name">
+                        <input type="checkbox" class="checkbox profile-checkbox-${idx}" onchange="updateSummary()"> ${profile.name}
+                    </div>
+                    <div class="profile-path">${profile.directory}</div>
+                    <div style="font-size: 12px; color: #999;">${profile.description}</div>
+                    <div style="margin-top: 8px;">
+                        <div class="profile-color" style="background-color: ${profile.color};"></div>
+                        <span style="font-size: 11px; color: #666;">${profile.color}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleProfile(idx) {
+            const checkbox = document.querySelector(`.profile-checkbox-${idx}`);
+            checkbox.checked = !checkbox.checked;
+            updateSummary();
+        }
+
+        function selectAllProfiles() {
+            document.querySelectorAll('.profile-checkbox-0, .profile-checkbox-1, .profile-checkbox-2, .profile-checkbox-3, .profile-checkbox-4, .profile-checkbox-5').forEach(cb => {
+                cb.checked = true;
+            });
+            updateSummary();
+        }
+
+        function deselectAllProfiles() {
+            document.querySelectorAll('input[class*="profile-checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const selected = document.querySelectorAll('input[class*="profile-checkbox"]:checked').length;
+            document.getElementById('selectedCount').textContent = selected;
+        }
+
+        function getSelectedProfiles() {
+            const selected = [];
+            profiles.forEach((profile, idx) => {
+                const checkbox = document.querySelector(`.profile-checkbox-${idx}`);
+                if (checkbox && checkbox.checked) {
+                    selected.push(profile);
+                }
+            });
+            return selected;
+        }
+
+        function resetForm() {
+            deselectAllProfiles();
+            document.getElementById('settingsPath').value = '';
+            document.getElementById('createBackup').checked = true;
+            document.getElementById('createFolder').checked = true;
+            clearMessage();
+        }
+
+        function showMessage(message, type = 'info') {
+            const messageEl = document.getElementById('message');
+            messageEl.innerHTML = `<div class="message ${type}">${message}</div>`;
+        }
+
+        function clearMessage() {
+            document.getElementById('message').innerHTML = '';
+        }
+
+        async function applyProfiles() {
+            const selected = getSelectedProfiles();
+
+            if (selected.length === 0) {
+                showMessage('⚠️ Please select at least one profile to add', 'info');
+                return;
+            }
+
+            const settingsPath = document.getElementById('settingsPath').value;
+            const createBackup = document.getElementById('createBackup').checked;
+            const createFolder = document.getElementById('createFolder').checked;
+
+            // In a real application, this would call an API or Electron IPC
+            // For now, show what would be sent
+            const data = {
+                action: 'applyProfiles',
+                profiles: selected,
+                settingsPath: settingsPath || 'default',
+                createBackup,
+                createFolder,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Would apply:', data);
+
+            // Show success message
+            showMessage(`<strong>✅ Ready to apply!</strong><br>
+                ${selected.length} profile(s) selected. Copy the command below to your terminal:<br>
+                <br>
+                <code>node "C:\\Users\\willh\\Desktop\\assistant\\apply-terminal-profiles.js"</code>
+            `, 'success');
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initUI);
+    </script>
+</body>
+</html>

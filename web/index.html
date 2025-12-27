@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager - Dashboard</title>
+    <link rel="stylesheet" href="src/css/main.css">
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 60px 1fr;
+            min-height: 100vh;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            grid-row: 1;
+            border-bottom: 1px solid var(--color-ind-border);
+            padding: 0 var(--spacing-lg);
+        }
+
+        aside {
+            grid-column: 1;
+            grid-row: 2;
+            border-right: 1px solid var(--color-ind-border);
+            overflow-y: auto;
+        }
+
+        main {
+            grid-column: 2;
+            grid-row: 2;
+            overflow-y: auto;
+            padding: var(--spacing-xl);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 50px 1fr;
+            }
+
+            aside {
+                grid-column: 1 / -1;
+                grid-row: 2;
+                border-right: none;
+                border-bottom: 1px solid var(--color-ind-border);
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            main {
+                grid-column: 1;
+                grid-row: 3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="flex flex-between items-center">
+        <div class="flex items-center gap-lg">
+            <h1 style="margin: 0; font-size: 20px;">
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 28px;">dashboard</span>
+                Project Manager
+            </h1>
+        </div>
+        <div class="flex gap-lg items-center">
+            <button class="industrial-button-secondary industrial-button-small" onclick="toggleTheme()">
+                <span class="material-symbols-outlined sm">dark_mode</span>
+            </button>
+            <button class="industrial-button-secondary industrial-button-small">
+                <span class="material-symbols-outlined sm">person</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="p-lg no-scrollbar">
+        <nav class="flex flex-col gap-md">
+            <div>
+                <p class="text-muted text-sm uppercase font-weight-700 mb-md" style="font-size: 11px; letter-spacing: 1px;">Navigation</p>
+                <ul style="list-style: none;">
+                    <li><a href="#" class="flex gap-md items-center p-md" style="text-decoration: none; color: var(--color-ind-text); border-radius: var(--radius-md); transition: all 0.2s;">
+                        <span class="material-symbols-outlined sm">home</span>
+                        <span>Dashboard</span>
+                    </a></li>
+                    <li><a href="#" class="flex gap-md items-center p-md" style="text-decoration: none; color: var(--color-ind-text); border-radius: var(--radius-md); transition: all 0.2s;">
+                        <span class="material-symbols-outlined sm">folder</span>
+                        <span>Projects</span>
+                    </a></li>
+                    <li><a href="#" class="flex gap-md items-center p-md" style="text-decoration: none; color: var(--color-ind-text); border-radius: var(--radius-md); transition: all 0.2s;">
+                        <span class="material-symbols-outlined sm">checklist</span>
+                        <span>Workorders</span>
+                    </a></li>
+                    <li><a href="#" class="flex gap-md items-center p-md" style="text-decoration: none; color: var(--color-ind-text); border-radius: var(--radius-md); transition: all 0.2s;">
+                        <span class="material-symbols-outlined sm">settings</span>
+                        <span>Settings</span>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <div class="flex flex-between items-center mb-xl">
+            <div>
+                <h2>Dashboard</h2>
+                <p class="text-muted mt-sm">Welcome to Project Manager</p>
+            </div>
+            <button class="industrial-button">
+                <span class="material-symbols-outlined sm" style="margin-right: var(--spacing-sm);">add</span>
+                New Project
+            </button>
+        </div>
+
+        <!-- Stats Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+            <div class="industrial-panel">
+                <div class="flex flex-between items-start">
+                    <div>
+                        <p class="text-muted text-sm" style="font-size: 12px; margin-bottom: var(--spacing-sm);">TOTAL PROJECTS</p>
+                        <h3 style="margin: 0; font-size: 32px;">12</h3>
+                    </div>
+                    <span class="material-symbols-outlined" style="color: var(--color-ind-accent);">folder</span>
+                </div>
+            </div>
+
+            <div class="industrial-panel">
+                <div class="flex flex-between items-start">
+                    <div>
+                        <p class="text-muted text-sm" style="font-size: 12px; margin-bottom: var(--spacing-sm);">ACTIVE WORKORDERS</p>
+                        <h3 style="margin: 0; font-size: 32px;">8</h3>
+                    </div>
+                    <span class="material-symbols-outlined" style="color: var(--color-ind-accent);">checklist</span>
+                </div>
+            </div>
+
+            <div class="industrial-panel">
+                <div class="flex flex-between items-start">
+                    <div>
+                        <p class="text-muted text-sm" style="font-size: 12px; margin-bottom: var(--spacing-sm);">COMPLETION RATE</p>
+                        <h3 style="margin: 0; font-size: 32px;">67%</h3>
+                    </div>
+                    <span class="material-symbols-outlined" style="color: var(--color-ind-accent);">trending_up</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="industrial-panel">
+            <div class="flex flex-between items-center mb-lg">
+                <h3>Recent Projects</h3>
+                <button class="industrial-button-secondary industrial-button-small">View All</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Status</th>
+                        <th>Progress</th>
+                        <th>Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CodeRef Explorer</strong></td>
+                        <td>
+                            <span style="display: inline-block; padding: 4px 8px; background: rgba(34, 197, 94, 0.2); color: #22c55e; border-radius: 4px; font-size: 12px;">Active</span>
+                        </td>
+                        <td>
+                            <div style="background: var(--color-ind-panel); height: 20px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--color-ind-accent); height: 100%; width: 75%;"></div>
+                            </div>
+                        </td>
+                        <td>2 hours ago</td>
+                        <td>
+                            <button class="industrial-button-secondary industrial-button-small">View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Terminal Profile Manager</strong></td>
+                        <td>
+                            <span style="display: inline-block; padding: 4px 8px; background: rgba(251, 146, 60, 0.2); color: #fb923c; border-radius: 4px; font-size: 12px;">Planning</span>
+                        </td>
+                        <td>
+                            <div style="background: var(--color-ind-panel); height: 20px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--color-ind-accent); height: 100%; width: 25%;"></div>
+                            </div>
+                        </td>
+                        <td>1 day ago</td>
+                        <td>
+                            <button class="industrial-button-secondary industrial-button-small">View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coderef Testing Framework</strong></td>
+                        <td>
+                            <span style="display: inline-block; padding: 4px 8px; background: rgba(59, 130, 246, 0.2); color: #3b82f6; border-radius: 4px; font-size: 12px;">In Progress</span>
+                        </td>
+                        <td>
+                            <div style="background: var(--color-ind-panel); height: 20px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--color-ind-accent); height: 100%; width: 50%;"></div>
+                            </div>
+                        </td>
+                        <td>3 days ago</td>
+                        <td>
+                            <button class="industrial-button-secondary industrial-button-small">View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+
+            if (isDark) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Initialize theme from localStorage
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            html.classList.remove('dark', 'light');
+            html.classList.add(savedTheme);
+        }
+
+        initTheme();
+    </script>
+</body>
+</html>

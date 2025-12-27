@@ -29,7 +29,11 @@
       "Bash(git commit:*)",
       "Bash(powershell -Command \"New-Item -ItemType Directory -Force -Path ''C:\\Users\\willh\\Desktop\\html-tools\\tools\\orchestrator'',''C:\\Users\\willh\\Desktop\\html-tools\\tools\\coderef-context'',''C:\\Users\\willh\\Desktop\\html-tools\\tools\\coderef-workflow'',''C:\\Users\\willh\\Desktop\\html-tools\\tools\\coderef-docs'' | Out-Null; Get-ChildItem ''C:\\Users\\willh\\Desktop\\html-tools\\tools\\'' | Select-Object Name\")",
       "mcp__coderef-workflow__create_plan",
-      "mcp__coderef-workflow__log_workorder"
+      "mcp__coderef-workflow__log_workorder",
+      "Bash(dir /s /b \"C:\\Users\\willh\\Desktop\\assistant-docs\")",
+      "Bash(dir:*)",
+      "Bash(nul)",
+      "Bash(findstr:*)"
     ]
   },
   "enabledMcpjsonServers": [

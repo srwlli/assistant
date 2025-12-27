@@ -1,0 +1,62 @@
+{
+  "feature_name": "papertrail-mcp-integration",
+  "title": "Papertrail AI Doc Generator Integration with CodeRef MCP Servers",
+  "description": "Integrate Papertrail's AI-powered documentation generation into coderef-docs MCP to auto-generate UDS-compliant DELIVERABLES.md, API docs, and architecture diagrams from plan.json during feature implementation.",
+  "category": "feature",
+  "priority": "high",
+  "created": "2025-12-26T14:30:00Z",
+  "status": "stub",
+  "context": "CodeRef ecosystem currently requires manual DELIVERABLES.md and doc generation after each feature. Papertrail's archived codebase contains proven AI Generator and UDS Framework modules (rated 6.5-8/10 viability) that could automate this. Proposal: When agent runs /create-plan and generates plan.json, coderef-docs MCP would invoke Papertrail's AI Generator to auto-produce UDS-compliant documentation (DELIVERABLES.md, API docs, architecture diagrams) without manual writing. This closes the gap between implementation and documentation and enables searchable, standardized docs across all features.",
+  "motivation": "Eliminate manual documentation burden. Auto-generate consistent UDS-compliant docs at feature creation time. Enable Papertrail's Search Engine to index all docs uniformly.",
+  "problem_statement": "Currently: Agent completes feature → Manually writes DELIVERABLES.md → Manually updates docs. Result: Slow, inconsistent, documentation lag. Proposed: Agent completes feature → plan.json triggers AI auto-generation → Docs created instantly, UDS-compliant, searchable.",
+  "solution_approach": "Extract Papertrail modules: AI Generator (uds-ai-generator.ts, ai-generator.ts) + UDS Framework (uds.ts). Integrate into coderef-docs MCP. Create MCP tool: /generate-docs-from-plan {plan.json} → Returns auto-generated DELIVERABLES.md, API.md, ARCHITECTURE.md. Future: Add Papertrail Search Engine for doc discovery.",
+  "components_to_extract": [
+    "uds-ai-generator.ts (14.2 KB) - Bridge between UDS templates and AI output",
+    "ai-generator.ts (8.8 KB) - Orchestrator for AI-driven documentation",
+    "uds.ts (18.8 KB) - UDS schema definitions and placeholder tokens",
+    "template-engine-extended.ts (32.8 KB) - Markdown templating engine with token injection",
+    "search-engine.ts (20.0 KB) - Intelligent document discovery (future phase)"
+  ],
+  "implementation_steps": [
+    "Parse Papertrail codebase, extract AI Generator + UDS modules",
+    "Adapt modules for MCP integration (remove Papertrail-specific dependencies)",
+    "Create MCP tool: /generate-docs-from-plan {plan_json_path}",
+    "Wire into coderef-docs MCP workflow",
+    "Test: Run /create-plan → /generate-docs-from-plan → Verify UDS output",
+    "Phase 2: Integrate Papertrail Search Engine for doc discovery"
+  ],
+  "expected_output": {
+    "immediate": "MCP tool that reads plan.json and auto-generates: DELIVERABLES.md (with metrics), API.md (endpoints), ARCHITECTURE.md (design). All UDS-compliant.",
+    "phase_2": "Papertrail Search Engine integrated: /search-docs {query} discovers all generated + manually-written docs across all features, projects"
+  },
+  "dependencies": [
+    "Papertrail codebase (archived but accessible)",
+    "OpenAI/Claude API for AI generation (config via env vars)",
+    "Existing coderef-docs MCP structure"
+  ],
+  "risks": [
+    "AI generation quality varies (need validation/approval workflow)",
+    "Papertrail modules may have external dependencies (requires cleanup)",
+    "UDS schema drift if not kept in sync with CodeRef UDS definition"
+  ],
+  "success_criteria": [
+    "Agent can trigger doc generation from plan.json without manual writing",
+    "Generated docs pass UDS validation",
+    "Docs are searchable and discoverable",
+    "Time from /create-plan to docs: <30 seconds",
+    "Zero manual documentation step required"
+  ],
+  "future_enhancements": [
+    "Papertrail Search Engine for unified doc discovery across projects",
+    "Doc versioning (track changes as features evolve)",
+    "Multi-format export (HTML, PDF, interactive docs)",
+    "Documentation diff/change tracking via git",
+    "Approval workflow for AI-generated docs before publishing"
+  ],
+  "reference_documents": [
+    "Papertrail location: C:\\Users\\willh\\Desktop\\ARCHIVED\\projects-idle\\paper-trail-parsed-into-modules",
+    "Papertrail Workflow Guide: misc/PAPER-TRAIL-WORKFLOW-GUIDE.md",
+    "AI Integration Guide: ai-integration.md",
+    "Strategic comparison: papertrail-documentation/papertrail-strategic-documents/which-is-better-coderef2-or-papertrail.md"
+  ]
+}
