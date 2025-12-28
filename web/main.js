@@ -43,7 +43,8 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
-      webSecurity: true
+      webSecurity: false,  // Disable to allow File System Access API
+      allowRunningInsecureContent: true
     },
     title: 'CodeRef Explorer',
     icon: path.join(__dirname, 'icon.png')
