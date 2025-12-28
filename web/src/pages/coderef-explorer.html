@@ -386,212 +386,42 @@
 
     <!-- Main Content -->
     <main>
+        <!-- Body Header -->
         <div class="flex flex-between items-center mb-xl">
             <div>
-                <div style="display: flex; align-items: center; gap: var(--spacing-sm); font-size: 12px; color: var(--color-ind-text-muted); margin-bottom: var(--spacing-sm);">
-                    <span>Assistant</span>
-                    <span>/</span>
-                    <span>coderef</span>
-                    <span>/</span>
-                    <span>workorder</span>
-                    <span>/</span>
-                    <span>coderef-explorer-endpoints</span>
-                    <span>/</span>
-                    <span style="color: var(--color-ind-accent); font-weight: 600;">stub.json</span>
+                <div class="file-breadcrumb" style="display: flex; align-items: center; gap: var(--spacing-sm); font-size: 12px; color: var(--color-ind-text-muted); margin-bottom: var(--spacing-sm);">
+                    Select a file to view
                 </div>
-                <h2>stub.json</h2>
-                <div class="file-info">
-                    <span><span class="material-symbols-outlined sm">description</span> 1.2 KB</span>
-                    <span><span class="material-symbols-outlined sm">schedule</span> Modified Dec 27, 2:15 PM</span>
-                    <span><span class="material-symbols-outlined sm">folder</span> assistant/coderef/workorder/coderef-explorer-endpoints/</span>
+                <h2 class="file-title">No file selected</h2>
+                <div class="file-meta file-info" style="font-size: 12px; color: var(--color-ind-text-muted);">
+                    Click a file in the sidebar to view its contents
                 </div>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm);">
+                <button class="industrial-button-secondary industrial-button-small" onclick="copyPath()" title="Copy file path">
+                    <span class="material-symbols-outlined sm">content_copy</span>
+                    Copy Path
+                </button>
+                <button class="industrial-button-secondary industrial-button-small" onclick="copyCode()" title="Copy file content">
+                    <span class="material-symbols-outlined sm">code</span>
+                    Copy Code
+                </button>
+                <button class="industrial-button-secondary industrial-button-small" onclick="shareLink()" title="Share link">
+                    <span class="material-symbols-outlined sm">share</span>
+                    Share
+                </button>
             </div>
         </div>
 
         <!-- File Contents -->
         <div class="industrial-panel">
-            <div class="markdown-content">
-                <pre style="background: var(--color-ind-panel); border: 1px solid var(--color-ind-border); border-radius: var(--radius-md); padding: var(--spacing-lg); overflow-x: auto; margin: var(--spacing-md) 0;"><code style="background: none; padding: 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.6;">{
-  "workorder_id": "WO-CODEREF-EXPLORER-001",
-  "feature_name": "coderef-explorer-endpoints",
-  "description": "Implement 7 REST API endpoints for multi-project coderef browsing",
-  "priority": "high",
-  "status": "complete",
-  "category": "backend",
-  "technical_approach": "Node.js Express server with folder-based discovery",
-  "created_date": "2025-12-20T10:30:00Z",
-  "last_modified": "2025-12-27T14:15:00Z",
-  "effort_estimate": "Medium (4-6 hours)",
-  "dependencies": [],
-  "deliverables": [
-    "Complete endpoint specification (CODEREF-EXPLORER-ENDPOINTS.md)",
-    "TypeScript type definitions",
-    "Implementation in coderef-dashboard MCP server",
-    "Integration tests",
-    "Security checks (input validation, auth)"
-  ],
-  "success_criteria": [
-    "All 7 endpoints return valid JSON",
-    "Folder-based discovery works (scans directories)",
-    "Graceful handling of missing files",
-    "Fast response time (&lt; 200ms for typical project)",
-    "Handles 50+ workorders/stubs without performance issues"
-  ],
-  "team": ["dashboard-agent"],
-  "tags": ["api", "backend", "coderef", "dashboard"]
-}</code></pre>
-            </div>
-        </div>
-
-        <!-- Original Workorder Table (Hidden) -->
-        <div class="industrial-panel" style="display: none;">
-            <div class="markdown-content">
-                <h2>Active Workorders</h2>
-
-                <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-lg) 0;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid var(--color-ind-border);">
-                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Workorder</th>
-                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Status</th>
-                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Last Touched</th>
-                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Files</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/', this)">
-                            <td style="padding: var(--spacing-md);"><strong>coderef-explorer-endpoints</strong></td>
-                            <td style="padding: var(--spacing-md);"><span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px; font-size: 12px;">complete</span></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 2025 · 2:15 PM</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">stub.json, plan.json</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/dashboard-tracking/', this)">
-                            <td style="padding: var(--spacing-md);"><strong>dashboard-tracking</strong></td>
-                            <td style="padding: var(--spacing-md);"><span style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 2px 8px; border-radius: 3px; font-size: 12px;">implementing</span></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 2025 · 11:45 AM</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">plan.json, context.json</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/persona-system/', this)">
-                            <td style="padding: var(--spacing-md);"><strong>persona-system</strong></td>
-                            <td style="padding: var(--spacing-md);"><span style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 2px 8px; border-radius: 3px; font-size: 12px;">planning</span></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 26, 2025 · 8:30 PM</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">context.json</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/known-issues/', this)">
-                            <td style="padding: var(--spacing-md);"><strong>known-issues-utility</strong></td>
-                            <td style="padding: var(--spacing-md);"><span style="background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 2px 8px; border-radius: 3px; font-size: 12px;">pending</span></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 24, 2025 · 3:20 PM</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">stub.json</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/auth-system/', this)">
-                            <td style="padding: var(--spacing-md);"><strong>auth-system</strong></td>
-                            <td style="padding: var(--spacing-md);"><span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px; font-size: 12px;">complete</span></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 23, 2025 · 5:00 PM</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">plan.json, DELIVERABLES.md</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/dashboard-api/', this)">
-                            <td style="padding: var(--spacing-md);"><strong>dashboard-api</strong></td>
-                            <td style="padding: var(--spacing-md);"><span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px; font-size: 12px;">complete</span></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 22, 2025 · 4:15 PM</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">plan.json, DELIVERABLES.md, communication.json</td>
-                        </tr>
-                        <tr style="cursor: pointer;" onclick="loadFile('coderef/workorder/ui-integration/', this)">
-                            <td style="padding: var(--spacing-md);"><strong>ui-integration</strong></td>
-                            <td style="padding: var(--spacing-md);"><span style="background: rgba(249, 115, 22, 0.2); color: #f97316; padding: 2px 8px; border-radius: 3px; font-size: 12px;">blocked</span></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 20, 2025 · 10:00 AM</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">context.json, communication.json</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3 style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--color-ind-border);">Workorder Files (coderef-explorer-endpoints)</h3>
-
-                <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-lg) 0;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid var(--color-ind-border);">
-                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">File</th>
-                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Size</th>
-                            <th style="text-align: left; padding: var(--spacing-md); font-weight: 600;">Modified</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/stub.json', this)">
-                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>stub.json</strong></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">2.3 KB</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 2:15 PM</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/plan.json', this)">
-                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>plan.json</strong></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">8.7 KB</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 2:10 PM</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/context.json', this)">
-                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>context.json</strong></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">1.9 KB</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 26, 10:30 PM</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--color-ind-border); cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/DELIVERABLES.md', this)">
-                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>DELIVERABLES.md</strong></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">4.2 KB</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 27, 1:45 PM</td>
-                        </tr>
-                        <tr style="cursor: pointer;" onclick="loadFile('coderef/workorder/coderef-explorer-endpoints/README.md', this)">
-                            <td style="padding: var(--spacing-md);"><span class="material-symbols-outlined sm" style="vertical-align: middle;">description</span> <strong>README.md</strong></td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">3.1 KB</td>
-                            <td style="padding: var(--spacing-md); font-size: 12px; color: var(--color-ind-text-muted);">Dec 25, 3:00 PM</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3>README.md</h3>
-                <div style="background: var(--color-ind-panel); border: 1px solid var(--color-ind-border); border-radius: var(--radius-md); padding: var(--spacing-lg); margin: var(--spacing-lg) 0;">
-                    <h4 style="margin: 0 0 var(--spacing-md) 0;">CodeRef Explorer - API Endpoints</h4>
-                    <p style="margin: 0 0 var(--spacing-md) 0; color: var(--color-ind-text-muted); font-size: 12px;">Feature stub defining the CodeRef Explorer workorder for dashboard integration.</p>
-
-                    <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm) 0; font-size: 14px;">Overview</h4>
-                    <p style="margin: 0 0 var(--spacing-md) 0; font-size: 13px;">Implements 7 REST API endpoints for multi-project coderef browsing with folder-based discovery pattern.</p>
-
-                    <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm) 0; font-size: 14px;">Key Files</h4>
-                    <ul style="margin: 0 0 var(--spacing-md) 0; padding-left: var(--spacing-lg); font-size: 13px;">
-                        <li><strong>stub.json</strong> - Feature metadata and requirements</li>
-                        <li><strong>plan.json</strong> - Implementation plan with tasks and phases</li>
-                        <li><strong>context.json</strong> - Technical context and constraints</li>
-                        <li><strong>DELIVERABLES.md</strong> - Completion checklist and metrics</li>
-                    </ul>
-
-                    <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm) 0; font-size: 14px;">API Endpoints</h4>
-                    <ul style="margin: 0 0 var(--spacing-md) 0; padding-left: var(--spacing-lg); font-size: 13px;">
-                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/projects</code></li>
-                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/tree</code></li>
-                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/folder</code></li>
-                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">GET /api/coderef/file</code></li>
-                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">POST /api/coderef/projects</code></li>
-                        <li><code style="background: rgba(255, 107, 0, 0.1); padding: 2px 4px; border-radius: 2px;">DELETE /api/coderef/projects/:id</code></li>
-                    </ul>
-                </div>
-
-                <h3 style="margin-top: var(--spacing-xl);">Status Legend</h3>
-                <div style="display: flex; gap: var(--spacing-lg); flex-wrap: wrap; margin-top: var(--spacing-md);">
-                    <div style="display: flex; align-items: center; gap: var(--spacing-sm); font-size: 12px;">
-                        <span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 2px 8px; border-radius: 3px;">complete</span>
-                        <span style="color: var(--color-ind-text-muted);">Ready for delivery/archived</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: var(--spacing-sm); font-size: 12px;">
-                        <span style="background: rgba(59, 130, 246, 0.2); color: #3b82f6; padding: 2px 8px; border-radius: 3px;">implementing</span>
-                        <span style="color: var(--color-ind-text-muted);">Active development</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: var(--spacing-sm); font-size: 12px;">
-                        <span style="background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 2px 8px; border-radius: 3px;">planning</span>
-                        <span style="color: var(--color-ind-text-muted);">Design phase</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: var(--spacing-sm); font-size: 12px;">
-                        <span style="background: rgba(249, 115, 22, 0.2); color: #f97316; padding: 2px 8px; border-radius: 3px;">blocked</span>
-                        <span style="color: var(--color-ind-text-muted);">Waiting on dependencies</span>
-                    </div>
-                </div>
+            <div class="body-content markdown-content" style="min-height: 400px;">
+                <p style="color: var(--color-ind-text-muted); text-align: center; padding: var(--spacing-xl);">
+                    Select a file from the sidebar to view its contents
+                </p>
             </div>
         </div>
     </main>
-
     <!-- Add Project Modal -->
     <div id="addProjectModal" class="modal" style="display: none;">
         <div class="modal-content">
