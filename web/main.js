@@ -5,6 +5,10 @@ const { spawn } = require('child_process');
 let mainWindow;
 let pythonProcess;
 
+// Enable File System Access API
+app.commandLine.appendSwitch('enable-features', 'FileSystemAccessAPI');
+app.commandLine.appendSwitch('enable-experimental-web-platform-features');
+
 // Start Python server
 function startPythonServer() {
   const pythonPath = 'python';
@@ -50,13 +54,16 @@ function createWindow() {
     icon: path.join(__dirname, 'icon.png')
   });
 
+  // Clear cache on startup
+  mainWindow.webContents.session.clearCache();
+
   // Wait for Python server to start (2 seconds)
   setTimeout(() => {
     mainWindow.loadURL('http://localhost:8080/src/pages/coderef-explorer.html');
   }, 2000);
 
   // Open DevTools in development
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
