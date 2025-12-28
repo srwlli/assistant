@@ -239,6 +239,104 @@
                 grid-row: 3;
             }
         }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--color-ind-panel);
+            border: 1px solid var(--color-ind-border);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-ind-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--color-ind-text-muted);
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: var(--color-ind-text);
+        }
+
+        .modal-body {
+            padding: var(--spacing-lg);
+        }
+
+        .modal-footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--color-ind-border);
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .industrial-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--color-ind-bg);
+            border: 2px solid var(--color-ind-border);
+            border-radius: var(--radius-md);
+            color: var(--color-ind-text);
+            font-family: var(--font-display);
+            font-size: 14px;
+        }
+
+        .industrial-input:focus {
+            outline: none;
+            border-color: var(--color-ind-primary);
+        }
     </style>
 </head>
 <body>
@@ -276,26 +374,11 @@
                 </button>
             </div>
 
-            <!-- CodeRef Folder Tree -->
+            <!-- CodeRef Folder Tree (Dynamic) -->
             <div style="border-top: 1px solid var(--color-ind-border); padding-top: var(--spacing-md);">
                 <p class="text-muted text-sm uppercase font-weight-700 mb-md" style="font-size: 11px; letter-spacing: 1px;">CODEREF</p>
-
-                <!-- CodeRef Folder (Expanded by default) -->
-                <div class="tree-item coderef-folder active" onclick="toggleFolder(this)">
-                    <span class="material-symbols-outlined sm chevron expanded">chevron_right</span>
-                    <span class="material-symbols-outlined sm fill-1">folder_special</span>
-                    <span style="flex: 1;">coderef/</span>
-                    <span class="badge">CODEREF</span>
-                </div>
-                <div class="tree-children show">
-                    <!-- Workorder Subfolder -->
-                    <div class="tree-item" onclick="toggleFolder(this)">
-                        <span class="material-symbols-outlined sm chevron">chevron_right</span>
-                        <span class="material-symbols-outlined sm">work</span>
-                        <span style="flex: 1;">workorder/</span>
-                    </div>
-                    <div class="tree-children">
-                    </div>
+                <div class="tree-container">
+                    <!-- Tree populated dynamically by JavaScript -->
                 </div>
             </div>
         </nav>
@@ -509,6 +592,34 @@
         </div>
     </main>
 
+    <!-- Add Project Modal -->
+    <div id="addProjectModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Project</h3>
+                <button class="modal-close" onclick="closeAddProjectModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <input type="text" id="projectName" placeholder="Enter project name..." class="industrial-input">
+                </div>
+                <div class="form-group">
+                    <label>Project Folder</label>
+                    <button id="browseFolderBtn" class="industrial-button-secondary" onclick="triggerFolderPicker()">
+                        <span class="material-symbols-outlined sm">folder_open</span>
+                        Browse for folder...
+                    </button>
+                    <p id="selectedFolderPath" class="text-muted text-sm" style="margin-top: var(--spacing-sm);"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="industrial-button-secondary" onclick="closeAddProjectModal()">Cancel</button>
+                <button id="addProjectBtn" class="industrial-button-primary" onclick="confirmAddProject()" disabled>Add Project</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Project management
         let projects = [];
@@ -576,20 +687,81 @@
             }
         }
 
+        let pendingProjectFiles = null;
+
         function showAddProjectDialog() {
-            const name = prompt('Enter project name:');
-            if (!name) return;
+            document.getElementById('addProjectModal').style.display = 'flex';
+            document.getElementById('projectName').value = '';
+            document.getElementById('selectedFolderPath').textContent = '';
+            document.getElementById('addProjectBtn').disabled = true;
+            pendingProjectFiles = null;
+        }
+
+        function closeAddProjectModal() {
+            document.getElementById('addProjectModal').style.display = 'none';
+            pendingProjectFiles = null;
+        }
+
+        function triggerFolderPicker() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.webkitdirectory = true;
+            input.multiple = true;
+
+            input.onchange = (e) => {
+                const files = Array.from(e.target.files);
+                if (files.length > 0) {
+                    pendingProjectFiles = files;
+                    const folderPath = files[0].webkitRelativePath.split('/')[0];
+                    document.getElementById('selectedFolderPath').textContent = `Selected: ${folderPath} (${files.length} files)`;
+
+                    // Auto-populate project name if empty
+                    const nameInput = document.getElementById('projectName');
+                    if (!nameInput.value) {
+                        nameInput.value = folderPath;
+                    }
+
+                    // Enable add button if name is filled
+                    if (nameInput.value) {
+                        document.getElementById('addProjectBtn').disabled = false;
+                    }
+                }
+            };
+
+            input.click();
+        }
+
+        function confirmAddProject() {
+            const name = document.getElementById('projectName').value.trim();
+            if (!name || !pendingProjectFiles) return;
 
             const id = name.toLowerCase().replace(/\s+/g, '-');
             const project = { id, name };
 
             projects.push(project);
+            projectFilesCache[id] = pendingProjectFiles;
             saveProjects();
             renderProjectSelector();
 
-            // Trigger folder picker
-            showFolderPicker(id);
+            // Switch to new project
+            currentProject = project;
+            document.getElementById('project-select').value = id;
+            buildTreeFromFiles(pendingProjectFiles);
+
+            closeAddProjectModal();
         }
+
+        // Enable Add button when name is entered
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameInput = document.getElementById('projectName');
+            if (nameInput) {
+                nameInput.addEventListener('input', () => {
+                    const hasName = nameInput.value.trim().length > 0;
+                    const hasFiles = pendingProjectFiles !== null;
+                    document.getElementById('addProjectBtn').disabled = !(hasName && hasFiles);
+                });
+            }
+        });
 
         function removeCurrentProject() {
             if (!currentProject) return;
