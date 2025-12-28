@@ -375,7 +375,7 @@
             </div>
 
             <!-- CodeRef Folder Tree (Dynamic) -->
-            <div style="border-top: 1px solid var(--color-ind-border); padding-top: var(--spacing-md);">
+            <div>
                 <p class="text-muted text-sm uppercase font-weight-700 mb-md" style="font-size: 11px; letter-spacing: 1px;">CODEREF</p>
                 <div class="tree-container">
                     <!-- Tree populated dynamically by JavaScript -->
@@ -456,6 +456,63 @@
     </div>
 
     <script>
+        // IndexedDB for storing directory handles
+        const DB_NAME = 'CodeRefExplorer';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'directoryHandles';
+
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => resolve(request.result);
+
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME, { keyPath: 'projectId' });
+                    }
+                };
+            });
+        }
+
+        async function saveDirectoryHandle(projectId, dirHandle) {
+            const db = await openDB();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put({ projectId, handle: dirHandle });
+
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function getDirectoryHandle(projectId) {
+            const db = await openDB();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.get(projectId);
+
+                request.onsuccess = () => resolve(request.result?.handle);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function deleteDirectoryHandle(projectId) {
+            const db = await openDB();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.delete(projectId);
+
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
         // Project management
         let projects = [];
         let currentProject = null;
@@ -526,11 +583,36 @@
             currentProject = projects.find(p => p.id === projectId);
             if (!currentProject) return;
 
-            // Check if this project has browsed files cached
-            if (projectBrowsedFilesCache[projectId]) {
-                buildTreeFromBrowsedFiles(projectBrowsedFilesCache[projectId]);
-            } else {
-                // Load from server
+            // Try to get directory handle from IndexedDB
+            try {
+                const dirHandle = await getDirectoryHandle(projectId);
+
+                if (dirHandle) {
+                    // Verify we still have permission
+                    const permission = await dirHandle.queryPermission({ mode: 'read' });
+
+                    if (permission === 'granted') {
+                        // Build tree from directory handle
+                        await buildTreeFromDirectoryHandle(dirHandle);
+                        return;
+                    } else if (permission === 'prompt') {
+                        // Request permission
+                        const newPermission = await dirHandle.requestPermission({ mode: 'read' });
+                        if (newPermission === 'granted') {
+                            await buildTreeFromDirectoryHandle(dirHandle);
+                            return;
+                        }
+                    }
+
+                    // Permission denied, fall through to server mode
+                    showToast('Permission denied. Please re-add this project.');
+                }
+            } catch (error) {
+                console.error('Error accessing directory handle:', error);
+            }
+
+            // Fallback: Load from server (for manually typed paths)
+            if (currentProject.path && !currentProject.path.startsWith('[Directory:')) {
                 try {
                     const response = await fetch(`/api/tree?path=${encodeURIComponent(currentProject.path)}`);
                     const tree = await response.json();
@@ -539,89 +621,80 @@
                     console.error('Error loading project tree:', error);
                     showToast('Error loading project folder');
                 }
+            } else {
+                showToast('Please grant permission to access this folder');
             }
         }
 
-        function buildTreeFromBrowsedFiles(files) {
-            const tree = {};
-
-            files.forEach(file => {
-                const parts = file.webkitRelativePath.split('/');
-                let current = tree;
-
-                parts.forEach((part, index) => {
-                    if (index === parts.length - 1) {
-                        // It's a file
-                        if (!current._files) current._files = [];
-                        current._files.push({ name: part, file: file });
-                    } else {
-                        // It's a folder
-                        if (!current[part]) current[part] = {};
-                        current = current[part];
-                    }
-                });
-            });
-
-            // Render the tree
+        async function buildTreeFromDirectoryHandle(dirHandle, parentPath = '') {
             const treeContainer = document.querySelector('.tree-container');
             treeContainer.innerHTML = '';
 
-            const rootName = Object.keys(tree)[0] || 'coderef';
-            renderBrowsedTreeNode(rootName, tree[rootName], treeContainer, true);
+            await renderDirectoryNode(dirHandle, treeContainer, true, parentPath + dirHandle.name);
         }
 
-        function renderBrowsedTreeNode(name, node, parentElement, isRoot = false) {
-            const hasChildren = Object.keys(node).some(key => key !== '_files');
-            const hasFiles = node._files && node._files.length > 0;
+        async function renderDirectoryNode(dirHandle, parentElement, isRoot = false, fullPath = '') {
+            // Create folder element
+            const folderDiv = document.createElement('div');
+            folderDiv.className = `tree-item folder ${isRoot ? 'active' : ''}`;
+            folderDiv.onclick = () => toggleFolder(folderDiv);
 
-            if (hasChildren || hasFiles) {
-                // Folder
-                const folderDiv = document.createElement('div');
-                folderDiv.className = `tree-item folder ${isRoot ? 'active' : ''}`;
-                folderDiv.onclick = () => toggleFolder(folderDiv);
+            folderDiv.innerHTML = `
+                <span class="material-symbols-outlined chevron ${isRoot ? 'expanded' : ''}">chevron_right</span>
+                <span class="material-symbols-outlined icon">folder</span>
+                <span>${dirHandle.name}</span>
+            `;
 
-                folderDiv.innerHTML = `
-                    <span class="material-symbols-outlined chevron ${isRoot ? 'expanded' : ''}">chevron_right</span>
-                    <span class="material-symbols-outlined icon">folder</span>
-                    <span>${name}</span>
-                `;
+            parentElement.appendChild(folderDiv);
 
-                parentElement.appendChild(folderDiv);
+            // Create children container
+            const childrenDiv = document.createElement('div');
+            childrenDiv.className = `tree-children ${isRoot ? 'show' : ''}`;
 
-                const childrenDiv = document.createElement('div');
-                childrenDiv.className = `tree-children ${isRoot ? 'show' : ''}`;
-
-                // Render subfolders
-                Object.keys(node).forEach(key => {
-                    if (key !== '_files') {
-                        renderBrowsedTreeNode(key, node[key], childrenDiv);
-                    }
-                });
-
-                // Render files
-                if (hasFiles) {
-                    node._files.forEach(fileObj => {
-                        const fileDiv = document.createElement('div');
-                        fileDiv.className = 'tree-item file';
-                        fileDiv.onclick = (e) => {
-                            e.stopPropagation();
-                            loadBrowsedFile(fileObj.file, fileDiv);
-                        };
-
-                        fileDiv.innerHTML = `
-                            <span class="material-symbols-outlined icon">description</span>
-                            <span>${fileObj.name}</span>
-                        `;
-
-                        childrenDiv.appendChild(fileDiv);
-                    });
-                }
-
-                parentElement.appendChild(childrenDiv);
+            // Get all entries
+            const entries = [];
+            for await (const entry of dirHandle.values()) {
+                entries.push(entry);
             }
+
+            // Sort: folders first, then files
+            entries.sort((a, b) => {
+                if (a.kind !== b.kind) {
+                    return a.kind === 'directory' ? -1 : 1;
+                }
+                return a.name.localeCompare(b.name);
+            });
+
+            // Render subdirectories
+            for (const entry of entries) {
+                if (entry.kind === 'directory') {
+                    await renderDirectoryNode(entry, childrenDiv, false, fullPath + '/' + entry.name);
+                }
+            }
+
+            // Render files
+            for (const entry of entries) {
+                if (entry.kind === 'file') {
+                    const fileDiv = document.createElement('div');
+                    fileDiv.className = 'tree-item file';
+                    fileDiv.onclick = async (e) => {
+                        e.stopPropagation();
+                        await loadFileFromHandle(entry, fileDiv, fullPath + '/' + entry.name);
+                    };
+
+                    fileDiv.innerHTML = `
+                        <span class="material-symbols-outlined icon">description</span>
+                        <span>${entry.name}</span>
+                    `;
+
+                    childrenDiv.appendChild(fileDiv);
+                }
+            }
+
+            parentElement.appendChild(childrenDiv);
         }
 
-        function loadBrowsedFile(file, element) {
+        async function loadFileFromHandle(fileHandle, element, filePath) {
             // Remove active class from all tree items
             document.querySelectorAll('.tree-item').forEach(item => {
                 item.classList.remove('active');
@@ -629,17 +702,18 @@
             // Add active to clicked item
             element.classList.add('active');
 
-            const reader = new FileReader();
+            try {
+                const file = await fileHandle.getFile();
+                const content = await file.text();
 
-            reader.onload = (e) => {
-                const content = e.target.result;
                 currentFileContent = content;
-                currentFilePath = file.webkitRelativePath;
+                currentFilePath = filePath;
 
-                displayFileContent(file.name, content, file.webkitRelativePath, file.size, file.lastModified);
-            };
-
-            reader.readAsText(file);
+                displayFileContent(file.name, content, filePath, file.size, file.lastModified);
+            } catch (error) {
+                console.error('Error reading file:', error);
+                showToast('Error reading file');
+            }
         }
 
         function showAddProjectDialog() {
@@ -653,39 +727,41 @@
             document.getElementById('addProjectModal').style.display = 'none';
         }
 
-        let pendingBrowsedFiles = null;
+        let pendingDirectoryHandle = null;
 
-        function browseFolderForPath() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.webkitdirectory = true;
-            input.multiple = true;
-
-            input.onchange = (e) => {
-                const files = Array.from(e.target.files);
-                if (files.length > 0) {
-                    pendingBrowsedFiles = files;
-                    const firstFile = files[0];
-                    const parts = firstFile.webkitRelativePath.split('/');
-                    const folderName = parts[0];
-
-                    // Set a placeholder path
-                    document.getElementById('projectPath').value = `[Browsed: ${folderName}]`;
-
-                    // Auto-populate project name if empty
-                    const nameInput = document.getElementById('projectName');
-                    if (!nameInput.value) {
-                        nameInput.value = folderName;
-                    }
-
-                    // Manually enable the Add button
-                    document.getElementById('addProjectBtn').disabled = false;
-
-                    showToast(`Selected folder: ${folderName} (${files.length} files)`);
+        async function browseFolderForPath() {
+            try {
+                // Check if File System Access API is supported
+                if (!window.showDirectoryPicker) {
+                    showToast('File System Access API not supported. Please type the full path instead.');
+                    return;
                 }
-            };
 
-            input.click();
+                const dirHandle = await window.showDirectoryPicker({
+                    mode: 'read'
+                });
+
+                pendingDirectoryHandle = dirHandle;
+
+                // Set folder name as path
+                document.getElementById('projectPath').value = `[Directory: ${dirHandle.name}]`;
+
+                // Auto-populate project name if empty
+                const nameInput = document.getElementById('projectName');
+                if (!nameInput.value) {
+                    nameInput.value = dirHandle.name;
+                }
+
+                // Manually enable the Add button
+                document.getElementById('addProjectBtn').disabled = false;
+
+                showToast(`Selected folder: ${dirHandle.name}`);
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Error selecting folder:', error);
+                    showToast('Error selecting folder');
+                }
+            }
         }
 
         // Store browsed files by project ID (in-memory, not persisted)
@@ -702,26 +778,35 @@
 
             const id = name.toLowerCase().replace(/\s+/g, '-');
 
-            // Check if user browsed files (in-memory mode)
-            if (pendingBrowsedFiles) {
-                // In-memory mode: use File objects directly
-                projectBrowsedFilesCache[id] = pendingBrowsedFiles;
+            // Check if user browsed a directory (File System Access API mode)
+            if (pendingDirectoryHandle) {
+                try {
+                    // Save directory handle to IndexedDB
+                    await saveDirectoryHandle(id, pendingDirectoryHandle);
 
-                const project = { id, name, path: '[Browsed - Not Persisted]' };
-                projects.push(project);
+                    // Save project metadata to server
+                    const project = { id, name, path: `[Directory: ${pendingDirectoryHandle.name}]` };
+                    const success = await saveProject(project);
 
-                renderProjectSelector();
-                currentProject = project;
-                document.getElementById('project-select').value = id;
-
-                // Render tree from browsed files
-                buildTreeFromBrowsedFiles(pendingBrowsedFiles);
-
-                closeAddProjectModal();
-                pendingBrowsedFiles = null;
-                showToast('Project added (files cached in browser)');
+                    if (success) {
+                        await loadProjects();
+                        currentProject = projects.find(p => p.id === id);
+                        if (currentProject) {
+                            document.getElementById('project-select').value = id;
+                            await changeProject(id);
+                        }
+                        closeAddProjectModal();
+                        pendingDirectoryHandle = null;
+                        showToast('Project added and persisted!');
+                    } else {
+                        showToast('Error saving project');
+                    }
+                } catch (error) {
+                    console.error('Error saving directory handle:', error);
+                    showToast('Error saving project');
+                }
             } else {
-                // Server mode: save path to server
+                // Server mode: save typed path to server
                 const project = { id, name, path };
                 const success = await saveProject(project);
 
@@ -768,12 +853,16 @@
             }
 
             try {
+                // Delete from server
                 const response = await fetch(`/api/projects/${currentProject.id}`, {
                     method: 'DELETE'
                 });
                 const result = await response.json();
 
                 if (result.success) {
+                    // Delete directory handle from IndexedDB
+                    await deleteDirectoryHandle(currentProject.id);
+
                     await loadProjects();
                     showToast('Project removed');
                 } else {
