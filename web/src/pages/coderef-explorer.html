@@ -594,7 +594,14 @@
         });
 
         function removeCurrentProject() {
-            if (!currentProject) return;
+            if (!currentProject) {
+                alert('No project selected');
+                return;
+            }
+
+            if (!confirm(`Remove project "${currentProject.name}"?`)) {
+                return;
+            }
 
             projects = projects.filter(p => p.id !== currentProject.id);
             delete projectFilesCache[currentProject.id];
