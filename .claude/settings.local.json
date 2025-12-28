@@ -35,7 +35,13 @@
       "Bash(nul)",
       "Bash(findstr:*)",
       "Bash(git stash:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(powershell -Command:*)",
+      "Bash(start http://localhost:8080/src/pages/coderef-explorer.html)",
+      "Bash(taskkill:*)",
+      "Bash(npm install:*)",
+      "Bash(npm start)",
+      "Bash(netstat:*)"
     ]
   },
   "enabledMcpjsonServers": [
