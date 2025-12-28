@@ -398,15 +398,15 @@
                 </div>
             </div>
             <div style="display: flex; gap: var(--spacing-sm);">
-                <button class="industrial-button-secondary industrial-button-small" onclick="copyPath()" title="Copy file path">
+                <button id="copyPathBtn" class="industrial-button-secondary industrial-button-small" onclick="copyPath()" title="Copy file path" disabled>
                     <span class="material-symbols-outlined sm">content_copy</span>
                     Copy Path
                 </button>
-                <button class="industrial-button-secondary industrial-button-small" onclick="copyCode()" title="Copy file content">
+                <button id="copyCodeBtn" class="industrial-button-secondary industrial-button-small" onclick="copyCode()" title="Copy file content" disabled>
                     <span class="material-symbols-outlined sm">code</span>
                     Copy Code
                 </button>
-                <button class="industrial-button-secondary industrial-button-small" onclick="shareLink()" title="Share link">
+                <button id="shareLinkBtn" class="industrial-button-secondary industrial-button-small" onclick="shareLink()" title="Share link" disabled>
                     <span class="material-symbols-outlined sm">share</span>
                     Share
                 </button>
@@ -771,6 +771,11 @@
             // Update file title
             document.querySelector('.file-title').textContent = fileName;
 
+            // Enable copy/share buttons
+            document.getElementById('copyPathBtn').disabled = false;
+            document.getElementById('copyCodeBtn').disabled = false;
+            document.getElementById('shareLinkBtn').disabled = false;
+
             // Update metadata
             const date = new Date(lastModified).toLocaleDateString();
             const size = (fileSize / 1024).toFixed(2);
@@ -830,21 +835,46 @@
 
         function copyPath() {
             if (currentFilePath) {
-                navigator.clipboard.writeText(currentFilePath);
+                navigator.clipboard.writeText(currentFilePath).then(() => {
+                    showToast('Path copied to clipboard!');
+                });
             }
         }
 
         function copyCode() {
             if (currentFileContent) {
-                navigator.clipboard.writeText(currentFileContent);
+                navigator.clipboard.writeText(currentFileContent).then(() => {
+                    showToast('Code copied to clipboard!');
+                });
             }
         }
 
         function shareLink() {
             if (currentFilePath) {
-                const url = window.location.href + '?file=' + encodeURIComponent(currentFilePath);
-                navigator.clipboard.writeText(url);
+                const url = window.location.href.split('?')[0] + '?file=' + encodeURIComponent(currentFilePath);
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast('Share link copied to clipboard!');
+                });
             }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--color-ind-primary);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 6px;
+                font-size: 14px;
+                z-index: 10000;
+                animation: fadeInOut 2s ease-in-out;
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
         }
 
         // Initialize theme from localStorage
