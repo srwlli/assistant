@@ -1,0 +1,40 @@
+{
+  "name": "coderef-explorer",
+  "version": "1.0.0",
+  "description": "CodeRef Explorer - Desktop app for browsing and managing coderef documentation",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win"
+  },
+  "keywords": [
+    "coderef",
+    "documentation",
+    "file-browser"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.coderef.explorer",
+    "productName": "CodeRef Explorer",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "server.py",
+      "src/**/*",
+      "mock-data/**/*"
+    ]
+  }
+}
