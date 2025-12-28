@@ -10,14 +10,18 @@ from urllib.parse import parse_qs, urlparse
 from pathlib import Path
 
 PORT = 8080
+PROJECTS_FILE = 'projects.json'
 
 class CodeRefHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
 
+        # API: Get all projects
+        if parsed.path == '/api/projects':
+            self.handle_get_projects()
         # API: Get folder tree
-        if parsed.path == '/api/tree':
+        elif parsed.path == '/api/tree':
             self.handle_tree_request(parsed)
         # API: Get file content
         elif parsed.path == '/api/file':
@@ -25,6 +29,108 @@ class CodeRefHandler(http.server.SimpleHTTPRequestHandler):
         else:
             # Serve static files
             super().do_GET()
+
+    def do_POST(self):
+        parsed = urlparse(self.path)
+
+        # API: Save project
+        if parsed.path == '/api/projects':
+            self.handle_save_project()
+        else:
+            self.send_error(404, "Not found")
+
+    def do_DELETE(self):
+        parsed = urlparse(self.path)
+
+        # API: Delete project by ID
+        if parsed.path.startswith('/api/projects/'):
+            project_id = parsed.path.split('/')[-1]
+            self.handle_delete_project(project_id)
+        else:
+            self.send_error(404, "Not found")
+
+    def do_OPTIONS(self):
+        """Handle CORS preflight"""
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+
+    def handle_get_projects(self):
+        """Return all saved projects"""
+        try:
+            if os.path.exists(PROJECTS_FILE):
+                with open(PROJECTS_FILE, 'r') as f:
+                    projects = json.load(f)
+            else:
+                projects = []
+
+            self.send_json_response(projects)
+        except Exception as e:
+            self.send_error(500, f"Error loading projects: {str(e)}")
+
+    def handle_save_project(self):
+        """Save a new project"""
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            project = json.loads(post_data)
+
+            # Validate required fields
+            if 'id' not in project or 'name' not in project or 'path' not in project:
+                self.send_error(400, "Missing required fields: id, name, path")
+                return
+
+            # Validate path exists
+            if not os.path.exists(project['path']):
+                self.send_error(400, f"Path does not exist: {project['path']}")
+                return
+
+            # Load existing projects
+            if os.path.exists(PROJECTS_FILE):
+                with open(PROJECTS_FILE, 'r') as f:
+                    projects = json.load(f)
+            else:
+                projects = []
+
+            # Check if project ID already exists
+            existing_index = next((i for i, p in enumerate(projects) if p['id'] == project['id']), None)
+            if existing_index is not None:
+                # Update existing
+                projects[existing_index] = project
+            else:
+                # Add new
+                projects.append(project)
+
+            # Save to file
+            with open(PROJECTS_FILE, 'w') as f:
+                json.dump(projects, f, indent=2)
+
+            self.send_json_response({'success': True, 'project': project})
+        except Exception as e:
+            self.send_error(500, f"Error saving project: {str(e)}")
+
+    def handle_delete_project(self, project_id):
+        """Delete a project by ID"""
+        try:
+            if not os.path.exists(PROJECTS_FILE):
+                self.send_error(404, "No projects found")
+                return
+
+            with open(PROJECTS_FILE, 'r') as f:
+                projects = json.load(f)
+
+            # Filter out the project
+            projects = [p for p in projects if p['id'] != project_id]
+
+            # Save updated list
+            with open(PROJECTS_FILE, 'w') as f:
+                json.dump(projects, f, indent=2)
+
+            self.send_json_response({'success': True, 'deleted': project_id})
+        except Exception as e:
+            self.send_error(500, f"Error deleting project: {str(e)}")
 
     def handle_tree_request(self, parsed):
         """Return folder structure as JSON"""

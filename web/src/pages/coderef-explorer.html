@@ -435,12 +435,11 @@
                     <input type="text" id="projectName" placeholder="Enter project name..." class="industrial-input">
                 </div>
                 <div class="form-group">
-                    <label>Project Folder</label>
-                    <button id="browseFolderBtn" class="industrial-button-secondary" onclick="triggerFolderPicker()">
-                        <span class="material-symbols-outlined sm">folder_open</span>
-                        Browse for folder...
-                    </button>
-                    <p id="selectedFolderPath" class="text-muted text-sm" style="margin-top: var(--spacing-sm);"></p>
+                    <label for="projectPath">Project Folder Path</label>
+                    <input type="text" id="projectPath" placeholder="e.g., C:\Users\willh\Desktop\assistant\coderef" class="industrial-input">
+                    <p class="text-muted text-sm" style="margin-top: var(--spacing-sm);">
+                        Enter the full path to your project's coderef folder
+                    </p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -454,30 +453,43 @@
         // Project management
         let projects = [];
         let currentProject = null;
-        let projectFilesCache = {}; // Cache File objects by project
 
-        function loadProjects() {
-            const saved = localStorage.getItem('coderef_projects');
-            if (saved) {
-                projects = JSON.parse(saved);
-            }
+        async function loadProjects() {
+            try {
+                const response = await fetch('/api/projects');
+                projects = await response.json();
 
-            renderProjectSelector();
+                renderProjectSelector();
 
-            if (projects.length > 0) {
-                changeProject(projects[0].id);
-            } else {
-                // Show empty state
-                document.querySelector('.tree-container').innerHTML = `
-                    <div style="padding: var(--spacing-lg); color: var(--color-ind-text-muted); text-align: center;">
-                        No projects. Click + to add one.
-                    </div>
-                `;
+                if (projects.length > 0) {
+                    changeProject(projects[0].id);
+                } else {
+                    // Show empty state
+                    document.querySelector('.tree-container').innerHTML = `
+                        <div style="padding: var(--spacing-lg); color: var(--color-ind-text-muted); text-align: center;">
+                            No projects. Click + to add one.
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                showToast('Error loading projects');
             }
         }
 
-        function saveProjects() {
-            localStorage.setItem('coderef_projects', JSON.stringify(projects));
+        async function saveProject(project) {
+            try {
+                const response = await fetch('/api/projects', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(project)
+                });
+                const result = await response.json();
+                return result.success;
+            } catch (error) {
+                console.error('Error saving project:', error);
+                return false;
+            }
         }
 
         function renderProjectSelector() {
@@ -504,96 +516,77 @@
             }
         }
 
-        function changeProject(projectId) {
+        async function changeProject(projectId) {
             currentProject = projects.find(p => p.id === projectId);
             if (!currentProject) return;
 
-            // Load cached files or show picker
-            if (projectFilesCache[projectId]) {
-                buildTreeFromFiles(projectFilesCache[projectId]);
-            } else {
-                // Show folder picker for first time
-                showFolderPicker(projectId);
+            try {
+                const response = await fetch(`/api/tree?path=${encodeURIComponent(currentProject.path)}`);
+                const tree = await response.json();
+                renderServerTree(tree);
+            } catch (error) {
+                console.error('Error loading project tree:', error);
+                showToast('Error loading project folder');
             }
         }
-
-        let pendingProjectFiles = null;
 
         function showAddProjectDialog() {
             document.getElementById('addProjectModal').style.display = 'flex';
             document.getElementById('projectName').value = '';
-            document.getElementById('selectedFolderPath').textContent = '';
+            document.getElementById('projectPath').value = '';
             document.getElementById('addProjectBtn').disabled = true;
-            pendingProjectFiles = null;
         }
 
         function closeAddProjectModal() {
             document.getElementById('addProjectModal').style.display = 'none';
-            pendingProjectFiles = null;
         }
 
-        function triggerFolderPicker() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.webkitdirectory = true;
-            input.multiple = true;
-
-            input.onchange = (e) => {
-                const files = Array.from(e.target.files);
-                if (files.length > 0) {
-                    pendingProjectFiles = files;
-                    const folderPath = files[0].webkitRelativePath.split('/')[0];
-                    document.getElementById('selectedFolderPath').textContent = `Selected: ${folderPath} (${files.length} files)`;
-
-                    // Auto-populate project name if empty
-                    const nameInput = document.getElementById('projectName');
-                    if (!nameInput.value) {
-                        nameInput.value = folderPath;
-                    }
-
-                    // Enable add button if name is filled
-                    if (nameInput.value) {
-                        document.getElementById('addProjectBtn').disabled = false;
-                    }
-                }
-            };
-
-            input.click();
-        }
-
-        function confirmAddProject() {
+        async function confirmAddProject() {
             const name = document.getElementById('projectName').value.trim();
-            if (!name || !pendingProjectFiles) return;
+            const path = document.getElementById('projectPath').value.trim();
+
+            if (!name || !path) {
+                showToast('Please fill in all fields');
+                return;
+            }
 
             const id = name.toLowerCase().replace(/\s+/g, '-');
-            const project = { id, name };
+            const project = { id, name, path };
 
-            projects.push(project);
-            projectFilesCache[id] = pendingProjectFiles;
-            saveProjects();
-            renderProjectSelector();
+            const success = await saveProject(project);
 
-            // Switch to new project
-            currentProject = project;
-            document.getElementById('project-select').value = id;
-            buildTreeFromFiles(pendingProjectFiles);
-
-            closeAddProjectModal();
+            if (success) {
+                await loadProjects();
+                currentProject = projects.find(p => p.id === id);
+                if (currentProject) {
+                    document.getElementById('project-select').value = id;
+                    changeProject(id);
+                }
+                closeAddProjectModal();
+                showToast('Project added successfully!');
+            } else {
+                showToast('Error: Invalid project path');
+            }
         }
 
-        // Enable Add button when name is entered
+        // Enable Add button when both fields are filled
         document.addEventListener('DOMContentLoaded', () => {
             const nameInput = document.getElementById('projectName');
-            if (nameInput) {
-                nameInput.addEventListener('input', () => {
-                    const hasName = nameInput.value.trim().length > 0;
-                    const hasFiles = pendingProjectFiles !== null;
-                    document.getElementById('addProjectBtn').disabled = !(hasName && hasFiles);
-                });
+            const pathInput = document.getElementById('projectPath');
+
+            const validateForm = () => {
+                const hasName = nameInput.value.trim().length > 0;
+                const hasPath = pathInput.value.trim().length > 0;
+                document.getElementById('addProjectBtn').disabled = !(hasName && hasPath);
+            };
+
+            if (nameInput && pathInput) {
+                nameInput.addEventListener('input', validateForm);
+                pathInput.addEventListener('input', validateForm);
             }
         });
 
-        function removeCurrentProject() {
+        async function removeCurrentProject() {
             if (!currentProject) {
                 alert('No project selected');
                 return;
@@ -603,37 +596,96 @@
                 return;
             }
 
-            projects = projects.filter(p => p.id !== currentProject.id);
-            delete projectFilesCache[currentProject.id];
+            try {
+                const response = await fetch(`/api/projects/${currentProject.id}`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
 
-            saveProjects();
-            renderProjectSelector();
-
-            if (projects.length > 0) {
-                changeProject(projects[0].id);
-            } else {
-                currentProject = null;
-                document.querySelector('.tree-container').innerHTML = `
-                    <div style="padding: var(--spacing-lg); color: var(--color-ind-text-muted); text-align: center;">
-                        No projects. Click + to add one.
-                    </div>
-                `;
+                if (result.success) {
+                    await loadProjects();
+                    showToast('Project removed');
+                } else {
+                    showToast('Error removing project');
+                }
+            } catch (error) {
+                console.error('Error removing project:', error);
+                showToast('Error removing project');
             }
         }
 
-        function showFolderPicker(projectId) {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.webkitdirectory = true;
-            input.multiple = true;
+        function renderServerTree(tree) {
+            const treeContainer = document.querySelector('.tree-container');
+            treeContainer.innerHTML = '';
+            renderServerTreeNode(tree, treeContainer, true);
+        }
 
-            input.onchange = (e) => {
-                const files = Array.from(e.target.files);
-                projectFilesCache[projectId] = files;
-                buildTreeFromFiles(files);
-            };
+        function renderServerTreeNode(node, parentElement, isRoot = false) {
+            if (node.type === 'folder') {
+                // Folder
+                const folderDiv = document.createElement('div');
+                folderDiv.className = `tree-item folder ${isRoot ? 'active' : ''}`;
+                folderDiv.onclick = () => toggleFolder(folderDiv);
 
-            input.click();
+                folderDiv.innerHTML = `
+                    <span class="material-symbols-outlined chevron ${isRoot ? 'expanded' : ''}">chevron_right</span>
+                    <span class="material-symbols-outlined icon">folder</span>
+                    <span>${node.name}</span>
+                `;
+
+                parentElement.appendChild(folderDiv);
+
+                const childrenDiv = document.createElement('div');
+                childrenDiv.className = `tree-children ${isRoot ? 'show' : ''}`;
+
+                if (node.children && node.children.length > 0) {
+                    node.children.forEach(child => {
+                        renderServerTreeNode(child, childrenDiv);
+                    });
+                }
+
+                parentElement.appendChild(childrenDiv);
+            } else {
+                // File
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'tree-item file';
+                fileDiv.onclick = (e) => {
+                    e.stopPropagation();
+                    loadServerFile(node.path, fileDiv);
+                };
+
+                fileDiv.innerHTML = `
+                    <span class="material-symbols-outlined icon">description</span>
+                    <span>${node.name}</span>
+                `;
+
+                parentElement.appendChild(fileDiv);
+            }
+        }
+
+        let currentFileContent = '';
+        let currentFilePath = '';
+
+        async function loadServerFile(filePath, element) {
+            // Remove active class from all tree items
+            document.querySelectorAll('.tree-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Add active to clicked item
+            element.classList.add('active');
+
+            try {
+                const response = await fetch(`/api/file?path=${encodeURIComponent(filePath)}`);
+                const fileInfo = await response.json();
+
+                currentFileContent = fileInfo.content;
+                currentFilePath = filePath;
+
+                displayFileContent(fileInfo.name, fileInfo.content, filePath, fileInfo.size, fileInfo.modified);
+            } catch (error) {
+                console.error('Error loading file:', error);
+                showToast('Error loading file');
+            }
         }
 
         function toggleTheme() {
@@ -663,110 +715,6 @@
             if (nextSibling && nextSibling.classList.contains('tree-children')) {
                 nextSibling.classList.toggle('show');
             }
-        }
-
-        function buildTreeFromFiles(files) {
-            // Build tree structure from File objects
-            const tree = {};
-
-            files.forEach(file => {
-                const parts = file.webkitRelativePath.split('/');
-                let current = tree;
-
-                parts.forEach((part, index) => {
-                    if (index === parts.length - 1) {
-                        // It's a file
-                        if (!current._files) current._files = [];
-                        current._files.push({ name: part, file: file });
-                    } else {
-                        // It's a folder
-                        if (!current[part]) current[part] = {};
-                        current = current[part];
-                    }
-                });
-            });
-
-            // Render the tree
-            const treeContainer = document.querySelector('.tree-container');
-            treeContainer.innerHTML = '';
-
-            const rootName = Object.keys(tree)[0] || 'coderef';
-            renderTreeNode(rootName, tree[rootName], treeContainer, true);
-        }
-
-        function renderTreeNode(name, node, parentElement, isRoot = false) {
-            const hasChildren = Object.keys(node).some(key => key !== '_files');
-            const hasFiles = node._files && node._files.length > 0;
-
-            if (hasChildren || hasFiles) {
-                // Folder
-                const folderDiv = document.createElement('div');
-                folderDiv.className = `tree-item folder ${isRoot ? 'active' : ''}`;
-                folderDiv.onclick = () => toggleFolder(folderDiv);
-
-                folderDiv.innerHTML = `
-                    <span class="material-symbols-outlined chevron ${isRoot ? 'expanded' : ''}">chevron_right</span>
-                    <span class="material-symbols-outlined icon">folder</span>
-                    <span>${name}</span>
-                `;
-
-                parentElement.appendChild(folderDiv);
-
-                const childrenDiv = document.createElement('div');
-                childrenDiv.className = `tree-children ${isRoot ? 'show' : ''}`;
-
-                // Render subfolders
-                Object.keys(node).forEach(key => {
-                    if (key !== '_files') {
-                        renderTreeNode(key, node[key], childrenDiv);
-                    }
-                });
-
-                // Render files
-                if (hasFiles) {
-                    node._files.forEach(fileObj => {
-                        const fileDiv = document.createElement('div');
-                        fileDiv.className = 'tree-item file';
-                        fileDiv.onclick = (e) => {
-                            e.stopPropagation();
-                            loadLocalFile(fileObj.file, fileDiv);
-                        };
-
-                        fileDiv.innerHTML = `
-                            <span class="material-symbols-outlined icon">description</span>
-                            <span>${fileObj.name}</span>
-                        `;
-
-                        childrenDiv.appendChild(fileDiv);
-                    });
-                }
-
-                parentElement.appendChild(childrenDiv);
-            }
-        }
-
-        let currentFileContent = '';
-        let currentFilePath = '';
-
-        function loadLocalFile(file, element) {
-            // Remove active class from all tree items
-            document.querySelectorAll('.tree-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            // Add active to clicked item
-            element.classList.add('active');
-
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                const content = e.target.result;
-                currentFileContent = content;
-                currentFilePath = file.webkitRelativePath;
-
-                displayFileContent(file.name, content, file.webkitRelativePath, file.size, file.lastModified);
-            };
-
-            reader.readAsText(file);
         }
 
         function displayFileContent(fileName, content, filePath, fileSize, lastModified) {
