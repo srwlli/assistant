@@ -1,0 +1,52 @@
+{
+  "feature_name": "coderef-explorer-rebuild",
+  "goal": "Restore all lost CodeRef Explorer features that were accidentally deleted by git checkout",
+  "description": "Rebuild the CodeRef Explorer with all 11 lost features: dynamic project management (add/remove with localStorage), local file browsing (folder picker + FileReader API), dynamic tree building, JSON syntax highlighting, markdown rendering with marked.js, copy/share buttons, empty state support, no hardcoded projects/folders. These features were working perfectly but were lost when git checkout overwrote the working directory.",
+  "requirements": [
+    "Dynamic project selector with localStorage persistence - projects stored in browser, survive page refresh",
+    "Add/remove project buttons (+ and delete icons) in sidebar",
+    "Folder picker for browsing local files - no manual path typing, use <input type='file' webkitdirectory>",
+    "File caching system using projectFilesCache JavaScript object to store File references",
+    "Dynamic tree builder with buildTreeFromFiles() and renderTreeNode() functions",
+    "Local file reader using loadLocalFile() with FileReader API - files never uploaded to server",
+    "JSON syntax highlighting with regex-based coloring (orange keys, green strings, blue booleans, purple null, yellow numbers)",
+    "Markdown rendering using marked.js library (already have CDN script tag)",
+    "Copy Path, Copy Code, and Share buttons in body header with clipboard API",
+    "Empty state support - allow deleting all projects, show 'No projects. Click + to add one.'",
+    "Remove all hardcoded projects and folder structures from HTML - everything dynamic"
+  ],
+  "out_of_scope": [
+    "Server-side file uploads - files must be read locally only via FileReader",
+    "User authentication or accounts - no login system",
+    "Backend database - localStorage only for project list",
+    "File modification or saving - read-only viewer"
+  ],
+  "constraints": [
+    "Pure client-side JavaScript implementation in web/src/pages/coderef-explorer.html",
+    "FileReader API only - files must stay on user's local machine",
+    "Must work with existing server.py that provides /api/tree and /api/file endpoints",
+    "Must commit immediately after completion to prevent another data loss incident",
+    "No external dependencies except marked.js (already included)",
+    "Must work in modern browsers (Chrome, Firefox, Edge)"
+  ],
+  "technical_context": {
+    "file_location": "web/src/pages/coderef-explorer.html",
+    "server_api": "web/server.py (provides /api/tree and /api/file endpoints)",
+    "current_state": "Reset to basic hardcoded version - all features lost",
+    "target_state": "Fully functional with 11 features listed above",
+    "libraries": {
+      "marked.js": "https://cdn.jsdelivr.net/npm/marked/marked.min.js - for markdown rendering",
+      "material_symbols": "Google Fonts - for icons"
+    }
+  },
+  "success_criteria": [
+    "User can add projects by clicking + button",
+    "User can browse local folders without typing paths",
+    "User can see dynamic folder tree from selected files",
+    "User can click files to view content with proper rendering (JSON highlighted, MD as HTML)",
+    "User can copy file path, code content, or share link",
+    "User can delete all projects and see empty state",
+    "No hardcoded project names or folder structures remain",
+    "All changes committed to git to prevent future loss"
+  ]
+}

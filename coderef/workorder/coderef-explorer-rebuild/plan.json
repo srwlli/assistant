@@ -1,0 +1,678 @@
+{
+  "workorder_id": "WO-CODEREF-REBUILD-001",
+  "feature_name": "coderef-explorer-rebuild",
+  "created_at": "2025-12-28T01:00:00Z",
+
+  "UNIVERSAL_PLANNING_STRUCTURE": {
+    "1_feature_overview": {
+      "title": "CodeRef Explorer Feature Rebuild",
+      "description": "Restore all 11 lost features to the CodeRef Explorer that were accidentally deleted by git checkout. This includes dynamic project management, local file browsing, syntax highlighting, and all interactive features that were working perfectly before the accidental reset.",
+      "business_value": "Provides a functional local file browser for exploring coderef documentation across multiple projects without requiring server uploads or manual path entry.",
+      "user_impact": "Users can browse their local coderef folders, view files with proper syntax highlighting and markdown rendering, manage multiple projects, and copy/share content easily."
+    },
+
+    "2_current_state_analysis": {
+      "existing_functionality": [
+        "Basic HTML structure with header, sidebar, and main content area",
+        "Industrial design CSS framework",
+        "Material Symbols icons",
+        "Static hardcoded folder tree (to be removed)",
+        "Basic file viewer placeholder"
+      ],
+      "gaps_and_problems": [
+        "All JavaScript functionality lost (11 features)",
+        "Hardcoded project selector - needs to be dynamic",
+        "No localStorage integration",
+        "No file browsing capability",
+        "No syntax highlighting or markdown rendering",
+        "No copy/share buttons",
+        "Cannot add or remove projects"
+      ],
+      "technical_debt": [],
+      "dependencies": {
+        "external": [
+          "marked.js library (CDN) - needs to be added to <head>",
+          "Material Symbols font (already included)",
+          "server.py (already exists with /api/tree and /api/file endpoints)"
+        ],
+        "internal": [
+          "web/src/css/main.css (Industrial design framework)",
+          "Browser FileReader API",
+          "Browser localStorage API",
+          "Browser Clipboard API"
+        ]
+      }
+    },
+
+    "3_architectural_decisions": {
+      "technology_choices": [
+        {
+          "decision": "Use FileReader API for local file access",
+          "rationale": "Allows reading files from user's machine without uploading to server, meeting privacy and security requirements",
+          "alternatives_considered": "Server API (rejected - requires file upload)",
+          "trade_offs": "User must select folder each time they add a project"
+        },
+        {
+          "decision": "Use localStorage for project persistence",
+          "rationale": "Simple client-side storage, no backend needed, survives page refresh",
+          "alternatives_considered": "sessionStorage (rejected - doesn't persist), cookies (rejected - size limits)",
+          "trade_offs": "Limited to ~5-10MB storage, projects only available in same browser"
+        },
+        {
+          "decision": "Use marked.js for markdown rendering",
+          "rationale": "Lightweight, fast, and renders GitHub-flavored markdown correctly",
+          "alternatives_considered": "markdown-it (heavier), showdown (older)",
+          "trade_offs": "Adds ~50KB via CDN"
+        }
+      ],
+      "design_patterns": [
+        {
+          "pattern": "Module Pattern",
+          "application": "Organize all JavaScript functions in global scope with clear naming (loadProjectTree, buildTreeFromFiles, etc.)",
+          "benefit": "Easy to understand, no build step required"
+        },
+        {
+          "pattern": "Event-driven UI updates",
+          "application": "onclick handlers trigger state changes and DOM updates",
+          "benefit": "Simple, reactive UI without framework overhead"
+        }
+      ],
+      "data_flow": [
+        "User clicks + button → showAddProjectDialog()",
+        "User clicks Browse → browseFolder() → <input type='file'> opens",
+        "User selects folder → handleFolderSelect() → stores files in projectFilesCache",
+        "User clicks Add → saveProject() → saves to localStorage → renderProjectSelector()",
+        "User selects project → changeProject() → loadProjectTree() → buildTreeFromFiles() → renderTreeNode()",
+        "User clicks file → loadLocalFile() → FileReader reads file → displays with highlighting/rendering"
+      ]
+    },
+
+    "4_risk_assessment": {
+      "technical_risks": [
+        {
+          "risk": "Browser compatibility with webkitdirectory attribute",
+          "severity": "medium",
+          "likelihood": "low",
+          "mitigation": "Test in Chrome/Firefox/Edge (all modern browsers support it)",
+          "fallback": "Provide manual path entry as backup"
+        },
+        {
+          "risk": "localStorage quota exceeded with large file lists",
+          "severity": "low",
+          "likelihood": "low",
+          "mitigation": "Only store project metadata, not actual file contents",
+          "fallback": "Show error message if quota exceeded"
+        },
+        {
+          "risk": "Accidental git checkout destroying work again",
+          "severity": "critical",
+          "likelihood": "medium",
+          "mitigation": "Commit immediately after each feature is complete, not at the end",
+          "fallback": "None - must commit frequently"
+        }
+      ],
+      "blocking_issues": [],
+      "assumptions": [
+        "User has modern browser (Chrome 89+, Firefox 88+, Edge 89+)",
+        "server.py is running on localhost:8080",
+        "User understands they need to re-select folders after browser restart (File API limitation)"
+      ]
+    },
+
+    "5_workorder_metadata": {
+      "workorder_id": "WO-CODEREF-REBUILD-001",
+      "priority": "critical",
+      "estimated_effort": "2-3 hours",
+      "assigned_to": "Claude",
+      "due_date": "2025-12-28",
+      "labels": ["bug-fix", "feature-restore", "critical", "data-recovery"]
+    },
+
+    "6_implementation_phases": [
+      {
+        "phase_number": 1,
+        "phase_name": "Foundation Setup",
+        "description": "Add marked.js library and fix CSS padding for tree structure",
+        "tasks": [
+          {
+            "task_id": "REBUILD-001",
+            "description": "Add marked.js CDN script to <head> section",
+            "file": "web/src/pages/coderef-explorer.html",
+            "estimated_time": "2 minutes",
+            "dependencies": []
+          },
+          {
+            "task_id": "REBUILD-002",
+            "description": "Change .tree-children padding-left from var(--spacing-lg) to 0 for vertical alignment",
+            "file": "web/src/pages/coderef-explorer.html (CSS)",
+            "estimated_time": "2 minutes",
+            "dependencies": []
+          },
+          {
+            "task_id": "REBUILD-003",
+            "description": "Commit foundation changes",
+            "file": "git",
+            "estimated_time": "1 minute",
+            "dependencies": ["REBUILD-001", "REBUILD-002"]
+          }
+        ],
+        "success_criteria": [
+          "marked.js library loads successfully (check browser console)",
+          "Tree items align vertically without indentation"
+        ],
+        "rollback_plan": "git reset --hard HEAD~1"
+      },
+      {
+        "phase_number": 2,
+        "phase_name": "Project Management System",
+        "description": "Replace hardcoded project selector with dynamic system using localStorage",
+        "tasks": [
+          {
+            "task_id": "REBUILD-004",
+            "description": "Replace hardcoded <select> options with empty select and dynamic loading",
+            "file": "web/src/pages/coderef-explorer.html (HTML)",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-003"]
+          },
+          {
+            "task_id": "REBUILD-005",
+            "description": "Add delete button next to + button in project selector",
+            "file": "web/src/pages/coderef-explorer.html (HTML)",
+            "estimated_time": "3 minutes",
+            "dependencies": ["REBUILD-004"]
+          },
+          {
+            "task_id": "REBUILD-006",
+            "description": "Add project management JavaScript: loadProjects(), saveProjects(), renderProjectSelector()",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "15 minutes",
+            "dependencies": ["REBUILD-005"]
+          },
+          {
+            "task_id": "REBUILD-007",
+            "description": "Add changeProject() function to handle project switching",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-006"]
+          },
+          {
+            "task_id": "REBUILD-008",
+            "description": "Update initTheme() call to also call loadProjects() on page load",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-007"]
+          },
+          {
+            "task_id": "REBUILD-009",
+            "description": "Commit project management system",
+            "file": "git",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-008"]
+          }
+        ],
+        "success_criteria": [
+          "Project selector loads from localStorage",
+          "Default 'Assistant' project created on first load",
+          "Can switch between projects"
+        ],
+        "rollback_plan": "git reset --hard to previous commit"
+      },
+      {
+        "phase_number": 3,
+        "phase_name": "Add/Remove Project UI",
+        "description": "Implement modal dialog for adding projects with folder picker and remove functionality",
+        "tasks": [
+          {
+            "task_id": "REBUILD-010",
+            "description": "Create modal dialog HTML for adding projects (after </main> tag)",
+            "file": "web/src/pages/coderef-explorer.html (HTML)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-009"]
+          },
+          {
+            "task_id": "REBUILD-011",
+            "description": "Add folder picker input with webkitdirectory attribute",
+            "file": "web/src/pages/coderef-explorer.html (HTML)",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-010"]
+          },
+          {
+            "task_id": "REBUILD-012",
+            "description": "Add showAddProjectDialog() and closeAddProjectDialog() functions",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-011"]
+          },
+          {
+            "task_id": "REBUILD-013",
+            "description": "Add browseFolder() and handleFolderSelect() functions for folder picker",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "15 minutes",
+            "dependencies": ["REBUILD-012"]
+          },
+          {
+            "task_id": "REBUILD-014",
+            "description": "Add saveProject() function to save project to localStorage",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-013"]
+          },
+          {
+            "task_id": "REBUILD-015",
+            "description": "Add removeCurrentProject() function with empty state support",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-014"]
+          },
+          {
+            "task_id": "REBUILD-016",
+            "description": "Commit add/remove project functionality",
+            "file": "git",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-015"]
+          }
+        ],
+        "success_criteria": [
+          "Click + button opens modal dialog",
+          "Click Browse opens folder picker",
+          "Selecting folder auto-fills project name and path",
+          "Click Add Project saves to localStorage and closes modal",
+          "Click delete button removes project (even if it's the last one)",
+          "Empty state shows 'No projects. Click + to add one.'"
+        ],
+        "rollback_plan": "git reset --hard to previous commit"
+      },
+      {
+        "phase_number": 4,
+        "phase_name": "File Caching and Tree Building",
+        "description": "Store file references and build dynamic folder tree from cached files",
+        "tasks": [
+          {
+            "task_id": "REBUILD-017",
+            "description": "Add projectFilesCache global variable and storeProjectFiles() function",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-016"]
+          },
+          {
+            "task_id": "REBUILD-018",
+            "description": "Update handleFolderSelect() to call storeProjectFiles()",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "3 minutes",
+            "dependencies": ["REBUILD-017"]
+          },
+          {
+            "task_id": "REBUILD-019",
+            "description": "Remove hardcoded folder tree HTML from sidebar",
+            "file": "web/src/pages/coderef-explorer.html (HTML)",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-018"]
+          },
+          {
+            "task_id": "REBUILD-020",
+            "description": "Add buildTreeFromFiles() function to build tree structure from file list",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "20 minutes",
+            "dependencies": ["REBUILD-019"]
+          },
+          {
+            "task_id": "REBUILD-021",
+            "description": "Add renderTreeNode() recursive function to render tree HTML",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "25 minutes",
+            "dependencies": ["REBUILD-020"]
+          },
+          {
+            "task_id": "REBUILD-022",
+            "description": "Update loadProjectTree() to call buildTreeFromFiles() if files cached",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-021"]
+          },
+          {
+            "task_id": "REBUILD-023",
+            "description": "Commit file caching and tree building",
+            "file": "git",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-022"]
+          }
+        ],
+        "success_criteria": [
+          "Selecting folder stores File objects in projectFilesCache",
+          "Tree builds dynamically from cached files",
+          "Folders appear above files (sorted)",
+          "Tree shows correct hierarchy matching folder structure",
+          "No hardcoded folder/file names remain"
+        ],
+        "rollback_plan": "git reset --hard to previous commit"
+      },
+      {
+        "phase_number": 5,
+        "phase_name": "Local File Reader",
+        "description": "Read file contents using FileReader API and display in main content area",
+        "tasks": [
+          {
+            "task_id": "REBUILD-024",
+            "description": "Add loadLocalFile() function with FileReader API",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "20 minutes",
+            "dependencies": ["REBUILD-023"]
+          },
+          {
+            "task_id": "REBUILD-025",
+            "description": "Add findFileByPath() helper function to locate file in cache",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-024"]
+          },
+          {
+            "task_id": "REBUILD-026",
+            "description": "Update renderTreeNode() to use onclick='loadLocalFile()' for files",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-025"]
+          },
+          {
+            "task_id": "REBUILD-027",
+            "description": "Update loadLocalFile() to populate breadcrumb, title, and metadata",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-026"]
+          },
+          {
+            "task_id": "REBUILD-028",
+            "description": "Commit local file reader",
+            "file": "git",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-027"]
+          }
+        ],
+        "success_criteria": [
+          "Clicking a file in tree reads it from local disk",
+          "Breadcrumb updates with file path",
+          "Title shows filename",
+          "Metadata shows actual file size and modified date",
+          "File content displays in main panel"
+        ],
+        "rollback_plan": "git reset --hard to previous commit"
+      },
+      {
+        "phase_number": 6,
+        "phase_name": "Syntax Highlighting and Rendering",
+        "description": "Add JSON syntax highlighting and markdown rendering to file viewer",
+        "tasks": [
+          {
+            "task_id": "REBUILD-029",
+            "description": "Add JSON syntax highlighting regex in loadLocalFile() for .json files",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "20 minutes",
+            "dependencies": ["REBUILD-028"]
+          },
+          {
+            "task_id": "REBUILD-030",
+            "description": "Add markdown rendering using marked.parse() for .md files",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-029"]
+          },
+          {
+            "task_id": "REBUILD-031",
+            "description": "Add plain text rendering for other file types",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-030"]
+          },
+          {
+            "task_id": "REBUILD-032",
+            "description": "Commit syntax highlighting and rendering",
+            "file": "git",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-031"]
+          }
+        ],
+        "success_criteria": [
+          "JSON files show orange keys, green strings, blue booleans, purple null, yellow numbers",
+          "Markdown files render as HTML with headers, lists, code blocks, links",
+          "Other files display as plain text in monospace font"
+        ],
+        "rollback_plan": "git reset --hard to previous commit"
+      },
+      {
+        "phase_number": 7,
+        "phase_name": "Copy and Share Buttons",
+        "description": "Add Copy Path, Copy Code, and Share buttons to body header with clipboard functionality",
+        "tasks": [
+          {
+            "task_id": "REBUILD-033",
+            "description": "Add three buttons (Copy Path, Copy Code, Share) to body header HTML",
+            "file": "web/src/pages/coderef-explorer.html (HTML)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-032"]
+          },
+          {
+            "task_id": "REBUILD-034",
+            "description": "Add global variables currentFileContent and currentFilePath",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-033"]
+          },
+          {
+            "task_id": "REBUILD-035",
+            "description": "Update loadLocalFile() to store content in currentFileContent",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "3 minutes",
+            "dependencies": ["REBUILD-034"]
+          },
+          {
+            "task_id": "REBUILD-036",
+            "description": "Add copyPath() function using navigator.clipboard.writeText()",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-035"]
+          },
+          {
+            "task_id": "REBUILD-037",
+            "description": "Add copyCode() function to copy raw file content",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-036"]
+          },
+          {
+            "task_id": "REBUILD-038",
+            "description": "Add shareLink() function to create shareable URL",
+            "file": "web/src/pages/coderef-explorer.html (JavaScript)",
+            "estimated_time": "10 minutes",
+            "dependencies": ["REBUILD-037"]
+          },
+          {
+            "task_id": "REBUILD-039",
+            "description": "Commit copy/share buttons",
+            "file": "git",
+            "estimated_time": "2 minutes",
+            "dependencies": ["REBUILD-038"]
+          }
+        ],
+        "success_criteria": [
+          "Copy Path button copies file path to clipboard and shows checkmark feedback",
+          "Copy Code button copies raw file content to clipboard",
+          "Share button copies shareable URL with ?file= parameter",
+          "All buttons show 'Copied!' feedback for 2 seconds"
+        ],
+        "rollback_plan": "git reset --hard to previous commit"
+      },
+      {
+        "phase_number": 8,
+        "phase_name": "Final Testing and Commit",
+        "description": "Test all features end-to-end and create final commit",
+        "tasks": [
+          {
+            "task_id": "REBUILD-040",
+            "description": "Test adding a project with folder picker",
+            "file": "Manual testing",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-039"]
+          },
+          {
+            "task_id": "REBUILD-041",
+            "description": "Test viewing JSON, markdown, and text files",
+            "file": "Manual testing",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-040"]
+          },
+          {
+            "task_id": "REBUILD-042",
+            "description": "Test copy/share buttons",
+            "file": "Manual testing",
+            "estimated_time": "3 minutes",
+            "dependencies": ["REBUILD-041"]
+          },
+          {
+            "task_id": "REBUILD-043",
+            "description": "Test removing all projects and empty state",
+            "file": "Manual testing",
+            "estimated_time": "3 minutes",
+            "dependencies": ["REBUILD-042"]
+          },
+          {
+            "task_id": "REBUILD-044",
+            "description": "Create final commit with complete feature set",
+            "file": "git",
+            "estimated_time": "5 minutes",
+            "dependencies": ["REBUILD-043"]
+          }
+        ],
+        "success_criteria": [
+          "All 11 features working as they were before git checkout",
+          "No console errors",
+          "All features committed to git",
+          "Server.py running successfully"
+        ],
+        "rollback_plan": "git reset --hard to last good commit (phase 7)"
+      }
+    ],
+
+    "7_testing_strategy": {
+      "unit_tests": [],
+      "integration_tests": [
+        {
+          "test_name": "Project management flow",
+          "description": "Add project, switch projects, remove project, verify empty state",
+          "expected_result": "Projects persist in localStorage, switching works, empty state shows message"
+        },
+        {
+          "test_name": "File browsing flow",
+          "description": "Select folder with Browse, verify tree builds, click files, verify rendering",
+          "expected_result": "Tree matches folder structure, files display with correct highlighting"
+        },
+        {
+          "test_name": "Copy/share flow",
+          "description": "Click each button, verify clipboard contains correct content",
+          "expected_result": "Clipboard API works, feedback shows 'Copied!' for 2 seconds"
+        }
+      ],
+      "manual_tests": [
+        {
+          "scenario": "First-time user loads page",
+          "steps": ["Open page", "See empty state", "Click +", "Browse folder", "Add project", "See tree"],
+          "expected": "Smooth onboarding experience, no errors"
+        },
+        {
+          "scenario": "Power user with multiple projects",
+          "steps": ["Add 3 projects", "Switch between them", "Delete one", "Verify others remain"],
+          "expected": "Project management works reliably"
+        }
+      ],
+      "edge_cases": [
+        "Empty folder selected",
+        "Folder with only hidden files",
+        "Very large folder (1000+ files)",
+        "File with special characters in name",
+        "localStorage quota exceeded"
+      ]
+    },
+
+    "8_deployment_plan": {
+      "pre_deployment": [
+        {
+          "step": "Verify server.py is running",
+          "command": "python web/server.py",
+          "success_criteria": "Server running at http://localhost:8080/"
+        },
+        {
+          "step": "Test in browser",
+          "command": "Open http://localhost:8080/src/pages/coderef-explorer.html",
+          "success_criteria": "Page loads without console errors"
+        }
+      ],
+      "deployment_steps": [
+        {
+          "step": "Commit all changes",
+          "command": "git add web/src/pages/coderef-explorer.html && git commit -m 'feat: Restore all CodeRef Explorer features'",
+          "rollback": "git reset --hard HEAD~1"
+        },
+        {
+          "step": "Push to remote (if applicable)",
+          "command": "git push",
+          "rollback": "git push --force-with-lease origin HEAD~1:main"
+        }
+      ],
+      "post_deployment": [
+        {
+          "step": "Verify page loads in production",
+          "validation": "Open page, check all features work"
+        }
+      ],
+      "rollback_procedure": "git reset --hard to last known good commit, restart server"
+    },
+
+    "9_monitoring_and_metrics": {
+      "success_metrics": [
+        {
+          "metric": "All 11 features restored",
+          "measurement": "Manual checklist verification",
+          "target": "11/11 features working"
+        },
+        {
+          "metric": "No data loss",
+          "measurement": "Git commit exists",
+          "target": "Changes committed and pushed"
+        }
+      ],
+      "monitoring_points": [],
+      "alerts": [],
+      "logging": [
+        "Console.log for file loading (for debugging)",
+        "Console.log for project caching (for debugging)"
+      ]
+    },
+
+    "10_documentation_and_knowledge_transfer": {
+      "code_comments": [
+        "Add comment explaining projectFilesCache structure",
+        "Add comment explaining FileReader API usage",
+        "Add comment explaining tree building algorithm"
+      ],
+      "readme_updates": [],
+      "architecture_docs": [],
+      "runbook": [
+        {
+          "scenario": "Files not loading",
+          "diagnosis": "Check browser console for FileReader errors, verify files cached in projectFilesCache",
+          "resolution": "Re-select folder with Browse button"
+        },
+        {
+          "scenario": "Tree not building",
+          "diagnosis": "Check if buildTreeFromFiles() is being called, verify projectFilesCache has files",
+          "resolution": "Debug renderTreeNode() recursive logic"
+        },
+        {
+          "scenario": "localStorage quota exceeded",
+          "diagnosis": "Check localStorage size in DevTools",
+          "resolution": "Clear old projects or reduce number of cached projects"
+        }
+      ],
+      "training_materials": [],
+      "knowledge_base_articles": []
+    }
+  }
+}
