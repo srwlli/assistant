@@ -265,14 +265,14 @@
         <nav class="flex flex-col gap-md">
             <!-- Project Selector - Inline with Add Button -->
             <div class="project-selector-inline">
-                <select onchange="changeProject(this.value)">
-                    <option value="assistant">Assistant (Orchestrator)</option>
-                    <option value="coderef-workflow">coderef-workflow MCP</option>
-                    <option value="coderef-docs">coderef-docs MCP</option>
-                    <option value="coderef-context">coderef-context MCP</option>
+                <select id="project-select" onchange="changeProject(this.value)">
+                    <!-- Projects loaded dynamically -->
                 </select>
-                <button class="industrial-button-secondary industrial-button-small" onclick="addProject()">
+                <button class="industrial-button-secondary industrial-button-small" onclick="showAddProjectDialog()" title="Add new project">
                     <span class="material-symbols-outlined sm">add</span>
+                </button>
+                <button class="industrial-button-secondary industrial-button-small" onclick="removeCurrentProject()" title="Remove current project">
+                    <span class="material-symbols-outlined sm">delete</span>
                 </button>
             </div>
 
@@ -510,6 +510,123 @@
     </main>
 
     <script>
+        // Project management
+        let projects = [];
+        let currentProject = null;
+        let projectFilesCache = {}; // Cache File objects by project
+
+        function loadProjects() {
+            const saved = localStorage.getItem('coderef_projects');
+            if (saved) {
+                projects = JSON.parse(saved);
+            }
+
+            renderProjectSelector();
+
+            if (projects.length > 0) {
+                changeProject(projects[0].id);
+            } else {
+                // Show empty state
+                document.querySelector('.tree-container').innerHTML = `
+                    <div style="padding: var(--spacing-lg); color: var(--color-ind-text-muted); text-align: center;">
+                        No projects. Click + to add one.
+                    </div>
+                `;
+            }
+        }
+
+        function saveProjects() {
+            localStorage.setItem('coderef_projects', JSON.stringify(projects));
+        }
+
+        function renderProjectSelector() {
+            const select = document.getElementById('project-select');
+            select.innerHTML = '';
+
+            if (projects.length === 0) {
+                const option = document.createElement('option');
+                option.textContent = 'No projects';
+                option.disabled = true;
+                select.appendChild(option);
+                return;
+            }
+
+            projects.forEach(project => {
+                const option = document.createElement('option');
+                option.value = project.id;
+                option.textContent = project.name;
+                select.appendChild(option);
+            });
+
+            if (currentProject) {
+                select.value = currentProject.id;
+            }
+        }
+
+        function changeProject(projectId) {
+            currentProject = projects.find(p => p.id === projectId);
+            if (!currentProject) return;
+
+            // Load cached files or show picker
+            if (projectFilesCache[projectId]) {
+                buildTreeFromFiles(projectFilesCache[projectId]);
+            } else {
+                // Show folder picker for first time
+                showFolderPicker(projectId);
+            }
+        }
+
+        function showAddProjectDialog() {
+            const name = prompt('Enter project name:');
+            if (!name) return;
+
+            const id = name.toLowerCase().replace(/\s+/g, '-');
+            const project = { id, name };
+
+            projects.push(project);
+            saveProjects();
+            renderProjectSelector();
+
+            // Trigger folder picker
+            showFolderPicker(id);
+        }
+
+        function removeCurrentProject() {
+            if (!currentProject) return;
+
+            projects = projects.filter(p => p.id !== currentProject.id);
+            delete projectFilesCache[currentProject.id];
+
+            saveProjects();
+            renderProjectSelector();
+
+            if (projects.length > 0) {
+                changeProject(projects[0].id);
+            } else {
+                currentProject = null;
+                document.querySelector('.tree-container').innerHTML = `
+                    <div style="padding: var(--spacing-lg); color: var(--color-ind-text-muted); text-align: center;">
+                        No projects. Click + to add one.
+                    </div>
+                `;
+            }
+        }
+
+        function showFolderPicker(projectId) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.webkitdirectory = true;
+            input.multiple = true;
+
+            input.onchange = (e) => {
+                const files = Array.from(e.target.files);
+                projectFilesCache[projectId] = files;
+                buildTreeFromFiles(files);
+            };
+
+            input.click();
+        }
+
         function toggleTheme() {
             const html = document.documentElement;
             const isDark = html.classList.contains('dark');
@@ -539,17 +656,90 @@
             }
         }
 
-        function changeProject(projectId) {
-            console.log('Changed to project:', projectId);
-            // API call would go here: fetch(`/api/coderef/tree?project_id=${projectId}`)
+        function buildTreeFromFiles(files) {
+            // Build tree structure from File objects
+            const tree = {};
+
+            files.forEach(file => {
+                const parts = file.webkitRelativePath.split('/');
+                let current = tree;
+
+                parts.forEach((part, index) => {
+                    if (index === parts.length - 1) {
+                        // It's a file
+                        if (!current._files) current._files = [];
+                        current._files.push({ name: part, file: file });
+                    } else {
+                        // It's a folder
+                        if (!current[part]) current[part] = {};
+                        current = current[part];
+                    }
+                });
+            });
+
+            // Render the tree
+            const treeContainer = document.querySelector('.tree-container');
+            treeContainer.innerHTML = '';
+
+            const rootName = Object.keys(tree)[0] || 'coderef';
+            renderTreeNode(rootName, tree[rootName], treeContainer, true);
         }
 
-        function addProject() {
-            console.log('Add new project');
-            // API call would go here: POST /api/coderef/projects
+        function renderTreeNode(name, node, parentElement, isRoot = false) {
+            const hasChildren = Object.keys(node).some(key => key !== '_files');
+            const hasFiles = node._files && node._files.length > 0;
+
+            if (hasChildren || hasFiles) {
+                // Folder
+                const folderDiv = document.createElement('div');
+                folderDiv.className = `tree-item folder ${isRoot ? 'active' : ''}`;
+                folderDiv.onclick = () => toggleFolder(folderDiv);
+
+                folderDiv.innerHTML = `
+                    <span class="material-symbols-outlined chevron ${isRoot ? 'expanded' : ''}">chevron_right</span>
+                    <span class="material-symbols-outlined icon">folder</span>
+                    <span>${name}</span>
+                `;
+
+                parentElement.appendChild(folderDiv);
+
+                const childrenDiv = document.createElement('div');
+                childrenDiv.className = `tree-children ${isRoot ? 'show' : ''}`;
+
+                // Render subfolders
+                Object.keys(node).forEach(key => {
+                    if (key !== '_files') {
+                        renderTreeNode(key, node[key], childrenDiv);
+                    }
+                });
+
+                // Render files
+                if (hasFiles) {
+                    node._files.forEach(fileObj => {
+                        const fileDiv = document.createElement('div');
+                        fileDiv.className = 'tree-item file';
+                        fileDiv.onclick = (e) => {
+                            e.stopPropagation();
+                            loadLocalFile(fileObj.file, fileDiv);
+                        };
+
+                        fileDiv.innerHTML = `
+                            <span class="material-symbols-outlined icon">description</span>
+                            <span>${fileObj.name}</span>
+                        `;
+
+                        childrenDiv.appendChild(fileDiv);
+                    });
+                }
+
+                parentElement.appendChild(childrenDiv);
+            }
         }
 
-        function loadFile(filePath, element) {
+        let currentFileContent = '';
+        let currentFilePath = '';
+
+        function loadLocalFile(file, element) {
             // Remove active class from all tree items
             document.querySelectorAll('.tree-item').forEach(item => {
                 item.classList.remove('active');
@@ -557,8 +747,102 @@
             // Add active to clicked item
             element.classList.add('active');
 
-            console.log('Loading file:', filePath);
-            // API call would go here: fetch(`/api/coderef/file?project_id=assistant&file_path=${filePath}`)
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const content = e.target.result;
+                currentFileContent = content;
+                currentFilePath = file.webkitRelativePath;
+
+                displayFileContent(file.name, content, file.webkitRelativePath, file.size, file.lastModified);
+            };
+
+            reader.readAsText(file);
+        }
+
+        function displayFileContent(fileName, content, filePath, fileSize, lastModified) {
+            const breadcrumb = filePath.split('/').join(' / ');
+
+            // Update breadcrumb
+            document.querySelector('.file-breadcrumb').textContent = breadcrumb;
+
+            // Update file title
+            document.querySelector('.file-title').textContent = fileName;
+
+            // Update metadata
+            const date = new Date(lastModified).toLocaleDateString();
+            const size = (fileSize / 1024).toFixed(2);
+            document.querySelector('.file-meta').textContent = `${size} KB • Modified ${date}`;
+
+            // Render content
+            const bodyContent = document.querySelector('.body-content');
+
+            if (fileName.endsWith('.json')) {
+                // JSON with syntax highlighting
+                const highlighted = syntaxHighlightJSON(content);
+                bodyContent.innerHTML = `<pre><code>${highlighted}</code></pre>`;
+            } else if (fileName.endsWith('.md')) {
+                // Markdown rendered as HTML
+                bodyContent.innerHTML = marked.parse(content);
+            } else {
+                // Plain text
+                bodyContent.innerHTML = `<pre><code>${escapeHtml(content)}</code></pre>`;
+            }
+        }
+
+        function syntaxHighlightJSON(json) {
+            return json
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                    let cls = 'number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                            match = match.slice(0, -1); // Remove the colon for coloring, add back later
+                            return '<span style="color: orange;">' + match + '</span>:';
+                        } else {
+                            cls = 'string';
+                            return '<span style="color: #90EE90;">' + match + '</span>';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean';
+                        return '<span style="color: #87CEEB;">' + match + '</span>';
+                    } else if (/null/.test(match)) {
+                        cls = 'null';
+                        return '<span style="color: #DDA0DD;">' + match + '</span>';
+                    }
+                    return '<span style="color: yellow;">' + match + '</span>';
+                });
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function copyPath() {
+            if (currentFilePath) {
+                navigator.clipboard.writeText(currentFilePath);
+            }
+        }
+
+        function copyCode() {
+            if (currentFileContent) {
+                navigator.clipboard.writeText(currentFileContent);
+            }
+        }
+
+        function shareLink() {
+            if (currentFilePath) {
+                const url = window.location.href + '?file=' + encodeURIComponent(currentFilePath);
+                navigator.clipboard.writeText(url);
+            }
         }
 
         // Initialize theme from localStorage
@@ -569,7 +853,9 @@
             html.classList.add(savedTheme);
         }
 
+        // Initialize on page load
         initTheme();
+        loadProjects();
     </script>
 </body>
 </html>
