@@ -82,10 +82,11 @@ class CodeRefHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(400, "Missing required fields: id, name, path")
                 return
 
-            # Validate path exists
-            if not os.path.exists(project['path']):
-                self.send_error(400, f"Path does not exist: {project['path']}")
-                return
+            # Validate path exists (skip validation for directory handles)
+            if not project['path'].startswith('[Directory:'):
+                if not os.path.exists(project['path']):
+                    self.send_error(400, f"Path does not exist: {project['path']}")
+                    return
 
             # Load existing projects
             if os.path.exists(PROJECTS_FILE):
