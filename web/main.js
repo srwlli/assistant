@@ -1,4 +1,4 @@
-const { app, BrowserWindow, protocol } = require('electron');
+const { app, BrowserWindow, protocol, session } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 
@@ -64,6 +64,25 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  // Configure permissions for File System Access API
+  session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+    // Auto-grant file system permissions
+    if (permission === 'fileSystem') {
+      callback(true);
+    } else {
+      callback(true); // Grant all permissions for local app
+    }
+  });
+
+  // Handle permission checks
+  session.defaultSession.setPermissionCheckHandler((webContents, permission, requestingOrigin, details) => {
+    // Always allow file system access
+    if (permission === 'fileSystem') {
+      return true;
+    }
+    return true;
+  });
+
   // Start Python server
   startPythonServer();
 
