@@ -526,14 +526,120 @@
             currentProject = projects.find(p => p.id === projectId);
             if (!currentProject) return;
 
-            try {
-                const response = await fetch(`/api/tree?path=${encodeURIComponent(currentProject.path)}`);
-                const tree = await response.json();
-                renderServerTree(tree);
-            } catch (error) {
-                console.error('Error loading project tree:', error);
-                showToast('Error loading project folder');
+            // Check if this project has browsed files cached
+            if (projectBrowsedFilesCache[projectId]) {
+                buildTreeFromBrowsedFiles(projectBrowsedFilesCache[projectId]);
+            } else {
+                // Load from server
+                try {
+                    const response = await fetch(`/api/tree?path=${encodeURIComponent(currentProject.path)}`);
+                    const tree = await response.json();
+                    renderServerTree(tree);
+                } catch (error) {
+                    console.error('Error loading project tree:', error);
+                    showToast('Error loading project folder');
+                }
             }
+        }
+
+        function buildTreeFromBrowsedFiles(files) {
+            const tree = {};
+
+            files.forEach(file => {
+                const parts = file.webkitRelativePath.split('/');
+                let current = tree;
+
+                parts.forEach((part, index) => {
+                    if (index === parts.length - 1) {
+                        // It's a file
+                        if (!current._files) current._files = [];
+                        current._files.push({ name: part, file: file });
+                    } else {
+                        // It's a folder
+                        if (!current[part]) current[part] = {};
+                        current = current[part];
+                    }
+                });
+            });
+
+            // Render the tree
+            const treeContainer = document.querySelector('.tree-container');
+            treeContainer.innerHTML = '';
+
+            const rootName = Object.keys(tree)[0] || 'coderef';
+            renderBrowsedTreeNode(rootName, tree[rootName], treeContainer, true);
+        }
+
+        function renderBrowsedTreeNode(name, node, parentElement, isRoot = false) {
+            const hasChildren = Object.keys(node).some(key => key !== '_files');
+            const hasFiles = node._files && node._files.length > 0;
+
+            if (hasChildren || hasFiles) {
+                // Folder
+                const folderDiv = document.createElement('div');
+                folderDiv.className = `tree-item folder ${isRoot ? 'active' : ''}`;
+                folderDiv.onclick = () => toggleFolder(folderDiv);
+
+                folderDiv.innerHTML = `
+                    <span class="material-symbols-outlined chevron ${isRoot ? 'expanded' : ''}">chevron_right</span>
+                    <span class="material-symbols-outlined icon">folder</span>
+                    <span>${name}</span>
+                `;
+
+                parentElement.appendChild(folderDiv);
+
+                const childrenDiv = document.createElement('div');
+                childrenDiv.className = `tree-children ${isRoot ? 'show' : ''}`;
+
+                // Render subfolders
+                Object.keys(node).forEach(key => {
+                    if (key !== '_files') {
+                        renderBrowsedTreeNode(key, node[key], childrenDiv);
+                    }
+                });
+
+                // Render files
+                if (hasFiles) {
+                    node._files.forEach(fileObj => {
+                        const fileDiv = document.createElement('div');
+                        fileDiv.className = 'tree-item file';
+                        fileDiv.onclick = (e) => {
+                            e.stopPropagation();
+                            loadBrowsedFile(fileObj.file, fileDiv);
+                        };
+
+                        fileDiv.innerHTML = `
+                            <span class="material-symbols-outlined icon">description</span>
+                            <span>${fileObj.name}</span>
+                        `;
+
+                        childrenDiv.appendChild(fileDiv);
+                    });
+                }
+
+                parentElement.appendChild(childrenDiv);
+            }
+        }
+
+        function loadBrowsedFile(file, element) {
+            // Remove active class from all tree items
+            document.querySelectorAll('.tree-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Add active to clicked item
+            element.classList.add('active');
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const content = e.target.result;
+                currentFileContent = content;
+                currentFilePath = file.webkitRelativePath;
+
+                displayFileContent(file.name, content, file.webkitRelativePath, file.size, file.lastModified);
+            };
+
+            reader.readAsText(file);
         }
 
         function showAddProjectDialog() {
@@ -547,6 +653,8 @@
             document.getElementById('addProjectModal').style.display = 'none';
         }
 
+        let pendingBrowsedFiles = null;
+
         function browseFolderForPath() {
             const input = document.createElement('input');
             input.type = 'file';
@@ -556,18 +664,13 @@
             input.onchange = (e) => {
                 const files = Array.from(e.target.files);
                 if (files.length > 0) {
-                    // Get the folder path from the first file
+                    pendingBrowsedFiles = files;
                     const firstFile = files[0];
                     const parts = firstFile.webkitRelativePath.split('/');
                     const folderName = parts[0];
 
-                    // Try to reconstruct the full path (this is approximate)
-                    // We'll use the file path and remove the relative portion
-                    const fullPath = firstFile.name ? window.location.pathname : '';
-
-                    // For Windows, we need to construct the path differently
-                    // Set the folder name as placeholder and let user correct it
-                    document.getElementById('projectPath').value = folderName;
+                    // Set a placeholder path
+                    document.getElementById('projectPath').value = `[Browsed: ${folderName}]`;
 
                     // Auto-populate project name if empty
                     const nameInput = document.getElementById('projectName');
@@ -575,12 +678,15 @@
                         nameInput.value = folderName;
                     }
 
-                    showToast(`Selected folder: ${folderName}. Please verify the full path.`);
+                    showToast(`Selected folder: ${folderName} (${files.length} files)`);
                 }
             };
 
             input.click();
         }
+
+        // Store browsed files by project ID (in-memory, not persisted)
+        let projectBrowsedFilesCache = {};
 
         async function confirmAddProject() {
             const name = document.getElementById('projectName').value.trim();
@@ -592,21 +698,42 @@
             }
 
             const id = name.toLowerCase().replace(/\s+/g, '-');
-            const project = { id, name, path };
 
-            const success = await saveProject(project);
+            // Check if user browsed files (in-memory mode)
+            if (pendingBrowsedFiles) {
+                // In-memory mode: use File objects directly
+                projectBrowsedFilesCache[id] = pendingBrowsedFiles;
 
-            if (success) {
-                await loadProjects();
-                currentProject = projects.find(p => p.id === id);
-                if (currentProject) {
-                    document.getElementById('project-select').value = id;
-                    changeProject(id);
-                }
+                const project = { id, name, path: '[Browsed - Not Persisted]' };
+                projects.push(project);
+
+                renderProjectSelector();
+                currentProject = project;
+                document.getElementById('project-select').value = id;
+
+                // Render tree from browsed files
+                buildTreeFromBrowsedFiles(pendingBrowsedFiles);
+
                 closeAddProjectModal();
-                showToast('Project added successfully!');
+                pendingBrowsedFiles = null;
+                showToast('Project added (files cached in browser)');
             } else {
-                showToast('Error: Invalid project path');
+                // Server mode: save path to server
+                const project = { id, name, path };
+                const success = await saveProject(project);
+
+                if (success) {
+                    await loadProjects();
+                    currentProject = projects.find(p => p.id === id);
+                    if (currentProject) {
+                        document.getElementById('project-select').value = id;
+                        changeProject(id);
+                    }
+                    closeAddProjectModal();
+                    showToast('Project added and persisted!');
+                } else {
+                    showToast('Error: Invalid project path');
+                }
             }
         }
 
