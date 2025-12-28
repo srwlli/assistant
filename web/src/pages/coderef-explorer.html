@@ -678,6 +678,9 @@
                         nameInput.value = folderName;
                     }
 
+                    // Manually enable the Add button
+                    document.getElementById('addProjectBtn').disabled = false;
+
                     showToast(`Selected folder: ${folderName} (${files.length} files)`);
                 }
             };
