@@ -1,10 +1,8 @@
 @echo off
 REM CodeRef Explorer Launcher - Electron Edition
-REM Launches the Electron desktop app
+REM Launches the Electron desktop app (hidden terminal)
 
 cd /d "%~dp0"
-
-echo Starting CodeRef Explorer (Electron)...
 
 REM Check if node_modules exists
 if not exist "node_modules\" (
@@ -15,5 +13,6 @@ if not exist "node_modules\" (
     exit /b 1
 )
 
-REM Launch Electron app
-npm start
+REM Launch Electron app without terminal window
+start /B npm start
+exit
