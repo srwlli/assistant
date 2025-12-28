@@ -436,9 +436,15 @@
                 </div>
                 <div class="form-group">
                     <label for="projectPath">Project Folder Path</label>
-                    <input type="text" id="projectPath" placeholder="e.g., C:\Users\willh\Desktop\assistant\coderef" class="industrial-input">
+                    <div style="display: flex; gap: var(--spacing-sm);">
+                        <input type="text" id="projectPath" placeholder="e.g., C:\Users\willh\Desktop\assistant\coderef" class="industrial-input" style="flex: 1;">
+                        <button class="industrial-button-secondary" onclick="browseFolderForPath()" title="Browse for folder">
+                            <span class="material-symbols-outlined sm">folder_open</span>
+                            Browse
+                        </button>
+                    </div>
                     <p class="text-muted text-sm" style="margin-top: var(--spacing-sm);">
-                        Enter the full path to your project's coderef folder
+                        Type the path or click Browse to select a folder
                     </p>
                 </div>
             </div>
@@ -539,6 +545,41 @@
 
         function closeAddProjectModal() {
             document.getElementById('addProjectModal').style.display = 'none';
+        }
+
+        function browseFolderForPath() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.webkitdirectory = true;
+            input.multiple = true;
+
+            input.onchange = (e) => {
+                const files = Array.from(e.target.files);
+                if (files.length > 0) {
+                    // Get the folder path from the first file
+                    const firstFile = files[0];
+                    const parts = firstFile.webkitRelativePath.split('/');
+                    const folderName = parts[0];
+
+                    // Try to reconstruct the full path (this is approximate)
+                    // We'll use the file path and remove the relative portion
+                    const fullPath = firstFile.name ? window.location.pathname : '';
+
+                    // For Windows, we need to construct the path differently
+                    // Set the folder name as placeholder and let user correct it
+                    document.getElementById('projectPath').value = folderName;
+
+                    // Auto-populate project name if empty
+                    const nameInput = document.getElementById('projectName');
+                    if (!nameInput.value) {
+                        nameInput.value = folderName;
+                    }
+
+                    showToast(`Selected folder: ${folderName}. Please verify the full path.`);
+                }
+            };
+
+            input.click();
         }
 
         async function confirmAddProject() {
