@@ -62,8 +62,8 @@ function createWindow() {
     mainWindow.loadURL('http://localhost:8080/src/pages/coderef-explorer.html');
   }, 2000);
 
-  // Open DevTools in development
-  mainWindow.webContents.openDevTools();
+  // Open DevTools in development (uncomment for debugging)
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
