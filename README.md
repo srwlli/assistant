@@ -1,35 +1,20 @@
-# assistant
+# CodeRef Ecosystem
 
-## Overview
+**An AI-powered code intelligence and development orchestration system**
 
-<!-- AGENT: Describe what this project does -->
-
-## Quick Stats
-
-| Metric | Value |
-|--------|-------|
-| Functions | 3 |
-
-## Architecture Overview
-
-```mermaid
-graph TB
-    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_DELIVERABLES_md_84_to["Deliverables.Md"]
-    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_plan_json_114_to["Planon"]
-    C__Users_willh_Desktop_assistant_HANDOFF_WO_FILE_DISCOVERY_ENHANCEMENT_001_md_43_to["Handoff-Wo-File-Discovery-Enhancement-001.Md"]
-```
-
-## Quick Start
-
-<!-- AGENT: Installation and usage instructions -->
-
-## Documentation
-
-- [API Reference](coderef/foundation-docs/API.md)
-- [Architecture](coderef/foundation-docs/ARCHITECTURE.md)
-- [Components](coderef/foundation-docs/COMPONENTS.md)
-- [Schema](coderef/foundation-docs/SCHEMA.md)
+> Transform how you build, understand, and document software with autonomous AI agents backed by deep code analysis.
 
 ---
 
-*Generated: 2025-12-19T18:35:35.096391*
+## What Is It?
+
+**CodeRef** is a complete MCP (Model Context Protocol) ecosystem that gives AI agents superhuman understanding of your codebase. It combines code analysis, automated planning, expert personas, and intelligent documentation to create a development environment where AI agents can:
+
+- **Understand** your entire codebase in seconds (not hours)
+- **Plan** complex features with 10-section implementation roadmaps
+- **Implement** code changes with full dependency awareness
+- **Test** automatically with impact-based test selection
+- **Document** everything from architecture to APIs to user guides
+
+Think of it as giving Claude Code (or any AI agent) the ability to "see" your code like an experienced developer who's worked on your project for years.
+
