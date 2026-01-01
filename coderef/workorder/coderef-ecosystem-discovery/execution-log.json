@@ -1,0 +1,110 @@
+[
+  {
+    "timestamp": "2025-12-31T21:46:40.340369",
+    "workorder_id": "WO-CODEREF-ECOSYSTEM-DISCOVERY-001",
+    "feature_name": "coderef-ecosystem-discovery",
+    "task_count": 20,
+    "tasks": [
+      {
+        "content": "PRE-IMPL-001: Review complete plan for gaps",
+        "activeForm": "PRE-IMPL-001: Reviewing complete plan for gaps",
+        "status": "pending"
+      },
+      {
+        "content": "PRE-IMPL-002: Verify all 7 servers have .coderef/ directories",
+        "activeForm": "PRE-IMPL-002: Verifying all 7 servers have .coderef/ directories",
+        "status": "pending"
+      },
+      {
+        "content": "PRE-IMPL-003: Confirm Python 3.8+ installed",
+        "activeForm": "PRE-IMPL-003: Confirming Python 3.8+ installed",
+        "status": "pending"
+      },
+      {
+        "content": "SETUP-001: Create scripts/ directory in workorder folder",
+        "activeForm": "SETUP-001: Creating scripts/ directory in workorder folder",
+        "status": "pending"
+      },
+      {
+        "content": "SETUP-002: Create exports/ directory in workorder folder",
+        "activeForm": "SETUP-002: Creating exports/ directory in workorder folder",
+        "status": "pending"
+      },
+      {
+        "content": "IMPL-001: Write generate_dependencies.py (extract cross-server imports)",
+        "activeForm": "IMPL-001: Writing generate_dependencies.py (extract cross-server imports)",
+        "status": "pending"
+      },
+      {
+        "content": "IMPL-002: Write generate_shared_code.py (find duplicates)",
+        "activeForm": "IMPL-002: Writing generate_shared_code.py (find duplicates)",
+        "status": "pending"
+      },
+      {
+        "content": "IMPL-003: Write generate_ecosystem_diagram.py (combine diagrams)",
+        "activeForm": "IMPL-003: Writing generate_ecosystem_diagram.py (combine diagrams)",
+        "status": "pending"
+      },
+      {
+        "content": "IMPL-004: Write generate_refactor_targets.py (complexity analysis)",
+        "activeForm": "IMPL-004: Writing generate_refactor_targets.py (complexity analysis)",
+        "status": "pending"
+      },
+      {
+        "content": "IMPL-005: Write generate_patterns_analysis.py (pattern comparison)",
+        "activeForm": "IMPL-005: Writing generate_patterns_analysis.py (pattern comparison)",
+        "status": "pending"
+      },
+      {
+        "content": "IMPL-006: Write copy_graph_exports.py (copy exports)",
+        "activeForm": "IMPL-006: Writing copy_graph_exports.py (copy exports)",
+        "status": "pending"
+      },
+      {
+        "content": "TEST-001: Test scripts on sample .coderef/ directories",
+        "activeForm": "TEST-001: Testing scripts on sample .coderef/ directories",
+        "status": "pending"
+      },
+      {
+        "content": "EXEC-001: Execute scripts on production data",
+        "activeForm": "EXEC-001: Executeing scripts on production data",
+        "status": "pending"
+      },
+      {
+        "content": "VERIFY-001: Review all 6 markdown outputs for accuracy",
+        "activeForm": "VERIFY-001: Reviewing all 6 markdown outputs for accuracy",
+        "status": "pending"
+      },
+      {
+        "content": "DOC-001: Update guide.md Pre-Planning checklist",
+        "activeForm": "DOC-001: Updating guide.md Pre-Planning checklist",
+        "status": "pending"
+      },
+      {
+        "content": "FINALIZA-001: All 6 markdown documents generated and verified",
+        "activeForm": "FINALIZA-001: Alling 6 markdown documents generated and verified",
+        "status": "pending"
+      },
+      {
+        "content": "FINALIZA-002: 7 graph.json files copied to exports/",
+        "activeForm": "FINALIZA-002: 7ing graph.json files copied to exports/",
+        "status": "pending"
+      },
+      {
+        "content": "FINALIZA-003: guide.md updated with completion status",
+        "activeForm": "FINALIZA-003: guide.mding updated with completion status",
+        "status": "pending"
+      },
+      {
+        "content": "FINALIZA-004: DELIVERABLES.md updated with git metrics",
+        "activeForm": "FINALIZA-004: DELIVERABLES.mding updated with git metrics",
+        "status": "pending"
+      },
+      {
+        "content": "FINALIZA-005: Commit all changes to git",
+        "activeForm": "FINALIZA-005: Commiting all changes to git",
+        "status": "pending"
+      }
+    ]
+  }
+]

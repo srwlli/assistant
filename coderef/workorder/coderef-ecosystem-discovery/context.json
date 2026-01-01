@@ -1,0 +1,43 @@
+{
+  "feature_name": "coderef-ecosystem-discovery",
+  "description": "Generate comparative analysis documents across all 7 CodeRef MCP servers by processing existing .coderef/ data to create DEPENDENCIES.md, SHARED-CODE.md, ECOSYSTEM-ARCHITECTURE.mmd, REFACTOR-TARGETS.md, and PATTERNS-ANALYSIS.md for v1\u2192v2 refactor planning",
+  "goal": "Enable data-driven refactor planning by discovering cross-server dependencies, duplicated code, complexity hotspots, and pattern inconsistencies across the CodeRef ecosystem without manual code reading",
+  "requirements": [
+    "Process all 7 \u00d7 .coderef/index.json files to extract cross-server imports",
+    "Compare function/class names across servers to identify duplicated code (18+ generators)",
+    "Aggregate complexity metrics from reports/complexity/ to find refactor targets",
+    "Analyze patterns.json files to discover inconsistencies in error handling, logging, and validation",
+    "Generate visual ecosystem architecture diagram combining individual server diagrams",
+    "Output 6 markdown documents in workorder folder for planning reference"
+  ],
+  "out_of_scope": [
+    "Refactoring the code itself (analysis only)",
+    "Scanning servers (already complete)",
+    "Creating new .coderef/ structures",
+    "Modifying MCP server code"
+  ],
+  "constraints": [
+    "Must use existing .coderef/ data only (no source file reading)",
+    "All analysis must be automated/scripted for reproducibility",
+    "Documents must be markdown for version control and readability",
+    "Processing must complete in under 30 minutes total",
+    "Must work on Windows file paths"
+  ],
+  "decisions": {},
+  "success_criteria": {},
+  "_metadata": {
+    "workorder_id": "WO-CODEREF-ECOSYSTEM-DISCOVERY-001",
+    "workorder_assigned_at": "2026-01-01T01:36:31.069868+00:00",
+    "workorder_assigned_by": "gather_context"
+  },
+  "_uds": {
+    "generated_by": "coderef-workflow v2.0.0",
+    "document_type": "Feature Context",
+    "workorder_id": "WO-CODEREF-ECOSYSTEM-DISCOVERY-001",
+    "feature_id": "coderef-ecosystem-discovery",
+    "last_updated": "2026-01-01",
+    "ai_assistance": true,
+    "status": "DRAFT",
+    "next_review": "2026-01-31"
+  }
+}

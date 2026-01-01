@@ -1,0 +1,328 @@
+{
+  "META_DOCUMENTATION": {
+    "feature_name": "coderef-ecosystem-discovery",
+    "workorder_id": "WO-CODEREF-ECOSYSTEM-DISCOVERY-001",
+    "version": "1.0.0",
+    "status": "planning",
+    "generated_by": "PlanningGenerator",
+    "has_context": true,
+    "has_analysis": true,
+    "uds": {
+      "generated_by": "coderef-workflow v2.0.0",
+      "document_type": "Implementation Plan",
+      "last_updated": "2026-01-01",
+      "ai_assistance": true,
+      "next_review": "2026-01-31"
+    }
+  },
+  "UNIVERSAL_PLANNING_STRUCTURE": {
+    "0_preparation": {
+      "foundation_docs": {
+        "available": [
+          "README.md",
+          "ARCHITECTURE.md",
+          "API.md"
+        ],
+        "missing": ["USER-GUIDE.md"]
+      },
+      "reference_context": {
+        "guide.md": "coderef/workorder/coderef-v1-to-v2-refactor/guide.md - Contains ecosystem overview, server paths, and pre-planning context",
+        "DISCOVERY-WORKFLOW.md": "coderef/workorder/coderef-v1-to-v2-refactor/DISCOVERY-WORKFLOW.md - Complete 7-step discovery methodology",
+        ".coderef directories": "All 7 servers already scanned with index.json, context.md, reports/, diagrams/, exports/"
+      }
+    },
+    "1_executive_summary": {
+      "purpose": "Generate 6 comparative analysis documents by processing existing .coderef/ data from all 7 CodeRef MCP servers to enable data-driven v1→v2 refactor planning",
+      "value_proposition": "Automate cross-server discovery (dependencies, duplicates, complexity, patterns) in 30 minutes instead of 10-20 hours of manual code reading, providing reproducible analysis for architectural refactoring decisions",
+      "real_world_analogy": "Like running a business intelligence dashboard across multiple databases - we already have the raw data (.coderef/) from each server, now we're aggregating it into executive reports (6 markdown docs) that show relationships, duplications, and hot spots across the entire ecosystem",
+      "use_case": "Orchestrator agent runs this workflow → Generates DEPENDENCIES.md, SHARED-CODE.md, ECOSYSTEM-ARCHITECTURE.mmd, REFACTOR-TARGETS.md, PATTERNS-ANALYSIS.md → Reads reports → Creates individual workorders per server with informed refactor scope",
+      "output": [
+        "DEPENDENCIES.md - Cross-server import matrix showing which servers depend on which",
+        "SHARED-CODE.md - List of 18+ duplicated generators with consolidation recommendations",
+        "ECOSYSTEM-ARCHITECTURE.mmd - Visual Mermaid diagram of all 7 servers and their relationships",
+        "REFACTOR-TARGETS.md - High-complexity functions (cyclomatic >15, cognitive >20) across all servers",
+        "PATTERNS-ANALYSIS.md - Pattern inconsistencies in error handling, logging, validation",
+        "7 × graph.json - Copied from each server's .coderef/exports/ for deeper analysis"
+      ]
+    },
+    "2_risk_assessment": {
+      "overall_risk": "low",
+      "complexity": "low - 6 Python scripts reading JSON files, no source code modification (Analysis only: ~300-400 total lines of code across 6 scripts)",
+      "scope": "Small - 6 new Python scripts, 6 new markdown files in coderef/workorder/coderef-v1-to-v2-refactor/, no modifications to existing code",
+      "file_system_risk": "minimal - Read-only access to .coderef/ directories, write only to workorder folder",
+      "dependencies": [],
+      "performance_concerns": [
+        "Processing 7 × index.json files (largest: coderef-workflow ~500KB) - Mitigated by streaming JSON parsing if needed",
+        "Generating ecosystem diagram with 7 nodes - Negligible, Mermaid is text-based"
+      ],
+      "security_considerations": [
+        "None - No network access, no user input, no code execution, read-only file access"
+      ],
+      "breaking_changes": "none"
+    },
+    "3_current_state_analysis": {
+      "affected_files": [
+        "coderef/workorder/coderef-v1-to-v2-refactor/scripts/generate_dependencies.py - NEW (extract cross-server imports)",
+        "coderef/workorder/coderef-v1-to-v2-refactor/scripts/generate_shared_code.py - NEW (find duplicates)",
+        "coderef/workorder/coderef-v1-to-v2-refactor/scripts/generate_ecosystem_diagram.py - NEW (combine diagrams)",
+        "coderef/workorder/coderef-v1-to-v2-refactor/scripts/generate_refactor_targets.py - NEW (complexity analysis)",
+        "coderef/workorder/coderef-v1-to-v2-refactor/scripts/generate_patterns_analysis.py - NEW (pattern comparison)",
+        "coderef/workorder/coderef-v1-to-v2-refactor/scripts/copy_graph_exports.py - NEW (copy exports)",
+        "coderef/workorder/coderef-v1-to-v2-refactor/DEPENDENCIES.md - OUTPUT",
+        "coderef/workorder/coderef-v1-to-v2-refactor/SHARED-CODE.md - OUTPUT",
+        "coderef/workorder/coderef-v1-to-v2-refactor/ECOSYSTEM-ARCHITECTURE.mmd - OUTPUT",
+        "coderef/workorder/coderef-v1-to-v2-refactor/REFACTOR-TARGETS.md - OUTPUT",
+        "coderef/workorder/coderef-v1-to-v2-refactor/PATTERNS-ANALYSIS.md - OUTPUT",
+        "coderef/workorder/coderef-v1-to-v2-refactor/exports/graph-*.json - OUTPUT (7 files)"
+      ],
+      "dependencies": {
+        "existing_internal": [],
+        "existing_external": ["json (Python stdlib)", "pathlib (Python stdlib)"],
+        "new_external": [],
+        "new_internal": []
+      },
+      "architecture_context": "Orchestrator layer - Pure analysis scripts that aggregate data from multiple projects (.coderef/ directories) without executing or modifying source code. Follows read-only pattern for cross-project discovery."
+    },
+    "4_key_features": {
+      "primary_features": [
+        "Cross-server dependency extraction - Parse all 7 × .coderef/index.json files, extract import statements, filter for cross-server references (e.g., coderef-workflow importing from coderef-docs)",
+        "Duplicate code detection - Compare function/class names across all servers' index.json files, identify 18+ shared generators, provide consolidation recommendations (shared library vs keep duplicated)",
+        "Complexity hotspot discovery - Aggregate reports/complexity/*.json from all servers, filter functions with cyclomatic complexity >15 or cognitive complexity >20, prioritize by severity",
+        "Pattern inconsistency analysis - Read reports/patterns.json from all servers, compare error handling, logging, and validation patterns, identify standardization opportunities",
+        "Visual ecosystem mapping - Combine 7 × diagrams/dependencies.mmd into single ecosystem diagram showing server relationships"
+      ],
+      "secondary_features": [
+        "Graph export aggregation - Copy 7 × .coderef/exports/graph.json to workorder folder for optional deep analysis (Neo4j, etc.)",
+        "Markdown output formatting - Use tables, lists, and code blocks for readability and version control compatibility",
+        "Windows path handling - Normalize backslashes, handle long paths (>260 chars)"
+      ],
+      "edge_case_handling": [
+        "Missing .coderef/index.json - Skip server with warning, continue processing others",
+        "Empty patterns.json - Report 'No patterns detected' instead of error",
+        "Circular dependencies detected - Highlight in DEPENDENCIES.md with warning icon"
+      ],
+      "configuration_options": [
+        "None - Hardcoded server paths from guide.md for reproducibility"
+      ]
+    },
+    "5_task_id_system": {
+      "tasks": [
+        "SETUP-001 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Create scripts/ subdirectory in workorder folder",
+        "SETUP-002 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Create exports/ subdirectory for graph.json copies",
+        "IMPL-001 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Write generate_dependencies.py - Extract cross-server imports from 7 × index.json",
+        "IMPL-002 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Write generate_shared_code.py - Find duplicated functions/classes across servers",
+        "IMPL-003 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Write generate_ecosystem_diagram.py - Combine diagrams into ecosystem-level Mermaid",
+        "IMPL-004 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Write generate_refactor_targets.py - Aggregate complexity metrics, filter high-complexity functions",
+        "IMPL-005 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Write generate_patterns_analysis.py - Compare patterns.json files, identify inconsistencies",
+        "IMPL-006 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Write copy_graph_exports.py - Copy 7 × graph.json to exports/ folder",
+        "TEST-001 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Run all 6 scripts on test .coderef/ directories, verify outputs",
+        "EXEC-001 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Execute all scripts on production .coderef/ directories",
+        "VERIFY-001 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Manually review 6 markdown documents for accuracy and completeness",
+        "DOC-001 [WO-CODEREF-ECOSYSTEM-DISCOVERY-001]: Update guide.md Pre-Planning checklist - Mark Phase 1 tasks complete"
+      ]
+    },
+    "6_implementation_phases": {
+      "phases": [
+        {
+          "phase": 1,
+          "name": "Setup",
+          "title": "Phase 1: Setup",
+          "purpose": "Create directory structure for scripts and outputs",
+          "complexity": "low",
+          "effort_level": 1,
+          "tasks": ["SETUP-001", "SETUP-002"],
+          "deliverables": [
+            "coderef/workorder/coderef-v1-to-v2-refactor/scripts/ directory exists",
+            "coderef/workorder/coderef-v1-to-v2-refactor/exports/ directory exists"
+          ],
+          "completion_criteria": "Both directories created and empty"
+        },
+        {
+          "phase": 2,
+          "name": "Script Development",
+          "title": "Phase 2: Script Development",
+          "purpose": "Implement 6 Python analysis scripts",
+          "complexity": "medium",
+          "effort_level": 4,
+          "tasks": ["IMPL-001", "IMPL-002", "IMPL-003", "IMPL-004", "IMPL-005", "IMPL-006"],
+          "deliverables": [
+            "generate_dependencies.py - Outputs DEPENDENCIES.md",
+            "generate_shared_code.py - Outputs SHARED-CODE.md",
+            "generate_ecosystem_diagram.py - Outputs ECOSYSTEM-ARCHITECTURE.mmd",
+            "generate_refactor_targets.py - Outputs REFACTOR-TARGETS.md",
+            "generate_patterns_analysis.py - Outputs PATTERNS-ANALYSIS.md",
+            "copy_graph_exports.py - Copies 7 × graph.json"
+          ],
+          "completion_criteria": "All 6 scripts executable, no syntax errors, handle edge cases"
+        },
+        {
+          "phase": 3,
+          "name": "Testing & Execution",
+          "title": "Phase 3: Testing & Execution",
+          "purpose": "Test scripts and generate production analysis documents",
+          "complexity": "low",
+          "effort_level": 2,
+          "tasks": ["TEST-001", "EXEC-001", "VERIFY-001"],
+          "deliverables": [
+            "DEPENDENCIES.md with cross-server import matrix",
+            "SHARED-CODE.md with duplicate code list and recommendations",
+            "ECOSYSTEM-ARCHITECTURE.mmd with 7-server diagram",
+            "REFACTOR-TARGETS.md with high-complexity functions",
+            "PATTERNS-ANALYSIS.md with pattern inconsistencies",
+            "exports/ folder with 7 × graph.json files"
+          ],
+          "completion_criteria": "All 6 markdown docs generated, reviewed for accuracy, no errors"
+        },
+        {
+          "phase": 4,
+          "name": "Documentation",
+          "title": "Phase 4: Documentation",
+          "purpose": "Update planning documents with completion status",
+          "complexity": "low",
+          "effort_level": 1,
+          "tasks": ["DOC-001"],
+          "deliverables": [
+            "guide.md updated - Phase 1 Discovery checklist marked complete",
+            "DELIVERABLES.md updated - Implementation metrics recorded"
+          ],
+          "completion_criteria": "guide.md reflects completion, DELIVERABLES.md has git metrics"
+        }
+      ]
+    },
+    "7_testing_strategy": {
+      "unit_tests": [
+        "Not applicable - Analysis scripts are single-pass data transformations, testing via execution on real data"
+      ],
+      "integration_tests": [
+        "Execute all 6 scripts on test .coderef/ directories (sample from coderef-context, coderef-workflow)",
+        "Verify DEPENDENCIES.md contains cross-server imports",
+        "Verify SHARED-CODE.md identifies known duplicates (e.g., planning_generator.py in workflow/docs)",
+        "Verify REFACTOR-TARGETS.md contains functions with cyclomatic complexity >15"
+      ],
+      "end_to_end_tests": [
+        "Run complete workflow on production .coderef/ directories",
+        "Manually review all 6 markdown outputs for correctness"
+      ],
+      "edge_case_scenarios": [
+        {
+          "scenario": "Missing .coderef/index.json in one server",
+          "setup": "Temporarily rename coderef-testing/.coderef/index.json",
+          "expected_behavior": "Script logs warning 'Skipping coderef-testing: index.json not found', continues processing other 6 servers",
+          "verification": "Check output files still generated, warning appears in console",
+          "error_handling": "FileNotFoundError caught, logged, continues"
+        },
+        {
+          "scenario": "Empty patterns.json file",
+          "setup": "Create .coderef/reports/patterns.json with {} or []",
+          "expected_behavior": "PATTERNS-ANALYSIS.md shows 'No patterns detected for [server]'",
+          "verification": "Check markdown output, verify graceful handling",
+          "error_handling": "No error - Empty patterns treated as valid (no patterns found)"
+        },
+        {
+          "scenario": "Circular dependency detected (A imports B, B imports A)",
+          "setup": "Check if exists in real data (coderef-workflow ↔ coderef-docs)",
+          "expected_behavior": "DEPENDENCIES.md highlights with warning: '⚠️ Circular: workflow ↔ docs'",
+          "verification": "Visual inspection of DEPENDENCIES.md",
+          "error_handling": "No error - Circular dependencies are analysis findings, not errors"
+        }
+      ]
+    },
+    "8_success_criteria": {
+      "functional_requirements": [
+        {
+          "requirement": "Generate DEPENDENCIES.md with cross-server import matrix",
+          "metric": "File exists, contains table with 7 rows (one per server)",
+          "target": "100% servers listed",
+          "validation": "Read file, count rows, verify all servers present"
+        },
+        {
+          "requirement": "Identify 18+ duplicated generators in SHARED-CODE.md",
+          "metric": "Count of duplicated functions/classes",
+          "target": "≥18 duplicates identified",
+          "validation": "Read file, count listed duplicates"
+        },
+        {
+          "requirement": "Generate ECOSYSTEM-ARCHITECTURE.mmd with 7 servers",
+          "metric": "Mermaid diagram node count",
+          "target": "7 nodes (one per server)",
+          "validation": "Parse mermaid syntax, count graph nodes"
+        },
+        {
+          "requirement": "Find high-complexity functions in REFACTOR-TARGETS.md",
+          "metric": "Count of functions with cyclomatic complexity >15 or cognitive complexity >20",
+          "target": "≥5 high-complexity functions identified",
+          "validation": "Read file, count table rows"
+        },
+        {
+          "requirement": "Discover pattern inconsistencies in PATTERNS-ANALYSIS.md",
+          "metric": "Number of pattern categories analyzed (error handling, logging, validation)",
+          "target": "3 categories",
+          "validation": "Read file, verify sections exist"
+        },
+        {
+          "requirement": "Copy 7 graph.json exports to exports/ folder",
+          "metric": "File count in exports/ folder",
+          "target": "7 files",
+          "validation": "List directory, count .json files"
+        }
+      ],
+      "quality_requirements": [
+        {
+          "requirement": "Markdown files are well-formatted",
+          "metric": "Markdown linting (headings, tables, lists)",
+          "target": "0 syntax errors",
+          "validation": "Run markdown linter or manual review"
+        },
+        {
+          "requirement": "Analysis completes in under 30 minutes",
+          "metric": "Total execution time (all 6 scripts)",
+          "target": "<30 minutes",
+          "validation": "Measure runtime with time command"
+        }
+      ],
+      "performance_requirements": [
+        {
+          "requirement": "Process 7 × index.json files efficiently",
+          "metric": "Memory usage",
+          "target": "<500MB RAM",
+          "validation": "Monitor with Task Manager during execution"
+        }
+      ],
+      "security_requirements": []
+    },
+    "9_implementation_checklist": {
+      "pre_implementation": [
+        "☐ Review complete plan for gaps",
+        "☐ Verify all 7 servers have .coderef/ directories",
+        "☐ Confirm Python 3.8+ installed"
+      ],
+      "phase_1": [
+        "☐ SETUP-001: Create scripts/ directory in workorder folder",
+        "☐ SETUP-002: Create exports/ directory in workorder folder"
+      ],
+      "phase_2": [
+        "☐ IMPL-001: Write generate_dependencies.py (extract cross-server imports)",
+        "☐ IMPL-002: Write generate_shared_code.py (find duplicates)",
+        "☐ IMPL-003: Write generate_ecosystem_diagram.py (combine diagrams)",
+        "☐ IMPL-004: Write generate_refactor_targets.py (complexity analysis)",
+        "☐ IMPL-005: Write generate_patterns_analysis.py (pattern comparison)",
+        "☐ IMPL-006: Write copy_graph_exports.py (copy exports)"
+      ],
+      "phase_3": [
+        "☐ TEST-001: Test scripts on sample .coderef/ directories",
+        "☐ EXEC-001: Execute scripts on production data",
+        "☐ VERIFY-001: Review all 6 markdown outputs for accuracy"
+      ],
+      "phase_4": [
+        "☐ DOC-001: Update guide.md Pre-Planning checklist"
+      ],
+      "finalization": [
+        "☐ All 6 markdown documents generated and verified",
+        "☐ 7 graph.json files copied to exports/",
+        "☐ guide.md updated with completion status",
+        "☐ DELIVERABLES.md updated with git metrics",
+        "☐ Commit all changes to git"
+      ]
+    }
+  }
+}
