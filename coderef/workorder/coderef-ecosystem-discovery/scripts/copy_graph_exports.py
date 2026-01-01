@@ -31,7 +31,7 @@ def copy_graph_exports():
         graph_file = server_path / ".coderef" / "exports" / "graph.json"
 
         if not graph_file.exists():
-            print(f"⚠️ Skipping {server}: graph.json not found")
+            print(f"[WARN] Skipping {server}: graph.json not found")
             missing.append(server)
             continue
 
@@ -41,7 +41,7 @@ def copy_graph_exports():
 
         shutil.copy2(graph_file, dest_file)
         copied.append(server)
-        print(f"✅ Copied {server} → {dest_file.name}")
+        print(f"[OK] Copied {server} -> {dest_file.name}")
 
     return copied, missing
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     readme_path = Path(__file__).parent.parent / "exports" / "README.md"
     readme_path.write_text(readme_content, encoding='utf-8')
 
-    print(f"\n✅ Copied {len(copied)} graph exports")
+    print(f"\n[OK] Copied {len(copied)} graph exports")
     if missing:
-        print(f"⚠️ Missing {len(missing)} exports: {', '.join(missing)}")
-    print(f"✅ Generated {readme_path}")
+        print(f"[WARN] Missing {len(missing)} exports: {', '.join(missing)}")
+    print(f"[OK] Generated {readme_path}")

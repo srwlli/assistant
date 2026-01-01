@@ -39,6 +39,11 @@ def find_duplicates():
         elements = load_index(server_path)
 
         for elem in elements:
+            # Skip dependency packages (not our code)
+            file_path = elem.get('file', '')
+            if any(x in file_path for x in ['.venv', 'node_modules', '__pycache__', 'site-packages']):
+                continue
+
             if elem['type'] in ['function', 'class', 'component']:
                 name = elem['name']
                 location = f"{server}:{elem['file']}:{elem.get('line', '?')}"
