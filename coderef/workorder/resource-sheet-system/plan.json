@@ -1,0 +1,395 @@
+{
+  "META_DOCUMENTATION": {
+    "feature_name": "resource-sheet-system",
+    "workorder_id": "WO-RESOURCE-SHEET-SYSTEM-001",
+    "version": "1.0.0",
+    "status": "planning",
+    "generated_by": "coderef-assistant",
+    "created": "2026-01-02",
+    "has_context": true,
+    "has_analysis": false
+  },
+
+  "0_preparation": {
+    "foundation_docs": {
+      "available": [
+        "CLAUDE.md - Orchestrator context and MCP ecosystem",
+        "projects.md - Project tracking and stub inventory",
+        "Explorer Sidebar documentation pattern (inspiration)"
+      ],
+      "missing": []
+    },
+    "coding_standards": {
+      "available": [
+        "Slash command conventions (/command-name.md format)",
+        "MCP tool patterns (tool-based architecture)",
+        "coderef-workflow integration patterns"
+      ],
+      "missing": []
+    },
+    "reference_components": {
+      "primary": "Explorer Sidebar authoritative documentation pattern",
+      "secondary": [
+        "coderef-docs foundation docs workflow",
+        "coderef-workflow planning system",
+        "Claude Code slash commands"
+      ]
+    },
+    "key_patterns_identified": [
+      "Template-driven documentation generation",
+      "Element-type classification taxonomy",
+      "Checklist-based validation",
+      "Refactor-safe contract specifications"
+    ],
+    "technology_stack": {
+      "languages": ["TypeScript", "JavaScript"],
+      "frameworks": ["MCP Protocol"],
+      "key_libraries": ["coderef-workflow", "coderef-docs"]
+    },
+    "gaps_and_risks": [
+      "Two separate implementations creating fragmentation",
+      "No unified MCP tool for resource sheets",
+      "Documentation references scattered across coderef/core",
+      "Potential breaking changes during consolidation"
+    ]
+  },
+
+  "1_executive_summary": {
+    "purpose": "Consolidate two separate resource sheet implementations (create-resource-sheet.md and resource-sheet-catalog.md) into a single unified MCP tool",
+    "value_proposition": "Eliminates duplication, establishes single source of truth, improves discoverability, and ensures consistent resource sheet generation across all projects",
+    "real_world_analogy": "Like merging two separate recipe books with overlapping recipes into one authoritative cookbook with organized sections and a comprehensive index",
+    "use_case": "Developer needs to document a complex system component → Uses MCP tool to generate element-specific resource sheet → Tool provides validated template with comprehensive checklists → Developer fills in details following proven pattern → Result is refactor-safe, authoritative documentation",
+    "output": "Unified MCP tool with 20 element-type templates, validation system, and updated coderef/core documentation"
+  },
+
+  "2_risk_assessment": {
+    "overall_risk": "medium",
+    "complexity": "medium (estimated 8-12 files, ~1500-2000 lines including templates)",
+    "scope": "6 requirements affecting MCP tool architecture, template system, and documentation",
+    "file_system_risk": "medium (new MCP server creation, slash command deprecation, doc updates)",
+    "dependencies": [
+      "coderef-docs MCP server (documentation workflows)",
+      "coderef-workflow MCP server (planning integration)",
+      "Claude Code slash command system",
+      "MCP protocol"
+    ],
+    "performance_concerns": [
+      "Template generation must complete in < 1 second",
+      "20 element types require efficient classification logic",
+      "Large templates (13 sections) need optimized rendering"
+    ],
+    "security_considerations": [
+      "Template injection prevention",
+      "File path validation for output locations",
+      "Input sanitization for element names"
+    ],
+    "breaking_changes": "medium (deprecated slash commands, changed documentation references)"
+  },
+
+  "3_current_state_analysis": {
+    "affected_files": [
+      ".claude/commands/create-resource-sheet.md (to be deprecated)",
+      ".claude/commands/resource-sheet-catalog.md (to be deprecated)",
+      "coderef/foundation-docs/ARCHITECTURE.md (update references)",
+      "coderef/foundation-docs/API.md (update references)",
+      "coderef/schemas/ (may need new schema)",
+      "coderef/workflows/ (may reference doc workflows)"
+    ],
+    "dependencies": {
+      "existing_internal": [
+        "coderef-docs MCP server",
+        "coderef-workflow MCP server",
+        "Claude Code slash command system"
+      ],
+      "existing_external": [
+        "MCP protocol",
+        "TypeScript/JavaScript runtime"
+      ],
+      "new_external": [],
+      "new_internal": [
+        "New resource-sheets MCP server"
+      ]
+    },
+    "architecture_context": "Create new MCP server following established coderef ecosystem patterns (similar to coderef-docs, coderef-workflow). Implement tool-based API with generate, classify, and validate tools. Store templates in structured format. Integrate with existing documentation workflows."
+  },
+
+  "4_key_features": {
+    "primary_features": [
+      "Generate resource sheets from 20 element-type templates",
+      "Classify elements into appropriate categories",
+      "Validate resource sheet completeness against checklists",
+      "Support interactive and batch generation modes"
+    ],
+    "secondary_features": [
+      "Template customization per project",
+      "Export to multiple formats (markdown, JSON)",
+      "Integration with coderef-workflow planning"
+    ],
+    "edge_case_handling": [
+      "Unknown element types (fallback to base template)",
+      "Missing required sections (validation warnings)",
+      "Invalid element names (sanitization and validation)",
+      "Partial template generation (support incomplete sheets)"
+    ],
+    "configuration_options": [
+      "Default element type classification",
+      "Required vs optional sections per element type",
+      "Output format preferences",
+      "Custom validation rules"
+    ]
+  },
+
+  "5_task_id_system": {
+    "tasks": [
+      "DESIGN-001: Design MCP tool API (generate_resource_sheet, classify_element, validate_sheet tools)",
+      "DESIGN-002: Map features from both implementations to unified tool (feature matrix)",
+      "DESIGN-003: Define template schema and storage format (JSON with metadata)",
+      "IMPL-001: Create MCP server scaffold with tool definitions and protocol handlers",
+      "IMPL-002: Implement template generation logic for all 20 element types",
+      "IMPL-003: Implement element classification system with taxonomy mapping",
+      "IMPL-004: Implement validation system with checklist enforcement",
+      "TEMPLATE-001: Create base template with 13 documentation sections",
+      "TEMPLATE-002: Create 20 element-specific template variants with custom checklists",
+      "DOC-001: Audit coderef/core for all resource sheet references (grep/search)",
+      "DOC-002: Update ARCHITECTURE.md with MCP tool reference and migration guide",
+      "DOC-003: Update API.md with tool documentation and usage examples",
+      "DOC-004: Add deprecation notices to old slash commands with migration instructions",
+      "TEST-001: Test all 20 element type template generations (smoke tests)",
+      "TEST-002: Validate all coderef/core references updated (link checking)",
+      "TEST-003: Integration test with coderef-workflow (end-to-end scenario)"
+    ]
+  },
+
+  "6_implementation_phases": {
+    "phases": [
+      {
+        "phase": 1,
+        "name": "Phase 1: Design & Planning",
+        "description": "Design MCP tool architecture, API, and template system structure",
+        "tasks": [
+          "DESIGN-001",
+          "DESIGN-002",
+          "DESIGN-003"
+        ],
+        "deliverables": [
+          "MCP tool API specification document",
+          "Feature mapping matrix (old → new)",
+          "Template schema definition"
+        ]
+      },
+      {
+        "phase": 2,
+        "name": "Phase 2: Template System",
+        "description": "Create base template and 20 element-specific variants",
+        "tasks": [
+          "TEMPLATE-001",
+          "TEMPLATE-002"
+        ],
+        "deliverables": [
+          "Base template with 13 sections",
+          "20 element-type templates with custom checklists",
+          "Template validation rules"
+        ]
+      },
+      {
+        "phase": 3,
+        "name": "Phase 3: MCP Tool Implementation",
+        "description": "Build the unified MCP server with core functionality",
+        "tasks": [
+          "IMPL-001",
+          "IMPL-002",
+          "IMPL-003",
+          "IMPL-004"
+        ],
+        "deliverables": [
+          "MCP server running and registered",
+          "All three tools functional (generate, classify, validate)",
+          "Integration with MCP protocol complete"
+        ]
+      },
+      {
+        "phase": 4,
+        "name": "Phase 4: Documentation Migration",
+        "description": "Update all references to use new MCP tool and deprecate old implementations",
+        "tasks": [
+          "DOC-001",
+          "DOC-002",
+          "DOC-003",
+          "DOC-004"
+        ],
+        "deliverables": [
+          "All coderef/core references updated",
+          "Migration guide published",
+          "Deprecation notices in place"
+        ]
+      },
+      {
+        "phase": 5,
+        "name": "Phase 5: Testing & Validation",
+        "description": "Comprehensive testing and validation of consolidation",
+        "tasks": [
+          "TEST-001",
+          "TEST-002",
+          "TEST-003"
+        ],
+        "deliverables": [
+          "All tests passing",
+          "Zero broken documentation links",
+          "Integration verified"
+        ]
+      }
+    ]
+  },
+
+  "7_testing_strategy": {
+    "unit_tests": [
+      "Template generation for each of 20 element types",
+      "Element classification logic (taxonomy mapping)",
+      "Validation rule enforcement for each checklist",
+      "Template schema parsing and rendering",
+      "Input sanitization and validation"
+    ],
+    "integration_tests": [
+      "MCP tool registration with Claude Code",
+      "Tool invocation via MCP protocol",
+      "Integration with coderef-workflow planning",
+      "Slash command backward compatibility",
+      "Template output file creation"
+    ],
+    "end_to_end_tests": [
+      {
+        "scenario": "Generate resource sheet for stateful container",
+        "setup": "Call generate_resource_sheet with element_type='stateful-container'",
+        "expected_behavior": "Tool returns markdown with all 13 sections plus state ownership checklist",
+        "verification": "Assert output contains State Ownership table and persistence contract",
+        "error_handling": "ValidationError if required fields missing"
+      },
+      {
+        "scenario": "Classify unknown element type",
+        "setup": "Call classify_element with unknown type",
+        "expected_behavior": "Tool returns fallback to base template with warning",
+        "verification": "Assert warning logged and base template returned",
+        "error_handling": "No error, graceful degradation"
+      },
+      {
+        "scenario": "Validate incomplete resource sheet",
+        "setup": "Call validate_sheet with partial template missing required sections",
+        "expected_behavior": "Tool returns validation errors listing missing sections",
+        "verification": "Assert error list contains specific missing section names",
+        "error_handling": "ValidationError with detailed feedback"
+      }
+    ],
+    "edge_case_scenarios": [
+      {
+        "scenario": "Empty element name provided",
+        "setup": "Call generate_resource_sheet with empty string",
+        "expected_behavior": "Tool validates input and returns appropriate error",
+        "verification": "Assert error message indicates invalid element name",
+        "error_handling": "ValueError with descriptive message"
+      },
+      {
+        "scenario": "All 20 element types tested",
+        "setup": "Iterate through all element types and generate sheets",
+        "expected_behavior": "Each type returns valid template with type-specific checklists",
+        "verification": "Assert all outputs pass validation",
+        "error_handling": "No errors expected for valid types"
+      }
+    ]
+  },
+
+  "8_success_criteria": {
+    "functional_requirements": [
+      {
+        "requirement": "Single MCP tool provides all functionality",
+        "metric": "All features from both implementations available",
+        "target": "100% feature parity",
+        "validation": "Feature mapping matrix verification"
+      },
+      {
+        "requirement": "All 20 element types supported",
+        "metric": "Template generation success rate",
+        "target": "20/20 element types generate valid templates",
+        "validation": "Automated test suite"
+      },
+      {
+        "requirement": "Documentation migration complete",
+        "metric": "coderef/core references updated",
+        "target": "0 references to old implementations",
+        "validation": "Grep search for old file names"
+      }
+    ],
+    "quality_requirements": [
+      {
+        "requirement": "Template validation",
+        "metric": "Validation coverage",
+        "target": "100% of required sections validated",
+        "validation": "Validation rule tests"
+      },
+      {
+        "requirement": "Zero functionality loss",
+        "metric": "Feature migration completeness",
+        "target": "All old features preserved or improved",
+        "validation": "Side-by-side comparison"
+      }
+    ],
+    "performance_requirements": [
+      {
+        "requirement": "Template generation speed",
+        "metric": "Generation time",
+        "target": "< 500ms per template",
+        "validation": "Performance benchmarks"
+      }
+    ],
+    "security_requirements": [
+      {
+        "requirement": "Input validation",
+        "metric": "All inputs sanitized",
+        "target": "100% input validation coverage",
+        "validation": "Security review and fuzz testing"
+      }
+    ]
+  },
+
+  "9_implementation_checklist": {
+    "pre_implementation": [
+      "☐ Review both existing implementations (create-resource-sheet.md and resource-sheet-catalog.md)",
+      "☐ Verify MCP tool naming convention and registration process",
+      "☐ Set up development environment for MCP server"
+    ],
+    "phase_1": [
+      "☐ DESIGN-001: Design MCP tool API",
+      "☐ DESIGN-002: Map features from both implementations",
+      "☐ DESIGN-003: Define template schema"
+    ],
+    "phase_2": [
+      "☐ TEMPLATE-001: Create base template",
+      "☐ TEMPLATE-002: Create 20 element-specific templates"
+    ],
+    "phase_3": [
+      "☐ IMPL-001: Create MCP server scaffold",
+      "☐ IMPL-002: Implement template generation",
+      "☐ IMPL-003: Implement classification system",
+      "☐ IMPL-004: Implement validation system"
+    ],
+    "phase_4": [
+      "☐ DOC-001: Audit coderef/core references",
+      "☐ DOC-002: Update ARCHITECTURE.md",
+      "☐ DOC-003: Update API.md",
+      "☐ DOC-004: Add deprecation notices"
+    ],
+    "phase_5": [
+      "☐ TEST-001: Test all 20 element types",
+      "☐ TEST-002: Validate all references updated",
+      "☐ TEST-003: Integration test with coderef-workflow"
+    ],
+    "finalization": [
+      "☐ All tests passing (unit + integration + e2e)",
+      "☐ Code review completed and approved",
+      "☐ Documentation migration verified (zero broken links)",
+      "☐ Migration guide published for users",
+      "☐ MCP server registered and functional",
+      "☐ Old implementations deprecated with notices",
+      "☐ Final verification against success criteria"
+    ]
+  }
+}
