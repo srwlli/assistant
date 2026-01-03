@@ -1,0 +1,263 @@
+{
+  "session_id": "resource-sheet-consolidation",
+  "workorder_id": "WO-RESOURCE-SHEET-CONSOLIDATION-001",
+  "session_type": "multi_agent_implementation",
+  "created": "2026-01-03",
+  "last_updated": "2026-01-03",
+  "status": "phase_3_delegation",
+  "description": "Multi-agent consolidation of resource sheet systems with explicit domain delegation",
+
+  "current_status": {
+    "phases_complete": ["phase_1", "phase_2"],
+    "current_phase": "phase_3",
+    "overall_progress": "7/19 tasks complete (37%)",
+    "next_action": "papertrail: Review MAP-001 and continue Phase 3A. coderef-system: Start Phase 3B. coderef-docs: Start Phase 3C (PORT-001, DOCS-001).",
+    "last_updated": "2026-01-03 (coderef-docs completed Phase 2 + MAP-001 out-of-scope)"
+  },
+
+  "work_completed": {
+    "phase_1_orchestrator": {
+      "agent": "coderef-assistant",
+      "status": "complete",
+      "completed_tasks": [
+        "DEPRECATE-001: Added deprecation warning to create-resource-sheet.md",
+        "DEPRECATE-002: Added deprecation warning to resource-sheet-catalog.md",
+        "UPDATE-001: Updated ARCHITECTURE.md",
+        "UPDATE-002: Updated API.md"
+      ],
+      "deliverables": [
+        ".claude/commands/create-resource-sheet.md (deprecated)",
+        ".claude/commands/resource-sheet-catalog.md (deprecated)",
+        "CODEREF-DOCS-HANDOFF.md (initial handoff - now superseded)"
+      ],
+      "notes": "Changed from DELETE to DEPRECATE - kept files for reference with warnings"
+    },
+    "phase_2_coderef_docs": {
+      "agent": "coderef-docs",
+      "status": "complete",
+      "completed_tasks": [
+        "ROUTE-001: Routed slash command to MCP tool",
+        "ROUTE-002: Added element_type parameter passthrough",
+        "TEST-ROUTE: Tested basic routing"
+      ],
+      "deliverables": [
+        ".claude/commands/create-resource-sheet.md (updated with MCP routing instructions)",
+        "MCP tool routing configuration",
+        "Element type parameter support",
+        "communication.json (progress tracking)"
+      ],
+      "out_of_scope_work_completed": {
+        "MAP-001": {
+          "status": "completed_needs_review",
+          "file": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\resource_sheet\\mapping\\element-type-mapping.json",
+          "notes": "Created element-type-mapping.json with all 20 element types. Papertrail should review against unified_template_schema and validate detection patterns.",
+          "review_needed_by": "papertrail"
+        }
+      }
+    },
+    "phase_3c_coderef_docs": {
+      "agent": "coderef-docs",
+      "status": "complete",
+      "completed_tasks": [
+        "PORT-001: Ported Tool 1 writing guidelines to post-processor",
+        "DOCS-001: Created 4-tier documentation hierarchy"
+      ],
+      "deliverables": [
+        "resource_sheet/processing/writing_standards.py - Tool 1 quality controls as post-processing module",
+        "coderef/user/RESOURCE-SHEET-USER-GUIDE.md - Tier 1 user documentation",
+        "coderef/user/QUICK-REFERENCE-CARD.md - Tier 4 quick reference",
+        "coderef/foundation-docs/MODULE-REFERENCE.md - Tier 2 module technical reference",
+        "coderef/foundation-docs/ELEMENT-TYPE-CATALOG.md - Tier 3 element type catalog",
+        "communication.json - Final status tracking"
+      ],
+      "work_in_progress_status": "Phase 3C complete! All assigned tasks (PORT-001, DOCS-001) finished. coderef-docs domain work complete."
+    }
+  },
+
+  "agents": {
+    "papertrail": {
+      "role": "Template Generation Engine & UDS Enforcement",
+      "persona": "Documentation standards expert, template schema designer, validation architect",
+      "domain": "Template generation engine, UDS enforcement, element detection, validation pipeline",
+      "tasks": [
+        {
+          "id": "MAP-001",
+          "description": "Create element-type-mapping.json (20 types)",
+          "status": "needs_review",
+          "completed_by": "coderef-docs (2026-01-03)",
+          "file_location": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\resource_sheet\\mapping\\element-type-mapping.json",
+          "notes": "coderef-docs created initial version with all 20 element types from Tool 2. Papertrail must review and validate against unified_template_schema from papertrail-output.json. Verify detection patterns match 3-stage algorithm design."
+        },
+        {
+          "id": "DETECT-001",
+          "description": "Implement 3-stage detection algorithm",
+          "status": "needs_review",
+          "notes": "coderef-docs may have started this - papertrail must review and complete with proper detection patterns"
+        },
+        {
+          "id": "PORT-002",
+          "description": "Port Tool 2 checklists into ModuleRegistry",
+          "status": "pending",
+          "priority": "high"
+        },
+        {
+          "id": "VALID-001",
+          "description": "Build 4-gate validation pipeline",
+          "status": "pending",
+          "priority": "high"
+        }
+      ],
+      "deliverables": [
+        "element-type-mapping.json - 20 element type definitions with detection patterns",
+        "detection-module.py - 3-stage detection algorithm (filename → code analysis → fallback)",
+        "module-registry.py - Tool 2 checklists integrated as conditional modules",
+        "validation-pipeline.py - 4-gate quality validation system"
+      ],
+      "reference_materials": [
+        "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\reference-sheet-reconciliation\\papertrail-output.json",
+        ".claude/commands/resource-sheet-catalog.md (20 element types)",
+        "unified_template_schema from papertrail-output.json"
+      ],
+      "estimated_duration": "6-8 hours",
+      "priority": "high",
+      "handoff_file": "PAPERTRAIL-HANDOFF.md"
+    },
+    "coderef_system": {
+      "role": "Graph Integration & Auto-Fill Data Layer",
+      "persona": "Dependency graph expert, query optimization specialist, data integration architect",
+      "domain": "Graph integration, dependency queries, auto-fill data layer",
+      "tasks": [
+        {
+          "id": "GRAPH-001",
+          "description": "Create graph-helpers.ts with 4 query functions",
+          "status": "pending",
+          "priority": "high",
+          "functions": ["getImportsForElement", "getExportsForElement", "getConsumersForElement", "getDependenciesForElement"]
+        },
+        {
+          "id": "GRAPH-002",
+          "description": "Integrate graph queries into template renderer",
+          "status": "pending",
+          "priority": "high",
+          "target_auto_fill": "60-80% completion rate"
+        }
+      ],
+      "deliverables": [
+        "graph-helpers.ts - 4 query functions for dependency graph analysis",
+        "analyzer-integration.py - Integration layer feeding graph data to templates",
+        "performance-benchmarks.md - Query timing validation (<50ms per query)"
+      ],
+      "reference_materials": [
+        "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\reference-sheet-reconciliation\\coderef-system-output.json",
+        "graph_query_patterns from coderef-system-output.json",
+        "auto_fill_completion_rates_by_element_type"
+      ],
+      "estimated_duration": "4-6 hours",
+      "priority": "high",
+      "handoff_file": "CODEREF-SYSTEM-HANDOFF.md"
+    },
+    "coderef_docs": {
+      "role": "Writing Standards & Documentation Hierarchy",
+      "persona": "Technical writing expert, documentation architect, quality standards enforcer",
+      "domain": "MCP tool routing (complete), writing standards, documentation hierarchy",
+      "tasks": [
+        {
+          "id": "PORT-001",
+          "description": "Port Tool 1 writing guidelines to post-processor",
+          "status": "pending",
+          "priority": "medium",
+          "source": ".claude/commands/create-resource-sheet.md sections 5-6"
+        },
+        {
+          "id": "DOCS-001",
+          "description": "Create 4-tier documentation hierarchy",
+          "status": "pending",
+          "priority": "medium",
+          "tiers": ["RESOURCE-SHEET-USER-GUIDE.md", "MODULE-REFERENCE.md", "ELEMENT-TYPE-CATALOG.md", "QUICK-REFERENCE-CARD.md"]
+        }
+      ],
+      "deliverables": [
+        "writing-standards-processor.py - Tool 1 quality controls as post-processing rules",
+        "4-tier documentation hierarchy in coderef/user/ and coderef/foundation-docs/"
+      ],
+      "reference_materials": [
+        "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\reference-sheet-reconciliation\\coderef-docs-output.json",
+        ".claude/commands/create-resource-sheet.md (writing guidelines sections)"
+      ],
+      "estimated_duration": "2-3 hours",
+      "priority": "medium",
+      "handoff_file": "CODEREF-DOCS-PHASE3-HANDOFF.md",
+      "note": "Phase 2 complete. Do NOT continue MAP-001 or DETECT-001 - those are papertrail's domain"
+    },
+    "testing_agent": {
+      "role": "Quality Validation & Acceptance Testing",
+      "persona": "QA specialist, test strategy designer, validation engineer",
+      "domain": "Quality validation, P1 batch testing, acceptance criteria",
+      "tasks": [
+        {"id": "TEST-P1", "description": "Test 15 P1 examples", "status": "pending"},
+        {"id": "TEST-FILL", "description": "Validate 60-80% auto-fill", "status": "pending"},
+        {"id": "TEST-DETECT", "description": "Validate element detection", "status": "pending"},
+        {"id": "TEST-VALID", "description": "Validate validation pipeline", "status": "pending"}
+      ],
+      "status": "awaiting_phase_3_completion",
+      "estimated_duration": "2-4 hours",
+      "handoff_file": "TESTING-AGENT-BRIEF.md (already created)"
+    }
+  },
+
+  "execution_sequence": {
+    "parallel_execution": [
+      {
+        "group": "Phase 3 - Multi-Agent Enhancement",
+        "agents": ["papertrail", "coderef-system", "coderef-docs"],
+        "coordination": "Independent work - minimal dependencies",
+        "timeline": "Can run in parallel (12-16 hours total wall time)",
+        "dependencies": {
+          "papertrail": ["None - start immediately after review"],
+          "coderef-system": ["None - start immediately"],
+          "coderef-docs": ["None - start immediately"]
+        }
+      }
+    ],
+    "sequential_execution": [
+      {
+        "phase": "Phase 4 - Testing",
+        "agent": "testing-agent",
+        "depends_on": "All Phase 3 agents complete",
+        "trigger": "When all 12 Phase 3 tasks are complete"
+      }
+    ]
+  },
+
+  "communication_protocol": {
+    "status_updates": {
+      "frequency": "After each task completion",
+      "method": "Update instructions.json with task status",
+      "format": "agents.<agent_name>.tasks[<task_id>].status = 'complete'"
+    },
+    "blockers": {
+      "process": "Update instructions.json with blocker details in notes field",
+      "escalation": "Tag orchestrator in notes if cross-agent dependency blocks progress"
+    },
+    "completion": {
+      "process": "Update instructions.json with agent status = 'complete'",
+      "deliverables": "List all created files in deliverables array"
+    }
+  },
+
+  "handoff_documents": {
+    "papertrail": "PAPERTRAIL-HANDOFF.md (to be created)",
+    "coderef_system": "CODEREF-SYSTEM-HANDOFF.md (to be created)",
+    "coderef_docs": "CODEREF-DOCS-PHASE3-HANDOFF.md (to be created)",
+    "testing_agent": "TESTING-AGENT-BRIEF.md (already created)"
+  },
+
+  "success_criteria": {
+    "phase_3_complete": {
+      "papertrail": "4 tasks complete, 4 deliverables created, validation pipeline passing",
+      "coderef_system": "2 tasks complete, 2 deliverables created, 60-80% auto-fill achieved",
+      "coderef_docs": "2 tasks complete, 2 deliverables created, documentation hierarchy complete"
+    },
+    "ready_for_phase_4": "All 12 Phase 3 tasks marked complete, all deliverables validated"
+  }
+}
