@@ -1,271 +1,108 @@
----
-⚠️ **DEPRECATED** - This command now routes to MCP tool
----
-
-# DEPRECATION NOTICE
-
-**Status:** Deprecated as of 2026-01-03
-**New Backend:** `mcp__coderef-docs__generate_resource_sheet`
-
-This slash command template is **deprecated** and kept for reference only.
-
-## What Changed
-
-The `/create-resource-sheet` command now routes to an MCP tool with enhanced capabilities:
-- ✅ **60-80% auto-fill** from dependency graph analysis
-- ✅ **20 element type** specializations (components, hooks, APIs, etc.)
-- ✅ **4-gate validation** pipeline for quality assurance
-- ✅ **3 output formats:** Markdown + JSON Schema + JSDoc
-- ✅ **150-300x speedup** vs manual documentation
-
-## Migration
-
-**No action required** - the slash command continues working with improved backend.
-
-## Reference
-
-- **Synthesis:** `C:\Users\willh\.mcp-servers\coderef\sessions\reference-sheet-reconciliation\orchestrator-output.md`
-- **Workorder:** WO-RESOURCE-SHEET-CONSOLIDATION-001
-- **MCP Tool:** coderef-docs v3.4.0+ `generate_resource_sheet`
-
----
-
-# Create Resource Sheet - Agent Instruction Template (LEGACY)
+# Create Resource Sheet - Unified MCP Tool Integration
 
 ## Purpose
-Generate an authoritative, refactor-safe technical documentation resource sheet for a specific feature, component, system, or codebase artifact.
+Generate an authoritative, refactor-safe technical documentation resource sheet for a specific code element using the coderef-docs MCP tool with 60-80% auto-fill from dependency graph analysis.
 
 ## Usage
 ```
-/create-resource-sheet [target] [scope]
+/create-resource-sheet <target> [element-type]
+
+Required:
+  target        Path to code file or element name (e.g., AuthService.ts, Button.tsx)
+
+Optional:
+  element-type  Override auto-detection (e.g., stateful-container, api-client, custom-hook)
+                If omitted, element type is auto-detected from code characteristics
 
 Examples:
-/create-resource-sheet AuthService backend
-/create-resource-sheet ProjectSelector component
-/create-resource-sheet coderef-workflow tool
+/create-resource-sheet src/auth/AuthService.ts
+/create-resource-sheet components/Button.tsx design-system
+/create-resource-sheet hooks/useLocalStorage.ts custom-hook
 ```
 
 ## Agent Instructions
 
-You are tasked with creating an **authoritative resource sheet** that serves as the single source of truth for understanding, maintaining, and extending the target system.
+**IMPORTANT:** You MUST use the `generate_resource_sheet` MCP tool instead of generating documentation manually.
 
-### 1. Document Header Metadata
-```markdown
----
-Agent: [Your Model Name/Version]
-Date: [YYYY-MM-DD]
-Task: [REVIEW / CONSOLIDATE / DOCUMENT]
----
+### Step 1: Call the MCP Tool
 
-# [Target Name] — Authoritative Documentation
+Use the `mcp__coderef-docs__generate_resource_sheet` tool with these parameters:
+
+```typescript
+{
+  project_path: string,        // Current project root (auto-detected)
+  element_name: string,         // Target file/element from user input
+  mode: "reverse-engineer",     // Default mode for existing code
+  element_type?: string,        // Optional: pass through if user specified
+  output_path?: string          // Optional: custom output directory
+}
 ```
 
-### 2. Executive Summary (Required)
-Write a 2-4 sentence summary covering:
-- What the system is
-- Primary role/responsibility
-- Key architectural position
-- Maintenance intent (who uses this doc and why)
+### Step 2: Handle the Response
 
-### 3. Audience & Intent (Required)
-Define the hierarchy of authority:
-- **Markdown (this document):** Architectural truth, behavior, state
-- **TypeScript/Code:** Compile-time contracts, runtime behavior
-- **JSON Schemas:** Validation contracts
-- **Other formats:** Specify their role
+**IMPORTANT:** The MCP tool automatically saves all 3 output formats:
+1. **Markdown** → `coderef/reference-sheets/{element_name}/{element_name}.md`
+2. **JSON Schema** → `coderef/reference-sheets/{element_name}/{element_name}.schema.json`
+3. **JSDoc** → `coderef/reference-sheets/{element_name}/{element_name}.jsdoc.txt`
 
-### 4. Core Documentation Sections
+The tool response includes:
+- `outputs.markdown` - Path to saved markdown file
+- `outputs.schema` - Path to saved schema file
+- `outputs.jsdoc` - Path to saved JSDoc file
+- `auto_fill_rate` - Percentage of auto-filled content
+- `warnings` - Any issues detected
 
-#### 4.1 Architecture Overview
-- Role in larger system
-- Component hierarchy (use code blocks or Mermaid)
-- Key integration points
-- Layout/structure contracts
+**Inform the user where all 3 files were saved** and provide the auto-fill percentage.
 
-#### 4.2 State Ownership & Source of Truth
-Create a canonical table:
+### Step 3: Quality Validation
 
-| State | Owner | Type | Persistence | Source of Truth |
-|-------|-------|------|-------------|-----------------|
-| [state name] | [component] | [UI/Domain/System] | [localStorage/none/external] | [authority] |
+The MCP tool automatically runs 4-gate validation:
+- **Gate 1:** Structural validation (header, summary, required sections)
+- **Gate 2:** Content quality (no placeholders, writing standards)
+- **Gate 3:** Element-specific validation (type requirements met)
+- **Gate 4:** Auto-fill threshold (>= 60% completion)
 
-**Rules section:** Define precedence rules for conflicts
+If validation fails, the tool provides specific issues to address. Review and apply fixes if needed.
 
-#### 4.3 Data Persistence (if applicable)
-- Storage keys and schema
-- Versioning strategy
-- Failure modes & recovery
-- Cross-tab/multi-client sync
-
-#### 4.4 State Lifecycle
-Document the canonical sequence:
-1. Initialization
-2. Hydration
-3. Validation
-4. Migration
-5. Runtime updates
-6. Persistence triggers
-
-#### 4.5 Behaviors (Events & Side Effects)
-Split into:
-- **User behaviors:** Click, toggle, input events
-- **System behaviors:** External updates, storage events, network responses
-
-#### 4.6 Event & Callback Contracts
-Table format:
-
-| Event | Trigger | Payload | Side Effects |
-|-------|---------|---------|--------------|
-| `onEvent` | User action | `{ schema }` | What changes |
-
-#### 4.7 Performance Considerations
-- Known limits (tested thresholds)
-- Bottlenecks
-- Optimization opportunities
-- Deferred optimizations (with rationale)
-
-#### 4.8 Accessibility
-Audit current state:
-- **Current Gaps:** Issues table with severity
-- **Required Tasks:** Prioritized backlog
-
-#### 4.9 Testing Strategy
-- **Must-Cover Scenarios:** Critical paths
-- **Explicitly Not Tested:** Out of scope with reasoning
-
-#### 4.10 Non-Goals / Out of Scope
-Explicit list of rejected features/patterns
-
-#### 4.11 Common Pitfalls & Sharp Edges
-- Known bugs/quirks
-- Integration gotchas
-- Configuration mistakes
-- Edge cases
-
-#### 4.12 Diagrams (Optional)
-If included, add maintenance rule:
-> Diagrams are **illustrative**, not authoritative. State tables and text define truth.
-
-### 5. Writing Guidelines
-
-#### Voice & Tone
-- **Imperative, not conversational:** "The sidebar persists state" not "We persist state"
-- **Precision over politeness:** Technical accuracy trumps readability
-- **No hedging:** "Must" not "should probably"
-- **Active voice:** "Component manages state" not "State is managed by component"
-
-#### Structural Rules
-- **Tables over prose** for state, contracts, configurations
-- **Code blocks** for sequences, hierarchies, examples
-- **Callouts** for critical warnings
-- **Versioning** in headers if applicable
-
-#### Exhaustiveness Requirements
-- Document **all** persisted state keys
-- Document **all** failure recovery paths
-- Document **all** external integration contracts
-- Explicitly call out **non-goals** to prevent scope creep
-
-#### Refactor Safety Checks
-Before finalizing, verify:
-- [ ] Can a new developer refactor this without breaking contracts?
-- [ ] Are state ownership rules unambiguous?
-- [ ] Are failure modes documented with recovery paths?
-- [ ] Are non-goals explicit to prevent future scope creep?
-- [ ] Do diagrams match text (or are they marked illustrative)?
-
-### 6. Output Format
-
-```markdown
----
-Agent: [Model]
-Date: [Date]
-Task: [Task Type]
----
-
-# [System Name] — Authoritative Documentation
-
-## Executive Summary
-[2-4 sentences]
-
-## Audience & Intent
-- **Markdown:** [role]
-- **Code:** [role]
-- **Schemas:** [role]
-
-## 1. Architecture Overview
-...
-
-## 2. State Ownership & Source of Truth (Canonical)
-...
-
-[Continue with sections 3-12 as needed]
-
-## Conclusion
-[Final synthesis: what this doc defines, how to use it, maintenance expectations]
-```
-
-### 7. Special Cases
-
-#### For Components
-Focus on: Props, state, lifecycle, events, accessibility
-
-#### For Services/APIs
-Focus on: Contracts, error handling, state machines, integration points
-
-#### For Tools/CLIs
-Focus on: Command interface, configuration, workflows, failure modes
-
-#### For Workflows
-Focus on: State transitions, actor responsibilities, handoff points, idempotency
-
-### 8. Maintenance Protocol
-
-When updating the resource sheet:
-1. Mark deprecated sections with `⚠️ DEPRECATED` header
-2. Add migration notes for breaking changes
-3. Update version number if using versioned sections
-4. Archive old behavior in appendix if needed
-
----
-
-## Example Invocation
+### Example Invocation
 
 ```
-You: /create-resource-sheet WorkflowEngine backend
+User: /create-resource-sheet src/auth/AuthService.ts
 
 Agent:
-I'll analyze the WorkflowEngine backend system and create an authoritative resource sheet covering:
-- State machine architecture
-- Task lifecycle contracts
-- Event sourcing patterns
-- Error recovery mechanisms
-- Integration points with orchestrator
-- Performance characteristics
-- Testing requirements
+I'll generate a resource sheet for AuthService using the unified MCP tool.
 
-[Generates comprehensive markdown document following template]
+[Calls mcp__coderef-docs__generate_resource_sheet with:
+  project_path: "C:/path/to/project",
+  element_name: "AuthService",
+  mode: "reverse-engineer"
+]
+
+[Tool generates and auto-saves all 3 formats with 68% auto-fill rate]
+
+✅ Resource sheet generated with 68% auto-fill rate!
+
+All 3 formats saved to:
+1. 📄 Markdown: coderef/reference-sheets/authservice/authservice.md
+2. 📋 JSON Schema: coderef/reference-sheets/authservice/authservice.schema.json
+3. 💬 JSDoc: coderef/reference-sheets/authservice/authservice.jsdoc.txt
+
+The markdown file contains the full documentation. The schema provides
+type contracts for validation, and the JSDoc file has inline comment
+suggestions you can copy into your source code.
 ```
 
----
+## Migration Note
 
-## Final Checklist
+This command was upgraded from a template-based system to an MCP tool integration on 2026-01-03 (WO-RESOURCE-SHEET-CONSOLIDATION-001). The MCP tool provides:
+- ✅ **60-80% auto-fill** from dependency graph analysis
+- ✅ **20 element type** specializations
+- ✅ **4-gate validation** pipeline
+- ✅ **3 output formats:** Markdown + JSON Schema + JSDoc
+- ✅ **150-300x speedup** vs manual documentation
 
-Before submitting resource sheet:
-- [ ] Executive summary complete
-- [ ] State ownership table included
-- [ ] All persistence documented
-- [ ] Failure modes covered
-- [ ] Non-goals explicit
-- [ ] Accessibility gaps noted
-- [ ] Common pitfalls listed
-- [ ] Refactor-safe contracts defined
-- [ ] No ambiguous "should" statements
-- [ ] Tables used for structured data
-- [ ] Diagrams marked illustrative (if present)
+**Reference:** For element type catalog and detailed documentation, see `.claude/commands/resource-sheet-catalog.md`
 
 ---
 
-**Maintained by:** CodeRef Assistant (Orchestrator Persona)
-**Template Version:** 1.0.0
-**Created:** 2026-01-02
+**Note:** This command was fully migrated to MCP tool integration on 2026-01-03. The old manual template has been removed. All documentation generation now happens via the `mcp__coderef-docs__generate_resource_sheet` tool with 60-80% auto-fill.

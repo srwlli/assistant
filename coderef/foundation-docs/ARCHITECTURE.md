@@ -1,23 +1,40 @@
-# Architecture Documentation
-
-## Module Dependency Graph
-
-```mermaid
-graph TB
-    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_DELIVERABLES_md_84_to["Deliverables.Md"]
-    C__Users_willh_Desktop_assistant_coderef_working_file_discovery_enhancement_plan_json_114_to["Planon"]
-    C__Users_willh_Desktop_assistant_HANDOFF_WO_FILE_DISCOVERY_ENHANCEMENT_001_md_43_to["Handoff-Wo-File-Discovery-Enhancement-001.Md"]
-```
-
-## Metrics
-
-- **Total Files:** 3
-- **Total Elements:** 3
-- **Graph Density:** 0.0 (lower = better modularity)
-- **Circular Dependencies:** 0 ✅
-- **Isolated Nodes:** 3 (constants, types)
-
-## Code Patterns
+# Architecture
 
 
-*Generated: 2025-12-19T18:35:35.098928*
+
+## Core Components
+
+### Functions (10)
+
+- **`isFolder()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:311
+- **`isFile()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:318
+- **`isFileSystemAccessSupported()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:325
+- **`isBrowsedDirectory()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:332
+- **`extractDirectoryName()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:340
+- **`generateProjectId()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:353
+- **`formatFileSize()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:361
+- **`formatDate()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:371
+- **`getFileExtension()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:383
+- **`getFileType()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:391
+
+### Classes (0)
+
+_No classes found_
+
+### Components (0)
+
+_No components found_
+
+## Module Organization
+
+### `C:\Users\willh\Desktop\assistant\web\coderef\workorder\migrate-to-coderef-dashboard/`
+- Elements: 13
+
+
+## Design Patterns
+
+_No patterns detected_
+
+---
+**Generated from:** `.coderef/index.json`, `.coderef/diagrams/dependencies.mmd`
+**Date:** 2025-12-31
