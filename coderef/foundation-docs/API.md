@@ -1,22 +1,74 @@
-# API Documentation
+# API Reference
 
-## Overview
+**Total Functions:** 10
 
-- **Framework:** Unknown
-- **Authentication:** Unknown
-- **Error Format:** Unknown
-- **Total Endpoints:** 0
+## Functions
 
-## Endpoints
+### `isFolder()`
 
-*No API endpoints detected.*
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 311
+- **Type:** Function
 
-## Authentication
+### `isFile()`
 
-*Authentication method not detected.*
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 318
+- **Type:** Function
 
-## Error Handling
+### `isFileSystemAccessSupported()`
 
-*Error format not detected.*
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 325
+- **Type:** Function
 
-*Generated: 2025-12-19T18:35:35.102013*
+### `isBrowsedDirectory()`
+
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 332
+- **Type:** Function
+
+### `extractDirectoryName()`
+
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 340
+- **Type:** Function
+
+### `generateProjectId()`
+
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 353
+- **Type:** Function
+
+### `formatFileSize()`
+
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 361
+- **Type:** Function
+
+### `formatDate()`
+
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 371
+- **Type:** Function
+
+### `getFileExtension()`
+
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 383
+- **Type:** Function
+
+### `getFileType()`
+
+- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`
+- **Line:** 391
+- **Type:** Function
+
+
+## Classes
+
+_No classes found_
+
+---
+**Generated from:** `.coderef/index.json`
+**Date:** 2025-12-31
