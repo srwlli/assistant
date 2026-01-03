@@ -1,0 +1,202 @@
+{
+  "META_DOCUMENTATION": {
+    "feature_name": "resource-sheet-consolidation",
+    "workorder_id": "WO-RESOURCE-SHEET-CONSOLIDATION-001",
+    "version": "1.0.0",
+    "status": "planning",
+    "generated_by": "coderef-assistant (manual - based on 4-agent synthesis)",
+    "created": "2026-01-03",
+    "has_context": true,
+    "has_analysis": true,
+    "analysis_source": "Multi-agent synthesis WO-REFERENCE-SHEET-RECONCILIATION-001 (coderef, coderef-docs, papertrail, coderef-system)"
+  },
+
+  "0_preparation": {
+    "foundation_docs": {
+      "available": [
+        "orchestrator-output.md - Complete synthesis from 4 agents",
+        "coderef-output.md - Consolidation design",
+        "papertrail-output.md - Template schema",
+        "coderef-system-output.md - Graph integration",
+        "15 P1 batch reference sheets"
+      ],
+      "missing": []
+    },
+    "coding_standards": {
+      "available": [
+        "MCP tool patterns (coderef-docs v3.4.0)",
+        "Slash command conventions"
+      ],
+      "missing": []
+    },
+    "reference_components": {
+      "primary": "coderef-docs/generators/resource_sheet_generator.py",
+      "secondary": [
+        ".claude/commands/create-resource-sheet.md",
+        ".claude/commands/resource-sheet-catalog.md"
+      ]
+    },
+    "key_patterns_identified": [
+      "Composable modules (4 universal + 11 conditional)",
+      "3-stage detection",
+      "Graph auto-fill",
+      "4-gate validation"
+    ],
+    "technology_stack": {
+      "languages": ["Python"],
+      "frameworks": ["MCP Protocol"],
+      "key_libraries": ["coderef-docs", "coderef-context"]
+    },
+    "gaps_and_risks": [
+      "Breaking change deleting .md files",
+      "MCP tool Phase 1 incomplete (17/22 tasks)"
+    ]
+  },
+
+  "1_executive_summary": {
+    "purpose": "Consolidate two resource sheet systems into ONE by deleting legacy .md files and enhancing existing MCP tool",
+    "value_proposition": "60-80% auto-fill, 150-300x speedup, 20 element types, 4-gate validation",
+    "real_world_analogy": "Upgrading from two recipe books to smart cooking app with auto-fill",
+    "use_case": "/create-resource-sheet Button.tsx → MCP detects type → Auto-fills 60%+ → Validates → Outputs md/json/jsdoc",
+    "output": "Unified system with slash routing + full MCP enhancement"
+  },
+
+  "2_risk_assessment": {
+    "overall_risk": "medium",
+    "complexity": "medium-high",
+    "scope": "10 requirements, 3 phases, 19 tasks",
+    "file_system_risk": "high (deleting .md files, but dev branch)",
+    "dependencies": ["coderef-docs", "coderef-context", "coderef-workflow"],
+    "performance_concerns": ["Graph load <500ms", "Queries <50ms"],
+    "security_considerations": ["Input validation", "Path sanitization"],
+    "breaking_changes": "high (dev branch only)"
+  },
+
+  "3_current_state_analysis": {
+    "affected_files": [
+      ".claude/commands/create-resource-sheet.md (DELETE)",
+      ".claude/commands/resource-sheet-catalog.md (DELETE)",
+      "coderef-docs MCP tool (ENHANCE)",
+      "ARCHITECTURE.md (UPDATE)",
+      "API.md (UPDATE)"
+    ],
+    "dependencies": {
+      "existing_internal": ["coderef-docs", "coderef-context", "coderef-workflow"],
+      "new_internal": ["Graph helpers", "Validation pipeline", "Detection module"]
+    }
+  },
+
+  "4_key_features": {
+    "primary_features": [
+      "Delete .md files",
+      "Route slash command to MCP",
+      "20 element types",
+      "Graph 60-80% auto-fill",
+      "4-gate validation"
+    ]
+  },
+
+  "5_task_id_system": {
+    "tasks": [
+      "DELETE-001: Delete create-resource-sheet.md",
+      "DELETE-002: Delete resource-sheet-catalog.md",
+      "UPDATE-001: Update ARCHITECTURE.md",
+      "UPDATE-002: Update API.md",
+      "ROUTE-001: Route slash command to MCP",
+      "ROUTE-002: Add element_type passthrough",
+      "TEST-ROUTE: Test routing",
+      "MAP-001: Create element-type-mapping.json",
+      "DETECT-001: Implement 3-stage detection",
+      "GRAPH-001: Create graph-helpers",
+      "GRAPH-002: Integrate queries",
+      "PORT-001: Port Tool 1 guidelines",
+      "PORT-002: Port Tool 2 checklists",
+      "VALID-001: Build 4-gate validation",
+      "DOCS-001: Create doc hierarchy",
+      "TEST-P1: Test 15 P1 examples",
+      "TEST-FILL: Validate 60-80% auto-fill",
+      "TEST-DETECT: Validate detection",
+      "TEST-VALID: Validate pipeline"
+    ]
+  },
+
+  "6_implementation_phases": {
+    "phases": [
+      {
+        "phase": 1,
+        "name": "Delete Legacy Files",
+        "tasks": ["DELETE-001", "DELETE-002", "UPDATE-001", "UPDATE-002"],
+        "duration": "15-30 min"
+      },
+      {
+        "phase": 2,
+        "name": "Route to MCP",
+        "tasks": ["ROUTE-001", "ROUTE-002", "TEST-ROUTE"],
+        "duration": "1-2 hours"
+      },
+      {
+        "phase": 3,
+        "name": "Full Enhancement",
+        "tasks": ["MAP-001", "DETECT-001", "GRAPH-001", "GRAPH-002", "PORT-001", "PORT-002", "VALID-001", "DOCS-001"],
+        "duration": "12-16 hours"
+      },
+      {
+        "phase": 4,
+        "name": "Testing",
+        "tasks": ["TEST-P1", "TEST-FILL", "TEST-DETECT", "TEST-VALID"],
+        "duration": "2-4 hours"
+      }
+    ]
+  },
+
+  "7_testing_strategy": {
+    "end_to_end_tests": [
+      {
+        "scenario": "Generate Button.tsx resource sheet",
+        "expected": "60%+ auto-fill, 3 formats, passes validation"
+      },
+      {
+        "scenario": "Regenerate 15 P1 examples",
+        "expected": "All succeed with improved completion"
+      }
+    ]
+  },
+
+  "8_success_criteria": {
+    "functional_requirements": [
+      {"requirement": "Routing works", "target": "100%"},
+      {"requirement": "20 types detected", "target": "80%+ confidence"},
+      {"requirement": "60-80% auto-fill", "target": "70% avg"}
+    ]
+  },
+
+  "9_implementation_checklist": {
+    "phase_1": [
+      "☐ DELETE-001",
+      "☐ DELETE-002",
+      "☐ UPDATE-001",
+      "☐ UPDATE-002"
+    ],
+    "phase_2": [
+      "☐ ROUTE-001",
+      "☐ ROUTE-002",
+      "☐ TEST-ROUTE"
+    ],
+    "phase_3": [
+      "☐ MAP-001",
+      "☐ DETECT-001",
+      "☐ GRAPH-001",
+      "☐ GRAPH-002",
+      "☐ PORT-001",
+      "☐ PORT-002",
+      "☐ VALID-001",
+      "☐ DOCS-001"
+    ],
+    "phase_4": [
+      "☐ TEST-P1",
+      "☐ TEST-FILL",
+      "☐ TEST-DETECT",
+      "☐ TEST-VALID"
+    ]
+  }
+}

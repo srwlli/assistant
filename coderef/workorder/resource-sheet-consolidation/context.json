@@ -1,0 +1,42 @@
+{
+  "feature_name": "resource-sheet-consolidation",
+  "description": "Consolidate two separate resource sheet systems (Tool 1: create-resource-sheet.md + Tool 2: resource-sheet-catalog.md) into ONE unified system by deleting .md files and routing to existing coderef-docs MCP tool, then enhancing MCP tool with all missing features from both tools",
+  "goal": "Single unified resource sheet system with 60-80% auto-fill, all 20 element types supported, 4-gate validation, and 150-300x speedup over manual documentation",
+  "requirements": [
+    "Delete both .md files (breaking change acceptable on dev branch)",
+    "Route /create-resource-sheet to mcp__coderef-docs__generate_resource_sheet",
+    "Implement all 20 element type detection patterns",
+    "Port Tool 1 writing guidelines to MCP tool",
+    "Integrate Tool 2 element-specific checklists",
+    "Implement 4-gate validation pipeline",
+    "Integrate graph queries for 60-80% auto-fill",
+    "Create 4-tier documentation hierarchy",
+    "Maintain backward compatibility for slash command interface",
+    "Test with 15 P1 batch reference sheets"
+  ],
+  "out_of_scope": [],
+  "constraints": [
+    "Must work on dev branch",
+    "MCP tool already exists in coderef-docs v3.4.0",
+    "15 P1 batch reference sheets exist as validation examples",
+    "Graph integration requires coderef-context MCP server",
+    "Must preserve slash command user experience"
+  ],
+  "decisions": {},
+  "success_criteria": {},
+  "_metadata": {
+    "workorder_id": "WO-RESOURCE-SHEET-CONSOLIDATION-001",
+    "workorder_assigned_at": "2026-01-03T03:42:18.847877+00:00",
+    "workorder_assigned_by": "gather_context"
+  },
+  "_uds": {
+    "generated_by": "coderef-workflow v2.0.0",
+    "document_type": "Feature Context",
+    "workorder_id": "WO-RESOURCE-SHEET-CONSOLIDATION-001",
+    "feature_id": "resource-sheet-consolidation",
+    "last_updated": "2026-01-03",
+    "ai_assistance": true,
+    "status": "DRAFT",
+    "next_review": "2026-02-02"
+  }
+}
