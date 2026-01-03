@@ -1,0 +1,84 @@
+{
+  "stub_id": "STUB-063",
+  "feature_name": "consolidate-foundation-docs-workflow",
+  "title": "Consolidate Foundation Docs into Single Workflow",
+  "category": "workflow-improvement",
+  "priority": "medium",
+  "description": "Currently foundation docs generation is split across multiple MCP tools and commands. Consolidate into a single, unified workflow that generates all foundation documentation (README, ARCHITECTURE, API, COMPONENTS, SCHEMA) in one cohesive operation.",
+  "problem": {
+    "current_state": [
+      "Foundation docs scattered across coderef-docs and coderef-workflow MCPs",
+      "Multiple tools: generate_foundation_docs, generate_individual_doc, coderef_foundation_docs",
+      "Inconsistent naming conventions and interfaces",
+      "User confusion about which tool to use",
+      "Duplication between MCP servers"
+    ],
+    "pain_points": [
+      "Need to remember multiple tool names",
+      "Unclear which tool does what",
+      "No single source of truth for foundation doc generation",
+      "Potential for outdated/duplicate implementations"
+    ]
+  },
+  "proposed_solution": {
+    "approach": "Single unified workflow in coderef-workflow MCP",
+    "consolidation_target": "One tool: generate_foundation_docs",
+    "features": [
+      "Generate all 5 foundation docs in one call",
+      "Optional selective generation (e.g., just README + ARCHITECTURE)",
+      "Smart detection of existing docs (update vs fresh generation)",
+      "Consistent output format and structure",
+      "Clear success/failure reporting per document"
+    ]
+  },
+  "technical_details": {
+    "location": "coderef-workflow MCP",
+    "tools_to_consolidate": [
+      "coderef-docs/generate_foundation_docs",
+      "coderef-docs/generate_individual_doc",
+      "coderef-workflow/coderef_foundation_docs"
+    ],
+    "new_interface": {
+      "tool_name": "generate_foundation_docs",
+      "parameters": {
+        "project_path": "Absolute path to project directory",
+        "docs": "Optional array: ['readme', 'architecture', 'api', 'components', 'schema']. Default: all",
+        "force_regenerate": "Boolean - regenerate even if exists. Default: false",
+        "deep_extraction": "Boolean - deep analysis vs shallow. Default: true"
+      }
+    },
+    "migration_strategy": [
+      "Keep old tools with deprecation warnings",
+      "Add aliases that redirect to new unified tool",
+      "Update documentation and slash commands",
+      "Remove deprecated tools in next major version"
+    ]
+  },
+  "deliverables": [
+    "Unified generate_foundation_docs tool in coderef-workflow",
+    "Deprecation notices on old tools",
+    "Updated documentation (user-guide.md, my-guide.md)",
+    "Migration guide for existing workflows",
+    "Tests for new unified tool"
+  ],
+  "benefits": [
+    "Single source of truth for foundation docs",
+    "Reduced user confusion",
+    "Easier maintenance (one tool vs multiple)",
+    "Consistent behavior across all doc types",
+    "Simpler command interface"
+  ],
+  "related_stubs": {
+    "STUB-057": "WO-Tracking Dashboard Widget - UI for tracking workorders",
+    "STUB-060": "Dashboard API endpoints - Related workflow consolidation"
+  },
+  "implementation_notes": {
+    "complexity": "Medium - requires refactoring existing tools",
+    "breaking_changes": "No - old tools remain with deprecation warnings",
+    "testing_requirements": "Validate all 5 doc types generate correctly",
+    "rollout": "Phased - new tool first, deprecate old tools gradually"
+  },
+  "created": "2025-12-27T23:15:00Z",
+  "status": "stub",
+  "target_project": "coderef-docs"
+}

@@ -1,0 +1,123 @@
+{
+  "workorder_id": "WO-CODEREF-V2-REFACTOR-001",
+  "feature_name": "coderef-v1-to-v2-refactor",
+  "description": "Multi-server coordination for CodeRef ecosystem v1→v2 refactor. All 7 MCP servers plus 3 supporting projects transitioning to unified architecture with .coderef/ integration, shared standards, and consolidated workflows. Each server/project has independent agent executing scoped refactor based on DEPENDENCIES.md, SHARED-CODE.md, and PATTERNS-ANALYSIS.md discovery documents.",
+  "servers": [
+    {
+      "id": "coderef-context",
+      "role": "Code analysis and intelligence",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-context",
+      "status": "review_complete",
+      "agent": "coderef-context-agent",
+      "review_document": "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\context.md",
+      "output_files": [
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\context.md",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\index.json",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\graph.json",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\reports\\patterns.json",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\reports\\coverage.json",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\reports\\validation.json",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\reports\\drift.json",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\diagrams\\dependencies.mmd",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\diagrams\\calls.mmd",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\exports\\graph.json",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-context\\.coderef\\exports\\graph.jsonld"
+      ]
+    },
+    {
+      "id": "coderef-workflow",
+      "role": "Planning and orchestration workflows",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-workflow",
+      "status": "review_complete",
+      "agent": null,
+      "review_document": "AGENT: Please provide full path to your review/analysis document (e.g., .coderef/context.md, REVIEW.md, ANALYSIS.md)"
+    },
+    {
+      "id": "coderef-docs",
+      "role": "Documentation generation",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-docs",
+      "status": "review_complete",
+      "agent": null,
+      "review_document": "AGENT: Please provide full path to your review/analysis document (e.g., .coderef/context.md, REVIEW.md, ANALYSIS.md)"
+    },
+    {
+      "id": "coderef-personas",
+      "role": "Expert agent personas",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-personas",
+      "status": "review_complete",
+      "agent": null,
+      "review_document": "C:\\Users\\willh\\.mcp-servers\\coderef-personas\\.coderef\\context.md"
+    },
+    {
+      "id": "coderef-testing",
+      "role": "Test automation and validation",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-testing",
+      "status": "review_complete",
+      "agent": null,
+      "review_document": "C:\\Users\\willh\\.mcp-servers\\coderef-testing\\.coderef\\context.md"
+    },
+    {
+      "id": "papertrail",
+      "role": "UDS template generator and standards enforcement",
+      "path": "C:\\Users\\willh\\.mcp-servers\\papertrail",
+      "status": "review_complete",
+      "agent": "papertrail-agent",
+      "note": "To be renamed coderef-standards",
+      "review_document": "C:\\Users\\willh\\.mcp-servers\\papertrail\\CLAUDE.md"
+    },
+    {
+      "id": "coderef-system",
+      "role": "Core CLI and scripts",
+      "path": "C:\\Users\\willh\\Desktop\\projects\\coderef-system",
+      "status": "review_complete",
+      "agent": null,
+      "review_document": "AGENT: Please provide full path to your review/analysis document (e.g., .coderef/context.md, REVIEW.md, ANALYSIS.md)"
+    },
+    {
+      "id": "coderef-dashboard",
+      "role": "Visual orchestration UI",
+      "path": "C:\\Users\\willh\\Desktop\\coderef-dashboard",
+      "status": "review_complete",
+      "agent": null,
+      "review_document": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\.coderef\\context.md"
+    },
+    {
+      "id": "scanner-gui",
+      "role": "GUI tool for CodeRef scanner",
+      "path": "C:\\Users\\willh\\Desktop\\projects\\coderef-system\\scanner-gui",
+      "status": "pending",
+      "agent": null,
+      "review_document": "AGENT: Please provide full path to your review/analysis document (e.g., .coderef/context.md, REVIEW.md, ANALYSIS.md)"
+    }
+  ],
+  "coordination": {
+    "discovery_complete": true,
+    "discovery_workorder": "WO-CODEREF-ECOSYSTEM-DISCOVERY-001",
+    "discovery_completed_at": "2026-01-01",
+    "analysis_documents": [
+      "DEPENDENCIES.md - 0 cross-server dependencies (clean isolation)",
+      "SHARED-CODE.md - 802 duplicates (mostly .venv false positives)",
+      "ECOSYSTEM-ARCHITECTURE.mmd - Visual diagram with 7 servers",
+      "REFACTOR-TARGETS.md - 0 high-complexity functions",
+      "PATTERNS-ANALYSIS.md - No data (requires --patterns flag)"
+    ],
+    "analysis_location": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\workorder\\coderef-ecosystem-discovery\\",
+    "next_phase": "Review analysis documents and begin server-specific refactoring based on findings",
+    "key_findings": {
+      "positive": [
+        "Clean architecture - no cross-server dependencies",
+        "No high-complexity functions detected",
+        "All 7 servers have .coderef/ directories"
+      ],
+      "action_items": [
+        "Filter .venv paths from duplicate detection",
+        "Run coderef scan --patterns on all servers",
+        "Verify graph.json exports exist in all 7 servers"
+      ]
+    }
+  },
+  "_metadata": {
+    "created": "2026-01-01",
+    "purpose": "Multi-server refactor communication and status tracking"
+  }
+}

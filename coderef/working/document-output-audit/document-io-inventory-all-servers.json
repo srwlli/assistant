@@ -1,0 +1,681 @@
+{
+  "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+  "generated": "2026-01-01",
+  "servers": [
+    {
+      "agent_id": "coderef-context",
+      "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+      "inputs": [
+        {
+          "file": ".coderef/index.json",
+          "type": "coderef_output",
+          "frequency": "often",
+          "purpose": "Drift detection (coderef_drift tool)"
+        },
+        {
+          "file": "CLAUDE.md",
+          "type": "foundation_doc",
+          "frequency": "rarely",
+          "purpose": "Self-documentation reference"
+        }
+      ],
+      "outputs": [
+        {
+          "file": ".coderef/index.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "All code elements inventory"
+        },
+        {
+          "file": ".coderef/context.md",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Architecture overview"
+        },
+        {
+          "file": ".coderef/context.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Structured context data"
+        },
+        {
+          "file": ".coderef/graph.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Dependency graph"
+        },
+        {
+          "file": ".coderef/reports/patterns.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Code patterns detected"
+        },
+        {
+          "file": ".coderef/reports/coverage.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Test coverage analysis"
+        },
+        {
+          "file": ".coderef/reports/validation.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "CodeRef2 reference validation"
+        },
+        {
+          "file": ".coderef/reports/drift.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Drift detection results"
+        },
+        {
+          "file": ".coderef/reports/complexity.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Complexity metrics"
+        },
+        {
+          "file": ".coderef/diagrams/dependencies.mmd",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Mermaid dependency diagram"
+        },
+        {
+          "file": ".coderef/diagrams/dependencies.dot",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "GraphViz dependency diagram"
+        },
+        {
+          "file": ".coderef/diagrams/calls.mmd",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Function call graph (Mermaid)"
+        },
+        {
+          "file": ".coderef/diagrams/imports.mmd",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Import graph (Mermaid)"
+        },
+        {
+          "file": ".coderef/exports/graph.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Exported graph data (JSON)"
+        },
+        {
+          "file": ".coderef/exports/graph.jsonld",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Exported graph (JSON-LD semantic)"
+        },
+        {
+          "file": ".coderef/exports/diagram-wrapped.md",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Markdown-wrapped diagrams"
+        },
+        {
+          "file": ".coderef/generated-docs/README.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Auto-generated README"
+        },
+        {
+          "file": ".coderef/generated-docs/ARCHITECTURE.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Auto-generated architecture doc"
+        },
+        {
+          "file": ".coderef/generated-docs/API.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Auto-generated API reference"
+        },
+        {
+          "file": ".coderef/generated-docs/COMPONENTS.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Auto-generated component list"
+        }
+      ]
+    },
+    {
+      "agent_id": "coderef-workflow",
+      "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+      "inputs": [
+        {
+          "file": ".coderef/index.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Element inventory for planning"
+        },
+        {
+          "file": ".coderef/graph.json",
+          "type": "coderef_output",
+          "frequency": "often",
+          "purpose": "Dependency analysis"
+        },
+        {
+          "file": ".coderef/reports/patterns.json",
+          "type": "coderef_output",
+          "frequency": "often",
+          "purpose": "Pattern detection for planning"
+        },
+        {
+          "file": ".coderef/reports/coverage.json",
+          "type": "coderef_output",
+          "frequency": "sometimes",
+          "purpose": "Test gap analysis"
+        },
+        {
+          "file": "README.md",
+          "type": "foundation_doc",
+          "frequency": "always",
+          "purpose": "Project overview context"
+        },
+        {
+          "file": "coderef/foundation-docs/README.md",
+          "type": "foundation_doc",
+          "frequency": "always",
+          "purpose": "Alternative README location"
+        },
+        {
+          "file": "ARCHITECTURE.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Architecture context extraction"
+        },
+        {
+          "file": "coderef/foundation-docs/ARCHITECTURE.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Alternative ARCHITECTURE location"
+        },
+        {
+          "file": "API.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "API reference context"
+        },
+        {
+          "file": "coderef/foundation-docs/API.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Alternative API location"
+        },
+        {
+          "file": "COMPONENTS.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Component inventory"
+        },
+        {
+          "file": "coderef/foundation-docs/COMPONENTS.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Alternative COMPONENTS location"
+        },
+        {
+          "file": "SCHEMA.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Data schema context"
+        },
+        {
+          "file": "coderef/foundation-docs/SCHEMA.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Alternative SCHEMA location"
+        },
+        {
+          "file": "coderef/standards/BEHAVIOR-STANDARDS.md",
+          "type": "standard_doc",
+          "frequency": "often",
+          "purpose": "Behavior pattern reference"
+        },
+        {
+          "file": "coderef/standards/UI-STANDARDS.md",
+          "type": "standard_doc",
+          "frequency": "often",
+          "purpose": "UI pattern reference"
+        },
+        {
+          "file": "coderef/standards/UX-PATTERNS.md",
+          "type": "standard_doc",
+          "frequency": "often",
+          "purpose": "UX pattern reference"
+        },
+        {
+          "file": "coderef/standards/COMPONENT-PATTERN.md",
+          "type": "standard_doc",
+          "frequency": "sometimes",
+          "purpose": "Component pattern reference"
+        },
+        {
+          "file": "coderef/standards/COMPONENT-INDEX.md",
+          "type": "standard_doc",
+          "frequency": "sometimes",
+          "purpose": "Component index reference"
+        },
+        {
+          "file": "coderef/workorder/{feature}/context.json",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Feature requirements & constraints"
+        },
+        {
+          "file": "coderef/workorder/{feature}/plan.json",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "10-section implementation plan"
+        },
+        {
+          "file": "coderef/workorder/{feature}/DELIVERABLES.md",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Metrics & progress tracking"
+        },
+        {
+          "file": "coderef/workorder/{feature}/communication.json",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Multi-agent coordination"
+        },
+        {
+          "file": "coderef/workorder-log.txt",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Global workorder audit trail"
+        },
+        {
+          "file": "coderef/archived/{feature}/plan.json",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Historical plan reference"
+        },
+        {
+          "file": "coderef/archived/index.json",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Archive metadata"
+        }
+      ],
+      "outputs": [
+        {
+          "file": "coderef/workorder/{feature}/context.json",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Feature requirements gathered"
+        },
+        {
+          "file": "coderef/workorder/{feature}/analysis.json",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Project analysis results"
+        },
+        {
+          "file": "coderef/workorder/{feature}/plan.json",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Generated implementation plan"
+        },
+        {
+          "file": "coderef/workorder/{feature}/DELIVERABLES.md",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Generated deliverables template"
+        },
+        {
+          "file": "coderef/workorder/{feature}/communication.json",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Multi-agent coordination file"
+        },
+        {
+          "file": "coderef/workorder/{feature}/execution-log.json",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Execution progress log"
+        },
+        {
+          "file": "coderef/workorder/{feature}/claude.md",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Agent handoff context"
+        },
+        {
+          "file": "coderef/foundation-docs/ARCHITECTURE.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated architecture doc"
+        },
+        {
+          "file": "coderef/foundation-docs/SCHEMA.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated schema doc"
+        },
+        {
+          "file": "coderef/foundation-docs/API.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated API reference"
+        },
+        {
+          "file": "coderef/foundation-docs/COMPONENTS.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated component list"
+        },
+        {
+          "file": "coderef/foundation-docs/project-context.json",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Structured planning context"
+        },
+        {
+          "file": "coderef/workorder-log.txt",
+          "type": "workflow_doc",
+          "frequency": "always",
+          "purpose": "Workorder log entries"
+        },
+        {
+          "file": "coderef/archived/{feature}/",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Archived feature directory"
+        },
+        {
+          "file": "coderef/archived/index.json",
+          "type": "workflow_doc",
+          "frequency": "sometimes",
+          "purpose": "Updated archive index"
+        }
+      ]
+    },
+    {
+      "agent_id": "coderef-docs",
+      "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+      "inputs": [
+        {
+          "file": ".coderef/index.json",
+          "type": "coderef_output",
+          "frequency": "often",
+          "purpose": "Element data for doc generation"
+        },
+        {
+          "file": ".coderef/context.md",
+          "type": "coderef_output",
+          "frequency": "sometimes",
+          "purpose": "Architecture overview reference"
+        },
+        {
+          "file": "coderef/standards/ui-patterns.md",
+          "type": "standard_doc",
+          "frequency": "often",
+          "purpose": "Standards enforcement (audit)"
+        },
+        {
+          "file": "coderef/standards/behavior-patterns.md",
+          "type": "standard_doc",
+          "frequency": "often",
+          "purpose": "Standards enforcement"
+        },
+        {
+          "file": "coderef/standards/ux-patterns.md",
+          "type": "standard_doc",
+          "frequency": "often",
+          "purpose": "Standards enforcement"
+        },
+        {
+          "file": "coderef/standards/standards-overview.md",
+          "type": "standard_doc",
+          "frequency": "sometimes",
+          "purpose": "Standards reference"
+        },
+        {
+          "file": "CHANGELOG.json",
+          "type": "other",
+          "frequency": "always",
+          "purpose": "Read existing changelog"
+        },
+        {
+          "file": "README.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Version extraction"
+        }
+      ],
+      "outputs": [
+        {
+          "file": "coderef/foundation-docs/README.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated README"
+        },
+        {
+          "file": "coderef/foundation-docs/ARCHITECTURE.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated architecture doc"
+        },
+        {
+          "file": "coderef/foundation-docs/API.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated API reference"
+        },
+        {
+          "file": "coderef/foundation-docs/COMPONENTS.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated component list"
+        },
+        {
+          "file": "coderef/foundation-docs/SCHEMA.md",
+          "type": "foundation_doc",
+          "frequency": "often",
+          "purpose": "Generated schema doc"
+        },
+        {
+          "file": "coderef/standards/ui-patterns.md",
+          "type": "standard_doc",
+          "frequency": "sometimes",
+          "purpose": "Established UI standards"
+        },
+        {
+          "file": "coderef/standards/behavior-patterns.md",
+          "type": "standard_doc",
+          "frequency": "sometimes",
+          "purpose": "Established behavior standards"
+        },
+        {
+          "file": "coderef/standards/ux-patterns.md",
+          "type": "standard_doc",
+          "frequency": "sometimes",
+          "purpose": "Established UX standards"
+        },
+        {
+          "file": "coderef/standards/standards-overview.md",
+          "type": "standard_doc",
+          "frequency": "sometimes",
+          "purpose": "Standards summary doc"
+        },
+        {
+          "file": "CHANGELOG.json",
+          "type": "other",
+          "frequency": "always",
+          "purpose": "Updated changelog with entries"
+        },
+        {
+          "file": "README.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Updated with version/changelog"
+        },
+        {
+          "file": "CLAUDE.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "Updated with version history"
+        },
+        {
+          "file": "quickref.md",
+          "type": "other",
+          "frequency": "rarely",
+          "purpose": "Generated quick reference"
+        },
+        {
+          "file": "user-guide.md",
+          "type": "other",
+          "frequency": "rarely",
+          "purpose": "Generated user guide"
+        },
+        {
+          "file": "my-guide.md",
+          "type": "other",
+          "frequency": "rarely",
+          "purpose": "Generated internal guide"
+        }
+      ]
+    },
+    {
+      "agent_id": "coderef-personas",
+      "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+      "inputs": [
+        {
+          "file": ".coderef/reports/patterns.json",
+          "type": "coderef_output",
+          "frequency": "often",
+          "purpose": "Project-specific patterns for advice"
+        },
+        {
+          "file": "personas/base/{persona}.json",
+          "type": "config",
+          "frequency": "always",
+          "purpose": "Persona definitions (9 personas)"
+        },
+        {
+          "file": "personas/custom/{name}.json",
+          "type": "config",
+          "frequency": "sometimes",
+          "purpose": "Custom user-created personas"
+        }
+      ],
+      "outputs": [
+        {
+          "file": "personas/custom/{name}.json",
+          "type": "config",
+          "frequency": "sometimes",
+          "purpose": "Created custom personas"
+        }
+      ]
+    },
+    {
+      "agent_id": "coderef-testing",
+      "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+      "inputs": [
+        {
+          "file": ".coderef/reports/drift.json",
+          "type": "coderef_output",
+          "frequency": "often",
+          "purpose": "Impact-based test selection"
+        },
+        {
+          "file": ".coderef/reports/coverage.json",
+          "type": "coderef_output",
+          "frequency": "always",
+          "purpose": "Coverage analysis"
+        },
+        {
+          "file": "pytest.ini",
+          "type": "config",
+          "frequency": "sometimes",
+          "purpose": "Pytest configuration"
+        },
+        {
+          "file": ".coveragerc",
+          "type": "config",
+          "frequency": "sometimes",
+          "purpose": "Coverage configuration"
+        }
+      ],
+      "outputs": [
+        {
+          "file": "test-results.json",
+          "type": "other",
+          "frequency": "always",
+          "purpose": "Test execution results"
+        },
+        {
+          "file": ".coverage",
+          "type": "other",
+          "frequency": "always",
+          "purpose": "Coverage data file"
+        },
+        {
+          "file": "coverage.xml",
+          "type": "other",
+          "frequency": "sometimes",
+          "purpose": "Coverage report (XML)"
+        },
+        {
+          "file": "htmlcov/index.html",
+          "type": "other",
+          "frequency": "sometimes",
+          "purpose": "HTML coverage report"
+        }
+      ]
+    },
+    {
+      "agent_id": "papertrail",
+      "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+      "inputs": [
+        {
+          "file": "coderef/workorder/{feature}/plan.json",
+          "type": "workflow_doc",
+          "frequency": "often",
+          "purpose": "UDS metadata validation"
+        },
+        {
+          "file": "coderef/workorder/{feature}/DELIVERABLES.md",
+          "type": "workflow_doc",
+          "frequency": "often",
+          "purpose": "Document health checking"
+        },
+        {
+          "file": "ARCHITECTURE.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "UDS validation"
+        },
+        {
+          "file": "README.md",
+          "type": "foundation_doc",
+          "frequency": "sometimes",
+          "purpose": "UDS validation"
+        }
+      ],
+      "outputs": [
+        {
+          "file": "templates/uds/{doc_type}.json",
+          "type": "config",
+          "frequency": "rarely",
+          "purpose": "UDS template schemas"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_servers": 6,
+    "total_input_types": 138,
+    "total_output_types": 66,
+    "most_read_file": ".coderef/index.json (4 servers)",
+    "most_written_file": "coderef/workorder/{feature}/plan.json (2 servers)",
+    "heaviest_consumer": "coderef-workflow (27 inputs)",
+    "heaviest_producer": "coderef-context (20 outputs)"
+  }
+}

@@ -27,11 +27,17 @@
       "ai": "Claude API",
       "mcp": "docs-mcp, coderef-mcp, personas-mcp"
     },
-    "pricing_tiers": ["Free", "Pro ($29/user)", "Team ($79/user)", "Enterprise"],
+    "pricing_tiers": [
+      "Free",
+      "Pro ($29/user)",
+      "Team ($79/user)",
+      "Enterprise"
+    ],
     "mvp_timeline": "12 weeks",
     "related_to": [
       "saas-mvp-candidates",
       "scriptboard-assistant-integration"
     ]
-  }
+  },
+  "target_project": "coderef-dashboard"
 }

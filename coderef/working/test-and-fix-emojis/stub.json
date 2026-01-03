@@ -1,0 +1,27 @@
+{
+  "feature_name": "test-and-fix-emojis",
+  "description": "Comprehensive testing and fixing infrastructure for emoji scanning and UTF-8 encoding issues. Includes: (1) scan-emojis.py - recursive emoji scanner with auto-fix and backup capability, (2) scan-all-fixed.py - UTF-8 encoding fixes for Windows subprocess issues, (3) test_scan_all.py - 11 comprehensive tests covering Unicode encoding, exception handling, and None safety (all passing).",
+  "project": "coderef-system",
+  "created": "2025-12-31T10:47:00.000Z",
+  "status": "stub",
+  "context": {
+    "conversation_summary": "User requested comprehensive testing infrastructure after discovering 91% E2E test failure rate. Created emoji scanner with Unicode range detection across 10 emoji blocks, fixed scan-all.py UTF-8 encoding bugs (Windows cp1252 issue), and built complete test suite with 11/11 passing tests.",
+    "key_artifacts": [
+      "C:/Users/willh/Desktop/projects/coderef-system/scripts/scan-emojis.py",
+      "C:/Users/willh/Desktop/projects/coderef-system/scripts/scan-all-fixed.py",
+      "C:/Users/willh/Desktop/projects/coderef-system/scripts/test_scan_all.py"
+    ],
+    "scan_results": {
+      "coderef_testing": "1,398 emojis in 36 files",
+      "all_mcp_servers": "1,128,119 emojis in 1,317 files (mostly .git/.venv, ~15K in source)"
+    },
+    "technical_decisions": [
+      "Created separate scan-all-fixed.py rather than modifying original",
+      "Used regex Unicode ranges U+1F600-U+1FFFF for emoji detection",
+      "Implemented backup strategy (.bak files) before auto-fixing",
+      "Added explicit UTF-8 encoding with errors='replace' for Windows compatibility"
+    ]
+  },
+  "category": "feature",
+  "priority": "medium"
+}

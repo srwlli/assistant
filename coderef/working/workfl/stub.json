@@ -1,0 +1,11 @@
+{
+  "stub_id": "STUB-072",
+  "feature_name": "workfl",
+  "description": "Private social media application for personal or team collaboration with controlled access and privacy-first design.",
+  "category": "feature",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "new-project",
+  "tags": ["social-media", "privacy", "collaboration"]
+}

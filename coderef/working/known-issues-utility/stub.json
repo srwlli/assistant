@@ -51,7 +51,14 @@
       "fix": "Steps to fix it",
       "prevention": "How to avoid it",
       "severity": "blocker|annoying|minor",
-      "tags": ["python", "path", "import", "windows", "environment", "setup"],
+      "tags": [
+        "python",
+        "path",
+        "import",
+        "windows",
+        "environment",
+        "setup"
+      ],
       "project": "Which project(s) affected",
       "tool": "Which tool (git, python, npm, etc.)",
       "logged_by": "Agent name",
@@ -79,7 +86,13 @@
     "fix": "1. Verify Python installed: python --version in CMD\n2. Add Python to PATH: setx PATH '%PATH%;C:\\Users\\<user>\\AppData\\Local\\Programs\\Python\\Python311'\n3. Restart terminal/IDE\n4. Verify: python --version",
     "prevention": "When installing Python on Windows, check 'Add Python to PATH' during installation setup.",
     "severity": "blocker",
-    "tags": ["python", "path", "windows", "environment", "setup"],
+    "tags": [
+      "python",
+      "path",
+      "windows",
+      "environment",
+      "setup"
+    ],
     "project": "Multiple",
     "tool": "Python",
     "logged_by": "Lloyd",
@@ -119,5 +132,7 @@
     "coderef-system"
   ],
   "related_stubs": [],
-  "notes": "This is institutional knowledge that compounds over time. First few weeks will be sparse, but after months of agent work, becomes invaluable troubleshooting resource. Consider this an investment in agent productivity and reliability."
+  "notes": "This is institutional knowledge that compounds over time. First few weeks will be sparse, but after months of agent work, becomes invaluable troubleshooting resource. Consider this an investment in agent productivity and reliability.",
+  "created": "2025-12-29",
+  "target_project": "coderef-dashboard"
 }

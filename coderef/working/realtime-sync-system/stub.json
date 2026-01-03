@@ -5,7 +5,13 @@
   "description": "Build a real-time data synchronization system for HTML Tools that syncs workorders and stubs from coderef/workorder/ directory. Monitor workorder status changes, stub creation/completion across all connected clients and tools. When one user/agent updates a workorder, all other users see the change immediately.",
   "category": "feature",
   "priority": "high",
-  "tags": ["realtime", "sync", "websocket", "collaboration", "dashboard"],
+  "tags": [
+    "realtime",
+    "sync",
+    "websocket",
+    "collaboration",
+    "dashboard"
+  ],
   "created": "2025-12-25T00:00:00Z",
   "status": "stub",
   "problem": [
@@ -172,6 +178,10 @@
       "coderef/archived/ (historical, no real-time tracking needed)"
     ]
   },
-  "related_stubs": ["STUB-030 (internal-plan-tracking)", "STUB-057 (CodeRef Dashboard)"],
-  "notes": "This Phase 1 focuses specifically on workorder/stub tracking from coderef/workorder/ directory. Makes HTML Tools a true real-time command center where agents can coordinate work instantly. Transforms dashboard from static view to live monitoring."
+  "related_stubs": [
+    "STUB-030 (internal-plan-tracking)",
+    "STUB-057 (CodeRef Dashboard)"
+  ],
+  "notes": "This Phase 1 focuses specifically on workorder/stub tracking from coderef/workorder/ directory. Makes HTML Tools a true real-time command center where agents can coordinate work instantly. Transforms dashboard from static view to live monitoring.",
+  "target_project": "coderef-dashboard"
 }

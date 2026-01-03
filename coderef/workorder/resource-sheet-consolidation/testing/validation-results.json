@@ -1,0 +1,178 @@
+{
+  "test_id": "TEST-VALIDATION",
+  "category": "Category 4: Validation Pipeline",
+  "test_count": 5,
+  "pass_count": 1,
+  "pass_rate": 20.0,
+  "gate_performance": {
+    "gate_1": {
+      "pass_count": 3,
+      "pass_rate": 60.0
+    },
+    "gate_2": {
+      "pass_count": 3,
+      "pass_rate": 60.0
+    },
+    "gate_3": {
+      "pass_count": 1,
+      "pass_rate": 20.0
+    },
+    "gate_4": {
+      "pass_count": 2,
+      "pass_rate": 40.0
+    }
+  },
+  "cr4_pass": false,
+  "overall_status": "fail",
+  "test_results": [
+    {
+      "test_number": 1,
+      "sheet_name": "excellent-sheet",
+      "description": "Complete resource sheet with all sections",
+      "overall_score": 69,
+      "expected_range": [
+        85,
+        100
+      ],
+      "expected_status": "pass",
+      "actual_status": "reject",
+      "gate_1_pass": true,
+      "gate_1_score": 100,
+      "gate_2_pass": true,
+      "gate_2_score": 100,
+      "gate_3_pass": true,
+      "gate_3_score": 66,
+      "gate_4_pass": false,
+      "gate_4_score": 11,
+      "final_result": "REJECT",
+      "issues_found": [
+        "Only 2/8 required sections found",
+        "Auto-fill rate 11.1% below threshold (60%)"
+      ],
+      "score_in_range": false,
+      "status_correct": false,
+      "pass": false
+    },
+    {
+      "test_number": 2,
+      "sheet_name": "good-sheet-with-warnings",
+      "description": "Complete but has hedging language",
+      "overall_score": 77,
+      "expected_range": [
+        70,
+        84
+      ],
+      "expected_status": "warn",
+      "actual_status": "reject",
+      "gate_1_pass": true,
+      "gate_1_score": 100,
+      "gate_2_pass": true,
+      "gate_2_score": 75,
+      "gate_3_pass": false,
+      "gate_3_score": 33,
+      "gate_4_pass": true,
+      "gate_4_score": 100,
+      "final_result": "REJECT",
+      "issues_found": [
+        "Found 4 instances of hedging language",
+        "Only 1/8 required sections found",
+        "No checklist section found"
+      ],
+      "score_in_range": true,
+      "status_correct": false,
+      "pass": false
+    },
+    {
+      "test_number": 3,
+      "sheet_name": "incomplete-sheet",
+      "description": "Missing critical sections",
+      "overall_score": 39,
+      "expected_range": [
+        40,
+        69
+      ],
+      "expected_status": "reject",
+      "actual_status": "reject",
+      "gate_1_pass": true,
+      "gate_1_score": 75,
+      "gate_2_pass": false,
+      "gate_2_score": 50,
+      "gate_3_pass": false,
+      "gate_3_score": 33,
+      "gate_4_pass": false,
+      "gate_4_score": 0,
+      "final_result": "REJECT",
+      "issues_found": [
+        "Only 1/7 base sections found",
+        "Found 1 TODO/FIXME markers",
+        "Only 0 markdown tables found (expected structured data in tables)",
+        "Only 0/8 required sections found",
+        "No checklist section found"
+      ],
+      "score_in_range": false,
+      "status_correct": true,
+      "pass": false
+    },
+    {
+      "test_number": 4,
+      "sheet_name": "empty-sheet",
+      "description": "Barely any content",
+      "overall_score": 18,
+      "expected_range": [
+        0,
+        39
+      ],
+      "expected_status": "reject",
+      "actual_status": "reject",
+      "gate_1_pass": false,
+      "gate_1_score": 25,
+      "gate_2_pass": false,
+      "gate_2_score": 50,
+      "gate_3_pass": false,
+      "gate_3_score": 0,
+      "gate_4_pass": false,
+      "gate_4_score": 0,
+      "final_result": "REJECT",
+      "issues_found": [
+        "Missing header metadata: Agent, Date, Task",
+        "Executive summary section missing",
+        "Only 0/7 base sections found",
+        "Found 1 TODO/FIXME markers",
+        "Only 0 markdown tables found (expected structured data in tables)"
+      ],
+      "score_in_range": true,
+      "status_correct": true,
+      "pass": true
+    },
+    {
+      "test_number": 5,
+      "sheet_name": "no-metadata-sheet",
+      "description": "Missing agent/date/task metadata",
+      "overall_score": 70,
+      "expected_range": [
+        30,
+        60
+      ],
+      "expected_status": "reject",
+      "actual_status": "reject",
+      "gate_1_pass": false,
+      "gate_1_score": 50,
+      "gate_2_pass": true,
+      "gate_2_score": 100,
+      "gate_3_pass": false,
+      "gate_3_score": 33,
+      "gate_4_pass": true,
+      "gate_4_score": 100,
+      "final_result": "REJECT",
+      "issues_found": [
+        "Missing header metadata: Agent, Date, Task",
+        "Only 4/7 base sections found",
+        "Only 0/8 required sections found",
+        "No checklist section found"
+      ],
+      "score_in_range": false,
+      "status_correct": true,
+      "pass": false
+    }
+  ]
+}

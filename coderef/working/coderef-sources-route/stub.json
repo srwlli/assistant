@@ -92,7 +92,10 @@
         "owner": "Team or person responsible",
         "last_updated": "ISO 8601 timestamp",
         "access_level": "Public|Team|Internal",
-        "tags": ["tag1", "tag2"],
+        "tags": [
+          "tag1",
+          "tag2"
+        ],
         "icon": "lucide-react icon name"
       }
     },
@@ -171,5 +174,6 @@
         }
       ]
     }
-  }
+  },
+  "target_project": "coderef-docs"
 }

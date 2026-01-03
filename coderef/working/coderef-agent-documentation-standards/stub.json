@@ -1,0 +1,18 @@
+{
+  "feature_name": "coderef-agent-documentation-standards",
+  "description": "Documentation standards for AI agents using coderef system. Defines common practices, conventions, and patterns for agent behavior documentation (CLAUDE.md, context files, handoff protocols). Ensures consistency across all agent implementations.",
+  "project": "assistant",
+  "created": "2025-12-28T06:30:00Z",
+  "status": "stub",
+  "references": [
+    {
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef\\agent\\standards\\mcp-cache-clearing-process.json",
+      "type": "existing_standard",
+      "description": "Agentic process for MCP cache clearing - comprehensive example of agent process documentation with pre-flight checks, execution steps, critical rules, troubleshooting, and communication templates"
+    }
+  ],
+  "notes": "Reference existing mcp-cache-clearing-process.json as example of agent process standards. Should define similar patterns for: CLAUDE.md structure, context.json format, handoff protocol templates, communication.json status flow, agent behavior documentation",
+  "category": "feature",
+  "priority": "medium",
+  "target_project": "coderef-docs"
+}

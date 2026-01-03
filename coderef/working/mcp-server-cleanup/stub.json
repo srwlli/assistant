@@ -4,7 +4,10 @@
   "description": "Audit MCP servers (docs-mcp, coderef-mcp, personas-mcp), identify unused tools, consolidate overlapping functionality, and remove what's not needed.",
   "category": "refactor",
   "priority": "medium",
-  "tags": ["mcp", "workflow"],
+  "tags": [
+    "mcp",
+    "workflow"
+  ],
   "created": "2025-12-16T00:00:00.000Z",
   "status": "stub",
   "notes": {
@@ -30,5 +33,6 @@
     "related_to": [
       "STUB-002 (tool-inventory-workflow)"
     ]
-  }
+  },
+  "target_project": "coderef-docs"
 }

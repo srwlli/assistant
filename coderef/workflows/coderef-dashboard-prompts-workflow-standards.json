@@ -1,0 +1,334 @@
+{
+  "tool_name": "coderef-dashboard-prompts-workflow",
+  "version": "1.0.0",
+  "created": "2026-01-01",
+  "purpose": "Technical reference for AI agents to understand and extend the dashboard prompting workflow system",
+  "route": "/prompts",
+  "file_location": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\packages\\dashboard\\src\\app\\prompts\\page.tsx",
+
+  "architecture": {
+    "pattern": "React Context + Component Composition",
+    "state_management": "WorkflowContext (React Context API)",
+    "framework": "Next.js App Router (Client-side)",
+    "styling": "Tailwind CSS with custom industrial theme"
+  },
+
+  "workflow_pattern": {
+    "steps": [
+      {
+        "order": 1,
+        "name": "Select Prompt",
+        "component": "PromptSelector",
+        "description": "User chooses from predefined prompts library",
+        "state_update": "setSelectedPrompt(prompt)",
+        "validation": "Optional - can proceed without selection but export disabled"
+      },
+      {
+        "order": 2,
+        "name": "Add Attachments",
+        "component": "AttachmentManager",
+        "description": "User adds files/documents as context for the prompt",
+        "state_update": "addAttachments(files[])",
+        "validation": "Required - at least 1 attachment needed for export"
+      },
+      {
+        "order": 3,
+        "name": "Review Metadata",
+        "component": "WorkflowMeta",
+        "description": "Display workflow summary (prompt details + attachment count)",
+        "state_update": "None - read-only display",
+        "validation": "None"
+      },
+      {
+        "order": 4,
+        "name": "Export Workflow",
+        "component": "ExportMenu",
+        "description": "Export in JSON or Markdown format, or copy to clipboard",
+        "actions": ["Copy JSON", "Export JSON", "Export Markdown"],
+        "validation": "Requires selectedPrompt AND attachments.length > 0"
+      },
+      {
+        "order": 5,
+        "name": "Paste Final Result",
+        "component": "PasteFinalResultModal",
+        "description": "After running prompt with LLM, paste response back and save complete session",
+        "state_update": "setFinalResult(result)",
+        "validation": "Optional - for session tracking only"
+      }
+    ],
+    "validation_rule": "isReadyForExport = workflow.selectedPrompt && workflow.attachments.length > 0"
+  },
+
+  "data_structures": {
+    "workflow_state": {
+      "selectedPrompt": {
+        "type": "Prompt | null",
+        "schema": {
+          "key": "string - unique identifier",
+          "name": "string - display name",
+          "description": "string - prompt purpose",
+          "template": "string - actual prompt text",
+          "category": "string - grouping (e.g., 'code-review', 'planning')",
+          "tags": "string[] - metadata tags"
+        }
+      },
+      "attachments": {
+        "type": "Attachment[]",
+        "schema": {
+          "id": "string - unique attachment ID",
+          "name": "string - file name",
+          "path": "string - file path",
+          "type": "string - mime type or file extension",
+          "size": "number - bytes",
+          "content": "string - file content (optional)"
+        }
+      },
+      "finalResult": {
+        "type": "string | null",
+        "description": "LLM response after executing the workflow"
+      }
+    },
+
+    "export_formats": {
+      "json": {
+        "structure": {
+          "workflow": {
+            "prompt": "Prompt object",
+            "attachments": "Attachment[] array",
+            "finalResult": "string | null",
+            "metadata": {
+              "exportedAt": "ISO timestamp",
+              "version": "workflow version"
+            }
+          }
+        },
+        "filename_pattern": "workflow_{promptName}_{timestamp}.json"
+      },
+      "markdown": {
+        "structure": [
+          "# Workflow: {promptName}",
+          "## Prompt",
+          "{prompt.template}",
+          "## Attachments ({count})",
+          "- attachment listings",
+          "## Final Result",
+          "{finalResult or 'Pending execution'}"
+        ],
+        "filename_pattern": "workflow_{promptName}_{timestamp}.md"
+      },
+      "session": {
+        "structure": "Same as JSON export",
+        "filename_pattern": "session_{timestamp}.json",
+        "purpose": "Complete workflow save for later retrieval"
+      }
+    }
+  },
+
+  "components": {
+    "PromptSelector": {
+      "location": "./components/PromptSelector",
+      "props": {
+        "prompts": "Prompt[] - available prompts from prompts.ts",
+        "selectedPromptKey": "string | undefined - currently selected",
+        "onSelectPrompt": "(prompt: Prompt) => void"
+      },
+      "behavior": "Dropdown or list UI for selecting predefined prompts"
+    },
+    "AttachmentManager": {
+      "location": "./components/AttachmentManager",
+      "props": {
+        "attachments": "Attachment[] - current attachments",
+        "onAddAttachments": "(files: File[]) => void",
+        "onRemoveAttachment": "(id: string) => void",
+        "onClearAll": "() => void"
+      },
+      "behavior": "File picker + attachment list with remove/clear actions"
+    },
+    "WorkflowMeta": {
+      "location": "./components/WorkflowMeta",
+      "props": {
+        "prompt": "Prompt | null",
+        "attachments": "Attachment[]"
+      },
+      "behavior": "Read-only display of workflow summary"
+    },
+    "ExportMenu": {
+      "location": "./components/ExportMenu",
+      "props": {
+        "onCopyJSON": "() => void",
+        "onExportJSON": "() => void",
+        "onExportMarkdown": "() => void",
+        "disabled": "boolean"
+      },
+      "behavior": "Action buttons for export operations"
+    },
+    "PasteFinalResultModal": {
+      "location": "./components/PasteFinalResultModal",
+      "props": {
+        "isOpen": "boolean",
+        "onResultSaved": "(result: string) => void",
+        "onClose": "() => void"
+      },
+      "behavior": "Modal dialog with textarea for pasting LLM response"
+    }
+  },
+
+  "hooks": {
+    "useWorkflow": {
+      "location": "@/contexts/WorkflowContext",
+      "returns": {
+        "workflow": "WorkflowState",
+        "setSelectedPrompt": "(prompt: Prompt) => void",
+        "addAttachments": "(files: File[]) => void",
+        "removeAttachment": "(id: string) => void",
+        "clearAttachments": "() => void",
+        "setFinalResult": "(result: string) => void"
+      }
+    },
+    "useClipboard": {
+      "location": "../hooks/useClipboard",
+      "returns": {
+        "write": "(text: string) => Promise<boolean>"
+      }
+    },
+    "useFileHandlers": {
+      "location": "../hooks/useFileHandlers",
+      "returns": {
+        "selectDirectory": "() => Promise<string | null>"
+      }
+    }
+  },
+
+  "utilities": {
+    "getAllPrompts": {
+      "location": "../utils/prompts",
+      "returns": "Prompt[] - all available prompts",
+      "description": "Loads predefined prompt library from prompts.ts"
+    },
+    "generateJSON": {
+      "location": "../utils/exportFormatter",
+      "signature": "(workflow: WorkflowState) => string",
+      "description": "Formats workflow as JSON string"
+    },
+    "generateMarkdown": {
+      "location": "../utils/exportFormatter",
+      "signature": "(workflow: WorkflowState) => string",
+      "description": "Formats workflow as Markdown string"
+    }
+  },
+
+  "styling_system": {
+    "theme": "Industrial/Cyberpunk",
+    "custom_classes": {
+      "ind-panel": "Panel background",
+      "ind-border": "Border color",
+      "ind-accent": "Accent color (yellow/gold)",
+      "ind-accent-hover": "Accent hover state",
+      "ind-text-muted": "Muted text color",
+      "ind-bg": "Background color"
+    },
+    "corner_accents": "4px decorative borders at panel corners",
+    "typography": "Uppercase tracking-widest for headers, monospace for technical content"
+  },
+
+  "extension_points": {
+    "add_new_prompt": {
+      "file": "src/components/PromptingWorkflow/utils/prompts.ts",
+      "action": "Add new Prompt object to prompts array",
+      "schema": {
+        "key": "unique-kebab-case-key",
+        "name": "Display Name",
+        "description": "What this prompt does",
+        "template": "The actual prompt text with {{placeholder}} variables",
+        "category": "code-review | planning | documentation | analysis",
+        "tags": ["tag1", "tag2"]
+      }
+    },
+    "customize_export_format": {
+      "file": "src/components/PromptingWorkflow/utils/exportFormatter.ts",
+      "action": "Modify generateJSON or generateMarkdown functions"
+    },
+    "add_new_export_type": {
+      "steps": [
+        "Add new handler to PromptingWorkflow.tsx (e.g., handleExportYAML)",
+        "Add new button to ExportMenu component",
+        "Create formatter function in exportFormatter.ts"
+      ]
+    },
+    "integrate_with_agent_review_system": {
+      "approach": "Create new prompt category 'agent-review' with communication.json template",
+      "required_changes": [
+        "Add agent review prompts to prompts.ts with tag taxonomy",
+        "Extend Attachment type to support communication.json structure",
+        "Add export format for agent-review-communication.json",
+        "Integrate with agent status tracking via WorkflowContext"
+      ]
+    }
+  },
+
+  "file_system_integration": {
+    "current_limitation": "Uses browser download fallback for file saves",
+    "intended_integration": "CodeRefCore.api.storage for file system access",
+    "notes": "Dashboard is designed for browser environment, file operations need File System Access API or Electron integration"
+  },
+
+  "use_cases": {
+    "code_review_workflow": {
+      "steps": [
+        "Select 'Code Review' prompt",
+        "Attach source files to review",
+        "Export as JSON",
+        "Send to LLM via API or copy/paste",
+        "Paste LLM response back",
+        "Save complete session"
+      ]
+    },
+    "planning_workflow": {
+      "steps": [
+        "Select 'Implementation Planning' prompt",
+        "Attach requirements docs, existing code samples",
+        "Export as Markdown for readability",
+        "Use with LLM for plan generation",
+        "Save final plan as session"
+      ]
+    },
+    "agent_review_workflow": {
+      "steps": [
+        "Select 'Agent Review' prompt with specific tags (docs:foundation, code:patterns)",
+        "Attach communication.json template",
+        "Export for agent consumption",
+        "Agent fills in analysis fields",
+        "Paste completed communication.json back",
+        "Save as session for orchestrator aggregation"
+      ]
+    }
+  },
+
+  "performance_considerations": {
+    "large_attachments": "File content loaded into memory - consider chunking for large files",
+    "clipboard_operations": "Navigator Clipboard API - requires HTTPS or localhost",
+    "state_persistence": "No automatic persistence - relies on user-initiated session saves"
+  },
+
+  "future_enhancements": {
+    "suggested": [
+      "Auto-save to localStorage",
+      "Workflow templates (save/load custom prompt+attachment combos)",
+      "Direct LLM API integration (OpenAI, Anthropic)",
+      "Real-time collaboration (multiple users on same workflow)",
+      "Version history for workflows",
+      "Attachment preview/editor",
+      "Prompt variable replacement UI",
+      "Integration with coderef-workflow MCP tools"
+    ]
+  },
+
+  "agent_instructions": {
+    "reading_this_file": "This JSON provides complete technical context for the dashboard prompting workflow system",
+    "creating_new_prompts": "Reference 'extension_points.add_new_prompt' section",
+    "integrating_with_review_system": "Reference 'extension_points.integrate_with_agent_review_system' section",
+    "understanding_workflow": "Follow 'workflow_pattern.steps' in sequential order",
+    "modifying_exports": "Reference 'data_structures.export_formats' and 'utilities' sections",
+    "expected_agent_behavior": "Agent should be able to generate a complete new prompt definition from user requirements using this schema as reference"
+  }
+}

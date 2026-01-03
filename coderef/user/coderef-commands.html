@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRef Commands Reference - Industrial Design</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Header (loaded from components.js) -->
+    <div id="header-container"></div>
+
+    <!-- Sidebar Navigation (loaded from components.js) -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+    <div class="container">
+        <h1>CodeRef Commands Reference</h1>
+        <p class="subtitle"><strong>Complete inventory of all slash commands in the CodeRef ecosystem</strong></p>
+        <p class="subtitle"><strong>Last Updated:</strong> 2025-12-31</p>
+
+        <div class="stats">
+            <strong>Total Commands: 68</strong> across 8 categories
+        </div>
+
+        <hr>
+
+        <h2>Documentation & Standards <span class="category-count">10 commands</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/list-templates</td>
+                    <td>List all available documentation templates (README, ARCHITECTURE, API, etc.)</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">list_templates</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/get-template</td>
+                    <td>Retrieve content of a specific documentation template</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">get_template</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/audit-codebase</td>
+                    <td>Audit codebase for standards violations with compliance report</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">audit_codebase</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/check-consistency</td>
+                    <td>Check code changes against established standards (pre-commit validation)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">check_consistency</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/establish-standards</td>
+                    <td>Scan codebase to discover patterns and generate standards documentation</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">establish_standards</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/update-docs</td>
+                    <td>Update all documentation files after completing a feature (agentic workflow)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">update_all_documentation</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/update-foundation-docs</td>
+                    <td>Update foundation documentation (README, ARCHITECTURE, API, SCHEMA)</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">generate_foundation_docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/coderef-foundation-docs</td>
+                    <td>Generate foundation docs using coderef analysis (hybrid approach)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">coderef_foundation_docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/generate-docs</td>
+                    <td>Generate documentation from coderef data</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">generate_individual_doc</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/generate-user-docs</td>
+                    <td>Generate user-facing documentation and guides</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">generate_quickref_interactive</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Planning & Workflow <span class="category-count">14 commands</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/gather-context</td>
+                    <td>Gather feature requirements and save to context.json</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">gather_context</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/analyze-for-planning</td>
+                    <td>Analyze project to discover foundation docs, standards, patterns (Section 0 prep)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">analyze_project_for_planning</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/create-plan</td>
+                    <td>Generate 10-section implementation plan from context and analysis</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">create_plan</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/validate-plan</td>
+                    <td>Validate implementation plan (0-100 score) against quality checklist</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">validate_implementation_plan</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/get-planning-template</td>
+                    <td>Get feature implementation planning template for AI reference</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">get_planning_template</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/generate-plan-review</td>
+                    <td>Generate human-readable plan review report with score and recommendations</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_plan_review_report</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/align-plan</td>
+                    <td>Generate TodoWrite task list from plan.json for execution tracking</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">execute_plan</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/create-workorder</td>
+                    <td>Create workorder with context.json and communication.json setup</td>
+                    <td><span class="component-badge comp-orchestrator">Orchestrator</span></td>
+                    <td class="used-in">Manual workflow</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/complete-workorder</td>
+                    <td>Complete workorder workflow (update deliverables + archive)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">update_deliverables + archive_feature</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/update-task-status</td>
+                    <td>Update task status in plan.json as agents complete work</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">update_task_status</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/audit-plans</td>
+                    <td>Audit all plans in workorder/ directory with health score</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">audit_plans</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/features-inventory</td>
+                    <td>Generate inventory of features in workorder/ and archived/</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_features_inventory</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/git-release</td>
+                    <td>Git release workflow with versioning and changelog</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Git commands + changelog</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/record-changes</td>
+                    <td>Smart changelog recording with git auto-detection</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">record_changes</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Deliverables & Tracking <span class="category-count">6 commands</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/generate-deliverables</td>
+                    <td>Generate DELIVERABLES.md template from plan.json structure</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_deliverables_template</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/update-deliverables</td>
+                    <td>Update DELIVERABLES.md with git metrics (LOC, commits, time)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">update_deliverables</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/archive-feature</td>
+                    <td>Archive completed feature from workorder/ to archived/</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">archive_feature</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/log-workorder</td>
+                    <td>Log new workorder entry to global workorder log</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">log_workorder</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/get-workorder-log</td>
+                    <td>Query global workorder log with filtering</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">get_workorder_log</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/stub</td>
+                    <td>Capture idea as STUB-XXX in orchestrator</td>
+                    <td><span class="component-badge comp-orchestrator">Orchestrator</span></td>
+                    <td class="used-in">Manual stub creation</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Multi-Agent Coordination <span class="category-count">6 commands</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/generate-agent-communication</td>
+                    <td>Generate communication.json from plan.json for multi-agent coordination</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_agent_communication</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/assign-agent-task</td>
+                    <td>Assign specific task to agent with workorder scoping</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">assign_agent_task</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/verify-agent-completion</td>
+                    <td>Verify agent completion with git diff checks and success criteria</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">verify_agent_completion</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/aggregate-agent-deliverables</td>
+                    <td>Aggregate metrics from multiple agent DELIVERABLES.md files</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">aggregate_agent_deliverables</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/track-agent-status</td>
+                    <td>Track agent status across features with real-time dashboard</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">track_agent_status</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/generate-handoff-context</td>
+                    <td>Generate agent handoff context files (claude.md) from plan + git history</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_handoff_context</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Personas <span class="category-count">11 commands</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/ava</td>
+                    <td>Activate Ava - Frontend Specialist persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (ava)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/marcus</td>
+                    <td>Activate Marcus persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (marcus)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/quinn</td>
+                    <td>Activate Quinn persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (quinn)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/taylor</td>
+                    <td>Activate Taylor - General Purpose Agent persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (taylor)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/lloyd</td>
+                    <td>Activate Lloyd persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (lloyd)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/use-persona</td>
+                    <td>Activate any persona by name</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/create-persona</td>
+                    <td>Create custom persona through guided workflow</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">create_custom_persona</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/coderef-assistant</td>
+                    <td>Activate CodeRef Assistant - Orchestrator persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (coderef-assistant)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/research-scout</td>
+                    <td>Activate Research Scout - Research assistant persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (research-scout)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/coderef-mcp-lead</td>
+                    <td>Activate MCP Lead persona - MCP system architect</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (coderef-mcp-lead)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/fix</td>
+                    <td>Activate fix/debug workflow persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">Specialized debug workflow</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Testing <span class="category-count">14 commands</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/discover-tests</td>
+                    <td>Discover test files in project</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">discover_tests</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/list-frameworks</td>
+                    <td>List available testing frameworks</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">list_frameworks</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/run-tests</td>
+                    <td>Run all tests in project</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">run_tests</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/run-test-file</td>
+                    <td>Run specific test file</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">run_test_file</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/run-by-pattern</td>
+                    <td>Run tests matching pattern</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">run_by_pattern</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/run-parallel</td>
+                    <td>Run tests in parallel</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">run_parallel</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/test-results</td>
+                    <td>View test results</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">test_results</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/test-report</td>
+                    <td>Generate test report</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">test_report</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/compare-runs</td>
+                    <td>Compare test runs</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">compare_runs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/test-coverage</td>
+                    <td>View test coverage</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">test_coverage</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/test-trends</td>
+                    <td>View test trends over time</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">test_trends</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/test-performance</td>
+                    <td>View test performance metrics</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">test_performance</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/detect-flaky</td>
+                    <td>Detect flaky tests</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">detect_flaky</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/test-health</td>
+                    <td>Check test health score</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">test_health</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Agent-Specific <span class="category-count">5 commands</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/coderef-context-agent</td>
+                    <td>Activate Context Agent - Code intelligence specialist</td>
+                    <td><span class="component-badge comp-context">Context</span></td>
+                    <td class="used-in">use_persona (coderef-context-agent)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/coderef-docs-agent</td>
+                    <td>Activate Docs Agent - Documentation specialist</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">use_persona (coderef-docs-agent)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/coderef-testing-agent</td>
+                    <td>Activate Testing Agent - Test automation specialist</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">use_persona (coderef-testing-agent)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/coderef-personas-agent</td>
+                    <td>Activate Personas Agent - Persona management specialist</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona (coderef-personas-agent)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">/testing-proof</td>
+                    <td>Generate testing completion proof</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">proof_generator</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>UI/Debug <span class="category-count">1 command</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>MCP Tool</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">/debug-ui</td>
+                    <td>Debug UI issues using Chrome DevTools MCP with Ava's frontend expertise</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">Chrome DevTools MCP + Ava persona</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    </div>
+
+    <script src="components.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

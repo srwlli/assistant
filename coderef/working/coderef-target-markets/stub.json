@@ -1,0 +1,68 @@
+{
+  "feature_name": "coderef-target-markets",
+  "description": "Market positioning and target customer segments for CodeRef. Identifies 6 key markets with specific use cases and feature alignments for go-to-market strategy.",
+  "project": "coderef-system",
+  "created": "2026-01-02T12:35:00Z",
+  "status": "stub",
+  "target_markets": [
+    {
+      "segment": "API-Heavy Projects",
+      "pain_points": ["Breaking changes cause incidents", "Ripple effects unclear", "Refactoring is risky"],
+      "coderef_solutions": [
+        "Breaking change detection prevents incidents",
+        "Impact analysis shows ripple effects",
+        "Migration hints guide refactoring"
+      ]
+    },
+    {
+      "segment": "Quality-Focused Teams",
+      "pain_points": ["Code complexity grows unchecked", "Test gaps cause bugs", "Inconsistent patterns", "Dead code accumulates"],
+      "coderef_solutions": [
+        "Complexity monitoring catches bloat early",
+        "Test coverage tracking ensures safety",
+        "Pattern detection enforces standards",
+        "Dead code detection reduces maintenance"
+      ]
+    },
+    {
+      "segment": "Documentation-Heavy Domains",
+      "pain_points": ["Manual docs are stale", "Diagrams outdated", "API docs missing", "No stakeholder visibility"],
+      "coderef_solutions": [
+        "12 generators automate grunt work",
+        "Architecture diagrams stay up-to-date",
+        "API docs generate automatically",
+        "Interactive dashboards for stakeholders"
+      ]
+    },
+    {
+      "segment": "AI Agent Development",
+      "pain_points": ["Tool integration fragmented", "Vendor lock-in risk", "Context retrieval inaccurate", "No confidence scoring"],
+      "coderef_solutions": [
+        "5 MCP tools ready to use",
+        "Standard protocol, vendor-agnostic",
+        "Graph-aware search for better context",
+        "Citation/confidence scoring"
+      ]
+    },
+    {
+      "segment": "Budget-Conscious Teams",
+      "pain_points": ["Commercial tools too expensive", "Per-user fees add up", "No budget for licenses", "Enterprise support cost-prohibitive"],
+      "coderef_solutions": [
+        "Open source, $0 licensing",
+        "Self-hosted deployment",
+        "No per-user fees",
+        "Community support"
+      ]
+    },
+    {
+      "segment": "Privacy/Security-First Organizations",
+      "pain_points": ["Cannot upload code externally", "Compliance requires air-gap", "Third-party risk unacceptable", "No source code visibility"],
+      "coderef_solutions": [
+        "Self-hosted RAG (Chroma/SQLite)",
+        "No code upload required",
+        "Air-gapped option",
+        "Full source code audit"
+      ]
+    }
+  ]
+}

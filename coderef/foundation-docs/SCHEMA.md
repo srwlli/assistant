@@ -1,6 +1,19 @@
-# Schema Documentation
+# Schema Reference
 
-*No database models detected.*
+**Total Types:** 0
 
+## Interfaces
 
-*Generated: 2025-12-19T18:35:35.100060*
+_No interfaces found_
+
+## Type Definitions
+
+_No type definitions found_
+
+## Enums
+
+_No enums found_
+
+---
+**Generated from:** `.coderef/index.json`
+**Date:** 2025-12-31

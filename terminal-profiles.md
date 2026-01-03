@@ -18,43 +18,30 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 
 ---
 
-## Current Profiles (19 Active)
+## Current Profiles (11 Active)
 
-### Main Projects (7)
+### Main Projects (1)
 
 | # | Profile | Icon | Shortcut | Directory | Color | Status |
 |---|---------|------|----------|-----------|-------|--------|
 | 1 | **Assistant** | 🤖 | `Ctrl+Shift+1` | `Desktop/assistant` | #3B82F6 (Blue) | ✅ Active |
-| 2 | **Football Stats** | 🏈 | `Ctrl+Shift+S` | `Desktop/scrapper` | #EF4444 (Red) | ✅ Active |
-| 3 | **Gridiron** | 🎮 | `Ctrl+Shift+E` | `Desktop/latest-sim/gridiron-franchise` | #22C55E (Green) | ✅ Active |
-| 4 | **Noted** | 📝 | `Ctrl+Shift+R` | `Desktop/projects/noted` | #F97316 (Orange) | ✅ Active |
-| 5 | **Selector** | 🔍 | `Ctrl+Shift+Y` | `Desktop/app_documents` | #06B6D4 (Cyan) | ✅ Active |
-| 6 | **MultiTenant** | 🏢 | `Ctrl+Shift+I` | `Desktop/Business-Dash/latest-app` | #EC4899 (Pink) | ✅ Active |
-| 7 | **Stats Backed** | 📊 | `Ctrl+Shift+B` | `Desktop/projects/next-scraper` | #14B8A6 (Teal) | ✅ Active |
-| 8 | **Scout** | 🌐 | (No binding) | `Desktop/projects/scout` | #F97316 (Orange) | ✅ Active |
-| 9 | **CodeRef Dashboard** | 📊 | `Ctrl+Shift+D` | `Desktop/coderef-dashboard` | #8B5CF6 (Purple) | ✅ Active |
 
-### Coderef (Nested folder in new tab menu - 7)
+### Coderef (Nested folder in new tab menu - 10)
 
 | # | Profile | Icon | Shortcut | Directory | Color | Status |
 |---|---------|------|----------|-----------|-------|--------|
-| 10 | **Coderef > Context** | 🔍 | (No binding) | `.mcp-servers/coderef-context` | #EAB308 (Yellow) | ✅ Active |
-| 11 | **Coderef > Docs** | 📚 | (No binding) | `.mcp-servers/coderef-docs` | #EAB308 (Yellow) | ✅ Active |
-| 12 | **Coderef > Workflow** | 📋 | (No binding) | `.mcp-servers/coderef-workflow` | #EAB308 (Yellow) | ✅ Active |
-| 13 | **Coderef > Personas** | 🎭 | (No binding) | `.mcp-servers/coderef-personas` | #EAB308 (Yellow) | ✅ Active |
-| 14 | **Coderef > Dashboard** | 📊 | (No binding) | `.mcp-servers/coderef-dashboard` | #8B5CF6 (Purple) | ✅ Active |
-| 15 | **Coderef > Testing** | 🧪 | (No binding) | `.mcp-servers/coderef-testing` | #F59E0B (Amber) | ✅ Active |
+| 2 | **Coderef > Context** | 🔍 | (No binding) | `.mcp-servers/coderef-context` | #EAB308 (Yellow) | ✅ Active |
+| 3 | **Coderef > Docs** | 📚 | (No binding) | `.mcp-servers/coderef-docs` | #EAB308 (Yellow) | ✅ Active |
+| 4 | **Coderef > MCP** | 🔌 | (No binding) | `.mcp-servers` | #EAB308 (Yellow) | ✅ Active |
+| 5 | **Coderef > Workflow** | 📋 | (No binding) | `.mcp-servers/coderef-workflow` | #EAB308 (Yellow) | ✅ Active |
+| 6 | **Coderef > System** | 💻 | (No binding) | `Desktop/projects/coderef-system` | #EAB308 (Yellow) | ✅ Active |
+| 7 | **Coderef > Dashboard** | 📊 | `Ctrl+Shift+D` | `Desktop/coderef-dashboard` | #8B5CF6 (Purple) | ✅ Active |
+| 8 | **Coderef > Personas** | 🎭 | (No binding) | `.mcp-servers/coderef-personas` | #FBBF24 (Amber) | ✅ Active |
+| 9 | **Coderef > Testing** | 🧪 | (No binding) | `.mcp-servers/coderef-testing` | #EAB308 (Yellow) | ✅ Active |
+| 10 | **Coderef > Papertrail** | 📋 | (No binding) | `.mcp-servers/papertrail` | #EAB308 (Yellow) | ✅ Active |
+| 11 | **Coderef > Packages** | 📦 | (No binding) | `Desktop/projects/coderef-system/packages` | #EAB308 (Yellow) | ✅ Active |
 
-**Note:** The 7 Coderef-related tabs are nested in the "Coderef" folder in the new tab menu for organization.
-
-### Personas (Nested folder in new tab menu - 2)
-
-| # | Profile | Icon | Shortcut | Directory | Color | Status |
-|---|---------|------|----------|-----------|-------|--------|
-| 18 | **Personas > Scout** | 🔍 | (No binding) | `Desktop/MCLVI/scout` | #06B6D4 (Cyan) | ✅ Active |
-| 19 | **Personas > Assistant** | 🤖 | (No binding) | `Desktop/assistant` | #3B82F6 (Blue) | ✅ Active |
-
-**Note:** The 2 Personas tabs are nested in the "Personas" folder in the new tab menu for organization.
+**Note:** The 10 Coderef-related tabs are nested in the "Coderef" folder in the new tab menu for organization.
 
 ---
 
@@ -72,18 +59,14 @@ Actions defined in settings.json (lines 4-104):
 }
 ```
 
-**11 Quick Launch Actions:**
+**7 Quick Launch Actions:**
 - User.openAssistant → Assistant
-- User.openScriptboard → Scriptboard
-- User.openScrapper → Football Stats
-- User.openGridiron → Gridiron
-- User.openNoted → Noted
-- User.openMCP → MCP Servers
-- User.openSelector → Selector
-- User.openCodeRef → CodeRef
-- User.openMultiTenant → MultiTenant
-- User.openStatsBacked → Stats Backed
-- User.openScout → Scout
+- User.openCoderefContext → Coderef-Context
+- User.openCoderefWorkflow → Coderef-Workflow
+- User.openCoderefMCP → Coderef-MCP
+- User.openCoderefDocs → Coderef-Docs
+- User.openCoderefDashboard → CodeRef Dashboard
+- User.openCoderefPersonas → Coderef-Personas
 
 ---
 
@@ -92,19 +75,13 @@ Actions defined in settings.json (lines 4-104):
 | Action | Shortcut | Profile |
 |--------|----------|---------|
 | **Assistant** | `Ctrl+Shift+1` | 🤖 |
-| **Football Stats** | `Ctrl+Shift+S` | 🏈 |
-| **Gridiron** | `Ctrl+Shift+E` | 🎮 |
-| **Noted** | `Ctrl+Shift+R` | 📝 |
-| **Selector** | `Ctrl+Shift+Y` | 🔍 |
-| **MultiTenant** | `Ctrl+Shift+I` | 🏢 |
-| **Stats Backed** | `Ctrl+Shift+B` | 📊 |
 | **CodeRef Dashboard** | `Ctrl+Shift+D` | 📊 |
 | **Split Pane (duplicate)** | `Alt+Shift+D` | — |
 | **Find** | `Ctrl+Shift+F` | — |
 | **Copy** | `Ctrl+C` | — |
 | **Paste** | `Ctrl+V` | — |
 
-**Unbound Shortcuts Available:** `Ctrl+Shift+2`, `Ctrl+Shift+3`, `Ctrl+Shift+4`, `Ctrl+Shift+5`, `Ctrl+Shift+6`, `Ctrl+Shift+7`, `Ctrl+Shift+8`, `Ctrl+Shift+9`, `Ctrl+Shift+T`, `Ctrl+Shift+U`, `Ctrl+Shift+N`
+**Unbound Shortcuts Available:** `Ctrl+Shift+2`, `Ctrl+Shift+3`, `Ctrl+Shift+4`, `Ctrl+Shift+5`, `Ctrl+Shift+6`, `Ctrl+Shift+7`, `Ctrl+Shift+8`, `Ctrl+Shift+9`, `Ctrl+Shift+B`, `Ctrl+Shift+E`, `Ctrl+Shift+I`, `Ctrl+Shift+R`, `Ctrl+Shift+S`, `Ctrl+Shift+T`, `Ctrl+Shift+U`, `Ctrl+Shift+Y`, `Ctrl+Shift+N`
 
 ---
 

@@ -1,0 +1,368 @@
+{
+  "workorder_id": "WO-DOC-OUTPUT-AUDIT-001",
+  "feature_name": "document-output-audit",
+  "created": "2026-01-01",
+  "instructions": "AGENT: (1) Review how your server/tool uses these documents, (2) Fill in the 'analysis' and 'additional_comments' fields in YOUR entry below (respond in JSON), (3) Update 'reply_file' with full path to this file, (4) Set 'status' to 'complete'",
+  "agents": [
+    {
+      "id": "coderef-context",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-context",
+      "reply_file": "C:\\Users\\willh\\.mcp-servers\\coderef-context\\coderef-document-audit-reply.md",
+      "status": "complete",
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "Minimal reading. Generate .coderef/context.md (similar purpose). Have own CLAUDE.md for MCP tool documentation.",
+          "strengths": "Clear separation. My CLAUDE.md defines dual role (MCP server + Scan Lead).",
+          "weaknesses": "Don't leverage existing ARCHITECTURE.md/SCHEMA.md when generating context.md. No integration between my CLAUDE.md and ecosystem docs.",
+          "add_remove": "ADD: Read existing ARCHITECTURE.md/SCHEMA.md and merge insights into .coderef/context.md. ADD: Cross-references in CLAUDE.md to .coderef/ outputs."
+        },
+        "standards_docs": {
+          "how_used": "Never read or write. Standards (UI/UX) not in my domain.",
+          "strengths": "N/A",
+          "weaknesses": "Complete disconnect. My patterns.json detects CODE patterns (handlers, decorators) but NOT UI/UX patterns.",
+          "add_remove": "CONSIDER: Enhance coderef_patterns to detect UI component patterns for frontend projects. CONSIDER: Generate ui-component-inventory.json in .coderef/reports/. KEEP: Standards enforcement remains in coderef-docs domain."
+        },
+        "workflow_workorder_docs": {
+          "how_used": "Never read/write directly. My .coderef/ outputs consumed BY coderef-workflow during planning.",
+          "strengths": "Clean separation. 90% utilization of my outputs in planning workflows (WO-CODEREF-OUTPUT-UTILIZATION-001).",
+          "weaknesses": "No feedback loop - don't know HOW outputs are used. No workorder tracking in scans. Can't trace which scan was used for which plan.",
+          "add_remove": "ADD: Workorder metadata to index.json (workorder_id, timestamp, agent). ADD: Scan provenance tracking. ADD: coderef_diff tool to compare two scans."
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "PRIMARY OUTPUT! Generate ALL 16 types: index.json, context.md, patterns.json, coverage.json, validation.json, drift.json, complexity/, diagrams (mmd/dot), exports (json/jsonld). Read existing index.json for drift detection.",
+          "strengths": "Complete coverage (16 outputs), 99% AST accuracy, well-structured, 98% test coverage, 90% ecosystem utilization.",
+          "weaknesses": "No versioning, no incremental updates (always full re-scan), no metadata (timestamp/workorder/agent), stale data risk, no diff tool.",
+          "add_remove": "ADD: Versioned index files (.coderef/index-v1.json). ADD: Metadata section (scan_timestamp, workorder_id, agent, cli_version, scan_duration_ms). ADD: Incremental scan mode. ADD: coderef_diff tool. ADD: Auto-drift warnings if index.json > 7 days old."
+        }
+      },
+      "additional_comments": {
+        "improvements": "1) Scan provenance tracking (workorder_id, timestamp, agent), 2) Incremental scanning for large codebases (>500k LOC timeout), 3) Drift detection automation, 4) Foundation doc integration (read ARCHITECTURE.md/SCHEMA.md), 5) UI pattern detection for frontend projects",
+        "weaknesses": "Isolation (operate in silo), No feedback loop (don't know how outputs used), No versioning (can't track evolution), No metadata (missing provenance), Full scans only (expensive)",
+        "other": "I'm a PRODUCER not CONSUMER. 90% value from GENERATING .coderef/ outputs. Current architecture is sound - enhancements should be additive. Top priorities: 1) Add metadata, 2) Incremental scans, 3) Optional foundation doc integration."
+      }
+    },
+    {
+      "id": "coderef-workflow",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-workflow",
+      "reply_file": "C:\\Users\\willh\\.mcp-servers\\coderef-workflow\\coderef-document-audit-reply.md",
+      "status": "complete",
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "Deep extraction during planning (planning_analyzer.py). Reads README, ARCHITECTURE, API, COMPONENTS, SCHEMA from root + coderef/foundation-docs/. Extracts headers, previews (500 chars), size. Auto-generates missing docs from coderef data.",
+          "strengths": "Flexible location checking (root + coderef/), deep extraction mode, header parsing, size tracking, auto-generation",
+          "weaknesses": "Limited to 10 headers, 500-char preview may miss context, no semantic search, no versioning, no POWER framework validation",
+          "add_remove": "Add semantic search, extract decision sections explicitly, increase header limit, add POWER validation, track document age (alert >90 days old)"
+        },
+        "standards_docs": {
+          "how_used": "Scans coderef/standards/ for existence of BEHAVIOR-STANDARDS.md, COMPONENT-PATTERN.md, UI-STANDARDS.md, UX-PATTERNS.md, COMPONENT-INDEX.md. Returns available/missing lists during planning.",
+          "strengths": "Clear directory structure, available/missing tracking, standardized naming",
+          "weaknesses": "No content parsing (only checks existence), no utilization scoring, no compliance tracking, no auto-suggestion",
+          "add_remove": "Parse standard definitions, track compliance metrics, auto-suggest standards during planning, link standards to plan tasks, generate violation reports"
+        },
+        "workflow_workorder_docs": {
+          "how_used": "Core orchestration files (plan.json, context.json, DELIVERABLES.md, communication.json) in coderef/workorder/. Complete lifecycle: context → plan → execution → deliverables → archive. Workorder ID tracking in global log.",
+          "strengths": "Complete lifecycle tracking, structured JSON formats, workorder ID tracking, multi-agent support (communication.json), metrics capture",
+          "weaknesses": "No cross-workorder analytics, no template validation schemas, no dependency tracking between workorders, no progress dashboard, no workorder search",
+          "add_remove": "Add workorder dependency tracking, implement JSON Schema validation, auto-generate DELIVERABLES from plan.json, cross-workorder analytics dashboard, workorder search/indexing"
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "3-tier priority: (1) Read .coderef/index.json (fastest), (2) Call coderef_scan MCP tool (live AST scan), (3) Fallback to coderef/inventory/ manifests. Uses index.json (inventory), graph.json (dependencies), patterns.json (AST patterns 99% accuracy), coverage.json (test gaps). Foundation doc generation uses graph.json for diagrams.",
+          "strengths": "Multi-tier fallback architecture, AST-based 99% accuracy, fast .coderef/ reads, comprehensive integration (index/graph/patterns/coverage), real-time MCP calls",
+          "weaknesses": "Auto-scan failures silent, no drift detection before planning, no cache invalidation strategy, no utilization tracking, doesn't use graph.jsonld or diagram-wrapped.md",
+          "add_remove": "Add drift alerts (check .coderef/ age vs git commits before planning), cache invalidation strategy (auto-refresh if stale >7 days), export utilization metrics, integrate diagram-wrapped.md, silent failure logging with actionable errors"
+        }
+      },
+      "additional_comments": {
+        "improvements": "Add unified document query interface (single API for all doc types), document health dashboard (real-time freshness/completeness/compliance), auto-remediation (detect and fix missing/stale docs), cross-document linking (standards→tasks, foundation→workorders), intelligent caching (pre-load during planning)",
+        "weaknesses": "No document versioning (can't track evolution), no semantic understanding (can't answer 'what auth decisions?'), limited compliance checking (no POWER/UDS validation), no document dependency tracking (circular refs, orphaned docs)",
+        "other": "coderef-workflow is the MOST INTEGRATED server in the ecosystem (90% utilization). The 3-tier priority system for .coderef/ outputs is exceptionally well-designed. Future direction: Add document intelligence layer (semantic search, auto-linking, compliance checking) to transform from 'document reader' to 'document understanding system.'"
+      }
+    },
+    {
+      "id": "coderef-docs",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-docs",
+      "reply_file": "AGENT: Full path to your coderef-document-audit-reply.md",
+      "status": "pending",
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "standards_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "workflow_workorder_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        }
+      },
+      "additional_comments": {
+        "improvements": "",
+        "weaknesses": "",
+        "other": ""
+      }
+    },
+    {
+      "id": "coderef-personas",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-personas",
+      "reply_file": "C:\\Users\\willh\\.mcp-servers\\coderef-personas\\coderef-document-audit-reply.md",
+      "status": "complete",
+      "output_files": [
+        "C:\\Users\\willh\\.mcp-servers\\coderef-personas\\coderef-document-audit-reply.md",
+        "C:\\Users\\willh\\.mcp-servers\\coderef-personas\\document-io-inventory.json"
+      ],
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "CONSUMER: CLAUDE.md is the primary context document for agents working on coderef-personas. Persona system prompts (lloyd.json, ava.json, marcus.json, quinn.json, taylor.json) extensively reference foundation docs from OTHER servers (coderef-workflow CLAUDE.md, coderef-docs templates, ecosystem README) to provide agents with comprehensive ecosystem knowledge when activated. Foundation docs are embedded in persona knowledge, not dynamically loaded.",
+          "strengths": "CLAUDE.md provides comprehensive overview of persona system (11 personas, stacking architecture, MCP integration). Persona definitions (JSON files) are well-structured with clear metadata (version, expertise, use_cases, behavior). Documentation clearly explains persona activation workflow and multi-agent coordination patterns.",
+          "weaknesses": "Persona system prompts contain COPIES of ecosystem documentation (duplicated from other servers' CLAUDE.md files), causing staleness risk when upstream docs change. No versioning on embedded documentation snippets. Foundation docs are static text in JSON - no links or references to source docs. COMPONENTS.md not applicable (backend MCP server, no UI).",
+          "add_remove": "ADD: Persona version compatibility matrix (which persona versions work with which ecosystem versions). ADD: Reference links in persona system prompts instead of full text duplication (e.g., 'See coderef-workflow/CLAUDE.md#planning-workflow'). ADD: Timestamp metadata in persona JSON showing last sync with ecosystem docs. REMOVE: COMPONENTS.md generation (not applicable). ADD: Foundation doc refresh detection (warn when persona knowledge is stale)."
+        },
+        "standards_docs": {
+          "how_used": "INDIRECT USE: coderef-personas MCP server itself does NOT consume standards docs. However, ACTIVATED PERSONAS reference them: Ava (frontend specialist) references ui-patterns.md and ux-patterns.md when implementing UI features. Marcus (backend specialist) references behavior-patterns.md for error handling and API patterns. Quinn (testing specialist) would benefit from test-patterns.md if it existed.",
+          "strengths": "Standards docs provide clear, actionable patterns that personas can teach agents (Ava knows Material Design patterns, Marcus knows REST conventions). Separation of concerns - personas act as 'teachers' of standards rather than programmatic enforcers.",
+          "weaknesses": "No test-patterns.md or backend-patterns.md despite having testing and backend specialist personas. Standards docs are UI/UX focused - missing patterns for: API design, database schema design, authentication flows, testing strategies, deployment patterns. Personas contain hardcoded pattern knowledge - if standards docs update, personas become outdated.",
+          "add_remove": "ADD: test-patterns.md (pytest conventions, mocking strategies, coverage thresholds). ADD: api-patterns.md (REST/GraphQL design, error responses, versioning). ADD: backend-patterns.md (database modeling, caching, background jobs). ADD: Persona-to-standards mapping in CLAUDE.md showing which persona uses which standards. ADD: Automated persona update workflow when standards change."
+        },
+        "workflow_workorder_docs": {
+          "how_used": "HEAVY CONSUMER: Lloyd persona (multi-agent coordinator) reads communication.json for task assignment and agent status tracking. Lloyd system prompt contains complete documentation of plan.json structure, DELIVERABLES.md format, and workorder lifecycle. All specialist personas (Ava, Marcus, Quinn, Taylor) reference plan.json task lists and update DELIVERABLES.md during execution. Personas use workorder_id for attribution in commits and documentation.",
+          "strengths": "Lloyd has comprehensive knowledge of workorder workflows (11-step /create-workorder process, multi-agent coordination via communication.json). Personas understand structured planning (plan.json 10-section format, task breakdown, dependencies). Clear integration between personas and coderef-workflow tools (gather_context, create_plan, execute_plan).",
+          "weaknesses": "Personas contain DUPLICATED workflow documentation from coderef-workflow - 1000+ lines of Lloyd system prompt are copies of coderef-workflow CLAUDE.md. No runtime validation that persona workflow knowledge matches actual coderef-workflow implementation. Context.json and analysis.json mentioned in Lloyd prompt but structure/schema not documented. Communication.json schema is embedded in personas - schema changes break personas.",
+          "add_remove": "ADD: Workorder document JSON schemas in coderef/schemas/ (plan-schema.json, communication-schema.json, deliverables-schema.json) for persona validation. ADD: Persona-workflow compatibility versioning (Lloyd v1.5.0 compatible with coderef-workflow v1.1.0+). REFACTOR: Extract workflow knowledge from persona system prompts to external reference docs, include by reference. ADD: Runtime schema validation when personas interact with workorder docs. ADD: Clear documentation of context.json and analysis.json formats."
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "MINIMAL DIRECT USE: coderef-personas MCP server itself does not consume .coderef/ analysis outputs. Personas MAY reference .coderef/ outputs when activated for code analysis tasks (e.g., Ava might read .coderef/reports/patterns.json to understand existing component patterns before implementing new UI). Lloyd persona could use .coderef/index.json for task complexity estimation. Not systematically integrated into persona workflows.",
+          "strengths": ".coderef/ outputs provide objective code intelligence that complements persona expertise. Patterns.json particularly valuable for Ava (frontend) and Marcus (backend) to maintain consistency. Context.md provides human-readable summary suitable for persona consumption.",
+          "weaknesses": "Personas have ZERO knowledge of .coderef/ output formats, locations, or schemas. No guidance in persona system prompts on when/how to use .coderef/ analysis. Missing integration: Lloyd should use .coderef/complexity.json for task estimation, Ava should use .coderef/reports/patterns.json for UI consistency, Quinn should use .coderef/reports/coverage.json for test gap analysis. No examples of personas using .coderef/ outputs in CLAUDE.md.",
+          "add_remove": "ADD: .coderef/ integration guidance in persona system prompts (when to read index.json, patterns.json, context.md). ADD: Use cases in CLAUDE.md showing personas consuming .coderef/ outputs (Ava checks component patterns, Marcus validates API consistency). ADD: Lloyd enhancement - read .coderef/complexity.json during task assignment to estimate effort. ADD: Quinn enhancement - read .coderef/reports/coverage.json to prioritize testing gaps. ADD: .coderef/ output schemas documentation in personas/docs/ for reference."
+        }
+      },
+      "additional_comments": {
+        "improvements": "Create personas/docs/ECOSYSTEM-REFERENCE.md to centralize ecosystem documentation instead of duplicating in every persona system prompt (currently 1000+ lines duplicated across 11 personas). Add persona versioning and compatibility matrix showing which persona versions work with which ecosystem tool versions. Implement automated persona update workflow triggered by upstream doc changes (coderef-workflow CLAUDE.md updates should flag Lloyd persona for refresh). Add JSON schema validation for persona definitions to catch structural errors early.",
+        "weaknesses": "Massive documentation duplication across persona system prompts (Lloyd, Ava, Marcus, Quinn all have 500-1500 line prompts with overlapping ecosystem knowledge). No centralized schema definitions for workorder docs - schemas are embedded as text in personas. Missing integration with .coderef/ analysis outputs despite personas being ideal consumers. Persona knowledge goes stale when ecosystem evolves (no versioning, no staleness detection). CLAUDE.md is 365 lines but should link to external references instead of inlining everything.",
+        "other": "Consider creating a 'persona knowledge base' system where personas reference living documentation instead of containing static copies. Implement persona composition/layering so base ecosystem knowledge is shared (not duplicated) across all personas. Add tooling to detect persona staleness (compare embedded doc versions vs current ecosystem versions). Create clear persona development guide showing how to add .coderef/ integration to new personas. Explore dynamic persona system prompts that inject fresh ecosystem context at activation time instead of baking it into JSON files."
+      }
+    },
+    {
+      "id": "coderef-testing",
+      "path": "C:\\Users\\willh\\.mcp-servers\\coderef-testing",
+      "reply_file": "AGENT: Full path to your coderef-document-audit-reply.md",
+      "status": "pending",
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "standards_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "workflow_workorder_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        }
+      },
+      "additional_comments": {
+        "improvements": "",
+        "weaknesses": "",
+        "other": ""
+      }
+    },
+    {
+      "id": "papertrail",
+      "path": "C:\\Users\\willh\\.mcp-servers\\papertrail",
+      "reply_file": "C:\\Users\\willh\\.mcp-servers\\papertrail\\coderef-document-audit-reply.md",
+      "status": "complete",
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "VALIDATOR: Papertrail validates foundation docs (CLAUDE.md, README, ARCHITECTURE, etc.) for UDS compliance via validate_document and check_document_health tools. Provides 0-100 health scoring (traceability 40%, completeness 30%, freshness 20%, validation 10%). Does not CONSUME these docs for operation - purely enforcement layer.",
+          "strengths": "Well-structured with clear sections. CLAUDE.md follows consistent template across servers. README for users, CLAUDE.md for agents - good separation.",
+          "weaknesses": "No UDS headers (workorder_id, timestamps, MCP attribution). No schemas for validation. Can't track which workorder created which doc. Can't measure freshness without timestamps. COMPONENTS.md not applicable to all projects (like papertrail itself - no UI).",
+          "add_remove": "ADD: UDS metadata headers (workorder_id, created_at, updated_at, mcp_attribution). ADD: JSON schemas in schemas/foundation/. ADD: --validate flag to generators. MAKE CONDITIONAL: COMPONENTS.md only for UI projects. ADD: version field for schema evolution tracking."
+        },
+        "standards_docs": {
+          "how_used": "NOT APPLICABLE: Papertrail is Python library/MCP server without UI. ui-patterns.md/ux-patterns.md irrelevant. behavior-patterns.md could apply to validation patterns but not consumed.",
+          "strengths": "Clear patterns for UI/UX projects with examples and anti-patterns.",
+          "weaknesses": "Entirely UI/UX focused. Missing: validation-patterns.md, mcp-tool-patterns.md, library-api-patterns.md, test-patterns.md. No standards for schema design, error reporting, or package structure.",
+          "add_remove": "ADD: validation-patterns.md (schema validation, input sanitization, error reporting). ADD: mcp-tool-patterns.md (tool schemas, error handling, parameter validation). ADD: library-api-patterns.md (public vs internal APIs, versioning, deprecation). ADD: test-patterns.md. MAKE CONDITIONAL: ui/ux patterns only for frontend projects."
+        },
+        "workflow_workorder_docs": {
+          "how_used": "CRITICAL CONSUMER: Logs workorder activity to global workorder-log.txt via log_workorder tool. Validates plan.json/DELIVERABLES.md for UDS compliance. Tracks workorder IDs across ecosystem for traceability. get_workorder_log queries historical data.",
+          "strengths": "Structured JSON (plan.json, context.json, communication.json) easy to validate. DELIVERABLES.md provides human-readable tracking. WO-FEATURE-CATEGORY-### format consistent. Archived features maintain history.",
+          "weaknesses": "No formal JSON schemas - agents infer structure. Inconsistent metadata (some have timestamps, some don't). No parent/child workorder linking. Missing health metrics in plan.json (staleness, completion %, blockers). No validation that workorder_id matches file location.",
+          "add_remove": "ADD: JSON schemas in schemas/workflow/ (plan, context, communication, deliverables). ADD: Health metadata to plan.json (timestamps, completion_pct, status). ADD: Parent/child linking. ADD: Validation that workorder_id matches directory. ADD: Staleness detection (warn if plan.json not updated 7+ days). ADD: Cross-reference validation (tasks in plan.json appear in DELIVERABLES.md)."
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "POTENTIAL VALIDATOR: Can inject UDS metadata via inject_uds_headers tool, but not currently integrated. .coderef/ outputs lack traceability (which scan, when, by whom). Papertrail doesn't consume .coderef/ data - it's validation layer, not code analysis.",
+          "strengths": "Comprehensive coverage (16 outputs: index, graph, patterns, coverage, complexity, diagrams, exports). JSON machine-readable. context.md human-readable. Multiple export formats (JSON, JSON-LD, Mermaid, DOT).",
+          "weaknesses": "No UDS metadata for traceability (missing: scan_timestamp, coderef_version, workorder_id, mcp_attribution). No formal schemas - agents infer structure. Unclear which outputs required vs optional. Missing metadata.json. No validation that .coderef/ is current (drift detection exists but not UDS-integrated).",
+          "add_remove": "ADD: .coderef/metadata.json with UDS headers (scan_timestamp, coderef_version, workorder_id, languages, analyzer_mode). ADD: JSON schemas in .coderef/schemas/. ADD: UDS headers to context.md. ADD: Drift detection with last_validated timestamp in metadata. ADD: .coderef/README.md explaining outputs and freshness. STANDARDIZE: Required (index.json, context.md) vs optional outputs."
+        }
+      },
+      "additional_comments": {
+        "improvements": "Add MCP tools to auto-generate JSON schemas for all doc types. Add batch validation mode. Create pre-commit hooks for UDS validation. Add --fix mode to auto-inject missing UDS headers. Integrate with coderef-workflow to auto-log workorders when plans created. Add CI/CD integration for continuous validation.",
+        "weaknesses": "Limited ecosystem integration currently. UDS schemas exist but not enforced automatically. No examples of valid/invalid docs. Health scoring weights (40/30/20/10) arbitrary, not validated. No dashboard/reporting UI for UDS compliance. Isolated - doesn't talk to other servers yet.",
+        "other": "Consider renaming 'papertrail' → 'coderef-standards' to align with ecosystem naming (all others are 'coderef-*'). Create unified schema registry at schemas/ with versioned schemas. Add custom schema support (project-specific UDS extensions). Integrate with coderef-testing to validate test docs. Create 'UDS compliance badge' for projects (0-100 score in README)."
+      }
+    },
+    {
+      "id": "coderef-system",
+      "path": "C:\\Users\\willh\\Desktop\\projects\\coderef-system",
+      "reply_file": "C:\\Users\\willh\\Desktop\\projects\\coderef-system\\coderef-document-audit-reply.md",
+      "status": "complete",
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "GENERATOR: coderef-system contains two foundation doc generators (scripts/parse_coderef_data.py and packages/parse_coderef_data.py) that consume .coderef/index.json to auto-generate README, ARCHITECTURE, API, COMPONENTS, SCHEMA docs. CLAUDE.md serves as the primary context source for agents working on this codebase.",
+          "strengths": "Auto-generation from scan outputs ensures consistency and accuracy. CLAUDE.md provides comprehensive system overview including architecture, CLI commands, MCP integration, and agent workflows. Foundation docs are well-structured and follow consistent templates.",
+          "weaknesses": "Foundation docs are stored in multiple locations (coderef/foundation-docs/ vs packages/.coderef/foundation-docs/) causing confusion. No clear versioning or timestamps to track doc freshness. COMPONENTS.md may not be relevant for non-UI projects like CLI tools.",
+          "add_remove": "ADD: Timestamps/version metadata to foundation docs for staleness detection. ADD: Clear distinction between 'project-level' vs 'package-level' foundation docs. REMOVE/OPTIONAL: COMPONENTS.md for non-UI projects (or make it conditional based on project type). ADD: Cross-references between foundation docs and .coderef/ analysis outputs."
+        },
+        "standards_docs": {
+          "how_used": "NOT ACTIVELY USED: coderef-system is a CLI tool without UI components, so ui-patterns.md and ux-patterns.md are not applicable. behavior-patterns.md could be relevant for error handling and CLI interaction patterns, but is not currently consumed by any tooling.",
+          "strengths": "Standards docs provide clear patterns for projects that need them (web apps, dashboards).",
+          "weaknesses": "Standards docs are UI/UX focused and not applicable to CLI/backend tools. No standards for CLI design patterns, error messaging, output formatting, or command structure. Missing standards for Python script patterns (like the foundation doc generators).",
+          "add_remove": "ADD: cli-patterns.md for command design, help text, error messages, progress indicators. ADD: script-patterns.md for Python automation scripts. ADD: test-patterns.md for testing standards across all project types. MAKE CONDITIONAL: Only generate ui-patterns/ux-patterns for frontend projects."
+        },
+        "workflow_workorder_docs": {
+          "how_used": "NOT APPLICABLE: coderef-system is a tool, not an agent. It does not consume or generate workflow/workorder docs. These docs are created BY coderef-workflow MCP server and consumed BY agents executing tasks.",
+          "strengths": "N/A - Tool does not interact with these docs.",
+          "weaknesses": "N/A - Tool does not interact with these docs.",
+          "add_remove": "No changes needed for coderef-system specifically. These docs are correctly scoped to agent coordination workflows."
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "PRODUCER: coderef-system generates ALL .coderef/ analysis outputs via CLI commands (scan → index.json, context → context.md, diagram → diagrams/, export → exports/, patterns → reports/patterns.json, coverage → reports/coverage.json, complexity → reports/complexity.json). CONSUMER: Foundation doc generators read .coderef/index.json and context.md to auto-generate documentation.",
+          "strengths": "Comprehensive output coverage across all analysis dimensions. JSON outputs are machine-readable and suitable for downstream tooling. Context.md provides human-readable summary. Diagrams support both Mermaid and Graphviz formats.",
+          "weaknesses": "No standardized schema documentation for .coderef/ outputs (agents must infer structure from examples). Missing metadata (timestamps, coderef version, scan parameters) in output files. No clear guidance on which outputs are required vs optional. Duplication between packages/.coderef/ and root .coderef/ directories.",
+          "add_remove": "ADD: .coderef/metadata.json with scan timestamp, coderef version, languages scanned, analyzer mode (AST/regex). ADD: JSON schema files for each .coderef/ output format in .coderef/schemas/. ADD: .coderef/README.md explaining purpose of each output file. STANDARDIZE: Single .coderef/ location (root level only, aggregate package-level scans). ADD: drift.json and validation.json to standard outputs (currently optional)."
+        }
+      },
+      "additional_comments": {
+        "improvements": "Foundation doc generators should validate against JSON schemas before generation. Add --validate flag to CLI commands to check output conformance. Create coderef-system-specific CLAUDE.md sections for: (1) How to add new CLI commands, (2) How to extend analyzers, (3) How to add new output formats.",
+        "weaknesses": "Documentation is scattered across multiple files and locations. No clear 'getting started' guide for agents new to coderef-system internals. Missing API documentation for @coderef/core library (currently only CLI is documented). No examples of using coderef as a library vs CLI tool.",
+        "other": "Consider creating a 'coderef-system-dev-guide.md' specifically for agents working on extending coderef internals. Current CLAUDE.md is user-focused (how to USE coderef) but lacks developer-focused content (how to EXTEND coderef). Also need clarity on mono-repo structure (packages/core vs packages/cli vs packages/scanner-gui)."
+      }
+    },
+    {
+      "id": "coderef-dashboard",
+      "path": "C:\\Users\\willh\\Desktop\\coderef-dashboard",
+      "reply_file": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\coderef-document-audit-reply.md",
+      "status": "complete",
+      "analysis": {
+        "foundation_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "standards_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "workflow_workorder_docs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        },
+        "coderef_analysis_outputs": {
+          "how_used": "",
+          "strengths": "",
+          "weaknesses": "",
+          "add_remove": ""
+        }
+      },
+      "additional_comments": {
+        "improvements": "",
+        "weaknesses": "",
+        "other": ""
+      }
+    }
+  ],
+  "document_categories": {
+    "foundation_docs": [
+      "coderef/foundation-docs/README.md",
+      "coderef/foundation-docs/ARCHITECTURE.md",
+      "coderef/foundation-docs/API.md",
+      "coderef/foundation-docs/COMPONENTS.md",
+      "coderef/foundation-docs/SCHEMA.md",
+      "CLAUDE.md"
+    ],
+    "standards_docs": [
+      "coderef/standards/ui-patterns.md",
+      "coderef/standards/behavior-patterns.md",
+      "coderef/standards/ux-patterns.md",
+      "coderef/standards/standards-overview.md"
+    ],
+    "workflow_workorder_docs": [
+      "coderef/workorder/{feature-name}/context.json",
+      "coderef/workorder/{feature-name}/plan.json",
+      "coderef/workorder/{feature-name}/communication.json",
+      "coderef/workorder/{feature-name}/DELIVERABLES.md",
+      "coderef/archived/{feature-name}/plan.json",
+      "coderef/archived/{feature-name}/DELIVERABLES.md"
+    ],
+    "coderef_analysis_outputs": [
+      ".coderef/index.json",
+      ".coderef/context.md",
+      ".coderef/reports/patterns.json",
+      ".coderef/reports/coverage.json",
+      ".coderef/reports/complexity.json",
+      ".coderef/diagrams/dependencies.mmd",
+      ".coderef/diagrams/dependencies.dot",
+      ".coderef/exports/graph.json"
+    ]
+  },
+  "reply_template": {
+    "foundation_docs": {
+      "how_used": "How does your server/tool USE these documents?",
+      "strengths": "What works well?",
+      "weaknesses": "What's missing or unclear?",
+      "add_remove": "What would make them more effective for agent context?"
+    },
+    "standards_docs": {
+      "how_used": "How does your server/tool USE these documents?",
+      "strengths": "What works well?",
+      "weaknesses": "What's missing or unclear?",
+      "add_remove": "What would make them more effective for agent context?"
+    },
+    "workflow_workorder_docs": {
+      "how_used": "How does your server/tool USE these documents?",
+      "strengths": "What works well?",
+      "weaknesses": "What's missing or unclear?",
+      "add_remove": "What would make them more effective for agent context?"
+    },
+    "coderef_analysis_outputs": {
+      "how_used": "How does your server/tool USE these documents?",
+      "strengths": "What works well?",
+      "weaknesses": "What's missing or unclear?",
+      "add_remove": "What would make them more effective for agent context?"
+    }
+  }
+}

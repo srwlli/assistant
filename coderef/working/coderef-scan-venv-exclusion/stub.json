@@ -1,0 +1,15 @@
+{
+  "stub_id": "STUB-070",
+  "feature_name": "coderef-scan-venv-exclusion",
+  "description": "Add .venv exclusion patterns to CodeRef scan scripts (populate-coderef.py, scan-all.py) to prevent indexing virtual environment files. Reduces scan noise from 19K to actual source code elements only.",
+  "category": "enhancement",
+  "priority": "medium",
+  "status": "planning",
+  "target_project": "coderef-system",
+  "created": "2025-12-31",
+  "notes": "Proven issue: .venv scan generated 19K elements instead of ~1K source files. Solutions: (1) Add --exclude .venv flag to CLI commands, (2) Update .gitignore pattern matching, (3) Add default exclusion list to scripts.",
+  "related_files": [
+    "coderef-system/scripts/populate-coderef.py",
+    "coderef-system/scripts/scan-all.py"
+  ]
+}

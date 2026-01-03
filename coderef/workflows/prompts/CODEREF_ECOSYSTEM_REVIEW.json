@@ -1,0 +1,44 @@
+{
+  "prompt_id": "CODEREF_ECOSYSTEM_REVIEW",
+  "version": "1.0.0",
+  "category": "agent-coordination",
+  "scope": "ecosystem",
+  "function": "review",
+  "output_format": "json",
+  "created": "2026-01-01",
+  "description": "Standardized prompt for agents to review document usage and propose ecosystem improvements",
+  "variables": {
+    "agent_id": {
+      "type": "string",
+      "description": "Agent identifier (e.g., coderef-docs, coderef-testing)",
+      "required": true
+    },
+    "agent_path": {
+      "type": "string",
+      "description": "Absolute path to agent server/project",
+      "required": true
+    },
+    "workorder_id": {
+      "type": "string",
+      "description": "Workorder ID for tracking (e.g., WO-DOC-OUTPUT-AUDIT-001)",
+      "required": true
+    }
+  },
+  "prompt_template": "## CODEREF ECOSYSTEM REVIEW: {{agent_id}}\n\n**Workorder:** {{workorder_id}}\n**Agent Path:** {{agent_path}}\n**Output Format:** JSON only (no markdown)\n\n---\n\n## Your Task\n\nYou are {{agent_id}}. Review how your server/tool uses the coderef ecosystem documents and provide structured analysis.\n\n### Document Categories to Review:\n\n1. **foundation_docs** - README, ARCHITECTURE, API, COMPONENTS, SCHEMA, CLAUDE.md\n2. **standards_docs** - ui-patterns.md, behavior-patterns.md, ux-patterns.md\n3. **workflow_workorder_docs** - context.json, plan.json, communication.json, DELIVERABLES.md\n4. **coderef_analysis_outputs** - .coderef/index.json, context.md, patterns.json, coverage.json, etc.\n\n### Analysis Structure\n\nFor EACH category, provide:\n\n- **how_used** - How does your server/tool USE these documents? (Read? Write? Generate? Validate?)\n- **strengths** - What works well?\n- **weaknesses** - What's missing, unclear, or causing friction?\n- **add_remove** - What would make them more effective for agent context?\n\n### Output Requirements\n\n**CRITICAL:** Output ONLY valid JSON following this schema:\n\n```json\n{\n  \"agent_id\": \"{{agent_id}}\",\n  \"workorder_id\": \"{{workorder_id}}\",\n  \"reply_file\": \"FULL_PATH_TO_YOUR_REPLY_FILE\",\n  \"status\": \"complete\",\n  \"analysis\": {\n    \"foundation_docs\": {\n      \"how_used\": \"String describing usage...\",\n      \"strengths\": \"String describing strengths...\",\n      \"weaknesses\": \"String describing weaknesses...\",\n      \"add_remove\": \"String with recommendations...\"\n    },\n    \"standards_docs\": {\n      \"how_used\": \"...\",\n      \"strengths\": \"...\",\n      \"weaknesses\": \"...\",\n      \"add_remove\": \"...\"\n    },\n    \"workflow_workorder_docs\": {\n      \"how_used\": \"...\",\n      \"strengths\": \"...\",\n      \"weaknesses\": \"...\",\n      \"add_remove\": \"...\"\n    },\n    \"coderef_analysis_outputs\": {\n      \"how_used\": \"...\",\n      \"strengths\": \"...\",\n      \"weaknesses\": \"...\",\n      \"add_remove\": \"...\"\n    }\n  },\n  \"additional_comments\": {\n    \"improvements\": \"Overall improvement recommendations...\",\n    \"weaknesses\": \"Systemic weaknesses...\",\n    \"other\": \"Additional insights...\"\n  }\n}\n```\n\n### Instructions\n\n1. **Read your source code** - Review how you interact with these documents\n2. **Be specific** - Use concrete examples and line references where applicable\n3. **Be honest** - Identify real gaps and friction points\n4. **Be constructive** - Propose actionable improvements\n5. **Output JSON only** - No markdown formatting, no code blocks, just pure JSON\n\n### Quality Standards\n\n- Each field should be 50-500 characters (concise but complete)\n- Use \"N/A\" or \"Not applicable\" for categories you don't use\n- Focus on YOUR perspective (not what others might need)\n- Prioritize agent workflow efficiency over human readability\n\n---\n\n**When complete:** Save your JSON response to `{{agent_path}}/coderef-document-audit-reply.json` and report the full path.",
+  "usage_notes": [
+    "Use with document-output-audit workflow",
+    "Assign to agents via communication.json",
+    "Agents output JSON directly (not wrapped in markdown)",
+    "Orchestrator aggregates responses for ecosystem-wide analysis"
+  ],
+  "integration_points": {
+    "workflow": "coderef-improvement-workflow-process",
+    "coordination_file": "document-output-audit-communication.json",
+    "aggregation_tool": "TBD - aggregate agent responses into unified report"
+  },
+  "example_invocation": {
+    "agent_id": "coderef-docs",
+    "agent_path": "C:\\Users\\willh\\.mcp-servers\\coderef-docs",
+    "workorder_id": "WO-DOC-OUTPUT-AUDIT-001"
+  }
+}

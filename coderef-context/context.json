@@ -1,0 +1,410 @@
+{
+  "overview": {
+    "sourceDir": "C:\\Users\\willh\\Desktop\\assistant",
+    "languages": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "totalFiles": 7,
+    "totalElements": 55
+  },
+  "entryPoints": [
+    {
+      "type": "method",
+      "name": "init",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 2,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "renderDocList",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 28,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "loadDocument",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 40,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 13,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 16,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 42,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 47,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 76,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "initializeSidebarToggle",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 16,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "init",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 51,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "renderDocList",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 80,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "loadDocument",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 97,
+      "exported": false
+    },
+    {
+      "type": "constant",
+      "name": "STATE_KEY",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 21,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 28,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 64,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 67,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 99,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 104,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 132,
+      "exported": false
+    },
+    {
+      "type": "constant",
+      "name": "PORT",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 5,
+      "exported": false
+    },
+    {
+      "type": "constant",
+      "name": "ROOT_DIR",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 6,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 11,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 29,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 30,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "startPythonServer",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 13,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "stopPythonServer",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 35,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "createWindow",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 42,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 36,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 77,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 87,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 108,
+      "exported": false
+    }
+  ],
+  "criticalFunctions": [
+    {
+      "type": "method",
+      "name": "addEventListener",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 33,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 36,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 42,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 47,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "initNavigation",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 4,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "closeDrawer",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 22,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 10,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "addEventListener",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 16,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 36,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "addEventListener",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 47,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "init",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 2,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "renderDocList",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 28,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "loadDocument",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 40,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 13,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 16,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 42,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 47,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 76,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "initializeSidebarToggle",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 16,
+      "exported": false,
+      "score": 0
+    },
+    {
+      "type": "method",
+      "name": "init",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 51,
+      "exported": false,
+      "score": 0
+    }
+  ],
+  "architecturePatterns": {
+    "errorHandling": 6,
+    "barrelExports": 0,
+    "decorators": 0,
+    "asyncAwait": 4
+  },
+  "dependencies": {
+    "nodeCount": 74,
+    "edgeCount": 100,
+    "circularity": 0,
+    "isolatedNodes": 0
+  },
+  "health": {
+    "complexity": 1.3513513513513513,
+    "maintainability": "Good"
+  }
+}

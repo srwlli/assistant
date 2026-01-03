@@ -36,5 +36,6 @@
       "tool-inventory-workflow",
       "scriptboard-assistant-integration"
     ]
-  }
+  },
+  "target_project": "assistant"
 }

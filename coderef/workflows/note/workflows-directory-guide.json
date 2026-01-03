@@ -1,0 +1,376 @@
+{
+  "directory_name": "workflows",
+  "location": "coderef/workflows/",
+  "version": "1.0.0",
+  "purpose": "Centralized knowledge base for workflow processes, tool standards, and technical documentation",
+
+  "structure": {
+    "pattern": "paired_documentation",
+    "formats": {
+      "markdown": {
+        "extension": ".md",
+        "audience": "humans",
+        "structure": "WHAT/HOW/WHY",
+        "purpose": "Quick understanding, context, narrative"
+      },
+      "json": {
+        "extension": ".json",
+        "audience": "AI_agents",
+        "structure": "structured_schema",
+        "purpose": "Complete technical specification, parseable data"
+      }
+    },
+    "naming_convention": "kebab-case",
+    "pairing_requirement": "Every workflow must have both .md and .json with matching base names"
+  },
+
+  "current_workflows": {
+    "coderef-improvement-workflow-process": {
+      "files": [
+        "coderef-improvement-workflow-process.md",
+        "coderef-improvement-workflow-process.json"
+      ],
+      "purpose": "Standardized process for ecosystem improvements through multi-agent review",
+      "key_features": [
+        "Tag-based review scoping (40+ tags across 9 categories)",
+        "Multi-agent coordination via communication.json",
+        "Structured analysis (how_used, strengths, weaknesses, add_remove)",
+        "5-phase workflow (define, generate, review, track, aggregate)"
+      ],
+      "use_cases": [
+        "Document effectiveness audits",
+        "Code quality reviews",
+        "Workflow optimization",
+        "Integration testing",
+        "Standards compliance checks"
+      ]
+    },
+    "coderef-dashboard-prompts-workflow-standards": {
+      "files": [
+        "coderef-dashboard-prompts-workflow-standards.md",
+        "coderef-dashboard-prompts-workflow-standards.json"
+      ],
+      "purpose": "Technical reference for dashboard prompting workflow UI system",
+      "key_features": [
+        "React Context + composition architecture",
+        "5-step workflow (select, attach, review, export, save)",
+        "Multiple export formats (JSON, Markdown, Session)",
+        "Extension points for new prompts and export formats"
+      ],
+      "use_cases": [
+        "Code review workflows",
+        "Planning workflows",
+        "Agent review workflows",
+        "Custom prompt creation"
+      ]
+    }
+  },
+
+  "file_organization": {
+    "root": "coderef/workflows/",
+    "subdirectories": {
+      "note": {
+        "purpose": "Meta-documentation about the workflows directory itself",
+        "files": [
+          "workflows-directory-guide.md",
+          "workflows-directory-guide.json"
+        ]
+      }
+    },
+    "file_types": {
+      "workflow_definitions": {
+        "pattern": "{workflow-name}.md + {workflow-name}.json",
+        "location": "root",
+        "examples": [
+          "coderef-improvement-workflow-process.md",
+          "coderef-improvement-workflow-process.json"
+        ]
+      },
+      "tool_standards": {
+        "pattern": "{tool-name}-standards.md + {tool-name}-standards.json",
+        "location": "root",
+        "examples": [
+          "coderef-dashboard-prompts-workflow-standards.md",
+          "coderef-dashboard-prompts-workflow-standards.json"
+        ]
+      },
+      "meta_documentation": {
+        "pattern": "{guide-name}.md + {guide-name}.json",
+        "location": "note/",
+        "examples": [
+          "workflows-directory-guide.md",
+          "workflows-directory-guide.json"
+        ]
+      }
+    }
+  },
+
+  "usage_instructions": {
+    "for_humans": {
+      "step_1": "Navigate to coderef/workflows/",
+      "step_2": "Find relevant workflow by name",
+      "step_3": "Read {workflow-name}.md for understanding",
+      "step_4": "Use WHAT/HOW/WHY structure to navigate",
+      "step_5": "Reference examples and use cases",
+      "step_6": "Follow step-by-step instructions"
+    },
+    "for_ai_agents": {
+      "step_1": "Read {workflow-name}.json for complete schema",
+      "step_2": "Parse structured data programmatically",
+      "step_3": "Extract workflow_definition, data_structures, agent_instructions",
+      "step_4": "Generate implementations from templates",
+      "step_5": "Validate outputs against validation_rules",
+      "step_6": "Reference use_cases for context"
+    }
+  },
+
+  "adding_new_workflows": {
+    "process": [
+      {
+        "step": 1,
+        "action": "Create Markdown Guide",
+        "details": {
+          "structure": "WHAT/HOW/WHY",
+          "style": "Brief, list-based, precise",
+          "required_sections": ["What", "How", "Why", "Use Cases"],
+          "optional_sections": ["Examples", "Extension Points", "Integration", "Future Enhancements"]
+        }
+      },
+      {
+        "step": 2,
+        "action": "Create JSON Schema",
+        "details": {
+          "required_fields": [
+            "workflow_name",
+            "version",
+            "purpose",
+            "workflow_definition",
+            "data_structures",
+            "use_cases",
+            "agent_instructions"
+          ],
+          "optional_fields": [
+            "validation_rules",
+            "performance_considerations",
+            "future_enhancements",
+            "integration_points"
+          ]
+        }
+      },
+      {
+        "step": 3,
+        "action": "Name Consistently",
+        "details": {
+          "format": "kebab-case",
+          "pattern": "{domain}-{type}",
+          "md_and_json_must_match": true,
+          "examples": [
+            "agent-handoff-protocol",
+            "workorder-lifecycle-workflow",
+            "documentation-generation-process"
+          ]
+        }
+      },
+      {
+        "step": 4,
+        "action": "Save to Directory",
+        "details": {
+          "location": "coderef/workflows/",
+          "both_files_required": true,
+          "commit_message_format": "docs(workflows): Add {workflow-name} workflow"
+        }
+      }
+    ]
+  },
+
+  "naming_conventions": {
+    "file_names": {
+      "format": "{workflow-name}.{extension}",
+      "case": "kebab-case",
+      "descriptive": true,
+      "concise": true,
+      "examples": {
+        "good": [
+          "coderef-improvement-workflow-process.md",
+          "agent-coordination-handoff.json",
+          "dashboard-prompts-workflow-standards.md"
+        ],
+        "bad": [
+          "workflow1.md (not descriptive)",
+          "CodeRefProcess.md (not kebab-case)",
+          "the-really-long-workflow-name-that-goes-on-forever.json (not concise)"
+        ]
+      }
+    },
+    "workflow_names": {
+      "pattern": "{domain}-{type}",
+      "domain_examples": ["coderef", "agent", "dashboard", "workorder", "documentation"],
+      "type_examples": ["workflow", "process", "standards", "guide", "protocol"],
+      "version_suffix": "Optional -v{major} for major versions (e.g., agent-handoff-protocol-v2)"
+    }
+  },
+
+  "templates": {
+    "markdown_template": {
+      "structure": [
+        "# {Workflow Name}",
+        "**Version:** X.Y.Z",
+        "**Purpose:** Brief description",
+        "---",
+        "## WHAT",
+        "- What it does",
+        "- What it requires",
+        "- What it produces",
+        "## HOW",
+        "- How it works (steps)",
+        "- How to use it",
+        "- How to extend it",
+        "## WHY",
+        "- Why it exists (problem/solution)",
+        "- Why this approach",
+        "- Why these choices",
+        "---",
+        "[Additional sections as needed]"
+      ],
+      "guidelines": {
+        "length": "Aim for <500 lines",
+        "examples": "Use liberally",
+        "use_cases": "Include real scenarios",
+        "next_steps": "Clear and actionable"
+      }
+    },
+    "json_template": {
+      "structure": {
+        "workflow_name": "kebab-case-name",
+        "version": "X.Y.Z",
+        "purpose": "Brief description",
+        "workflow_definition": {},
+        "data_structures": {},
+        "use_cases": [],
+        "agent_instructions": {},
+        "validation_rules": {},
+        "future_enhancements": []
+      },
+      "guidelines": {
+        "required_fields": "Define all required fields with descriptions",
+        "validation": "Include validation rules and constraints",
+        "examples": "Provide concrete examples in schemas",
+        "formats": "Document expected data formats"
+      }
+    }
+  },
+
+  "best_practices": {
+    "documentation": [
+      "Keep .md concise (aim for <500 lines)",
+      "Use examples liberally throughout",
+      "Include real-world use cases",
+      "Add clear next steps for users",
+      "Link to related workflows when relevant"
+    ],
+    "schema": [
+      "Define all required fields with types",
+      "Include validation rules and constraints",
+      "Document expected formats (dates, IDs, etc.)",
+      "Provide examples for complex structures",
+      "Add agent_instructions section"
+    ],
+    "maintenance": [
+      "Update both .md and .json together",
+      "Version changes appropriately (semver)",
+      "Test workflows before committing",
+      "Archive deprecated versions to archive/",
+      "Document breaking changes in changelog"
+    ],
+    "discovery": [
+      "Reference workflows in CLAUDE.md when relevant",
+      "Link from foundation docs (ARCHITECTURE.md)",
+      "Include in dashboard if UI applicable",
+      "Add to workflow registry (future enhancement)"
+    ]
+  },
+
+  "integration_points": {
+    "with_foundation_docs": {
+      "references": "Workflows referenced in ARCHITECTURE.md process flows",
+      "documentation": "Process flows documented in foundation docs",
+      "standards": "Standards enforcement via defined workflows"
+    },
+    "with_dashboard": {
+      "workflow_creation_ui": "Dashboard reads .json schemas for workflow creation",
+      "status_tracking": "Uses communication.json format from workflows",
+      "export_formats": "Follows standards defined in workflow schemas"
+    },
+    "with_agents": {
+      "implementation": "Agents read .json for complete implementation details",
+      "personas": "Persona system prompts reference workflows",
+      "coordination": "Multi-agent coordination via defined protocols"
+    },
+    "with_workorders": {
+      "artifacts": "Workflows define workorder artifact structure",
+      "tracking": "Communication.json tracks workorder execution",
+      "validation": "Standards validate workorder deliverables"
+    }
+  },
+
+  "future_additions": {
+    "planned_workflows": [
+      {
+        "name": "agent-handoff-protocol",
+        "purpose": "Standardized agent-to-agent handoff process",
+        "status": "planned"
+      },
+      {
+        "name": "workorder-lifecycle",
+        "purpose": "Complete workorder workflow from creation to archive",
+        "status": "planned"
+      },
+      {
+        "name": "documentation-generation",
+        "purpose": "Automated documentation workflows",
+        "status": "planned"
+      },
+      {
+        "name": "testing-coordination",
+        "purpose": "Multi-agent test execution workflows",
+        "status": "planned"
+      },
+      {
+        "name": "release-process",
+        "purpose": "Version bump and release workflows",
+        "status": "planned"
+      }
+    ],
+    "planned_features": [
+      "Workflow creation wizard (dashboard UI)",
+      "Communication.json generator tool",
+      "Analysis structure builder",
+      "Tag taxonomy extension guide",
+      "Workflow registry (searchable index)",
+      "Version compatibility matrix",
+      "Automated validation tools"
+    ]
+  },
+
+  "validation_rules": {
+    "file_pairing": {
+      "rule": "Every .md must have matching .json",
+      "check": "Base name must be identical",
+      "example": "workflow-name.md requires workflow-name.json"
+    },
+    "naming": {
+      "rule": "Must use kebab-case",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*\\.(md|json)$",
+      "max_length": 60
+    },
+    "json_schema": {
+      "required_fields": ["workflow_name", "version", "purpose"],
+      "version_format": "semver (X.Y.Z)",
+      "purpose_max_length": 200
+    },
+    "markdown_structure": {
+      "required_sections": ["WHAT", "HOW", "WHY"],
+      "optional_sections": ["Use Cases", "Examples", "Integration", "Future Enhancements"]
+    }
+  }
+}

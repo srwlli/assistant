@@ -24,5 +24,6 @@
     "related_to": [
       "STUB-008 (workorder-handoff-protocol)"
     ]
-  }
+  },
+  "target_project": "assistant"
 }

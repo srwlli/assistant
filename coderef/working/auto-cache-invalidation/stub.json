@@ -1,0 +1,20 @@
+{
+  "feature_name": "auto-cache-invalidation",
+  "description": "Implement automatic cache invalidation using file system watching (watchdog library). When source code files change, automatically clear extractor caches so documentation generation always uses fresh data without manual server restarts.",
+  "project": "coderef-system",
+  "created": "2025-12-28T00:00:00Z",
+  "status": "stub",
+  "effort_estimate": "2 hours",
+  "priority": "high",
+  "context": {
+    "problem": "Cache never updates - users must manually restart MCP server to see code changes in documentation",
+    "solution": "Install watchdog library to monitor file changes and auto-clear caches (extract_apis, extract_schemas, extract_components)",
+    "files_affected": [
+      ".mcp-servers/coderef-docs/cache_manager.py (new)",
+      ".mcp-servers/coderef-docs/server.py (integration)",
+      ".mcp-servers/coderef-docs/extractors.py (register invalidators)"
+    ]
+  },
+  "category": "feature",
+  "target_project": "coderef-docs"
+}

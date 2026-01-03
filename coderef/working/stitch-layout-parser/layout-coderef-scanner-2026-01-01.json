@@ -1,0 +1,310 @@
+{
+  "name": "coderef-scanner-interface",
+  "created": "2026-01-01",
+  "description": "Dark theme CodeRef Scanner with project list, console tabs, and action bar",
+
+  "spacing": {
+    "base_unit": "8px",
+    "scale": ["4px", "6px", "8px", "12px", "16px", "24px", "32px", "48px"],
+    "usage": {
+      "4px": "tight spacing (icon gaps)",
+      "8px": "compact spacing (button padding, list item padding)",
+      "12px": "button horizontal padding",
+      "16px": "card padding, button vertical padding",
+      "24px": "section gaps, container padding",
+      "32px": "header padding vertical",
+      "48px": "large button horizontal padding"
+    }
+  },
+
+  "colors": {
+    "primary": "#FF6B00",
+    "primary_hover": "#E65100",
+    "background_light": "#F3F4F6",
+    "background_dark": "#0A0A0A",
+    "surface_light": "#FFFFFF",
+    "surface_dark": "#171717",
+    "border_light": "#E5E7EB",
+    "border_dark": "#333333",
+    "text": {
+      "primary_light": "#111827",
+      "primary_dark": "#FFFFFF",
+      "secondary": "#6B7280",
+      "muted": "#9CA3AF"
+    },
+    "console": {
+      "background": "#1A1A1A",
+      "text_green": "#4ADE80",
+      "text_blue": "#60A5FA",
+      "text_gray": "#6B7280"
+    },
+    "status_dots": {
+      "yellow": "#FBBF24",
+      "green": "#10B981",
+      "red": "#EF4444"
+    }
+  },
+
+  "typography": {
+    "display_font": "Inter, sans-serif",
+    "mono_font": "JetBrains Mono, monospace",
+    "sizes": {
+      "xs": "12px",
+      "sm": "14px",
+      "base": "16px",
+      "lg": "18px",
+      "xl": "20px",
+      "2xl": "24px"
+    },
+    "weights": {
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700"
+    },
+    "line_heights": {
+      "tight": "1.25",
+      "normal": "1.5",
+      "relaxed": "1.75"
+    }
+  },
+
+  "layout": {
+    "type": "grid",
+    "max_width": "1280px",
+    "columns": 12,
+    "responsive_columns": {
+      "mobile": 1,
+      "tablet": 1,
+      "desktop": 12
+    },
+    "gap": "24px",
+    "padding": {
+      "mobile": "16px",
+      "tablet": "24px",
+      "desktop": "32px"
+    }
+  },
+
+  "grid_areas": {
+    "left_panel": {
+      "cols": "lg:col-span-8",
+      "description": "Project list section"
+    },
+    "right_sidebar": {
+      "cols": "lg:col-span-4",
+      "description": "Console/tabs section"
+    },
+    "bottom_action": {
+      "cols": "lg:col-span-12",
+      "description": "Full-width action bar"
+    }
+  },
+
+  "components": [
+    {
+      "name": "header",
+      "height": "64px",
+      "padding": "16px 24px",
+      "background": "#171717",
+      "border": "1px solid #333333 (bottom only)",
+      "position": "sticky top-0 z-50",
+      "elements": [
+        "Logo icon with orange background",
+        "Title (CodeRef Scanner)",
+        "Dark mode toggle",
+        "Status dots (yellow, green, red)"
+      ]
+    },
+    {
+      "name": "project_list_card",
+      "width": "100%",
+      "height": "500px (fixed)",
+      "background": "#171717",
+      "border": "1px solid #333333",
+      "border_radius": "12px",
+      "shadow": "subtle",
+      "sections": {
+        "header": {
+          "background": "#1A1A1A",
+          "padding": "16px",
+          "border_bottom": "1px solid #333333"
+        },
+        "list_area": {
+          "background": "#0A0A0A",
+          "padding": "8px",
+          "overflow": "scroll"
+        },
+        "footer_tip": {
+          "background": "#1A1A1A",
+          "padding": "8px 16px",
+          "border_top": "1px solid #333333"
+        }
+      }
+    },
+    {
+      "name": "list_item",
+      "padding": "8px",
+      "border_radius": "6px",
+      "hover": {
+        "background": "#1F1F1F",
+        "border": "1px solid #404040"
+      },
+      "selected": {
+        "background": "rgba(255, 107, 0, 0.1)",
+        "border": "1px solid rgba(255, 107, 0, 0.2)"
+      },
+      "disabled": {
+        "opacity": "0.5",
+        "cursor": "not-allowed"
+      }
+    },
+    {
+      "name": "console_panel",
+      "width": "100%",
+      "height": "500px (fixed)",
+      "background": "#171717",
+      "border": "1px solid #333333",
+      "border_radius": "12px",
+      "tabs": {
+        "background": "#1A1A1A",
+        "active_border": "2px solid #FF6B00",
+        "inactive_color": "#6B7280"
+      },
+      "console_area": {
+        "background": "#1A1A1A",
+        "text_color": "#4ADE80",
+        "font": "JetBrains Mono, 12px"
+      }
+    },
+    {
+      "name": "primary_button",
+      "background": "#FF6B00",
+      "hover_background": "#E65100",
+      "padding": "16px 48px",
+      "border_radius": "8px",
+      "shadow": "0 10px 15px rgba(255, 107, 0, 0.2)",
+      "text": {
+        "color": "#FFFFFF",
+        "size": "18px",
+        "weight": "700"
+      },
+      "hover_effect": "transform: translateY(-2px)",
+      "animation": "pulse on icon"
+    },
+    {
+      "name": "secondary_button",
+      "background": "transparent",
+      "hover_background": "#1F1F1F",
+      "padding": "16px 24px",
+      "border": "1px solid transparent",
+      "hover_border": "1px solid #333333",
+      "text_color": "#6B7280",
+      "hover_text_color": "#FFFFFF"
+    }
+  ],
+
+  "responsive_breakpoints": {
+    "mobile": {
+      "max_width": "767px",
+      "changes": [
+        "Grid collapses to 1 column",
+        "Buttons become full width",
+        "Padding reduces to 16px",
+        "Status dots hidden"
+      ]
+    },
+    "tablet": {
+      "min_width": "768px",
+      "max_width": "1023px",
+      "changes": [
+        "Grid still 1 column",
+        "Buttons auto-width",
+        "Padding 24px"
+      ]
+    },
+    "desktop": {
+      "min_width": "1024px",
+      "changes": [
+        "12-column grid active",
+        "8-4 column split (left/right)",
+        "Full padding 32px"
+      ]
+    }
+  },
+
+  "safe_to_reuse": {
+    "spacing_system": "8px base with 4/6/8/12/16/24/32/48px scale",
+    "color_system": "Orange primary (#FF6B00) + dark neutral palette",
+    "typography_system": "Inter for UI, JetBrains Mono for code, 12-24px range",
+    "component_patterns": [
+      "Card with 12px border radius and subtle border",
+      "List items with hover states and selection highlight",
+      "Console with dark background and monospace green text",
+      "Primary button with orange + shadow + lift hover effect",
+      "Tab system with bottom border indicator"
+    ],
+    "layout_structure": "12-column grid, 8-4 split, max-width 1280px, 24px gap",
+    "dark_theme_palette": "Very dark (#0A0A0A) background with slightly lighter (#171717) surfaces"
+  },
+
+  "do_not_copy": {
+    "fixed_heights": "h-[500px] on cards - breaks responsive flow, should use min-height or flex-grow",
+    "hardcoded_z_index": "z-50 on header - can conflict with modals",
+    "inline_tailwind_config": "Tailwind config in <script> tag - should be in tailwind.config.js file",
+    "inline_javascript": "Tab switching in <script> tags - should be in separate .js file or framework component",
+    "dark_mode_class_toggle": "Manual classList.toggle('dark') - should use state management or CSS custom properties",
+    "cdN_dependency": "Tailwind CDN - should use build process for production",
+    "absolute_color_values": "Using Tailwind classes instead of CSS variables - limits theme flexibility"
+  },
+
+  "recommended_usage": {
+    "copy_these": [
+      "8px spacing rhythm and scale values",
+      "Orange (#FF6B00) as primary action color",
+      "Dark neutral palette (#0A0A0A, #171717, #333333)",
+      "12px border radius for cards",
+      "Console color scheme (green/blue on dark)",
+      "Button shadow pattern (subtle on cards, prominent on primary button)",
+      "Tab indicator pattern (2px bottom border)",
+      "List item hover states"
+    ],
+    "adapt_these": [
+      "Replace fixed heights with min-height + flex",
+      "Convert inline config to proper build setup",
+      "Use CSS variables for theme colors",
+      "Implement proper dark mode toggle with state",
+      "Make grid responsive without hardcoded heights"
+    ],
+    "for_reusable_design_system": {
+      "tokens_to_extract": {
+        "spacing": "8px base rhythm",
+        "colors": "Orange primary + dark neutrals",
+        "typography": "Inter/JetBrains Mono",
+        "shadows": "sm/lg patterns",
+        "radius": "6px, 8px, 12px"
+      }
+    }
+  },
+
+  "implementation_notes": {
+    "framework": "HTML + Tailwind CSS + vanilla JavaScript",
+    "dependencies": [
+      "Tailwind CSS (CDN - should migrate to build)",
+      "Google Fonts (Inter, JetBrains Mono)",
+      "Material Icons Round"
+    ],
+    "accessibility": {
+      "good": [
+        "Semantic HTML (header, main, section)",
+        "ARIA labels on buttons",
+        "Focus states on interactive elements"
+      ],
+      "needs_improvement": [
+        "Add keyboard navigation for tabs",
+        "Add ARIA live regions for console updates",
+        "Ensure proper focus management"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "feature_name": "coderef-services-portfolio",
+  "description": "Universal /log-idea command to capture business offerings in assistant/services/IDEA-XXX.md. Integrates with coderef-dashboard Next.js app to display portfolio grid at /services route. Showcases both coderef system capabilities and real service offerings for client presentations.",
+  "project": "assistant",
+  "created": "2025-12-28T06:15:00Z",
+  "status": "stub",
+  "category": "feature",
+  "priority": "medium",
+  "target_project": "coderef-dashboard"
+}

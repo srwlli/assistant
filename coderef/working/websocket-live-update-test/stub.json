@@ -13,5 +13,6 @@
     "Frontend receives event and updates stub list automatically",
     "No manual refresh button needed"
   ],
-  "created_by": "Archer (Orchestrator)"
+  "created_by": "Archer (Orchestrator)",
+  "target_project": "coderef-dashboard"
 }

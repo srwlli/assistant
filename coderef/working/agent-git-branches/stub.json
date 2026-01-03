@@ -4,7 +4,10 @@
   "description": "Create dedicated git branches for specific agents via git manager and agentic workflow. Each agent works on isolated branch, orchestrator manages merges.",
   "category": "feature",
   "priority": "high",
-  "tags": ["orchestrator", "workflow"],
+  "tags": [
+    "orchestrator",
+    "workflow"
+  ],
   "created": "2025-12-16T00:00:00Z",
   "status": "stub",
   "concept": {
@@ -32,5 +35,9 @@
     "communication_json": "Track branch name in workorder",
     "orchestrator_mcp": "Tools for branch operations"
   },
-  "related_stubs": ["STUB-027", "STUB-023"]
+  "related_stubs": [
+    "STUB-027",
+    "STUB-023"
+  ],
+  "target_project": "assistant"
 }

@@ -1,0 +1,187 @@
+{
+  "test_category": "TEST-DETECTION",
+  "test_date": "2026-01-03",
+  "results": [
+    {
+      "filename": "ButtonWidget.tsx",
+      "expected_type": "top_level_widgets",
+      "detected_type": "top_level_widgets",
+      "confidence": 90,
+      "detection_method": "stage_1_filename + stage_2_code_analysis",
+      "priority": 1,
+      "pass": true
+    },
+    {
+      "filename": "UserManager.ts",
+      "expected_type": "stateful_containers",
+      "detected_type": "stateful_containers",
+      "confidence": 90,
+      "detection_method": "stage_1_filename + stage_2_code_analysis",
+      "priority": 1,
+      "pass": true
+    },
+    {
+      "filename": "AppStore.ts",
+      "expected_type": "global_state",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 1,
+      "pass": false
+    },
+    {
+      "filename": "useAuth.ts",
+      "expected_type": "custom_hooks",
+      "detected_type": "custom_hooks",
+      "confidence": 90,
+      "detection_method": "stage_1_filename + stage_2_code_analysis",
+      "priority": 1,
+      "pass": true
+    },
+    {
+      "filename": "APIClient.ts",
+      "expected_type": "api_clients",
+      "detected_type": "api_client",
+      "confidence": 95,
+      "detection_method": "stage_1_filename + stage_2_code_analysis",
+      "priority": 1,
+      "pass": false
+    },
+    {
+      "filename": "User.ts",
+      "expected_type": "data_models",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 2,
+      "pass": false
+    },
+    {
+      "filename": "helpers.ts",
+      "expected_type": "utility_modules",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 2,
+      "pass": false
+    },
+    {
+      "filename": "CONSTANTS.ts",
+      "expected_type": "constants",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 2,
+      "pass": false
+    },
+    {
+      "filename": "errors.ts",
+      "expected_type": "error_definitions",
+      "detected_type": "error_handling",
+      "confidence": 90,
+      "detection_method": "stage_1_filename + stage_2_code_analysis",
+      "priority": 2,
+      "pass": false
+    },
+    {
+      "filename": "types.ts",
+      "expected_type": "type_definitions",
+      "detected_type": "data_models",
+      "confidence": 95,
+      "detection_method": "stage_1_filename + stage_2_code_analysis",
+      "priority": 2,
+      "pass": false
+    },
+    {
+      "filename": "validation.ts",
+      "expected_type": "validation",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 3,
+      "pass": false
+    },
+    {
+      "filename": "authMiddleware.ts",
+      "expected_type": "middleware",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 3,
+      "pass": false
+    },
+    {
+      "filename": "transformers.ts",
+      "expected_type": "transformers",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 3,
+      "pass": false
+    },
+    {
+      "filename": "eventHandlers.ts",
+      "expected_type": "event_handlers",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 3,
+      "pass": false
+    },
+    {
+      "filename": "AuthService.ts",
+      "expected_type": "services",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 3,
+      "pass": false
+    },
+    {
+      "filename": "config.ts",
+      "expected_type": "configuration",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 4,
+      "pass": false
+    },
+    {
+      "filename": "ThemeProvider.tsx",
+      "expected_type": "context_providers",
+      "detected_type": "stateful_containers",
+      "confidence": 90,
+      "detection_method": "stage_1_filename + stage_2_code_analysis",
+      "priority": 4,
+      "pass": false
+    },
+    {
+      "filename": "decorators.ts",
+      "expected_type": "decorators",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 4,
+      "pass": false
+    },
+    {
+      "filename": "UserFactory.ts",
+      "expected_type": "factories",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 4,
+      "pass": false
+    },
+    {
+      "filename": "EventObserver.ts",
+      "expected_type": "observers",
+      "detected_type": "top_level_widgets",
+      "confidence": 0,
+      "detection_method": "stage_3_fallback_default",
+      "priority": 4,
+      "pass": false
+    }
+  ],
+  "critical_requirement_met": false
+}

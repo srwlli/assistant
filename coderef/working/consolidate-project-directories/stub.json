@@ -12,5 +12,6 @@
       "tool-inventory-workflow"
     ],
     "dependency": "Should happen before or alongside tool-inventory-workflow"
-  }
+  },
+  "target_project": "unknown"
 }

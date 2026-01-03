@@ -1,23 +1,93 @@
 [
   {
     "type": "function",
-    "name": "to",
-    "file": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/DELIVERABLES.md",
-    "line": 84,
-    "exported": false
+    "name": "isFolder",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 311,
+    "exported": true
   },
   {
     "type": "function",
-    "name": "to",
-    "file": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/plan.json",
-    "line": 114,
-    "exported": false
+    "name": "isFile",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 318,
+    "exported": true
   },
   {
     "type": "function",
-    "name": "to",
-    "file": "C:/Users/willh/Desktop/assistant/HANDOFF-WO-FILE-DISCOVERY-ENHANCEMENT-001.md",
-    "line": 43,
-    "exported": false
+    "name": "isFileSystemAccessSupported",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 325,
+    "exported": true
+  },
+  {
+    "type": "function",
+    "name": "isBrowsedDirectory",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 332,
+    "exported": true
+  },
+  {
+    "type": "function",
+    "name": "extractDirectoryName",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 340,
+    "exported": true
+  },
+  {
+    "type": "function",
+    "name": "generateProjectId",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 353,
+    "exported": true
+  },
+  {
+    "type": "function",
+    "name": "formatFileSize",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 361,
+    "exported": true
+  },
+  {
+    "type": "function",
+    "name": "formatDate",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 371,
+    "exported": true
+  },
+  {
+    "type": "function",
+    "name": "getFileExtension",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 383,
+    "exported": true
+  },
+  {
+    "type": "function",
+    "name": "getFileType",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 391,
+    "exported": true
+  },
+  {
+    "type": "constant",
+    "name": "INDEXEDDB_CONFIG",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 278,
+    "exported": true
+  },
+  {
+    "type": "constant",
+    "name": "API_ENDPOINTS",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 287,
+    "exported": true
+  },
+  {
+    "type": "constant",
+    "name": "FILE_TYPES",
+    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+    "line": 297,
+    "exported": true
   }
 ]

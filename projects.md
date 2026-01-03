@@ -1,7 +1,7 @@
 # Projects
 
-> Last updated: 2025-12-26
-> Next STUB-ID: STUB-063
+> Last updated: 2026-01-01
+> Next STUB-ID: STUB-082
 
 ---
 
@@ -20,6 +20,7 @@
 | STUB-021 | coderef-system | CodeRef system | `C:\Users\willh\Desktop\projects\coderef-system` | — | — |
 | STUB-022 | coderef-dashboard | CodeRef orchestration dashboard | `C:\Users\willh\Desktop\coderef-dashboard` | — | [local](http://localhost:3000) |
 | STUB-023 | next-multi-tenant | Multi-tenant app | `C:\Users\willh\Desktop\Business-Dash\latest-app` | — | — |
+| STUB-071 | island-escape-antigravity | Phaser.js game - Island escape with antigravity mechanics | `C:\Users\willh\Desktop\island-escape\Phaser-Antigravity` | — | [local](file:///C:/Users/willh/Desktop/island-escape/Phaser-Antigravity/index.html) |
 
 ---
 
@@ -51,6 +52,7 @@
 | STUB-059 | coderef-sources-route | feature | Knowledge base route with internal/external resources, search, filtering, and team resource management |
 | STUB-060 | coderef-tracking-api-mvp | CRITICAL | File system-based API for tracking workorders/stubs: projects.config.json + GET /api/{stubs,workorders} |
 | STUB-061 | stub-location-test | test | Validate stub centralization workflow - all stubs save to orchestrator regardless of origin project |
+| STUB-064 | jovi-home-salon-organizer | feature | Gamified task management for household/salon with progress tracking and rewards |
 
 ---
 
@@ -95,6 +97,7 @@
 | `C:\Users\willh\Desktop\projects\noted` | Noted app |
 | `C:\Users\willh\Desktop\projects\coderef-system` | CodeRef system |
 | `C:\Users\willh\Desktop\Business-Dash\latest-app` | Next multi-tenant app |
+| `C:\Users\willh\Desktop\island-escape\Phaser-Antigravity` | Island Escape game (Phaser.js + antigravity) |
 
 ---
 

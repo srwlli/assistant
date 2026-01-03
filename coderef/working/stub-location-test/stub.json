@@ -18,5 +18,6 @@
     "correct_location": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\ ✅ (centralized orchestrator)",
     "workflow_rule": "Stubs are orchestrator artifacts, not project artifacts. Single source of truth for all feature backlog items.",
     "implication": "When creating stub for a feature destined for ANY project, save in orchestrator location"
-  }
+  },
+  "target_project": "assistant"
 }

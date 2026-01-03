@@ -1,0 +1,12 @@
+{
+  "stub_id": "STUB-079",
+  "feature_name": "stitch-layout-parser",
+  "description": "Stitch agent parses generated UI layouts into structured JSON capturing UI/UX specifics (spacing, typography, colors, component hierarchy) to prevent unwanted characteristic leakage during code reuse",
+  "category": "feature",
+  "priority": "high",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "stitch",
+  "tags": ["ui", "ux", "layout", "parsing", "design-system", "agent-reporting"],
+  "notes": "Use case for STUB-078 (agent-reporting-prompts). Schema focuses on UI/UX attributes: spacing rhythm, typography scale, color palette, component relationships, responsive breakpoints. Output: layout-{id}.json + safe-styles.css + notes.md. Prevents unwanted CSS leakage when copying layouts between projects."
+}

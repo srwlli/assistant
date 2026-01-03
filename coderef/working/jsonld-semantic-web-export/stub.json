@@ -1,0 +1,31 @@
+{
+  "feature_name": "jsonld-semantic-web-export",
+  "description": "Add JSON-LD semantic web export capability to coderef ecosystem for publishing codebases to knowledge graphs, enabling cross-repository queries via SPARQL, Wikidata integration, and Schema.org markup for search engine discovery. Supports academic research, AI training data, and external tool consumption.",
+  "project": "coderef-ecosystem",
+  "created": "2025-12-31T17:45:00Z",
+  "status": "stub",
+  "context": {
+    "conversation_summary": "Discussed JSON-LD vs regular JSON usage - JSON-LD enables semantic web (knowledge graphs, Wikidata, RDF triple stores, Schema.org). Currently exports/graph.jsonld exists but unused by internal workflows (100% of workflow-useful outputs already consumed). JSON-LD is for EXTERNAL tools: code search engines, research queries, cross-repo linking, LLM training data.",
+    "key_insights": [
+      "JSON-LD = data + universal meaning (links to schema.org, Wikidata IDs)",
+      "RDF triples enable SPARQL queries across millions of repos",
+      "Schema.org markup makes code searchable by Google/search engines",
+      "Use cases: publishing packages, academic research, AI training, cross-org dependency graphs"
+    ],
+    "related_files": [
+      ".coderef/exports/graph.jsonld (already generated, needs consumption pathway)",
+      ".coderef/graph.json (base dependency data)",
+      ".coderef/index.json (source data for semantic export)"
+    ],
+    "potential_scope": [
+      "Export coderef data to JSON-LD with Schema.org vocabulary",
+      "Link to Wikidata entities (languages, frameworks, patterns)",
+      "Generate RDF triples for SPARQL queries",
+      "Create Schema.org markup for documentation sites",
+      "Publish to semantic code search engines",
+      "Enable research queries across multiple codebases"
+    ]
+  },
+  "category": "feature",
+  "priority": "medium"
+}

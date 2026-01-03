@@ -1,0 +1,11 @@
+{
+  "feature_name": "replace-grep-with-coderef-context",
+  "description": "Evaluate replacing grep/text search with coderef-context semantic search and code analysis. CodeRef context provides structure-aware search (functions, classes, relationships) vs grep's line-based pattern matching. Define migration path and use cases where coderef-context is superior.",
+  "project": "assistant",
+  "created": "2025-12-28T06:38:00Z",
+  "status": "stub",
+  "notes": "CodeRef context advantages: semantic search, call graphs, dependency analysis, complexity metrics. Grep advantages: simple text matching, speed for basic searches. Hybrid approach may be optimal.",
+  "category": "feature",
+  "priority": "medium",
+  "target_project": "coderef-context"
+}

@@ -63,5 +63,6 @@
   "related_stubs": [
     "STUB-047 (coderef-directory-rename - similar but more general)"
   ],
-  "note": "This is more specific than STUB-047 - focuses on the folder name itself, not the entire directory structure"
+  "note": "This is more specific than STUB-047 - focuses on the folder name itself, not the entire directory structure",
+  "target_project": "unknown"
 }

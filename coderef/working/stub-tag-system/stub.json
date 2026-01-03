@@ -4,7 +4,10 @@
   "description": "Formalize tag system for stubs. Define standard tags, add validation, enable filtering by tag in dashboard (STUB-023).",
   "category": "feature",
   "priority": "medium",
-  "tags": ["orchestrator", "workflow"],
+  "tags": [
+    "orchestrator",
+    "workflow"
+  ],
   "created": "2025-12-16T00:00:00Z",
   "status": "stub",
   "standard_tags": {
@@ -32,5 +35,9 @@
     "Tag-based grouping in projects.md",
     "Cross-project tag search"
   ],
-  "related_stubs": ["STUB-023", "STUB-027"]
+  "related_stubs": [
+    "STUB-023",
+    "STUB-027"
+  ],
+  "target_project": "coderef-dashboard"
 }

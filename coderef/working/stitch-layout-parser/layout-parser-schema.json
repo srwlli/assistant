@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "UI/UX layout parsing for Stitch-generated designs - extract reusable patterns without unwanted characteristic leakage",
+
+  "layout_metadata": {
+    "layout_id": "string (uuid)",
+    "created": "ISO 8601 timestamp",
+    "layout_name": "string (descriptive name)",
+    "category": "dashboard|landing|form|card|modal|sidebar|header|footer",
+    "tags": ["array of strings"]
+  },
+
+  "ui_structure": {
+    "layout_type": "grid|flexbox|absolute|hybrid",
+    "container": {
+      "width": "string (px|%|rem|auto)",
+      "height": "string (px|%|rem|auto|min-content|max-content)",
+      "maxWidth": "string (optional constraint)",
+      "padding": "string (spacing value)",
+      "margin": "string (spacing value)",
+      "gap": "string (grid/flex gap)"
+    }
+  },
+
+  "design_tokens": {
+    "spacing_rhythm": {
+      "base": "string (e.g., 8px)",
+      "scale": ["4px", "8px", "16px", "24px", "32px", "48px"],
+      "usage": {
+        "4px": "tight spacing (icon padding)",
+        "8px": "compact spacing (button padding)",
+        "16px": "standard spacing (card padding)",
+        "24px": "comfortable spacing (section margins)",
+        "32px": "relaxed spacing (page sections)",
+        "48px": "loose spacing (hero sections)"
+      }
+    },
+    "typography": {
+      "font_family": "string (primary font)",
+      "font_stack": "array of strings (fallbacks)",
+      "scale": {
+        "xs": "12px",
+        "sm": "14px",
+        "base": "16px",
+        "lg": "18px",
+        "xl": "20px",
+        "2xl": "24px",
+        "3xl": "30px",
+        "4xl": "36px"
+      },
+      "line_heights": {
+        "tight": "1.25",
+        "normal": "1.5",
+        "relaxed": "1.75"
+      },
+      "weights": ["400 (regular)", "500 (medium)", "600 (semibold)", "700 (bold)"]
+    },
+    "colors": {
+      "palette": {
+        "primary": "string (hex)",
+        "secondary": "string (hex)",
+        "accent": "string (hex)",
+        "background": "string (hex)",
+        "surface": "string (hex)",
+        "text": {
+          "primary": "string (hex)",
+          "secondary": "string (hex)",
+          "muted": "string (hex)"
+        },
+        "borders": {
+          "default": "string (hex)",
+          "subtle": "string (hex)",
+          "emphasis": "string (hex)"
+        }
+      }
+    },
+    "borders": {
+      "radius": {
+        "sm": "4px",
+        "md": "8px",
+        "lg": "12px",
+        "xl": "16px",
+        "full": "9999px"
+      },
+      "width": ["1px", "2px", "4px"]
+    },
+    "shadows": {
+      "sm": "string (box-shadow value)",
+      "md": "string (box-shadow value)",
+      "lg": "string (box-shadow value)",
+      "xl": "string (box-shadow value)"
+    }
+  },
+
+  "components": [
+    {
+      "component_id": "string (unique identifier)",
+      "component_type": "header|nav|hero|card|sidebar|footer|form|button|input",
+      "semantic_role": "string (accessibility role)",
+      "position": {
+        "grid_area": "string (if using grid)",
+        "flex_order": "number (if using flexbox)",
+        "absolute_coords": {"x": "string", "y": "string", "z": "number"}
+      },
+      "dimensions": {
+        "width": "string",
+        "height": "string",
+        "minWidth": "string (optional)",
+        "maxWidth": "string (optional)",
+        "aspectRatio": "string (optional)"
+      },
+      "spacing": {
+        "padding": "string or object {top, right, bottom, left}",
+        "margin": "string or object {top, right, bottom, left}",
+        "gap": "string (if container)"
+      },
+      "visual_style": {
+        "background": "string (color or gradient)",
+        "border": "string (shorthand) or object {width, style, color, radius}",
+        "boxShadow": "string",
+        "opacity": "number (0-1)"
+      },
+      "typography": {
+        "fontSize": "string (from scale)",
+        "fontWeight": "string (from weights)",
+        "lineHeight": "string (from line_heights)",
+        "textAlign": "left|center|right|justify",
+        "color": "string (from palette)"
+      },
+      "hierarchy": {
+        "parent_id": "string or null",
+        "children_ids": ["array of component_ids"],
+        "nesting_level": "number (depth from root)"
+      },
+      "responsive_behavior": {
+        "mobile": "object (overrides for mobile)",
+        "tablet": "object (overrides for tablet)",
+        "desktop": "object (base styles)"
+      }
+    }
+  ],
+
+  "responsive_breakpoints": {
+    "mobile": {
+      "maxWidth": "640px",
+      "overrides": "object (component-specific changes)"
+    },
+    "tablet": {
+      "minWidth": "641px",
+      "maxWidth": "1024px",
+      "overrides": "object"
+    },
+    "desktop": {
+      "minWidth": "1025px",
+      "overrides": "object"
+    }
+  },
+
+  "transition_safe_properties": {
+    "description": "Extracted patterns that are safe to reuse without unwanted characteristics",
+    "spacing_system": "8px base with consistent scale",
+    "color_system": "defined palette with semantic naming",
+    "typography_system": "type scale with consistent line heights",
+    "component_patterns": ["card-with-shadow", "centered-hero", "sidebar-fixed"],
+    "layout_constraints": {
+      "maxWidth": "1200px",
+      "padding": "responsive (mobile: 16px, desktop: 24px)",
+      "gap": "consistent 16px"
+    }
+  },
+
+  "exclude_from_copy": {
+    "description": "Properties that should NOT be copied to prevent characteristic leakage",
+    "exclude": [
+      "absolute positioning (unless semantic)",
+      "hardcoded pixel widths",
+      "inline styles",
+      "magic numbers",
+      "vendor-specific prefixes",
+      "z-index values > 10",
+      "!important declarations",
+      "fixed heights (unless semantic)"
+    ]
+  },
+
+  "usage_context": {
+    "intended_use": "string (what this layout is for)",
+    "dependencies": ["array of required libraries/frameworks"],
+    "accessibility_notes": "string (a11y considerations)",
+    "performance_notes": "string (optimization opportunities)",
+    "implementation_notes": "string (how to integrate)"
+  }
+}

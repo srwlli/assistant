@@ -1,0 +1,11 @@
+{
+  "stub_id": "STUB-075",
+  "feature_name": "plan-generator-skeleton-issue",
+  "description": "Fix recurring issue where plan generator creates skeleton with TODOs instead of filling in actual implementation details from context.json. Plan should be fully populated, not a template.",
+  "category": "bugfix",
+  "priority": "high",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "coderef-workflow",
+  "tags": ["planning", "create-plan", "automation", "bug"]
+}

@@ -1,0 +1,17 @@
+{
+  "feature_name": "scanner-output-validation",
+  "description": "Verify scan results after subprocess completes by checking .coderef/index.json exists, is valid JSON, and contains expected code elements before marking scan as successful.",
+  "project": "coderef-dashboard",
+  "created": "2026-01-03T10:00:00.000Z",
+  "status": "stub",
+  "references": [
+    "C:\\Users\\willh\\Desktop\\projects\\coderef-system\\coderef\\reference-sheets\\cli-command-system\\cli-command-system.md"
+  ],
+  "context": {
+    "current_issue": "scanExecutor.ts:177-180 trusts exit code 0 without verifying output",
+    "affected_files": [
+      "packages/dashboard/src/app/api/scanner/lib/scanExecutor.ts"
+    ],
+    "priority": "major"
+  }
+}

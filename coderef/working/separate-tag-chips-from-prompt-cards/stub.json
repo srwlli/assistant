@@ -1,0 +1,12 @@
+{
+  "stub_id": "STUB-081",
+  "feature_name": "separate-tag-chips-from-prompt-cards",
+  "description": "Refactor tag chips UI to render separately from prompt cards instead of embedded within them. Move tag selection to dedicated section below prompt grid or in sidebar panel.",
+  "category": "refactor",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "coderef-dashboard",
+  "tags": ["ui", "ux", "refactor", "prompts", "tags"],
+  "notes": "Current implementation embeds tag chips inside each prompt card, causing visual clutter and state management issues. Better UX: Select prompt first, then show relevant tags in separate section. Benefits: cleaner prompt cards, clearer workflow (select prompt → select tags → attach files → export), easier state management (tags only render for selected prompt)."
+}

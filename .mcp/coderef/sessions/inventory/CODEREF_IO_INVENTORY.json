@@ -1,0 +1,6 @@
+{
+  "prompt_id": "CODEREF_IO_INVENTORY",
+  "version": "1.0.0",
+  "description": "Agent document I/O inventory - identify all inputs consumed and outputs generated",
+  "prompt": "## DOCUMENT I/O INVENTORY: {{agent_id}}\n\n**Task:** List EVERY document you read (inputs) and EVERY document you generate (outputs). No analysis needed - just complete inventory.\n\n**Output JSON only:**\n\n```json\n{\n  \"agent_id\": \"{{agent_id}}\",\n  \"workorder_id\": \"{{workorder_id}}\",\n  \"inputs\": [\n    {\n      \"file\": \"relative/path/to/file.md\",\n      \"type\": \"foundation_doc | standard_doc | workflow_doc | coderef_output | config | other\",\n      \"frequency\": \"always | often | sometimes | rarely\",\n      \"purpose\": \"Brief description (10-50 chars)\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"file\": \"relative/path/to/output.json\",\n      \"type\": \"foundation_doc | standard_doc | workflow_doc | coderef_output | config | other\",\n      \"frequency\": \"always | often | sometimes | rarely\",\n      \"purpose\": \"Brief description (10-50 chars)\"\n    }\n  ]\n}\n```\n\n**Instructions:**\n1. Search your source code for file reads/writes\n2. List EVERYTHING - even rarely-used files\n3. Use relative paths from project root\n4. Output pure JSON (no markdown)\n5. Save to: .mcp/coderef/sessions/output/{{agent_id}}-io-inventory.json"
+}

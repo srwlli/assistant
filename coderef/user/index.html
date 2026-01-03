@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRef User Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 24px;
+            }
+        }
+
+        .card {
+            background: var(--color-ind-panel);
+            border: 2px solid var(--color-ind-border);
+            border-radius: 8px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--color-ind-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--color-ind-accent);
+            box-shadow: 0 8px 24px rgba(255, 107, 0, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--color-ind-text);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-description {
+            font-family: var(--font-display);
+            color: var(--color-ind-text-muted);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: var(--color-ind-accent);
+            color: var(--color-ind-bg);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 16px;
+            font-family: var(--font-mono);
+        }
+
+        .card-badge.placeholder {
+            background: var(--color-ind-border);
+            color: var(--color-ind-text-muted);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .intro {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--color-ind-bg);
+            border-left: 4px solid var(--color-ind-accent);
+            border-radius: 4px;
+        }
+
+        .intro p {
+            color: var(--color-ind-text-muted);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .intro p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (loaded from components.js) -->
+    <div id="header-container"></div>
+
+    <!-- Sidebar Navigation (loaded from components.js) -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+    <div class="container">
+        <h1>CodeRef User Documentation</h1>
+
+        <div class="cards-grid">
+            <!-- Card 0: Setup Workflow (Active) -->
+            <div class="card">
+                <a href="coderef-setup.html">
+                    <span class="card-icon"><i class="fa-solid fa-gear"></i></span>
+                    <h3 class="card-title">Setup Workflow</h3>
+                    <p class="card-description">
+                        Complete guide to setting up the CodeRef documentation system. Step-by-step workflow from code intelligence to validated documentation.
+                    </p>
+                    <span class="card-badge">View Guide</span>
+                </a>
+            </div>
+
+            <!-- Card 1: Scripts Reference (Active) -->
+            <div class="card">
+                <a href="coderef-scripts.html">
+                    <span class="card-icon"><i class="fa-solid fa-scroll"></i></span>
+                    <h3 class="card-title">Scripts Reference</h3>
+                    <p class="card-description">
+                        Complete inventory of all 50+ scripts in the CodeRef ecosystem. Browse by category, see which workflows use each script, and find full file paths.
+                    </p>
+                    <span class="card-badge">View Guide</span>
+                </a>
+            </div>
+
+            <!-- Card 2: Commands Reference (Active) -->
+            <div class="card">
+                <a href="coderef-commands.html">
+                    <span class="card-icon"><i class="fa-solid fa-terminal"></i></span>
+                    <h3 class="card-title">Commands Reference</h3>
+                    <p class="card-description">
+                        Comprehensive list of all 68 slash commands across the CodeRef system. Organized by category with usage examples and MCP tool mappings.
+                    </p>
+                    <span class="card-badge">View Guide</span>
+                </a>
+            </div>
+
+            <!-- Card 3: Workflows Guide (Active) -->
+            <div class="card">
+                <a href="coderef-workflows.html">
+                    <span class="card-icon"><i class="fa-solid fa-rotate"></i></span>
+                    <h3 class="card-title">Workflows Guide</h3>
+                    <p class="card-description">
+                        Step-by-step guides for 14 core workflows: creating plans, managing workorders, delegating to agents, and tracking deliverables.
+                    </p>
+                    <span class="card-badge">View Guide</span>
+                </a>
+            </div>
+
+            <!-- Card 4: MCP Tools Reference (Active) -->
+            <div class="card">
+                <a href="coderef-tools.html">
+                    <span class="card-icon"><i class="fa-solid fa-wrench"></i></span>
+                    <h3 class="card-title">MCP Tools Reference</h3>
+                    <p class="card-description">
+                        Documentation for all 71+ MCP server tools across 5 servers: coderef-context, coderef-workflow, coderef-docs, coderef-personas, and coderef-testing.
+                    </p>
+                    <span class="card-badge">View Guide</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="components.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "stub_id": "STUB-069",
+  "feature_name": "combined-directory-script",
+  "description": "Combine populate-coderef.py and create-coderef-structure.py into a single unified script that creates both .coderef/ (CLI outputs) and coderef/ (project organization) directory structures in one execution.",
+  "category": "enhancement",
+  "priority": "medium",
+  "status": "planning",
+  "target_project": "assistant",
+  "created": "2025-12-31",
+  "notes": "Would eliminate need to run two separate scripts. Single command to initialize complete project structure."
+}

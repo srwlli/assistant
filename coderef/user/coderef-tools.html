@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRef MCP Tools Reference - Industrial Design</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Header (loaded from components.js) -->
+    <div id="header-container"></div>
+
+    <!-- Sidebar Navigation (loaded from components.js) -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+    <div class="container">
+        <h1>CodeRef MCP Tools Reference</h1>
+        <p class="subtitle"><strong>Complete inventory of all MCP tools across the CodeRef ecosystem</strong></p>
+        <p class="subtitle"><strong>Last Updated:</strong> 2025-12-31</p>
+
+        <div class="stats">
+            <strong>Total Tools: 71+</strong> across 5 MCP servers
+        </div>
+
+        <hr>
+
+        <h2>coderef-context (Code Intelligence) <span class="category-count">12 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Used In</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">coderef_scan</td>
+                    <td>Scan project and discover all code elements (functions, classes, components, hooks)</td>
+                    <td class="used-in">Project initialization, codebase analysis, v2 refactor</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_query</td>
+                    <td>Query code relationships (calls, imports, dependencies)</td>
+                    <td class="used-in">Impact analysis, dependency tracking, refactoring</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_impact</td>
+                    <td>Analyze impact of modifying/deleting a code element</td>
+                    <td class="used-in">Risk assessment, change planning, breaking change detection</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_complexity</td>
+                    <td>Get complexity metrics for a code element</td>
+                    <td class="used-in">Code quality assessment, refactoring prioritization</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_patterns</td>
+                    <td>Discover code patterns and test coverage gaps</td>
+                    <td class="used-in">Standards discovery, test coverage analysis</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_coverage</td>
+                    <td>Analyze test coverage in the codebase</td>
+                    <td class="used-in">Test quality assessment, coverage reporting</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_context</td>
+                    <td>Generate comprehensive codebase context (markdown + JSON)</td>
+                    <td class="used-in">Documentation generation, AI context preparation</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_validate</td>
+                    <td>Validate CodeRef2 references in codebase</td>
+                    <td class="used-in">Reference validation, documentation accuracy</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_drift</td>
+                    <td>Detect drift between CodeRef index and current code</td>
+                    <td class="used-in">Index maintenance, sync verification</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_diagram</td>
+                    <td>Generate visual dependency diagrams (Mermaid or Graphviz)</td>
+                    <td class="used-in">Architecture visualization, documentation</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_tag</td>
+                    <td>Add CodeRef2 tags to source files for tracking</td>
+                    <td class="used-in">Source file annotation, tracking enhancement</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_export</td>
+                    <td>Export coderef data in various formats (JSON, JSON-LD, Mermaid, DOT)</td>
+                    <td class="used-in">Data export, external tool integration</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-workflow - Planning & Context <span class="category-count">9 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">get_planning_template</td>
+                    <td>Get feature implementation planning template</td>
+                    <td class="used-in">/get-planning-template</td>
+                </tr>
+                <tr>
+                    <td class="script-name">analyze_project_for_planning</td>
+                    <td>Analyze project to discover foundation docs, standards, patterns</td>
+                    <td class="used-in">/analyze-for-planning</td>
+                </tr>
+                <tr>
+                    <td class="script-name">gather_context</td>
+                    <td>Gather feature requirements and save to context.json</td>
+                    <td class="used-in">/gather-context</td>
+                </tr>
+                <tr>
+                    <td class="script-name">create_plan</td>
+                    <td>Create implementation plan from context + analysis</td>
+                    <td class="used-in">/create-plan</td>
+                </tr>
+                <tr>
+                    <td class="script-name">validate_implementation_plan</td>
+                    <td>Validate plan against quality checklist (0-100 score)</td>
+                    <td class="used-in">/validate-plan</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_plan_review_report</td>
+                    <td>Generate human-readable review report from validation</td>
+                    <td class="used-in">/generate-plan-review</td>
+                </tr>
+                <tr>
+                    <td class="script-name">execute_plan</td>
+                    <td>Generate TodoWrite task list from plan.json</td>
+                    <td class="used-in">/align-plan</td>
+                </tr>
+                <tr>
+                    <td class="script-name">update_task_status</td>
+                    <td>Update task status in plan.json as work completes</td>
+                    <td class="used-in">/update-task-status</td>
+                </tr>
+                <tr>
+                    <td class="script-name">audit_plans</td>
+                    <td>Audit all plans in coderef/workorder/ directory</td>
+                    <td class="used-in">/audit-plans</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-workflow - Multi-Agent Coordination <span class="category-count">6 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">generate_agent_communication</td>
+                    <td>Generate communication.json for multi-agent coordination</td>
+                    <td class="used-in">/generate-agent-communication</td>
+                </tr>
+                <tr>
+                    <td class="script-name">assign_agent_task</td>
+                    <td>Assign specific task to agent with workorder scoping</td>
+                    <td class="used-in">/assign-agent-task</td>
+                </tr>
+                <tr>
+                    <td class="script-name">verify_agent_completion</td>
+                    <td>Verify agent completion with automated checks</td>
+                    <td class="used-in">/verify-agent-completion</td>
+                </tr>
+                <tr>
+                    <td class="script-name">aggregate_agent_deliverables</td>
+                    <td>Aggregate metrics from multiple agent deliverables</td>
+                    <td class="used-in">/aggregate-agent-deliverables</td>
+                </tr>
+                <tr>
+                    <td class="script-name">track_agent_status</td>
+                    <td>Track agent status across all features</td>
+                    <td class="used-in">/track-agent-status</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_handoff_context</td>
+                    <td>Generate automated agent handoff context files</td>
+                    <td class="used-in">/generate-handoff-context</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-workflow - Documentation & Deliverables <span class="category-count">8 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">list_templates</td>
+                    <td>List all documentation templates</td>
+                    <td class="used-in">/list-templates</td>
+                </tr>
+                <tr>
+                    <td class="script-name">get_template</td>
+                    <td>Get specific template content</td>
+                    <td class="used-in">/get-template</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_foundation_docs</td>
+                    <td>Generate foundation docs (README, ARCHITECTURE, etc)</td>
+                    <td class="used-in">/update-foundation-docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_individual_doc</td>
+                    <td>Generate single documentation file</td>
+                    <td class="used-in">/generate-docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_foundation_docs</td>
+                    <td>Unified foundation docs generator with coderef analysis</td>
+                    <td class="used-in">/coderef-foundation-docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_deliverables_template</td>
+                    <td>Generate DELIVERABLES.md template from plan.json</td>
+                    <td class="used-in">/generate-deliverables</td>
+                </tr>
+                <tr>
+                    <td class="script-name">update_deliverables</td>
+                    <td>Update DELIVERABLES.md with git metrics</td>
+                    <td class="used-in">/update-deliverables</td>
+                </tr>
+                <tr>
+                    <td class="script-name">update_all_documentation</td>
+                    <td>Update all docs after completing a feature</td>
+                    <td class="used-in">/update-docs</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-workflow - Changelog & Standards <span class="category-count">6 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">get_changelog</td>
+                    <td>Get project changelog with structured history</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">add_changelog_entry</td>
+                    <td>Add new entry to project changelog</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">update_changelog</td>
+                    <td>Agentic workflow to update changelog from context</td>
+                    <td class="used-in">/record-changes</td>
+                </tr>
+                <tr>
+                    <td class="script-name">establish_standards</td>
+                    <td>Scan codebase to discover UI/UX/behavior patterns</td>
+                    <td class="used-in">/establish-standards</td>
+                </tr>
+                <tr>
+                    <td class="script-name">audit_codebase</td>
+                    <td>Audit codebase for standards violations</td>
+                    <td class="used-in">/audit-codebase</td>
+                </tr>
+                <tr>
+                    <td class="script-name">check_consistency</td>
+                    <td>Check code changes against established standards</td>
+                    <td class="used-in">/check-consistency</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-workflow - Workorder Management <span class="category-count">4 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">log_workorder</td>
+                    <td>Log new workorder entry to global log</td>
+                    <td class="used-in">/log-workorder</td>
+                </tr>
+                <tr>
+                    <td class="script-name">get_workorder_log</td>
+                    <td>Read and query global workorder log</td>
+                    <td class="used-in">/get-workorder-log</td>
+                </tr>
+                <tr>
+                    <td class="script-name">archive_feature</td>
+                    <td>Archive completed features to coderef/archived/</td>
+                    <td class="used-in">/archive-feature</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_features_inventory</td>
+                    <td>Generate inventory of all features</td>
+                    <td class="used-in">/features-inventory</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-workflow - Risk & Quickref <span class="category-count">2 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">assess_risk</td>
+                    <td>AI-powered risk assessment for proposed changes</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_quickref_interactive</td>
+                    <td>Interactive workflow to generate quickref guide</td>
+                    <td class="used-in">/generate-user-docs</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-docs (Documentation) <span class="category-count">12 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">list_templates</td>
+                    <td>List all documentation templates</td>
+                    <td class="used-in">/list-templates</td>
+                </tr>
+                <tr>
+                    <td class="script-name">get_template</td>
+                    <td>Get specific template content</td>
+                    <td class="used-in">/get-template</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_foundation_docs</td>
+                    <td>Generate foundation docs for a project</td>
+                    <td class="used-in">/update-foundation-docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_individual_doc</td>
+                    <td>Generate single documentation file</td>
+                    <td class="used-in">/generate-docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">add_changelog_entry</td>
+                    <td>Add new entry to project changelog</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">record_changes</td>
+                    <td>Smart agentic changelog recording with git auto-detection</td>
+                    <td class="used-in">/record-changes</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_quickref_interactive</td>
+                    <td>Generate universal quickref guide</td>
+                    <td class="used-in">/generate-user-docs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">establish_standards</td>
+                    <td>Scan codebase to discover patterns and generate standards</td>
+                    <td class="used-in">/establish-standards</td>
+                </tr>
+                <tr>
+                    <td class="script-name">audit_codebase</td>
+                    <td>Audit codebase for standards violations</td>
+                    <td class="used-in">/audit-codebase</td>
+                </tr>
+                <tr>
+                    <td class="script-name">check_consistency</td>
+                    <td>Check code changes against standards (pre-commit gate)</td>
+                    <td class="used-in">/check-consistency</td>
+                </tr>
+                <tr>
+                    <td class="script-name">validate_document</td>
+                    <td>Validate document against UDS schema</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">check_document_health</td>
+                    <td>Calculate health score (0-100) for document</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-personas (Expert Agents) <span class="category-count">8 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">use_persona</td>
+                    <td>Activate an expert persona (9 available: Ava, Marcus, Quinn, Taylor, Lloyd, etc.)</td>
+                    <td class="used-in">/ava, /marcus, /quinn, /taylor, /lloyd, /use-persona</td>
+                </tr>
+                <tr>
+                    <td class="script-name">get_active_persona</td>
+                    <td>Get information about currently active persona</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">clear_persona</td>
+                    <td>Deactivate current persona</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">list_personas</td>
+                    <td>List all available personas with descriptions</td>
+                    <td class="used-in">N/A - Direct tool call</td>
+                </tr>
+                <tr>
+                    <td class="script-name">create_custom_persona</td>
+                    <td>Create custom persona through guided workflow</td>
+                    <td class="used-in">/create-persona</td>
+                </tr>
+                <tr>
+                    <td class="script-name">generate_todo_list</td>
+                    <td>Convert plan task breakdown to TodoWrite format</td>
+                    <td class="used-in">N/A - Used by execute_plan</td>
+                </tr>
+                <tr>
+                    <td class="script-name">track_plan_execution</td>
+                    <td>Sync plan progress with todo status in real-time</td>
+                    <td class="used-in">N/A - Background tracking</td>
+                </tr>
+                <tr>
+                    <td class="script-name">execute_plan_interactive</td>
+                    <td>Execute plan with guided step-by-step or batch mode</td>
+                    <td class="used-in">N/A - Interactive workflow</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>coderef-testing (Test Automation) <span class="category-count">14 tools</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Purpose</th>
+                    <th>Slash Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">discover_tests</td>
+                    <td>Discover test files in project</td>
+                    <td class="used-in">/discover-tests</td>
+                </tr>
+                <tr>
+                    <td class="script-name">list_frameworks</td>
+                    <td>List available testing frameworks</td>
+                    <td class="used-in">/list-frameworks</td>
+                </tr>
+                <tr>
+                    <td class="script-name">run_tests</td>
+                    <td>Run test suite with pytest/jest integration</td>
+                    <td class="used-in">/run-tests</td>
+                </tr>
+                <tr>
+                    <td class="script-name">run_test_file</td>
+                    <td>Run specific test file</td>
+                    <td class="used-in">/run-test-file</td>
+                </tr>
+                <tr>
+                    <td class="script-name">run_by_pattern</td>
+                    <td>Run tests matching pattern</td>
+                    <td class="used-in">/run-by-pattern</td>
+                </tr>
+                <tr>
+                    <td class="script-name">run_parallel</td>
+                    <td>Run tests in parallel</td>
+                    <td class="used-in">/run-parallel</td>
+                </tr>
+                <tr>
+                    <td class="script-name">test_results</td>
+                    <td>View test results</td>
+                    <td class="used-in">/test-results</td>
+                </tr>
+                <tr>
+                    <td class="script-name">test_report</td>
+                    <td>Generate test report</td>
+                    <td class="used-in">/test-report</td>
+                </tr>
+                <tr>
+                    <td class="script-name">compare_runs</td>
+                    <td>Compare test runs</td>
+                    <td class="used-in">/compare-runs</td>
+                </tr>
+                <tr>
+                    <td class="script-name">test_coverage</td>
+                    <td>Analyze test coverage in codebase</td>
+                    <td class="used-in">/test-coverage</td>
+                </tr>
+                <tr>
+                    <td class="script-name">test_trends</td>
+                    <td>View test trends over time</td>
+                    <td class="used-in">/test-trends</td>
+                </tr>
+                <tr>
+                    <td class="script-name">test_performance</td>
+                    <td>View test performance metrics</td>
+                    <td class="used-in">/test-performance</td>
+                </tr>
+                <tr>
+                    <td class="script-name">detect_flaky</td>
+                    <td>Detect flaky tests</td>
+                    <td class="used-in">/detect-flaky</td>
+                </tr>
+                <tr>
+                    <td class="script-name">test_health</td>
+                    <td>Check test health metrics</td>
+                    <td class="used-in">/test-health</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    </div>
+
+    <script src="components.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

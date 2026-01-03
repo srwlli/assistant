@@ -12,33 +12,92 @@
   "document_types": [
     {
       "type": "README",
-      "required_sections": ["Overview", "Features", "Installation", "Usage", "API Reference"],
-      "tokens": ["{{PROJECT_NAME}}", "{{AUTHOR}}", "{{CREATED_DATE}}", "{{VERSION}}"]
+      "required_sections": [
+        "Overview",
+        "Features",
+        "Installation",
+        "Usage",
+        "API Reference"
+      ],
+      "tokens": [
+        "{{PROJECT_NAME}}",
+        "{{AUTHOR}}",
+        "{{CREATED_DATE}}",
+        "{{VERSION}}"
+      ]
     },
     {
       "type": "ARCHITECTURE",
-      "required_sections": ["System Overview", "Components", "Data Flow", "Design Decisions"],
-      "tokens": ["{{WORKORDER_ID}}", "{{FEATURE_NAME}}", "{{PHASE_COUNT}}", "{{DEPENDENCIES}}"]
+      "required_sections": [
+        "System Overview",
+        "Components",
+        "Data Flow",
+        "Design Decisions"
+      ],
+      "tokens": [
+        "{{WORKORDER_ID}}",
+        "{{FEATURE_NAME}}",
+        "{{PHASE_COUNT}}",
+        "{{DEPENDENCIES}}"
+      ]
     },
     {
       "type": "DELIVERABLES",
-      "required_sections": ["Overview", "Implementation Phases", "Deliverables Checklist", "Metrics", "Success Criteria"],
-      "tokens": ["{{FEATURE_NAME}}", "{{WORKORDER_ID}}", "{{CREATED_DATE}}", "{{TOTAL_TASKS}}", "{{LINES_OF_CODE}}", "{{GIT_COMMITS}}"]
+      "required_sections": [
+        "Overview",
+        "Implementation Phases",
+        "Deliverables Checklist",
+        "Metrics",
+        "Success Criteria"
+      ],
+      "tokens": [
+        "{{FEATURE_NAME}}",
+        "{{WORKORDER_ID}}",
+        "{{CREATED_DATE}}",
+        "{{TOTAL_TASKS}}",
+        "{{LINES_OF_CODE}}",
+        "{{GIT_COMMITS}}"
+      ]
     },
     {
       "type": "API",
-      "required_sections": ["Endpoints", "Request/Response Schemas", "Authentication", "Error Handling"],
-      "tokens": ["{{BASE_URL}}", "{{API_VERSION}}", "{{AUTHENTICATION_SCHEME}}"]
+      "required_sections": [
+        "Endpoints",
+        "Request/Response Schemas",
+        "Authentication",
+        "Error Handling"
+      ],
+      "tokens": [
+        "{{BASE_URL}}",
+        "{{API_VERSION}}",
+        "{{AUTHENTICATION_SCHEME}}"
+      ]
     },
     {
       "type": "COMPONENTS",
-      "required_sections": ["Component Overview", "Component List", "Dependencies", "Usage Examples"],
-      "tokens": ["{{PROJECT_NAME}}", "{{COMPONENT_COUNT}}"]
+      "required_sections": [
+        "Component Overview",
+        "Component List",
+        "Dependencies",
+        "Usage Examples"
+      ],
+      "tokens": [
+        "{{PROJECT_NAME}}",
+        "{{COMPONENT_COUNT}}"
+      ]
     },
     {
       "type": "SCHEMA",
-      "required_sections": ["Entity Overview", "Entity Definitions", "Relationships", "Constraints"],
-      "tokens": ["{{DATABASE_TYPE}}", "{{SCHEMA_VERSION}}"]
+      "required_sections": [
+        "Entity Overview",
+        "Entity Definitions",
+        "Relationships",
+        "Constraints"
+      ],
+      "tokens": [
+        "{{DATABASE_TYPE}}",
+        "{{SCHEMA_VERSION}}"
+      ]
     }
   ],
   "implementation_steps": [
@@ -128,5 +187,6 @@
         "{{CREATED_DATE}}"
       ]
     }
-  }
+  },
+  "target_project": "coderef-docs"
 }

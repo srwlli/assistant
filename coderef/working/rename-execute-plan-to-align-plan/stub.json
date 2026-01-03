@@ -37,5 +37,6 @@
     "Better UX: users understand what it does"
   ],
   "backward_compatibility": "Keep /execute-plan as alias or add deprecation notice",
-  "created_by": "Archer"
+  "created_by": "Archer",
+  "target_project": "coderef-workflow"
 }

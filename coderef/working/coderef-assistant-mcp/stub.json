@@ -1,0 +1,11 @@
+{
+  "stub_id": "STUB-073",
+  "feature_name": "coderef-assistant-mcp",
+  "description": "Package the CodeRef Assistant orchestrator persona and workflows as a standalone MCP server for delegation, workorder tracking, and multi-project coordination capabilities.",
+  "category": "infrastructure",
+  "priority": "high",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "assistant",
+  "tags": ["mcp", "orchestration", "delegation"]
+}

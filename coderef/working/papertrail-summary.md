@@ -1,0 +1,8 @@
+# Papertrail - One-Paragraph Summary
+
+Papertrail is a **Universal Documentation Standards (UDS) enforcement library** for the CodeRef ecosystem that ensures every generated document has complete workorder traceability, MCP server attribution, and measurable quality through automated validation and health scoring. It provides YAML header/footer injection (linking docs to workorder IDs like `WO-FEATURE-001`), JSON Schema-based validation for 5 document types (plan, deliverables, architecture, readme, api), a 4-factor health scoring system (0-100 scale measuring traceability, completeness, freshness, validation), and a Jinja2 template engine with CodeRef extensions for git/workflow/code intelligence integration. Papertrail matters because it **solves the audit trail problem** in AI-generated documentation—before Papertrail, there was no way to track which MCP server generated which document, link documentation to implementation tasks, or automatically validate documentation quality, making it impossible to maintain documentation integrity across the 5-server CodeRef ecosystem (coderef-workflow, coderef-docs, coderef-context, coderef-personas, coderef-testing). By embedding into coderef-docs as a library (Phase 4 complete, `PAPERTRAIL_ENABLED=true`), it automatically injects UDS metadata into every generated document, creating a complete audit trail from feature request → implementation plan → code changes → documentation → archive, enabling AI agents to generate high-quality, traceable, validatable documentation at scale.
+
+---
+
+**Saved:** 2025-12-30
+**Location:** C:\Users\willh\Desktop\assistant\coderef\working\papertrail-summary.md

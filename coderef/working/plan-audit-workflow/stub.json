@@ -4,7 +4,10 @@
   "description": "Audit workflow to scan all project coderef folders, index plan.json files, extract status/progress, and surface stale or active plans. Uses Scriptboard file indexer for discovery.",
   "category": "feature",
   "priority": "high",
-  "tags": ["orchestrator", "workflow"],
+  "tags": [
+    "orchestrator",
+    "workflow"
+  ],
   "created": "2025-12-16T00:00:00Z",
   "status": "stub",
   "discovery": {
@@ -83,5 +86,10 @@
     "What's the completion rate per project?",
     "Which projects have the most active work?"
   ],
-  "related_stubs": ["STUB-027", "STUB-002", "STUB-009"]
+  "related_stubs": [
+    "STUB-027",
+    "STUB-002",
+    "STUB-009"
+  ],
+  "target_project": "scriptboard"
 }

@@ -1,0 +1,440 @@
+{
+  "library_name": "coderef-prompts-library",
+  "location": "coderef/workflows/prompts/",
+  "version": "1.0.0",
+  "purpose": "Centralized library of reusable prompt templates for AI-assisted workflows across the coderef ecosystem",
+
+  "prompt_schema": {
+    "key": {
+      "type": "string",
+      "format": "kebab-case",
+      "description": "Unique identifier for the prompt",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable display name",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "description": "Purpose and use case explanation",
+      "max_length": 500,
+      "required": true
+    },
+    "template": {
+      "type": "string",
+      "description": "Actual prompt text with {{variable}} placeholders",
+      "required": true
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "code-review",
+        "planning-analysis",
+        "documentation",
+        "agent-coordination",
+        "quality-assurance",
+        "improvement-review"
+      ],
+      "required": true
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Metadata tags for filtering and search",
+      "required": true
+    },
+    "variables": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Variables that must be provided"
+        },
+        "optional": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Variables that are optional"
+        }
+      },
+      "required": false
+    },
+    "expected_output": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": ["json", "markdown", "plaintext", "communication.json", "plan.json"]
+        },
+        "structure": {
+          "type": "object",
+          "description": "Schema or description of output structure"
+        },
+        "example": {
+          "type": "string",
+          "description": "Sample output for reference"
+        }
+      },
+      "required": false
+    },
+    "version": {
+      "type": "string",
+      "format": "semver",
+      "description": "Prompt version (X.Y.Z)",
+      "required": false,
+      "default": "1.0.0"
+    }
+  },
+
+  "categories": {
+    "code-review": {
+      "description": "Analyze code quality, patterns, and standards compliance",
+      "prompts": [
+        "code-review-comprehensive",
+        "code-review-focused",
+        "code-review-security",
+        "code-review-performance"
+      ]
+    },
+    "planning-analysis": {
+      "description": "Generate implementation plans and technical analysis",
+      "prompts": [
+        "feature-planning",
+        "technical-analysis",
+        "risk-assessment",
+        "effort-estimation"
+      ]
+    },
+    "documentation": {
+      "description": "Generate or improve documentation",
+      "prompts": [
+        "api-documentation",
+        "readme-generation",
+        "architecture-documentation",
+        "changelog-entry"
+      ]
+    },
+    "agent-coordination": {
+      "description": "Multi-agent workflow coordination",
+      "prompts": [
+        "agent-review-assignment",
+        "agent-handoff",
+        "communication-json-generation",
+        "status-aggregation"
+      ]
+    },
+    "quality-assurance": {
+      "description": "Testing and validation prompts",
+      "prompts": [
+        "test-generation",
+        "test-coverage-analysis",
+        "validation-checklist",
+        "acceptance-criteria"
+      ]
+    },
+    "improvement-review": {
+      "description": "Ecosystem improvement and optimization",
+      "prompts": [
+        "document-effectiveness-audit",
+        "workflow-optimization",
+        "integration-testing",
+        "standards-compliance"
+      ]
+    }
+  },
+
+  "tag_taxonomy": {
+    "scope_tags": {
+      "code": "Code-related prompts",
+      "docs": "Documentation prompts",
+      "workflow": "Process/workflow prompts",
+      "testing": "Testing/QA prompts",
+      "planning": "Planning/analysis prompts"
+    },
+    "function_tags": {
+      "review": "Review and analysis",
+      "generation": "Content generation",
+      "validation": "Validation and checking",
+      "coordination": "Multi-agent coordination",
+      "optimization": "Improvement and optimization"
+    },
+    "output_tags": {
+      "json": "Produces JSON output",
+      "markdown": "Produces Markdown output",
+      "checklist": "Produces checklist format",
+      "report": "Produces report format",
+      "communication": "Produces communication.json"
+    },
+    "domain_tags": {
+      "coderef": "Coderef ecosystem specific",
+      "dashboard": "Dashboard integration",
+      "mcp": "MCP server related",
+      "agent": "Agent coordination",
+      "workorder": "Workorder management"
+    }
+  },
+
+  "variable_syntax": {
+    "required": {
+      "syntax": "{{variable_name}}",
+      "description": "Must be provided, no default",
+      "example": "{{file_path}}"
+    },
+    "optional": {
+      "syntax": "{{variable_name?}}",
+      "description": "Can be omitted",
+      "example": "{{review_focus?}}"
+    },
+    "default": {
+      "syntax": "{{variable_name:default_value}}",
+      "description": "Uses default if not provided",
+      "example": "{{output_format:json}}"
+    },
+    "multiple": {
+      "syntax": "{{variable_name...}}",
+      "description": "Accepts multiple values (array)",
+      "example": "{{tags...}}"
+    }
+  },
+
+  "template_structure": {
+    "sections": [
+      {
+        "name": "ROLE_DEFINITION",
+        "purpose": "Define the AI's role and expertise",
+        "example": "You are a senior code reviewer with expertise in React and TypeScript."
+      },
+      {
+        "name": "CONTEXT",
+        "purpose": "Provide background and context",
+        "example": "This is a production codebase using React 18 with TypeScript strict mode."
+      },
+      {
+        "name": "TASK",
+        "purpose": "Describe what needs to be done",
+        "example": "Review the following component for best practices and potential issues."
+      },
+      {
+        "name": "INPUTS",
+        "purpose": "List all variable inputs",
+        "example": "File: {{file_path}}\nFocus areas: {{review_focus}}"
+      },
+      {
+        "name": "CONSTRAINTS",
+        "purpose": "Define limitations and requirements",
+        "example": "- Follow React hooks rules\n- Maintain TypeScript strict mode compliance"
+      },
+      {
+        "name": "EXPECTED_OUTPUT",
+        "purpose": "Specify exact output format",
+        "example": "Return a JSON object with issues, suggestions, and compliance score."
+      },
+      {
+        "name": "EXAMPLES",
+        "purpose": "Provide optional examples (when helpful)",
+        "example": "Example output: { \"issues\": [...], \"suggestions\": [...] }"
+      }
+    ]
+  },
+
+  "integration_points": {
+    "dashboard_prompting_workflow": {
+      "reads_from": "This prompt library",
+      "components": {
+        "PromptSelector": "Uses category and tag filters",
+        "AttachmentManager": "Populates file-based variables",
+        "ExportMenu": "Matches expected_output formats"
+      },
+      "workflow": "Select prompt → populate variables → export → execute with LLM → save result"
+    },
+    "improvement_workflow": {
+      "uses": [
+        "agent-review-assignment prompts",
+        "communication-json-generation prompts",
+        "status-aggregation prompts"
+      ],
+      "tag_alignment": "Uses same tag taxonomy as review scope tags"
+    },
+    "workorder_system": {
+      "planning_phase": "feature-planning prompt generates plan.json",
+      "handoff_phase": "agent-handoff prompt creates instructions",
+      "validation_phase": "validation-checklist prompt checks deliverables",
+      "archive_phase": "status-aggregation prompt finalizes workorder"
+    },
+    "foundation_docs": {
+      "generation": "api-documentation, readme-generation, architecture-documentation prompts",
+      "updates": "changelog-entry prompt for version updates",
+      "standards": "standards-compliance prompt validates docs"
+    }
+  },
+
+  "usage_examples": [
+    {
+      "prompt_key": "code-review-focused",
+      "variables": {
+        "file_path": "src/components/PromptingWorkflow.tsx",
+        "review_focus": "React hooks usage and state management",
+        "standards": "React best practices, TypeScript strict mode"
+      },
+      "expected_output": {
+        "format": "json",
+        "structure": {
+          "issues": "array of identified issues",
+          "suggestions": "array of improvement suggestions",
+          "compliance": "object with compliance metrics"
+        }
+      }
+    },
+    {
+      "prompt_key": "agent-review-assignment",
+      "variables": {
+        "review_scope": "docs:foundation, docs:standards",
+        "agents": ["coderef-context", "coderef-workflow", "coderef-docs"],
+        "task_name": "document-effectiveness-audit"
+      },
+      "expected_output": {
+        "format": "communication.json",
+        "structure": {
+          "workorder_id": "generated WO-ID",
+          "agents": "array with agent entries",
+          "review_scope": "object with tags"
+        }
+      }
+    },
+    {
+      "prompt_key": "feature-planning",
+      "variables": {
+        "feature_name": "coderef-prompting-workflows",
+        "requirements": "Standardize agent reviews, Tag taxonomy, Dashboard UI",
+        "constraints": "Must work with existing agents, JSON-based coordination"
+      },
+      "expected_output": {
+        "format": "plan.json",
+        "structure": {
+          "sections": "10-section implementation plan",
+          "tasks": "task breakdown by phase",
+          "dependencies": "task dependencies"
+        }
+      }
+    }
+  ],
+
+  "best_practices": {
+    "prompt_design": [
+      "Start with clear role definition",
+      "Provide sufficient context",
+      "Be specific about task requirements",
+      "Define constraints explicitly",
+      "Specify exact output format",
+      "Include examples when helpful"
+    ],
+    "variable_usage": [
+      "Keep variable names descriptive",
+      "Document required vs optional",
+      "Provide sensible defaults",
+      "Validate variable values before substitution",
+      "Use consistent naming conventions (snake_case)"
+    ],
+    "testing": [
+      "Test with various input combinations",
+      "Validate output formats",
+      "Check edge cases",
+      "Iterate based on results",
+      "Version significant changes"
+    ],
+    "maintenance": [
+      "Review prompts quarterly",
+      "Update based on feedback",
+      "Archive deprecated prompts to archive/",
+      "Document changes in changelog",
+      "Test after modifications"
+    ]
+  },
+
+  "file_organization": {
+    "prompts_directory": "coderef/workflows/prompts/",
+    "structure": {
+      "by_category": {
+        "code-review/": ["code-review-comprehensive.json", "code-review-focused.json"],
+        "planning-analysis/": ["feature-planning.json", "risk-assessment.json"],
+        "documentation/": ["api-documentation.json", "readme-generation.json"],
+        "agent-coordination/": ["agent-review-assignment.json", "agent-handoff.json"],
+        "quality-assurance/": ["test-generation.json", "validation-checklist.json"],
+        "improvement-review/": ["document-effectiveness-audit.json", "workflow-optimization.json"]
+      },
+      "meta": {
+        "prompts-library-guide.md": "This guide (human-readable)",
+        "prompts-library-guide.json": "This guide (machine-readable)",
+        "registry.json": "Index of all prompts with metadata"
+      }
+    }
+  },
+
+  "validation_rules": {
+    "prompt_file": {
+      "format": "JSON",
+      "required_fields": ["key", "name", "description", "template", "category", "tags"],
+      "naming_convention": "kebab-case.json",
+      "max_file_size": "100KB"
+    },
+    "template": {
+      "variable_syntax": "{{variable_name}} or variants",
+      "no_hardcoded_values": "Use variables for dynamic content",
+      "sections_required": ["ROLE_DEFINITION", "TASK", "EXPECTED_OUTPUT"]
+    },
+    "output_specification": {
+      "format_required": true,
+      "structure_recommended": true,
+      "example_helpful": true
+    }
+  },
+
+  "future_enhancements": {
+    "features": [
+      "Prompt versioning system with changelog",
+      "A/B testing framework for prompt optimization",
+      "Output validation schemas (JSON Schema)",
+      "Prompt composition (combine multiple prompts)",
+      "Dynamic variable injection from context",
+      "Context-aware prompt suggestions",
+      "Performance metrics tracking (token count, execution time)"
+    ],
+    "planned_prompts": [
+      {
+        "key": "multi-agent-orchestration",
+        "category": "agent-coordination",
+        "description": "Coordinate complex multi-agent workflows with dependencies"
+      },
+      {
+        "key": "dependency-analysis",
+        "category": "code-review",
+        "description": "Analyze and visualize code/project dependencies"
+      },
+      {
+        "key": "migration-planning",
+        "category": "planning-analysis",
+        "description": "Plan code/system migration strategies"
+      },
+      {
+        "key": "refactoring-suggestions",
+        "category": "code-review",
+        "description": "Suggest refactoring opportunities based on patterns"
+      },
+      {
+        "key": "knowledge-extraction",
+        "category": "documentation",
+        "description": "Extract knowledge and patterns from codebases"
+      }
+    ],
+    "integration_improvements": [
+      "Auto-discovery of prompts in dashboard UI",
+      "Prompt recommendation engine based on context",
+      "Variable auto-population from project context",
+      "Real-time validation during prompt editing",
+      "Direct LLM API integration for execution",
+      "Prompt analytics and usage tracking"
+    ]
+  }
+}

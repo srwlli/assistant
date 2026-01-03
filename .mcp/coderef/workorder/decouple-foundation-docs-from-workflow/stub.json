@@ -1,0 +1,18 @@
+{
+  "stub_id": "STUB-065",
+  "feature_name": "decouple-foundation-docs-from-workflow",
+  "description": "Refactor foundation docs generation out of coderef-workflow create_plan process and move to coderef-context server. Planning workflows will reference existing docs instead of generating them inline, improving speed and separation of concerns.",
+  "category": "refactor",
+  "priority": "high",
+  "status": "planning",
+  "created": "2025-12-30",
+  "target_project": "coderef-workflow",
+  "tags": [
+    "mcp-servers",
+    "architecture",
+    "performance",
+    "decoupling",
+    "coderef-context"
+  ],
+  "notes": "Current state: CoderefFoundationGenerator runs during create_plan (tool_handlers.py:3530), blocking planning workflow. Proposed: Move generation to coderef-context server, have workflows read existing docs. Benefits: faster planning, decoupled concerns, reusable docs across workflows. Impact: 2 files changed in coderef-workflow, 1 new tool in coderef-context."
+}

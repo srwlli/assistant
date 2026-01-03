@@ -1,0 +1,12 @@
+{
+  "stub_id": "STUB-078",
+  "feature_name": "agent-reporting-prompts",
+  "description": "Create standardized prompt templates for agents to identify specific attributes and report back in a consistent format - enables systematic data collection and analysis across multiple agents.",
+  "category": "feature",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "assistant",
+  "tags": ["prompts", "agent-coordination", "standardization", "reporting", "templates"],
+  "notes": "Build reusable prompt templates that instruct agents to: (1) identify specific attributes/metrics, (2) analyze their domain, (3) report in standardized JSON/markdown format. Integrates with coderef-improvement-workflow and prompts library."
+}

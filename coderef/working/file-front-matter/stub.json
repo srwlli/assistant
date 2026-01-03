@@ -4,7 +4,10 @@
   "description": "Add front matter to important files giving agents explicit instructions (e.g., read-only, do not modify, required context). Prevents accidental changes to critical files.",
   "category": "improvement",
   "priority": "medium",
-  "tags": ["workflow", "orchestrator"],
+  "tags": [
+    "workflow",
+    "orchestrator"
+  ],
   "created": "2025-12-16T00:00:00Z",
   "status": "stub",
   "examples": {
@@ -24,5 +27,6 @@
     "Guide agents to read context files first",
     "Mark generated files to avoid manual edits",
     "Explicit ownership/responsibility"
-  ]
+  ],
+  "target_project": "coderef-dashboard"
 }

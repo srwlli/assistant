@@ -1,0 +1,344 @@
+{
+  "workflow_name": "coderef-improvement-workflow",
+  "version": "1.0.0",
+  "created": "2026-01-01",
+  "purpose": "Standardized process for agents to review, analyze, and propose improvements to any aspect of the coderef ecosystem",
+
+  "workflow_definition": {
+    "type": "multi-agent-review",
+    "coordination_mechanism": "communication.json",
+    "output_format": "structured_analysis + freeform_comments",
+    "scope_definition": "tag-based"
+  },
+
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Define Review Scope",
+      "actor": "orchestrator",
+      "actions": [
+        "Select review tags from taxonomy",
+        "Choose target agents (servers/projects)",
+        "Define analysis questions"
+      ],
+      "outputs": ["review_scope", "agent_list", "analysis_template"]
+    },
+    {
+      "phase": 2,
+      "name": "Generate Communication File",
+      "actor": "orchestrator",
+      "actions": [
+        "Create {task}-communication.json",
+        "Populate workorder_id, review_scope, agents[]",
+        "Save to coderef/working/{task}/"
+      ],
+      "outputs": ["{task}-communication.json"]
+    },
+    {
+      "phase": 3,
+      "name": "Agent Review",
+      "actor": "agents",
+      "actions": [
+        "Find entry by id match",
+        "Review specified scope (per tags)",
+        "Fill analysis fields (how_used, strengths, weaknesses, add_remove)",
+        "Add additional_comments",
+        "Update status to 'complete'"
+      ],
+      "outputs": ["completed analysis in communication.json", "optional detailed report"]
+    },
+    {
+      "phase": 4,
+      "name": "Progress Tracking",
+      "actor": "orchestrator",
+      "actions": [
+        "Poll communication.json for status",
+        "Monitor completion (pending vs complete count)",
+        "Identify blockers or incomplete reviews"
+      ],
+      "outputs": ["status dashboard", "completion metrics"]
+    },
+    {
+      "phase": 5,
+      "name": "Aggregation & Action",
+      "actor": "orchestrator",
+      "actions": [
+        "Collect all agent responses",
+        "Identify common themes (recurring issues)",
+        "Generate summary report",
+        "Create workorders for top improvements"
+      ],
+      "outputs": ["aggregated_report", "improvement_workorders"]
+    }
+  ],
+
+  "tag_taxonomy": {
+    "code_analysis": {
+      "code:patterns": "Code patterns and conventions",
+      "code:complexity": "Complexity analysis and technical debt",
+      "code:architecture": "System architecture and design",
+      "code:dependencies": "Dependency management and relationships",
+      "code:quality": "Code quality metrics and standards",
+      "code:coverage": "Test coverage and gaps",
+      "code:performance": "Performance bottlenecks and optimization"
+    },
+    "documentation": {
+      "docs:foundation": "Foundation docs (README, ARCHITECTURE, API, SCHEMA, COMPONENTS)",
+      "docs:standards": "Standards docs (ui-patterns, behavior-patterns, ux-patterns)",
+      "docs:workflow": "Workflow/workorder docs (plan.json, context.json, communication.json, DELIVERABLES.md)",
+      "docs:coderef-outputs": ".coderef/ analysis outputs (index.json, context.md, reports/, diagrams/)",
+      "docs:claude-md": "CLAUDE.md context documentation",
+      "docs:user-guides": "User-facing documentation",
+      "docs:api-reference": "API/tool reference documentation"
+    },
+    "process_workflow": {
+      "workflow:planning": "Planning workflows (gather_context, create_plan)",
+      "workflow:execution": "Execution workflows (execute_plan, update_deliverables)",
+      "workflow:coordination": "Multi-agent coordination patterns",
+      "workflow:handoff": "Agent handoff protocols",
+      "workflow:tracking": "Progress tracking and status updates",
+      "workflow:archival": "Feature archival and completion"
+    },
+    "integration_tooling": {
+      "integration:mcp": "MCP server integration patterns",
+      "integration:ecosystem": "Cross-server dependencies and communication",
+      "integration:cli": "CLI tool integration",
+      "integration:dashboard": "Dashboard UI integration",
+      "integration:git": "Git workflow integration",
+      "integration:testing": "Test automation integration"
+    },
+    "standards_compliance": {
+      "standards:ui": "UI component standards",
+      "standards:ux": "UX flow standards",
+      "standards:behavior": "Behavior pattern standards",
+      "standards:api": "API design standards",
+      "standards:testing": "Testing standards",
+      "standards:documentation": "Documentation standards"
+    },
+    "metadata_governance": {
+      "metadata:versioning": "Version tracking and compatibility",
+      "metadata:provenance": "Scan/workorder provenance tracking",
+      "metadata:timestamps": "Freshness and staleness detection",
+      "metadata:attribution": "Author and agent attribution",
+      "governance:schemas": "JSON schema definitions",
+      "governance:validation": "Validation rules and enforcement"
+    },
+    "output_artifacts": {
+      "output:reports": "Generated reports and summaries",
+      "output:diagrams": "Visual diagrams (Mermaid, Graphviz)",
+      "output:exports": "Export formats (JSON, JSON-LD)",
+      "output:deliverables": "Final deliverables and artifacts"
+    },
+    "agent_behavior": {
+      "agent:personas": "Persona definitions and activation",
+      "agent:coordination": "Multi-agent coordination",
+      "agent:context": "Agent context and knowledge",
+      "agent:tooling": "Agent tool usage patterns"
+    },
+    "infrastructure": {
+      "infra:file-structure": "Directory organization",
+      "infra:caching": "Caching strategies",
+      "infra:performance": "System performance",
+      "infra:scalability": "Scalability patterns"
+    }
+  },
+
+  "communication_json_schema": {
+    "workorder_id": "string - WO-IMPROVEMENT-XXX-001 format",
+    "feature_name": "string - kebab-case task name",
+    "created": "string - YYYY-MM-DD date",
+    "instructions": "string - brief agent instructions",
+    "review_scope": {
+      "tags": "array of strings - selected tags from taxonomy"
+    },
+    "agents": [
+      {
+        "id": "string - agent identifier (e.g., 'coderef-context')",
+        "path": "string - absolute path to agent project",
+        "reply_file": "string - optional path to detailed report",
+        "status": "enum - pending | complete",
+        "analysis": {
+          "{category_name}": {
+            "how_used": "string - how this component/doc is used",
+            "strengths": "string - what works well",
+            "weaknesses": "string - what's missing or unclear",
+            "add_remove": "string - specific suggestions"
+          }
+        },
+        "additional_comments": {
+          "improvements": "string - general improvements",
+          "weaknesses": "string - systemic issues",
+          "other": "string - anything else"
+        }
+      }
+    ]
+  },
+
+  "analysis_structure": {
+    "required_fields": {
+      "how_used": {
+        "description": "How this component/document is used by the agent",
+        "format": "Brief explanation (1-3 sentences)",
+        "examples": [
+          "Read CLAUDE.md for project context during planning",
+          "Generate .coderef/index.json as primary output",
+          "Never read or write - not in domain"
+        ]
+      },
+      "strengths": {
+        "description": "What works well about this component",
+        "format": "List of positives",
+        "examples": [
+          "Clear structure, comprehensive coverage",
+          "Auto-generated from code (always current)",
+          "Well-documented with examples"
+        ]
+      },
+      "weaknesses": {
+        "description": "What's missing, unclear, or problematic",
+        "format": "List of issues",
+        "examples": [
+          "No versioning, stale data risk",
+          "Missing documentation for edge cases",
+          "Duplication across multiple files"
+        ]
+      },
+      "add_remove": {
+        "description": "Specific suggestions for improvement",
+        "format": "Actionable recommendations with ADD/REMOVE/REFACTOR prefixes",
+        "examples": [
+          "ADD: Timestamp metadata to detect staleness",
+          "REMOVE: Duplicate sections in favor of references",
+          "REFACTOR: Split large file into focused modules"
+        ]
+      }
+    },
+    "optional_fields": {
+      "additional_comments.improvements": "General improvement ideas not tied to specific categories",
+      "additional_comments.weaknesses": "Systemic or cross-cutting issues",
+      "additional_comments.other": "Any other insights, context, or observations"
+    }
+  },
+
+  "use_cases": [
+    {
+      "name": "Document Effectiveness Audit",
+      "goal": "Understand how agents use ecosystem documentation",
+      "tags": ["docs:foundation", "docs:standards", "docs:workflow", "docs:coderef-outputs"],
+      "agents": ["coderef-context", "coderef-workflow", "coderef-docs", "coderef-personas", "coderef-testing", "papertrail", "coderef-system", "coderef-dashboard"],
+      "outcome": "Identify missing docs, stale content, integration gaps"
+    },
+    {
+      "name": "Code Quality Review",
+      "goal": "Assess code patterns and technical debt",
+      "tags": ["code:patterns", "code:complexity", "code:quality"],
+      "agents": ["coderef-context", "coderef-system", "coderef-dashboard"],
+      "outcome": "Refactoring priorities, pattern standardization"
+    },
+    {
+      "name": "Workflow Optimization",
+      "goal": "Streamline planning and execution workflows",
+      "tags": ["workflow:planning", "workflow:execution", "workflow:coordination"],
+      "agents": ["coderef-workflow", "coderef-docs", "coderef-personas"],
+      "outcome": "Workflow improvements, bottleneck removal"
+    },
+    {
+      "name": "Integration Testing",
+      "goal": "Verify cross-server integration points",
+      "tags": ["integration:ecosystem", "integration:mcp"],
+      "agents": ["coderef-context", "coderef-workflow", "coderef-docs", "coderef-personas", "coderef-testing", "papertrail"],
+      "outcome": "Integration issues, missing handoffs, dependency problems"
+    },
+    {
+      "name": "Standards Compliance Check",
+      "goal": "Ensure consistency across projects",
+      "tags": ["standards:ui", "standards:api", "standards:documentation"],
+      "agents": ["coderef-docs", "coderef-dashboard"],
+      "outcome": "Standards violations, pattern inconsistencies"
+    }
+  ],
+
+  "agent_instructions": {
+    "for_reviewed_agents": {
+      "step_1": "Read communication.json at coderef/working/{task}/{task}-communication.json",
+      "step_2": "Find your entry by matching 'id' field",
+      "step_3": "For each tag in review_scope.tags, analyze the specified area",
+      "step_4": "Fill in analysis fields (how_used, strengths, weaknesses, add_remove)",
+      "step_5": "Add any additional insights to additional_comments",
+      "step_6": "Update status to 'complete'",
+      "step_7": "Optionally create detailed report and link in reply_file"
+    },
+    "for_orchestrator": {
+      "step_1": "Define review scope (tags) and select agents",
+      "step_2": "Generate communication.json using template",
+      "step_3": "Save to coderef/working/{task}/",
+      "step_4": "Monitor agent status (poll communication.json)",
+      "step_5": "After all agents complete: aggregate responses, identify themes, generate report",
+      "step_6": "Create workorders for top improvements",
+      "step_7": "Archive communication.json to coderef/workorder/{task}/"
+    }
+  },
+
+  "dashboard_integration": {
+    "workflow_creation_ui": {
+      "components": [
+        "Tag picker (multi-select from taxonomy)",
+        "Agent selector (multi-select from available agents)",
+        "Communication.json generator",
+        "Save to filesystem"
+      ]
+    },
+    "status_tracking_widget": {
+      "features": [
+        "Real-time agent completion status",
+        "Progress bar (X of Y agents complete)",
+        "Agent-specific status indicators (pending/complete/blocked)"
+      ]
+    },
+    "aggregation_view": {
+      "features": [
+        "Summary of all responses",
+        "Theme detection (common weaknesses/improvements)",
+        "Actionable recommendations list",
+        "Export aggregated report"
+      ]
+    }
+  },
+
+  "file_locations": {
+    "communication_json": "coderef/working/{task}/{task}-communication.json",
+    "agent_reports": "{agent-path}/{task}-report.md (optional)",
+    "aggregated_report": "coderef/working/{task}/aggregated-report.md",
+    "archived_communication": "coderef/workorder/{task}/{task}-communication.json"
+  },
+
+  "validation_rules": {
+    "communication_json": {
+      "required_fields": ["workorder_id", "feature_name", "created", "review_scope", "agents"],
+      "agent_required_fields": ["id", "path", "status"],
+      "status_values": ["pending", "complete", "blocked"],
+      "tag_format": "category:specific-area"
+    },
+    "agent_completion": {
+      "required": "analysis fields filled for all categories in scope",
+      "optional": "additional_comments, reply_file",
+      "status_update": "status must be 'complete' when all fields filled"
+    }
+  },
+
+  "performance_considerations": {
+    "polling_frequency": "Check communication.json every 30-60 seconds for status updates",
+    "file_size": "Keep communication.json under 1MB (use external reports for large responses)",
+    "concurrent_reviews": "Limit to 3-5 active reviews to avoid agent overload"
+  },
+
+  "future_enhancements": [
+    "Auto-aggregation scripts (analyze communication.json → generate report)",
+    "Dashboard widgets for review creation/tracking",
+    "Template library (common review types)",
+    "Historical comparison (track improvements over time)",
+    "Agent notification system (alert when review assigned)",
+    "Workflow scheduling (periodic reviews)",
+    "Integration with workorder system (auto-create improvement workorders)"
+  ]
+}

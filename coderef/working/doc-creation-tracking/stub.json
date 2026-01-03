@@ -1,0 +1,12 @@
+{
+  "stub_id": "STUB-080",
+  "feature_name": "doc-creation-tracking",
+  "description": "Automated tracking system that logs all documents created in coderef/logs/docs/ with timestamps, metadata, and links. Integrates with document generation workflows to auto-update index.md.",
+  "category": "feature",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "assistant",
+  "tags": ["documentation", "automation", "tracking", "workflow", "logging"],
+  "notes": "Hook into document generation workflows to automatically append entries to coderef/logs/docs/index.md. Each entry should include timestamp, document type, file path, and metadata (scope, components, features, workorder)."
+}

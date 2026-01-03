@@ -1,0 +1,37 @@
+{
+  "stub_id": "STUB-068",
+  "feature_name": "coderef-system-improvements",
+  "description": "Comprehensive improvements to CodeRef ecosystem: (1) Sidecar annotations instead of inline. (2) JSONSchema validation. (3) Concurrency safety. (4) Cross-project graph merging. (5) Fuzzy symbol resolution. (6) Multi-language support. (7) Deep architectural pattern detection. (8) Production maturity roadmap. (9) Modern complexity metrics. (10) Testing integration for production readiness validation.",
+  "category": "enhancement",
+  "priority": "high",
+  "status": "planning",
+  "created": "2025-12-30",
+  "target_project": "coderef-context",
+  "tags": [
+    "developer-experience",
+    "data-integrity",
+    "schema-validation",
+    "concurrency",
+    "cross-project",
+    "natural-language",
+    "metadata-management"
+  ],
+  "notes": "Consolidates STUB-066 (sidecar annotations) and STUB-067 (workflow validation). Key improvements: (1) Sidecar files in .coderef/annotations/ instead of inline comments - solves diff noise and code purist concerns. (2) Explicit JSONSchema enforcement prevents agents from hallucinating invalid structures. (3) File locking for parallel scan/query operations prevents graph.json corruption. (4) Cross-repo analysis with element ID normalization. (5) Fuzzy matching/LLM integration for queries like 'the plan generator'. (6) Language support expansion - currently Python/JS/TS only, limiting adoption in polyglot orgs. Need parsers for Java, Go, Rust, C#, Ruby, PHP to become universal codebase navigator. (7) Architectural pattern detection - current pattern detection duplicates linters (print vs logger, type hints). Need deeper analysis: dependency inversion violations, layering violations, circular dependencies, God objects, feature envy, etc. Focus on architectural smells linters can't detect. (8) PRODUCTION MATURITY ROADMAP: Current state = 'advanced grep with graphs' (v1 internal tool). To become production-grade: (a) Humbler accuracy claims - acknowledge static analysis limits, dynamic code (reflection, eval, runtime imports) may be missed. (b) Runtime/instrumentation integration - actual execution data, not just syntax. (c) Semantic validation - integrate with type checkers (mypy, TypeScript compiler) for correctness beyond syntax. (d) Clear delineation - syntactic analysis (what we do) vs semantic analysis (what we need). Users should treat 'safe to delete/rename' recommendations with healthy skepticism until runtime validation added. Right now: nice grep++ with pretty graphs, valuable but not revolutionary. (9) MODERN COMPLEXITY METRICS: Current cyclomatic complexity alone is a 1970s metric, nearly meaningless without context. Need: (a) Cognitive complexity (Sonar metric for human readability). (b) Halstead metrics (vocabulary, volume, difficulty). (c) Maintainability index (composite score). (d) Change coupling (files that change together from git history). (e) Language-specific baselines - 'complexity: 12' means nothing without comparison to language norms. (f) Contextual scoring - complexity relative to project average, not absolute numbers. (10) CODEREF-TESTING INTEGRATION: Add coderef-testing as the 5th MCP server in the CodeRef ecosystem. Universal MCP server for framework-agnostic test orchestration, execution, and analysis across pytest, jest, vitest, cargo, and mocha. Auto-detects frameworks, runs tests in parallel with configurable workers, normalizes results into unified JSON schema (UnifiedTestResults), and performs comprehensive analysis including coverage gaps, performance profiling (p50/p95/p99), flaky test detection, and health scoring (0-100 with A-F grades). Completes the feature development lifecycle: coderef-workflow creates plans → coderef-context provides code intelligence → agents implement features → coderef-testing verifies correctness and measures quality → coderef-docs archives documentation. Essential for production readiness validation before feature archival.",
+  "context": {
+    "current_maturity": "CodeRef v1 is 'advanced grep with dependency graphs'—strong internal tool for AI agent integration but not production-grade. Provides fast static analysis (AST-based, 99% syntax accuracy) for Python/JS/TS with dependency graphs, but lacks runtime data, semantic validation, and broad language support.",
+    "ecosystem_components": "5 MCP servers: (1) coderef-context - 11 tools for code intelligence (scan, query, impact, complexity, patterns, coverage, context, validate, drift, diagram, tag), (2) coderef-workflow - 24 tools for planning/orchestration, (3) coderef-docs - documentation generation and UDS compliance, (4) coderef-personas - expert agent system (Lloyd coordinator + specialists), (5) coderef-testing - framework-agnostic test automation. This stub addresses cross-cutting improvements needed across all servers.",
+    "identified_gaps": [
+      "Accuracy claims overstated - 'X-ray vision' language implies capabilities beyond static analysis",
+      "Language support narrow - Python/JS/TS only, excludes Java/Go/Rust/C# needed for polyglot orgs",
+      "Pattern detection shallow - duplicates basic linting instead of detecting architectural smells",
+      "Complexity metrics outdated - cyclomatic complexity without cognitive complexity, Halstead, or baselines",
+      "Metadata invasive - inline tag annotations pollute source, create diff noise",
+      "Schema validation absent - agents hallucinate invalid plan.json/UDS without JSONSchema enforcement",
+      "Concurrency unsafe - .coderef/ operations lack locking, parallel scans corrupt graph.json",
+      "Cross-project incomplete - graph merging needs element ID normalization",
+      "NLP queries brittle - assumes perfect symbol resolution, needs fuzzy matching",
+      "Testing integration missing - no automated validation before archival"
+    ],
+    "production_readiness_path": "To reach production-grade: (1) Humble accuracy claims with static vs semantic delineation, (2) Runtime/instrumentation integration for execution data, (3) Broader language parsers, (4) Type checker integration (mypy, TS compiler), (5) Modern complexity metrics with contextual scoring, (6) Non-invasive metadata (sidecar files), (7) Automated testing completing lifecycle (plan → implement → test → archive). Current verdict: valuable but not revolutionary—users should treat 'safe to delete/rename' with healthy skepticism."
+  }
+}

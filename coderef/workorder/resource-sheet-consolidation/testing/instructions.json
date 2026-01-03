@@ -1,0 +1,338 @@
+{
+  "session_id": "resource-sheet-consolidation-testing",
+  "workorder_id": "WO-RESOURCE-SHEET-CONSOLIDATION-001-TESTING",
+  "parent_workorder": "WO-RESOURCE-SHEET-CONSOLIDATION-001",
+  "session_type": "testing_execution",
+  "created": "2026-01-03",
+  "status": "ready_to_execute",
+  "description": "Execute 49 test cases to validate resource sheet consolidation implementation",
+
+  "what_was_built": {
+    "phase_3a_papertrail": {
+      "detection_module": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\generators\\detection_module.py",
+      "module_registry": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\resource_sheet\\module_registry.py",
+      "validation_pipeline": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\generators\\validation_pipeline.py",
+      "element_mapping": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\resource_sheet\\mapping\\element-type-mapping.json"
+    },
+    "phase_3b_coderef_system": {
+      "graph_helpers": "packages/core/src/analyzer/graph-helpers.ts",
+      "test_suite": "packages/core/__tests__/graph-helpers.test.ts"
+    },
+    "phase_3c_coderef_docs": {
+      "writing_standards": "resource_sheet/processing/writing_standards.py",
+      "documentation": "coderef/user/ and coderef/foundation-docs/"
+    }
+  },
+
+  "testing_agent": {
+    "role": "Execute all 49 test cases and report results",
+    "persona": "QA engineer validating production readiness",
+
+    "your_exact_tasks": [
+      {
+        "task_id": "TEST-ROUTING",
+        "category": "Category 1: Routing Validation",
+        "test_count": 3,
+        "estimated_time": "15 minutes",
+        "critical_requirement": "CR-1: 100% MCP tool invocation",
+
+        "what_to_test": [
+          "Verify /create-resource-sheet calls mcp__coderef-docs__generate_resource_sheet",
+          "Verify element_type parameter is passed through correctly",
+          "Verify backward compatibility (no broken functionality)"
+        ],
+
+        "how_to_test": [
+          "1. Run: /create-resource-sheet --element-type='custom_hook' --name='useAuth'",
+          "2. Check logs: grep 'mcp__coderef-docs__generate_resource_sheet' in Claude Code output",
+          "3. Verify element_type='custom_hook' appears in MCP tool parameters",
+          "4. Confirm resource sheet generated successfully"
+        ],
+
+        "pass_criteria": "100% of invocations call MCP tool (not old .md file logic)",
+
+        "evidence_required": [
+          "Screenshot or log showing MCP tool invocation",
+          "Confirmation that element_type parameter was received",
+          "Generated resource sheet output"
+        ],
+
+        "report_back": {
+          "format": "Update this file with results",
+          "fields_to_update": [
+            "status: 'pass' or 'fail'",
+            "actual_result: 'description of what happened'",
+            "evidence: 'path to logs/screenshots'",
+            "notes: 'any issues or observations'"
+          ]
+        },
+
+        "status": "pending",
+        "actual_result": null,
+        "evidence": null,
+        "notes": null
+      },
+
+      {
+        "task_id": "TEST-DETECTION",
+        "category": "Category 2: Element Type Detection",
+        "test_count": 24,
+        "estimated_time": "45 minutes",
+        "critical_requirement": "CR-2: 80%+ confidence for all 20 element types",
+
+        "what_to_test": [
+          "Test detection for all 20 element types from element-type-mapping.json",
+          "Verify 3-stage algorithm (filename → code analysis → fallback)",
+          "Measure confidence scores for each detection",
+          "Test priority 1-4 element types separately"
+        ],
+
+        "how_to_test": [
+          "1. Import detection_module.py",
+          "2. Create test cases for each of 20 element types:",
+          "   - Priority 1: top_level_widgets, stateful_containers, global_state, custom_hooks, api_clients",
+          "   - Priority 2: data_models, utility_modules, constants, error_definitions, type_definitions",
+          "   - Priority 3: validation, middleware, transformers, event_handlers, services",
+          "   - Priority 4: configuration, context_providers, decorators, factories, observers",
+          "3. For each type, run:",
+          "   result = detect_element_type(filename='MyComponent.tsx', code_sample='...')",
+          "4. Record: detected_type, confidence_score, detection_stage (1, 2, or 3)",
+          "5. Calculate average confidence per priority tier"
+        ],
+
+        "pass_criteria": "≥80% average confidence score across all 20 element types",
+
+        "evidence_required": [
+          "Table showing all 20 element types with confidence scores",
+          "Average confidence by priority tier (1-4)",
+          "Detection stage breakdown (how many resolved at Stage 1 vs 2 vs 3)"
+        ],
+
+        "report_back": {
+          "format": "Create detection-results.json with all 20 test results",
+          "structure": {
+            "element_type": "custom_hooks",
+            "filename": "useAuth.ts",
+            "detected_type": "custom_hooks",
+            "confidence": 95,
+            "detection_stage": 1,
+            "pass": true
+          }
+        },
+
+        "status": "pending",
+        "actual_result": null,
+        "evidence": null,
+        "notes": null
+      },
+
+      {
+        "task_id": "TEST-AUTOFILL",
+        "category": "Category 3: Graph Integration Auto-Fill",
+        "test_count": 5,
+        "estimated_time": "30 minutes",
+        "critical_requirement": "CR-3: 60-80% average auto-fill completion rate",
+
+        "what_to_test": [
+          "Test all 4 graph query functions (getImportsForElement, getExportsForElement, getConsumersForElement, getDependenciesForElement)",
+          "Measure auto-fill percentage for each section (imports, exports, usage examples, dependencies)",
+          "Calculate overall completion rate across all sections"
+        ],
+
+        "how_to_test": [
+          "1. Choose 5 test elements from codebase (mix of components, hooks, utilities)",
+          "2. For each element, run:",
+          "   imports = getImportsForElement('MyComponent')",
+          "   exports = getExportsForElement('MyComponent')",
+          "   consumers = getConsumersForElement('MyComponent')",
+          "   dependencies = getDependenciesForElement('MyComponent')",
+          "3. Count auto-filled lines vs total section lines",
+          "4. Calculate: (auto_filled_lines / total_lines) * 100 per section",
+          "5. Average across all 5 test elements"
+        ],
+
+        "pass_criteria": "60-80% average completion rate (target from Phase 3B specs)",
+
+        "evidence_required": [
+          "Table showing 5 test elements with auto-fill percentages",
+          "Breakdown by section: imports (target 90%), exports (target 95%), consumers (target 70%), dependencies (target 75%)",
+          "Overall average completion rate"
+        ],
+
+        "report_back": {
+          "format": "Create autofill-results.json",
+          "structure": {
+            "element_name": "useAuth",
+            "imports_autofill": 90,
+            "exports_autofill": 95,
+            "consumers_autofill": 70,
+            "dependencies_autofill": 75,
+            "overall_autofill": 82.5,
+            "pass": true
+          }
+        },
+
+        "status": "pending",
+        "actual_result": null,
+        "evidence": null,
+        "notes": null
+      },
+
+      {
+        "task_id": "TEST-VALIDATION",
+        "category": "Category 4: Validation Pipeline",
+        "test_count": 5,
+        "estimated_time": "30 minutes",
+        "critical_requirement": "CR-4: 100% error detection (4-gate pipeline)",
+
+        "what_to_test": [
+          "Test all 4 validation gates",
+          "Verify scoring system (0-100 scale)",
+          "Test with good sheet (should PASS)",
+          "Test with incomplete sheet (should REJECT)",
+          "Test edge cases (empty sections, missing fields)"
+        ],
+
+        "how_to_test": [
+          "1. Import validation_pipeline.py",
+          "2. Create test resource sheets:",
+          "   - Good sheet: all sections complete (expect score ≥90)",
+          "   - Incomplete sheet: missing purpose/usage (expect score <70)",
+          "   - Minimal sheet: only name/type (expect score <50)",
+          "3. Run: score, result = validate_resource_sheet(sheet_content)",
+          "4. Verify 4 gates:",
+          "   Gate 1: Structural integrity (has required sections)",
+          "   Gate 2: Content completeness (sections not empty)",
+          "   Gate 3: Quality standards (from writing_standards.py)",
+          "   Gate 4: Auto-fill validation (60%+ from graph)"
+        ],
+
+        "pass_criteria": "All 4 gates correctly identify errors, scoring matches expected ranges",
+
+        "evidence_required": [
+          "Test results for 5 resource sheets with scores",
+          "Gate-by-gate breakdown showing which gates failed",
+          "Confirmation that good sheets PASS and bad sheets REJECT"
+        ],
+
+        "report_back": {
+          "format": "Create validation-results.json",
+          "structure": {
+            "sheet_name": "useAuth-resource-sheet.md",
+            "overall_score": 82,
+            "gate_1_pass": true,
+            "gate_2_pass": true,
+            "gate_3_pass": true,
+            "gate_4_pass": false,
+            "final_result": "WARN",
+            "issues_found": ["Auto-fill below 60% threshold"]
+          }
+        },
+
+        "status": "pending",
+        "actual_result": null,
+        "evidence": null,
+        "notes": null
+      },
+
+      {
+        "task_id": "TEST-PERFORMANCE",
+        "category": "Category 5: Performance Benchmarks",
+        "test_count": 4,
+        "estimated_time": "20 minutes",
+        "critical_requirement": "CR-5: <2 seconds total generation time",
+
+        "what_to_test": [
+          "End-to-end generation timing (slash command → final output)",
+          "Breakdown: detection time, graph queries time, template rendering time, validation time",
+          "Cold start vs warm run performance",
+          "95th percentile analysis (run 10 iterations)"
+        ],
+
+        "how_to_test": [
+          "1. Use Python timeit module:",
+          "   import timeit",
+          "   def test_generation():",
+          "       # Run full resource sheet generation",
+          "       pass",
+          "   times = timeit.repeat(test_generation, number=1, repeat=10)",
+          "2. Calculate:",
+          "   average = sum(times) / len(times)",
+          "   p95 = sorted(times)[int(len(times) * 0.95)]",
+          "   max_time = max(times)",
+          "3. Breakdown timing:",
+          "   - Detection: <50ms (Stage 1+2)",
+          "   - Graph queries: <50ms per query (4 queries = <200ms total)",
+          "   - Template rendering: <500ms",
+          "   - Validation: <100ms",
+          "   - Total: <2000ms (2 seconds)"
+        ],
+
+        "pass_criteria": "95th percentile ≤2000ms, average ≤1500ms",
+
+        "evidence_required": [
+          "10 timing runs with min/avg/p95/max",
+          "Breakdown by stage (detection, graph, rendering, validation)",
+          "Confirmation that <2s requirement met"
+        ],
+
+        "report_back": {
+          "format": "Create performance-results.json",
+          "structure": {
+            "iterations": 10,
+            "average_ms": 1450,
+            "p95_ms": 1820,
+            "max_ms": 1950,
+            "breakdown": {
+              "detection_ms": 45,
+              "graph_queries_ms": 180,
+              "template_rendering_ms": 950,
+              "validation_ms": 275
+            },
+            "pass": true
+          }
+        },
+
+        "status": "pending",
+        "actual_result": null,
+        "evidence": null,
+        "notes": null
+      }
+    ],
+
+    "how_to_report_back": {
+      "step_1": "Update each task in this file (instructions.json) with status: 'pass' or 'fail'",
+      "step_2": "Create 4 evidence files in testing/ folder:",
+      "files_to_create": [
+        "detection-results.json - All 20 element type test results",
+        "autofill-results.json - 5 test elements with auto-fill percentages",
+        "validation-results.json - 5 resource sheets with validation scores",
+        "performance-results.json - 10 timing runs with breakdown"
+      ],
+      "step_3": "Create TESTING-SUMMARY.md with GO/NO-GO decision",
+      "step_4": "Update parent instructions.json at C:\\Users\\willh\\Desktop\\assistant\\coderef\\workorder\\resource-sheet-consolidation\\instructions.json",
+      "step_5": "Signal orchestrator: 'Testing complete. See testing/TESTING-SUMMARY.md for results.'"
+    },
+
+    "go_no_go_decision_framework": {
+      "GO": "All 5 critical requirements PASS → Approve for production",
+      "NO_GO": "Any 1 critical requirement FAIL → Execute rollback plan",
+      "CONDITIONAL_GO": "Minor issues only (warnings) → Deploy with known issues documented",
+
+      "critical_requirements": {
+        "CR-1": {"name": "Routing", "threshold": "100%", "fail_means": "Users cannot invoke tool"},
+        "CR-2": {"name": "Detection", "threshold": "80%+", "fail_means": "Wrong element types generated"},
+        "CR-3": {"name": "Auto-fill", "threshold": "60-80%", "fail_means": "Users spend too much manual effort"},
+        "CR-4": {"name": "Validation", "threshold": "100%", "fail_means": "Bad sheets slip through"},
+        "CR-5": {"name": "Performance", "threshold": "<2s", "fail_means": "Poor user experience"}
+      }
+    }
+  },
+
+  "success_criteria": {
+    "all_tests_executed": "5/5 task categories complete",
+    "evidence_collected": "4 JSON files + TESTING-SUMMARY.md created",
+    "go_no_go_decision": "Clear recommendation based on critical requirements",
+    "orchestrator_notified": "Parent instructions.json updated"
+  }
+}

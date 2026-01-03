@@ -1,0 +1,11 @@
+{
+  "feature_name": "testing-brief-entry-point",
+  "description": "Structured testing brief format for coderef-testing server. Defines entry points, file references, test scope, and expected outcomes. Agents generate briefs, testing server consumes and executes tests based on provided context.",
+  "project": "assistant",
+  "created": "2025-12-28T06:40:00Z",
+  "status": "stub",
+  "notes": "Testing brief should include: target files, test type (unit/integration/e2e), entry functions, dependencies, expected behavior, edge cases. Standardized format enables automated test generation.",
+  "category": "feature",
+  "priority": "medium",
+  "target_project": "coderef-context"
+}

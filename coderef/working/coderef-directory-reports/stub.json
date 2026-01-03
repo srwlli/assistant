@@ -1,0 +1,12 @@
+{
+  "stub_id": "STUB-077",
+  "feature_name": "coderef-directory-reports",
+  "description": "Generate directory reports like the workflows library guide for agent and user reference - structured documentation of coderef/ directory contents",
+  "category": "documentation",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "assistant",
+  "tags": ["documentation", "coderef", "directory-structure", "reference"],
+  "notes": "Similar to workflows-directory-guide.md/.json - create standardized documentation for coderef/ directories showing structure, purpose, and usage patterns for both agents and humans"
+}

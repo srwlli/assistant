@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRef Setup Workflow - CodeRef Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .phase-section {
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--color-ind-panel);
+            border: 2px solid var(--color-ind-border);
+            border-left: 4px solid var(--color-ind-accent);
+            border-radius: 8px;
+        }
+
+        .phase-header {
+            font-family: var(--font-display);
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--color-ind-accent);
+            margin-bottom: 16px;
+        }
+
+        .phase-step {
+            font-family: var(--font-display);
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--color-ind-text);
+            margin-bottom: 12px;
+        }
+
+        .code-block {
+            background: var(--color-ind-bg);
+            border: 1px solid var(--color-ind-border);
+            border-radius: 4px;
+            padding: 16px;
+            margin: 12px 0;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 0;
+            white-space: pre;
+            font-family: inherit;
+        }
+
+        .code-block code {
+            color: var(--color-ind-accent);
+        }
+
+        .output-list {
+            margin: 12px 0 12px 24px;
+            color: var(--color-ind-text-muted);
+        }
+
+        .output-list li {
+            margin: 6px 0;
+            line-height: 1.6;
+        }
+
+        .workflow-diagram {
+            background: var(--color-ind-bg);
+            border: 2px solid var(--color-ind-border);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 32px 0;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .decision-table {
+            width: 100%;
+            margin: 24px 0;
+            border-collapse: collapse;
+        }
+
+        .decision-table th,
+        .decision-table td {
+            padding: 12px;
+            border: 1px solid var(--color-ind-border);
+            text-align: left;
+        }
+
+        .decision-table th {
+            background: var(--color-ind-accent);
+            color: var(--color-ind-bg);
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        .decision-table td {
+            background: var(--color-ind-panel);
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .badge-required {
+            background: var(--color-ind-accent);
+            color: var(--color-ind-bg);
+        }
+
+        .badge-optional {
+            background: var(--color-ind-border);
+            color: var(--color-ind-text-muted);
+        }
+
+        .key-insight {
+            background: var(--color-ind-panel);
+            border-left: 4px solid var(--comp-docs);
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+
+        .key-insight strong {
+            color: var(--comp-docs);
+            font-family: var(--font-display);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (loaded from components.js) -->
+    <div id="header-container"></div>
+
+    <!-- Sidebar Navigation (loaded from components.js) -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+    <div class="container">
+        <h1>CodeRef Setup Workflow</h1>
+        <p class="subtitle"><strong>Complete guide to setting up CodeRef documentation system</strong></p>
+
+        <!-- Directory Structures Overview -->
+        <h2>Directory Structures Created</h2>
+
+        <h3>1. Project Directory Structure (coderef/)</h3>
+        <div class="code-block"><pre>project/
+└── coderef/
+    ├── workorder/           # Active workorders
+    │   └── feature-name/
+    │       ├── context.json
+    │       ├── communication.json
+    │       ├── plan.json
+    │       └── DELIVERABLES.md
+    ├── archived/            # Completed features
+    ├── foundation/
+    │   └── docs/            # Foundation documentation
+    │       ├── README.md
+    │       ├── ARCHITECTURE.md
+    │       ├── API.md
+    │       └── COMPONENTS.md
+    ├── user/                # User documentation
+    └── standards/           # Project standards
+        ├── COMPONENT-INDEX.md
+        ├── UI-STANDARDS.md
+        ├── BEHAVIOR-STANDARDS.md
+        └── UX-PATTERNS.md</pre></div>
+
+        <h3>2. Code Intelligence Directory (.coderef/)</h3>
+        <div class="code-block"><pre>project/
+└── .coderef/               # Hidden directory (auto-generated)
+    ├── index.json          # All functions, classes, components
+    ├── context.md          # Human-readable architecture
+    ├── reports/
+    │   ├── patterns.json   # Code patterns detected
+    │   ├── coverage.json   # Test coverage analysis
+    │   └── complexity/     # Complexity metrics
+    ├── diagrams/
+    │   ├── dependencies.mmd    # Mermaid dependency graph
+    │   └── dependencies.dot    # GraphViz DOT format
+    ├── exports/
+    │   ├── graph.json      # Complete graph export
+    │   └── jsonld/         # Semantic web format
+    └── generated-docs/     # Auto-generated documentation
+        ├── README.md
+        ├── ARCHITECTURE.md
+        ├── API.md
+        └── COMPONENTS.md</pre></div>
+
+        <div class="key-insight">
+            <p><strong>Want more details?</strong> See the complete <a href="coderef-output-capabilities.html" style="color: var(--color-ind-accent); text-decoration: underline;">Output Capabilities Reference</a> for detailed specifications of all 21 output files, their formats, sizes, and use cases.</p>
+        </div>
+
+        <hr style="margin: 40px 0; border: 1px solid var(--color-ind-border);">
+
+        <!-- PHASE 1 -->
+        <div class="phase-section">
+            <div class="phase-header">PHASE 1: Code Intelligence Generation</div>
+            <div class="phase-step">Step 1: Generate .coderef/ Structure</div>
+
+            <div class="code-block">
+                <code>python C:\Users\willh\Desktop\projects\coderef-system\scripts\populate-coderef.py /path/to/project</code>
+            </div>
+
+            <p><strong>Purpose:</strong> Scan codebase and generate complete intelligence data</p>
+            <p><strong>Runs:</strong> 16 @coderef/core CLI commands</p>
+            <p><strong>Output:</strong> Creates the complete <code>.coderef/</code> directory structure shown above, including:</p>
+            <ul class="output-list">
+                <li>index.json - All functions, classes, components</li>
+                <li>context.md - Human-readable architecture overview</li>
+                <li>reports/ - patterns.json, coverage.json, complexity metrics</li>
+                <li>diagrams/ - dependencies.mmd (Mermaid), dependencies.dot (GraphViz)</li>
+                <li>exports/ - graph.json, jsonld/ (semantic web format)</li>
+                <li>generated-docs/ - README.md, ARCHITECTURE.md, API.md, COMPONENTS.md</li>
+            </ul>
+            <p style="margin-top: 12px; color: var(--color-ind-text-muted); font-size: 0.9em;">
+                <i class="fa-solid fa-circle-info"></i> See <a href="coderef-output-capabilities.html#code-intelligence" style="color: var(--color-ind-accent);">Code Intelligence Outputs</a> for detailed specs of outputs #1-9
+            </p>
+        </div>
+
+        <!-- PHASE 2 -->
+        <div class="phase-section">
+            <div class="phase-header">PHASE 2: Preprocessing <span class="badge badge-optional">Optional - Large Codebases</span></div>
+            <div class="phase-step">Step 2: Preprocess Large Index</div>
+
+            <div class="code-block">
+                <code>python C:\Users\willh\Desktop\projects\coderef-system\packages\parse_coderef_data.py /path/to/project</code>
+            </div>
+
+            <p><strong>When to use:</strong> index.json > 200KB or 500+ elements</p>
+            <p><strong>Input:</strong> .coderef/index.json</p>
+            <p><strong>Output:</strong> doc_generation_data.json (summarized/grouped)</p>
+            <p><strong>Purpose:</strong> Makes large codebases manageable for doc generation</p>
+        </div>
+
+        <!-- PHASE 3 -->
+        <div class="phase-section">
+            <div class="phase-header">PHASE 3: Foundation Documentation</div>
+            <div class="phase-step">Step 3: Generate Foundation Docs</div>
+
+            <div class="code-block">
+                <code>python /path/to/project/.coderef/generate_docs.py</code>
+            </div>
+
+            <p><strong>Note:</strong> This script is auto-generated per-project (not in coderef-system repo)</p>
+            <p><strong>Input:</strong></p>
+            <ul class="output-list">
+                <li>index.json OR doc_generation_data.json</li>
+                <li>context.md</li>
+                <li>reports/patterns.json</li>
+                <li>diagrams/dependencies.mmd</li>
+            </ul>
+            <p><strong>Output:</strong> .coderef/generated-docs/</p>
+            <ul class="output-list">
+                <li>README.md</li>
+                <li>ARCHITECTURE.md</li>
+                <li>API.md</li>
+                <li>COMPONENTS.md (if UI project)</li>
+            </ul>
+            <p style="margin-top: 12px; color: var(--color-ind-text-muted); font-size: 0.9em;">
+                <i class="fa-solid fa-circle-info"></i> See <a href="coderef-output-capabilities.html#foundation-docs" style="color: var(--color-ind-accent);">Foundation Documentation</a> for detailed specs of outputs #10-13
+            </p>
+        </div>
+
+        <!-- PHASE 4 -->
+        <div class="phase-section">
+            <div class="phase-header">PHASE 4: Standards Generation <span class="badge badge-optional">UI Projects</span></div>
+            <div class="phase-step">Step 4: Generate UI/UX Standards</div>
+
+            <div class="code-block">
+                <code>python C:\Users\willh\Desktop\projects\coderef-system\scripts\enhance-standards.py /path/to/project</code>
+            </div>
+
+            <p><strong>When to use:</strong> Frontend/UI projects</p>
+            <p><strong>Input:</strong></p>
+            <ul class="output-list">
+                <li>.coderef/index.json (component inventory)</li>
+                <li>.coderef/patterns.json</li>
+                <li>Component source files (targeted reading)</li>
+            </ul>
+            <p><strong>Output:</strong> coderef/standards/</p>
+            <ul class="output-list">
+                <li>COMPONENT-INDEX.md</li>
+                <li>UI-STANDARDS.md</li>
+                <li>BEHAVIOR-STANDARDS.md</li>
+                <li>UX-PATTERNS.md</li>
+            </ul>
+            <p style="margin-top: 12px; color: var(--color-ind-text-muted); font-size: 0.9em;">
+                <i class="fa-solid fa-circle-info"></i> See <a href="coderef-output-capabilities.html#standards-docs" style="color: var(--color-ind-accent);">Standards Documentation</a> for detailed specs of outputs #14-17
+            </p>
+        </div>
+
+        <!-- PHASE 5 -->
+        <div class="phase-section">
+            <div class="phase-header">PHASE 5: Visualization <span class="badge badge-optional">Optional</span></div>
+            <div class="phase-step">Step 5: Generate Visual Diagrams</div>
+
+            <div class="code-block">
+                <code>python C:\Users\willh\Desktop\projects\coderef-system\scripts\diagram-generator.py /path/to/project</code>
+            </div>
+
+            <p><strong>Input:</strong> Project path or package name</p>
+            <p><strong>Output:</strong> Mermaid/DOT diagrams (visual representations)</p>
+        </div>
+
+        <!-- PHASE 6 -->
+        <div class="phase-section">
+            <div class="phase-header">PHASE 6: Validation</div>
+            <div class="phase-step">Step 6: Validate Documentation</div>
+
+            <div class="code-block">
+                <code>python C:\Users\willh\Desktop\projects\coderef-system\scripts\validate-docs.py /path/to/project</code>
+            </div>
+
+            <p><strong>Input:</strong> Project path (checks all generated docs)</p>
+            <p><strong>Output:</strong> Validation report</p>
+            <ul class="output-list">
+                <li>Completeness checks</li>
+                <li>Cross-reference validation</li>
+                <li>Broken link detection</li>
+                <li>Markdown formatting</li>
+                <li>Diagram validity</li>
+            </ul>
+        </div>
+
+        <!-- Workflow Diagram -->
+        <h2>Complete Workflow Diagram</h2>
+        <div class="workflow-diagram">
+START: Raw Codebase
+    ↓
+┌───────────────────────────────────────┐
+│ PHASE 1: populate-coderef.py         │
+│ → Creates .coderef/ (16 files)       │
+└───────────────────────────────────────┘
+    ↓
+    ├─→ Small project (< 200KB)?
+    │       ↓ YES
+    │   Skip to PHASE 3
+    │
+    └─→ Large project (> 200KB)?
+            ↓ NO
+        ┌─────────────────────────────────┐
+        │ PHASE 2: parse_coderef_data.py  │
+        │ → Summarizes index.json         │
+        └─────────────────────────────────┘
+    ↓
+┌───────────────────────────────────────┐
+│ PHASE 3: generate_docs.py             │
+│ → Foundation docs (README, ARCH, API) │
+└───────────────────────────────────────┘
+    ↓
+    ├─→ UI/Frontend project?
+    │       ↓ YES
+    │   ┌─────────────────────────────────┐
+    │   │ PHASE 4: enhance-standards.py   │
+    │   │ → UI/UX standards (4 docs)      │
+    │   └─────────────────────────────────┘
+    │
+    └─→ Backend/CLI project?
+            ↓ NO
+        Skip to PHASE 5
+    ↓
+┌───────────────────────────────────────┐
+│ PHASE 5: diagram-generator.py         │
+│ → Visual diagrams (optional)          │
+└───────────────────────────────────────┘
+    ↓
+┌───────────────────────────────────────┐
+│ PHASE 6: validate-docs.py             │
+│ → Quality checks & validation         │
+└───────────────────────────────────────┘
+    ↓
+END: Complete Documentation Set
+        </div>
+
+        <!-- Decision Tree -->
+        <h2>Decision Tree: Which Scripts to Run?</h2>
+        <table class="decision-table">
+            <thead>
+                <tr>
+                    <th>Project Type</th>
+                    <th>Required Scripts</th>
+                    <th>Optional Scripts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Small Backend (< 200KB)</td>
+                    <td>1 → 3 → 6</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td>Large Backend (> 200KB)</td>
+                    <td>1 → 2 → 3 → 6</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td>Small Frontend (< 200KB)</td>
+                    <td>1 → 3 → 4 → 6</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td>Large Frontend (> 200KB)</td>
+                    <td>1 → 2 → 3 → 4 → 6</td>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Quick Reference -->
+        <h2>Quick Reference: Script Locations</h2>
+        <div class="code-block"><pre>coderef-system/
+├── scripts/
+│   ├── populate-coderef.py          # [1] Main entry point
+│   ├── enhance-standards.py         # [4] UI/UX standards
+│   ├── diagram-generator.py         # [5] Visualizations
+│   └── validate-docs.py             # [6] Quality checks
+└── packages/
+    └── parse_coderef_data.py        # [2] Preprocessor</pre></div>
+
+        <!-- Key Insight -->
+        <div class="key-insight">
+            <p><strong>Key Insight:</strong> generate_docs.py is NOT in the coderef-system repo—it's auto-generated per-project in the target project's .coderef/ directory.</p>
+        </div>
+
+        <hr style="margin: 40px 0; border: 1px solid var(--color-ind-border);">
+
+        <!-- ADVANCED: Multi-Server Analysis -->
+        <h2>Advanced: Multi-Server Ecosystem Analysis</h2>
+        <p class="subtitle"><strong>For orchestrators managing multiple related projects/servers</strong></p>
+
+        <div class="phase-section">
+            <div class="phase-header">Ecosystem Discovery Workflow</div>
+            <div class="phase-step">Use Case: v1→v2 Refactor Planning Across 7 MCP Servers</div>
+
+            <p><strong>Scenario:</strong> You have multiple MCP servers with `.coderef/` data and need to discover cross-server dependencies, shared code, and refactor targets.</p>
+
+            <p><strong>Prerequisites:</strong></p>
+            <ul class="output-list">
+                <li>All servers have completed PHASE 1 (populate-coderef.py)</li>
+                <li>Each server has `.coderef/index.json` generated</li>
+                <li>Python 3.8+ installed</li>
+            </ul>
+
+            <p><strong>Analysis Scripts:</strong></p>
+            <div class="code-block"><pre># Location: coderef/workorder/coderef-ecosystem-discovery/scripts/
+
+1. generate_dependencies.py     # Cross-server import matrix
+2. generate_shared_code.py       # Duplicated code detection
+3. generate_ecosystem_diagram.py # Visual architecture
+4. generate_refactor_targets.py  # Complexity hotspots
+5. generate_patterns_analysis.py # Pattern inconsistencies
+6. copy_graph_exports.py         # Full graph data export</pre></div>
+
+            <div class="phase-step">Example: Generate Dependency Matrix</div>
+            <div class="code-block">
+                <code>cd C:\Users\willh\Desktop\assistant\coderef\workorder\coderef-ecosystem-discovery\scripts
+python generate_dependencies.py</code>
+            </div>
+
+            <p><strong>Output:</strong> <code>DEPENDENCIES.md</code> - Cross-server import matrix with circular dependency detection</p>
+
+            <p><strong>Output Format:</strong></p>
+            <div class="code-block"><pre>## Import Matrix
+| From Server      | To Server        | Import Statements           |
+|------------------|------------------|-----------------------------|
+| coderef-workflow | coderef-context  | `coderef_scan`, `analyze`   |
+
+## Circular Dependencies
+⚠️ **coderef-workflow ↔ coderef-docs** (circular)</pre></div>
+
+            <p><strong>Servers Analyzed:</strong></p>
+            <ul class="output-list">
+                <li>coderef-context - Code analysis and intelligence</li>
+                <li>coderef-workflow - Planning and orchestration</li>
+                <li>coderef-docs - Documentation generation</li>
+                <li>coderef-personas - Expert agent personas</li>
+                <li>coderef-testing - Test automation</li>
+                <li>papertrail - UDS standards enforcement</li>
+                <li>coderef-system - Core CLI and scripts</li>
+            </ul>
+
+            <p style="margin-top: 16px;"><strong>Documentation:</strong> See <a href="../workorder/coderef-ecosystem-discovery/SCRIPTS.md" style="color: var(--color-ind-accent); text-decoration: underline;">SCRIPTS.md</a> for complete documentation of all 6 analysis scripts.</p>
+
+            <p style="margin-top: 12px; color: var(--color-ind-text-muted); font-size: 0.9em;">
+                <i class="fa-solid fa-rocket"></i> <strong>Total Runtime:</strong> < 30 minutes for all 6 scripts across 7 servers
+            </p>
+        </div>
+
+        <div class="key-insight">
+            <p><strong>Important:</strong> This workflow is for orchestrators managing multiple projects. Single-project setups should follow the standard PHASE 1-6 workflow above. Ecosystem analysis requires all servers to have pre-generated `.coderef/` data.</p>
+        </div>
+
+    </div>
+    </div>
+
+    <script src="components.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

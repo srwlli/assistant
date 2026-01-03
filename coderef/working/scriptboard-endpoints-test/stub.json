@@ -29,5 +29,7 @@
   "expected_outcome": "All endpoints return valid JSON responses with correct data",
   "priority": "high",
   "status": "pending",
-  "created_by": "Archer"
+  "created_by": "Archer",
+  "feature_name": "scriptboard-endpoints-test",
+  "target_project": "assistant"
 }

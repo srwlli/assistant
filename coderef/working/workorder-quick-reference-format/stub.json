@@ -1,0 +1,11 @@
+{
+  "feature_name": "workorder-quick-reference-format",
+  "description": "Replace DELIVERABLES.md with workorder.md - human-friendly quick reference format. Shows new files, changes, what/why/how summaries, file references, tables/lists for quick scanning. Designed for rapid human comprehension of workorder outcomes.",
+  "project": "assistant",
+  "created": "2025-12-28T06:42:00Z",
+  "status": "stub",
+  "notes": "workorder.md format: ## What Changed (files list), ## Why (business reason), ## How (technical approach), ## New Files (table with purpose), ## Modified Files (table with changes), ## Quick Reference (key decisions, gotchas). Focus: scannable, high signal-to-noise ratio.",
+  "category": "feature",
+  "priority": "medium",
+  "target_project": "coderef-dashboard"
+}

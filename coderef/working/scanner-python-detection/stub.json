@@ -1,0 +1,17 @@
+{
+  "feature_name": "scanner-python-detection",
+  "description": "Add Python binary detection with version checking (Python 3), PATH validation, and user-friendly error messaging when Python not found or wrong version.",
+  "project": "coderef-dashboard",
+  "created": "2026-01-03T10:00:00.000Z",
+  "status": "stub",
+  "references": [
+    "C:\\Users\\willh\\Desktop\\projects\\coderef-system\\coderef\\reference-sheets\\cli-command-system\\cli-command-system.md"
+  ],
+  "context": {
+    "current_issue": "scanExecutor.ts:159 assumes 'python' is in PATH with no validation",
+    "affected_files": [
+      "packages/dashboard/src/app/api/scanner/lib/scanExecutor.ts"
+    ],
+    "priority": "critical"
+  }
+}

@@ -72,5 +72,7 @@
   "priority": "high",
   "status": "pending",
   "target_agent": "docs-mcp",
-  "created_by": "Archer"
+  "created_by": "Archer",
+  "feature_name": "agent-completion-workflow",
+  "target_project": "assistant"
 }

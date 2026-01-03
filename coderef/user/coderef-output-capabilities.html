@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRef Output Capabilities - CodeRef Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .output-section {
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--color-ind-panel);
+            border: 2px solid var(--color-ind-border);
+            border-radius: 8px;
+        }
+
+        .output-header {
+            font-family: var(--font-display);
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--color-ind-accent);
+            margin-bottom: 16px;
+        }
+
+        .output-item {
+            margin: 24px 0;
+            padding: 16px;
+            background: var(--color-ind-bg);
+            border-left: 4px solid var(--color-ind-border);
+            border-radius: 4px;
+        }
+
+        .output-title {
+            font-family: var(--font-display);
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--color-ind-text);
+            margin-bottom: 8px;
+        }
+
+        .output-meta {
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            color: var(--color-ind-text-muted);
+            margin-bottom: 12px;
+        }
+
+        .code-example {
+            background: var(--color-ind-bg);
+            border: 1px solid var(--color-ind-border);
+            border-radius: 4px;
+            padding: 12px;
+            margin: 12px 0;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            overflow-x: auto;
+        }
+
+        .spec-table {
+            width: 100%;
+            margin: 24px 0;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        .spec-table th,
+        .spec-table td {
+            padding: 12px;
+            border: 1px solid var(--color-ind-border);
+            text-align: left;
+        }
+
+        .spec-table th {
+            background: var(--color-ind-accent);
+            color: var(--color-ind-bg);
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        .spec-table td {
+            background: var(--color-ind-panel);
+            font-family: var(--font-mono);
+        }
+
+        .spec-table td:first-child {
+            font-weight: 600;
+            color: var(--color-ind-text);
+        }
+
+        .toc {
+            background: var(--color-ind-panel);
+            border: 2px solid var(--color-ind-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .toc h3 {
+            font-family: var(--font-display);
+            color: var(--color-ind-accent);
+            margin-bottom: 12px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: var(--color-ind-text);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+        }
+
+        .toc a:hover {
+            color: var(--color-ind-accent);
+            text-decoration: underline;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .use-case-card {
+            background: var(--color-ind-panel);
+            border: 2px solid var(--color-ind-border);
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .use-case-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--color-ind-accent);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (loaded from components.js) -->
+    <div id="header-container"></div>
+
+    <!-- Sidebar Navigation (loaded from components.js) -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+    <div class="container">
+        <h1>CodeRef Output Capabilities</h1>
+        <p class="subtitle"><strong>Complete reference for all output files, formats, and data structures</strong></p>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#code-intelligence">1. Code Intelligence Outputs (.coderef/)</a></li>
+                <li><a href="#foundation-docs">2. Foundation Documentation</a></li>
+                <li><a href="#standards-docs">3. Standards Documentation</a></li>
+                <li><a href="#diagrams">4. Diagram Outputs</a></li>
+                <li><a href="#exports">5. Export Formats</a></li>
+                <li><a href="#workorder">6. Workorder Tracking Files</a></li>
+                <li><a href="#summary">7. Summary Table</a></li>
+                <li><a href="#use-cases">8. Use Case Matrix</a></li>
+            </ul>
+        </div>
+
+        <!-- Section 1: Code Intelligence -->
+        <h2 id="code-intelligence">Code Intelligence Outputs</h2>
+
+        <div class="output-section">
+            <div class="output-item">
+                <div class="output-title">1. index.json</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/index.json</div>
+                <p><strong>Purpose:</strong> Complete inventory of all code elements in the project</p>
+                <p><strong>Contains:</strong> Functions, Classes, Components, Hooks, Types/Interfaces, Constants, Imports/Exports</p>
+                <p><strong>Size:</strong> Typically 50KB - 2MB</p>
+                <div class="code-example">
+{
+  "elements": [
+    {
+      "type": "function",
+      "name": "authenticateUser",
+      "signature": "authenticateUser(username: string, password: string): Promise&lt;User&gt;",
+      "file": "src/auth/index.ts",
+      "line": 42,
+      "dependencies": ["bcrypt", "jwt"],
+      "exports": true
+    }
+  ]
+}
+                </div>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">2. context.md</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/context.md</div>
+                <p><strong>Purpose:</strong> Human-readable architecture overview</p>
+                <p><strong>Contains:</strong> Project structure, architectural patterns, technology stack, core modules, entry points, configuration</p>
+                <p><strong>Size:</strong> 20-100KB (500-2000 lines)</p>
+                <p><strong>Use Cases:</strong> Quick onboarding, AI context for LLMs, architecture review</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">3. patterns.json</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/reports/patterns.json</div>
+                <p><strong>Purpose:</strong> Detected code patterns and architectural decisions</p>
+                <p><strong>Contains:</strong> Design patterns, API patterns, state management, error handling, auth patterns, database queries</p>
+                <p><strong>Size:</strong> 10-50KB</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">4. coverage.json</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/reports/coverage.json</div>
+                <p><strong>Purpose:</strong> Test coverage analysis</p>
+                <p><strong>Contains:</strong> Tested/untested functions, test file locations, coverage by module</p>
+                <p><strong>Size:</strong> 5-20KB</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">5. complexity/</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/reports/complexity/</div>
+                <p><strong>Purpose:</strong> Code complexity metrics</p>
+                <p><strong>Contains:</strong> Cyclomatic complexity, cognitive complexity, nested code analysis, hotspots</p>
+                <p><strong>Files:</strong> complexity-summary.json, high-complexity.json, complexity-by-module.json</p>
+                <p><strong>Size:</strong> 10-50KB total</p>
+            </div>
+        </div>
+
+        <!-- Section 2: Diagrams -->
+        <h2 id="diagrams">Diagram Outputs</h2>
+
+        <div class="output-section">
+            <div class="output-item">
+                <div class="output-title">6. dependencies.mmd</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/diagrams/dependencies.mmd</div>
+                <p><strong>Purpose:</strong> Dependency graph in Mermaid format</p>
+                <p><strong>Rendering:</strong> GitHub, VS Code, Mermaid Live Editor</p>
+                <div class="code-example">
+graph TD
+    A[AuthService] --> B[UserRepository]
+    A --> C[JWTService]
+    B --> D[Database]
+                </div>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">7. dependencies.dot</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/diagrams/dependencies.dot</div>
+                <p><strong>Purpose:</strong> Dependency graph in GraphViz DOT format</p>
+                <p><strong>Rendering:</strong> GraphViz tools, online DOT viewers</p>
+            </div>
+        </div>
+
+        <!-- Section 3: Exports -->
+        <h2 id="exports">Export Formats</h2>
+
+        <div class="output-section">
+            <div class="output-item">
+                <div class="output-title">8. graph.json</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/exports/graph.json</div>
+                <p><strong>Purpose:</strong> Complete graph export (nodes + edges)</p>
+                <p><strong>Size:</strong> 100KB-5MB</p>
+                <p><strong>Use Cases:</strong> Custom graph analysis, Neo4j integration, network visualization</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">9. jsonld/</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/exports/jsonld/</div>
+                <p><strong>Purpose:</strong> Semantic web export (JSON-LD format)</p>
+                <p><strong>Use Cases:</strong> Knowledge graphs, semantic search, RDF/SPARQL integration</p>
+            </div>
+        </div>
+
+        <!-- Section 4: Foundation Documentation -->
+        <h2 id="foundation-docs">Foundation Documentation</h2>
+
+        <div class="output-section">
+            <div class="output-item">
+                <div class="output-title">10. README.md</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/generated-docs/README.md</div>
+                <p><strong>Purpose:</strong> Project overview and quick start guide</p>
+                <p><strong>Sections:</strong> Description, Tech Stack, Getting Started, Structure, Features, Configuration, Common Tasks</p>
+                <p><strong>Size:</strong> 10-30KB (200-500 lines)</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">11. ARCHITECTURE.md</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/generated-docs/ARCHITECTURE.md</div>
+                <p><strong>Purpose:</strong> Detailed architectural documentation</p>
+                <p><strong>Sections:</strong> System Overview, Core Components, Data Flow, Module Structure, Design Patterns, ADRs, Integration Points, Security</p>
+                <p><strong>Size:</strong> 30-100KB (500-1500 lines)</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">12. API.md</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/generated-docs/API.md</div>
+                <p><strong>Purpose:</strong> API reference documentation</p>
+                <p><strong>Sections:</strong> Overview, Authentication, Endpoints, Request/Response, Error Codes, Rate Limiting, Versioning, Examples</p>
+                <p><strong>Size:</strong> 20-80KB (300-1000 lines)</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">13. COMPONENTS.md</div>
+                <div class="output-meta"><strong>Location:</strong> .coderef/generated-docs/COMPONENTS.md</div>
+                <p><strong>Purpose:</strong> Component inventory (UI projects only)</p>
+                <p><strong>Sections:</strong> Component Hierarchy, Shared Components, Pages, Layouts, Props Reference, State Management, Patterns</p>
+                <p><strong>Size:</strong> 30-100KB (400-1200 lines)</p>
+                <p><strong>Generated for:</strong> React, Vue, Angular, Svelte projects</p>
+            </div>
+        </div>
+
+        <!-- Section 5: Standards Documentation -->
+        <h2 id="standards-docs">Standards Documentation</h2>
+
+        <div class="output-section">
+            <div class="output-item">
+                <div class="output-title">14. COMPONENT-INDEX.md</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/standards/COMPONENT-INDEX.md</div>
+                <p><strong>Purpose:</strong> Searchable component inventory with props and usage examples</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">15. UI-STANDARDS.md</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/standards/UI-STANDARDS.md</div>
+                <p><strong>Purpose:</strong> UI pattern standards discovered from codebase</p>
+                <p><strong>Contains:</strong> Button styles, form patterns, modals, layouts, colors, typography, spacing</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">16. BEHAVIOR-STANDARDS.md</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/standards/BEHAVIOR-STANDARDS.md</div>
+                <p><strong>Purpose:</strong> Behavioral pattern standards</p>
+                <p><strong>Contains:</strong> Error handling, loading states, form validation, navigation, state persistence</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">17. UX-PATTERNS.md</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/standards/UX-PATTERNS.md</div>
+                <p><strong>Purpose:</strong> UX flow and interaction standards</p>
+                <p><strong>Contains:</strong> User flows, permission handling, RBAC patterns, multi-step forms, data tables, search/filter</p>
+            </div>
+        </div>
+
+        <!-- Section 6: Workorder Tracking -->
+        <h2 id="workorder">Workorder Tracking Files</h2>
+
+        <div class="output-section">
+            <div class="output-item">
+                <div class="output-title">18. context.json</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/workorder/{feature-name}/context.json</div>
+                <p><strong>Purpose:</strong> Feature requirements and constraints</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">19. communication.json</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/workorder/{feature-name}/communication.json</div>
+                <p><strong>Purpose:</strong> Workflow status tracking</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">20. plan.json</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/workorder/{feature-name}/plan.json</div>
+                <p><strong>Purpose:</strong> Implementation plan with task IDs and phases</p>
+            </div>
+
+            <div class="output-item">
+                <div class="output-title">21. DELIVERABLES.md</div>
+                <div class="output-meta"><strong>Location:</strong> coderef/workorder/{feature-name}/DELIVERABLES.md</div>
+                <p><strong>Purpose:</strong> Completion metrics (LOC, files, commits, time, contributors)</p>
+            </div>
+        </div>
+
+        <!-- Summary Table -->
+        <h2 id="summary">Summary Table</h2>
+
+        <table class="spec-table">
+            <thead>
+                <tr>
+                    <th>Output</th>
+                    <th>Location</th>
+                    <th>Format</th>
+                    <th>Phase</th>
+                    <th>Size Range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>index.json</td>
+                    <td>.coderef/</td>
+                    <td>JSON</td>
+                    <td>1</td>
+                    <td>50KB-2MB</td>
+                </tr>
+                <tr>
+                    <td>context.md</td>
+                    <td>.coderef/</td>
+                    <td>Markdown</td>
+                    <td>1</td>
+                    <td>20-100KB</td>
+                </tr>
+                <tr>
+                    <td>patterns.json</td>
+                    <td>.coderef/reports/</td>
+                    <td>JSON</td>
+                    <td>1</td>
+                    <td>10-50KB</td>
+                </tr>
+                <tr>
+                    <td>coverage.json</td>
+                    <td>.coderef/reports/</td>
+                    <td>JSON</td>
+                    <td>1</td>
+                    <td>5-20KB</td>
+                </tr>
+                <tr>
+                    <td>complexity/</td>
+                    <td>.coderef/reports/</td>
+                    <td>JSON</td>
+                    <td>1</td>
+                    <td>10-50KB</td>
+                </tr>
+                <tr>
+                    <td>dependencies.mmd</td>
+                    <td>.coderef/diagrams/</td>
+                    <td>Mermaid</td>
+                    <td>1</td>
+                    <td>5-50KB</td>
+                </tr>
+                <tr>
+                    <td>dependencies.dot</td>
+                    <td>.coderef/diagrams/</td>
+                    <td>DOT</td>
+                    <td>1</td>
+                    <td>5-50KB</td>
+                </tr>
+                <tr>
+                    <td>graph.json</td>
+                    <td>.coderef/exports/</td>
+                    <td>JSON</td>
+                    <td>1</td>
+                    <td>100KB-5MB</td>
+                </tr>
+                <tr>
+                    <td>jsonld/</td>
+                    <td>.coderef/exports/</td>
+                    <td>JSON-LD</td>
+                    <td>1</td>
+                    <td>100KB-5MB</td>
+                </tr>
+                <tr>
+                    <td>README.md</td>
+                    <td>generated-docs/</td>
+                    <td>Markdown</td>
+                    <td>3</td>
+                    <td>10-30KB</td>
+                </tr>
+                <tr>
+                    <td>ARCHITECTURE.md</td>
+                    <td>generated-docs/</td>
+                    <td>Markdown</td>
+                    <td>3</td>
+                    <td>30-100KB</td>
+                </tr>
+                <tr>
+                    <td>API.md</td>
+                    <td>generated-docs/</td>
+                    <td>Markdown</td>
+                    <td>3</td>
+                    <td>20-80KB</td>
+                </tr>
+                <tr>
+                    <td>COMPONENTS.md</td>
+                    <td>generated-docs/</td>
+                    <td>Markdown</td>
+                    <td>3</td>
+                    <td>30-100KB</td>
+                </tr>
+                <tr>
+                    <td>UI-STANDARDS.md</td>
+                    <td>standards/</td>
+                    <td>Markdown</td>
+                    <td>4</td>
+                    <td>20-60KB</td>
+                </tr>
+                <tr>
+                    <td>BEHAVIOR-STANDARDS.md</td>
+                    <td>standards/</td>
+                    <td>Markdown</td>
+                    <td>4</td>
+                    <td>15-40KB</td>
+                </tr>
+                <tr>
+                    <td>UX-PATTERNS.md</td>
+                    <td>standards/</td>
+                    <td>Markdown</td>
+                    <td>4</td>
+                    <td>15-40KB</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Use Cases -->
+        <h2 id="use-cases">Use Case Matrix</h2>
+
+        <div class="use-case-grid">
+            <div class="use-case-card">
+                <div class="use-case-title">AI Context Generation</div>
+                <p><strong>Outputs:</strong> index.json, context.md</p>
+                <p><strong>Tools:</strong> LLM prompts, Claude Code</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">Documentation Site</div>
+                <p><strong>Outputs:</strong> All .md files</p>
+                <p><strong>Tools:</strong> MkDocs, Docusaurus, VuePress</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">Dependency Analysis</div>
+                <p><strong>Outputs:</strong> graph.json, dependencies.*</p>
+                <p><strong>Tools:</strong> Neo4j, Gephi, Cytoscape</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">Code Quality Metrics</div>
+                <p><strong>Outputs:</strong> complexity/, coverage.json</p>
+                <p><strong>Tools:</strong> SonarQube, CodeClimate</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">Semantic Search</div>
+                <p><strong>Outputs:</strong> jsonld/</p>
+                <p><strong>Tools:</strong> RDF stores, SPARQL</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">Visual Architecture</div>
+                <p><strong>Outputs:</strong> dependencies.mmd/.dot</p>
+                <p><strong>Tools:</strong> Mermaid Live, GraphViz</p>
+            </div>
+        </div>
+
+        <p style="margin-top: 40px; color: var(--color-ind-text-muted); text-align: center;">
+            <strong>Last Updated:</strong> 2025-12-31 | <strong>CodeRef System Version:</strong> 2.0+
+        </p>
+
+    </div>
+    </div>
+
+    <script src="components.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

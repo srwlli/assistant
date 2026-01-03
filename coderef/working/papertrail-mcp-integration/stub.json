@@ -58,5 +58,6 @@
     "Papertrail Workflow Guide: misc/PAPER-TRAIL-WORKFLOW-GUIDE.md",
     "AI Integration Guide: ai-integration.md",
     "Strategic comparison: papertrail-documentation/papertrail-strategic-documents/which-is-better-coderef2-or-papertrail.md"
-  ]
+  ],
+  "target_project": "coderef-docs"
 }

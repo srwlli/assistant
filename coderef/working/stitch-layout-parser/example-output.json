@@ -1,0 +1,131 @@
+{
+  "name": "dashboard-card-layout",
+  "created": "2026-01-01",
+  "description": "Clean card-based dashboard with sidebar navigation",
+
+  "spacing": {
+    "base_unit": "8px",
+    "values_used": ["8px", "16px", "24px", "32px", "48px"],
+    "notes": "Consistent 8px rhythm throughout"
+  },
+
+  "colors": {
+    "background": "#f9fafb",
+    "surface": "#ffffff",
+    "text_primary": "#111827",
+    "text_secondary": "#6b7280",
+    "border": "#e5e7eb",
+    "accent": "#3b82f6",
+    "notes": "Neutral gray palette with blue accent"
+  },
+
+  "typography": {
+    "font_family": "Inter, sans-serif",
+    "sizes": {
+      "small": "14px",
+      "base": "16px",
+      "large": "20px",
+      "heading": "24px"
+    },
+    "weights": {
+      "regular": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700"
+    },
+    "line_heights": {
+      "tight": "1.25",
+      "normal": "1.5",
+      "relaxed": "1.75"
+    }
+  },
+
+  "layout": {
+    "type": "grid",
+    "template": "sidebar main",
+    "sidebar_width": "240px",
+    "main_max_width": "1200px",
+    "gap": "24px",
+    "padding": "24px"
+  },
+
+  "components": [
+    {
+      "name": "sidebar",
+      "width": "240px",
+      "height": "100vh",
+      "padding": "24px 16px",
+      "background": "#ffffff",
+      "border": "1px solid #e5e7eb",
+      "position": "fixed"
+    },
+    {
+      "name": "dashboard-card",
+      "width": "100%",
+      "padding": "24px",
+      "background": "#ffffff",
+      "border": "1px solid #e5e7eb",
+      "border_radius": "8px",
+      "box_shadow": "0 1px 3px rgba(0,0,0,0.1)"
+    },
+    {
+      "name": "header",
+      "width": "100%",
+      "height": "64px",
+      "padding": "16px 24px",
+      "background": "#ffffff",
+      "border_bottom": "1px solid #e5e7eb"
+    }
+  ],
+
+  "responsive": {
+    "mobile": {
+      "breakpoint": "max-width: 768px",
+      "changes": [
+        "sidebar collapses to hamburger menu",
+        "padding reduces to 16px",
+        "cards stack vertically"
+      ]
+    }
+  },
+
+  "safe_to_reuse": {
+    "spacing_system": "8px base with 8/16/24/32/48px scale",
+    "color_palette": "Neutral grays (#f9fafb, #ffffff, #e5e7eb) + blue accent (#3b82f6)",
+    "typography_system": "Inter font with 14/16/20/24px sizes and 400/500/600/700 weights",
+    "component_patterns": [
+      "Card with subtle shadow and 8px border radius",
+      "Sidebar with fixed positioning",
+      "Header with bottom border separator"
+    ],
+    "layout_structure": "Grid layout with fixed sidebar + flexible main area"
+  },
+
+  "do_not_copy": [
+    "Fixed sidebar position (causes layout issues on mobile)",
+    "Hardcoded 240px sidebar width (should be responsive)",
+    "100vh height on sidebar (breaks when content scrolls)",
+    "Any z-index values over 10",
+    "Absolute positioning on cards"
+  ],
+
+  "recommended_usage": {
+    "copy_these": [
+      "8px spacing rhythm",
+      "Color palette (grays + blue)",
+      "Typography scale",
+      "Card shadow and border radius values",
+      "24px standard padding"
+    ],
+    "avoid_these": [
+      "Fixed positioning",
+      "Hardcoded widths",
+      "100vh heights"
+    ],
+    "adapt_for_mobile": [
+      "Convert fixed sidebar to hamburger menu",
+      "Reduce padding to 16px",
+      "Stack cards vertically"
+    ]
+  }
+}

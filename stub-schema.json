@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Orchestrator Stub Schema",
+  "description": "Canonical schema for stub.json files across orchestrator and dashboard",
+  "type": "object",
+  "required": [
+    "stub_id",
+    "feature_name",
+    "description",
+    "category",
+    "priority",
+    "status",
+    "created"
+  ],
+  "properties": {
+    "stub_id": {
+      "type": "string",
+      "pattern": "^STUB-\\d{3}$",
+      "description": "Auto-incremented stub ID (e.g., STUB-001)"
+    },
+    "feature_name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Kebab-case feature identifier matching folder name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Brief description of the feature idea"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "feature",
+        "enhancement",
+        "bugfix",
+        "infrastructure",
+        "documentation",
+        "refactor",
+        "research"
+      ],
+      "description": "Type of work"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "Implementation priority"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planning",
+        "ready",
+        "blocked",
+        "promoted",
+        "abandoned"
+      ],
+      "description": "Current stub lifecycle status"
+    },
+    "created": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Creation date in YYYY-MM-DD format"
+    },
+    "target_project": {
+      "type": "string",
+      "description": "Target project for delegation (optional until promotion)"
+    },
+    "promoted_to": {
+      "type": "string",
+      "pattern": "^WO-[A-Z0-9-]+-\\d{3}$",
+      "description": "Workorder ID if promoted (e.g., WO-AUTH-001)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional tags for filtering/searching"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional additional context or notes"
+    }
+  },
+  "additionalProperties": false
+}

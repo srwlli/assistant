@@ -84,5 +84,7 @@
     "phase_4_dashboard": "New scriptboard widget system displays coderef-workflow orchestration data",
     "phase_5_mcp_integration": "Integrate git-mcp and claude-filesystem-mcp with all 4 coderef servers",
     "result": "Unified system: 6 MCP servers (context, workflow, docs, testing, git, filesystem) + dashboard (all decoupled, all talking via clean APIs)"
-  }
+  },
+  "feature_name": "mcp-docs-workflow-refactor",
+  "status": "planning"
 }

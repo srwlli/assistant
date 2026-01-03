@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jovi's ADHD-Friendly Organizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rose-gold: #D4A068;
+            --rose-gold-light: #E8C4A0;
+            --rose-gold-dark: #B8860B;
+            --black: #0D0806;
+            --purple: #FFD700;
+            --purple-light: #F4E4C1;
+            --purple-dark: #C5A572;
+            --dark-bg: #1A0F0A;
+            --card-bg: #2C1810;
+            --text-light: #F5EFE7;
+            --text-muted: #C8B6A6;
+            --success: #10B981;
+            --priority-high: #FF6B6B;
+            --priority-medium: #FFD93D;
+            --priority-low: #6BCF7F;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+            background: linear-gradient(135deg, var(--black) 0%, var(--dark-bg) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+        body.focus-mode .task-card:not(.active-task) {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        body.focus-mode .calendar-widget,
+        body.focus-mode .achievements-banner {
+            opacity: 0.5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--purple-dark) 0%, var(--rose-gold-dark) 100%);
+            padding: 1.5rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--rose-gold-light), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .icon-btn.active {
+            background: var(--rose-gold);
+            border-color: var(--rose-gold-light);
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--rose-gold-light), var(--purple-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 0.25rem;
+        }
+
+        .level-progress {
+            margin-top: 1rem;
+        }
+
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--rose-gold), var(--purple));
+            height: 100%;
+            width: 65%;
+            transition: width 0.3s ease;
+        }
+
+        /* Achievements Banner */
+        .achievements-banner {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1rem;
+            border: 2px solid rgba(212, 160, 104, 0.2);
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .achievement-badge {
+            min-width: 60px;
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge.unlocked {
+            border-color: var(--purple);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .achievement-badge .badge-icon {
+            font-size: 2rem;
+            filter: grayscale(100%);
+            opacity: 0.3;
+        }
+
+        .achievement-badge.unlocked .badge-icon {
+            filter: grayscale(0%);
+            opacity: 1;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .achievement-badge .badge-label {
+            font-size: 0.7rem;
+            margin-top: 0.25rem;
+            color: var(--text-muted);
+        }
+
+        .achievement-badge.unlocked .badge-label {
+            color: var(--purple-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+
+        .view-btn {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            border-color: var(--rose-gold);
+            background: rgba(212, 160, 104, 0.1);
+            color: var(--rose-gold-light);
+        }
+
+        /* Calendar Widget */
+        .calendar-widget {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(212, 160, 104, 0.2);
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--rose-gold-light), var(--purple-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--rose-gold-dark);
+        }
+
+        .calendar-day.today {
+            background: linear-gradient(135deg, var(--purple-dark), var(--rose-gold-dark));
+            border-color: var(--rose-gold);
+            box-shadow: 0 4px 12px rgba(212, 160, 104, 0.3);
+        }
+
+        .calendar-day.streak {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+        }
+
+        .calendar-day.streak::after {
+            content: '🔥';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.6rem;
+        }
+
+        .calendar-day-name {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .calendar-day-number {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .calendar-day.today .calendar-day-name,
+        .calendar-day.today .calendar-day-number {
+            color: var(--rose-gold-light);
+        }
+
+        /* Task Grid */
+        .task-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .task-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .task-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            height: fit-content;
+            position: relative;
+        }
+
+        .task-card:hover {
+            border-color: var(--rose-gold-dark);
+            box-shadow: 0 4px 12px rgba(212, 160, 104, 0.2);
+        }
+
+        .task-card.completed {
+            opacity: 0.7;
+            border-color: var(--success);
+        }
+
+        .task-card.paused {
+            border-color: var(--priority-medium);
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 217, 61, 0.05) 100%);
+        }
+
+        .task-card.active-task {
+            border-color: var(--rose-gold);
+            box-shadow: 0 0 20px rgba(212, 160, 104, 0.4);
+        }
+
+        .priority-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-high {
+            background: var(--priority-high);
+            color: white;
+        }
+
+        .priority-medium {
+            background: var(--priority-medium);
+            color: var(--black);
+        }
+
+        .priority-low {
+            background: var(--priority-low);
+            color: white;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .task-checkbox {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--rose-gold);
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .task-checkbox.checked {
+            background: linear-gradient(135deg, var(--rose-gold), var(--purple));
+            border-color: var(--purple);
+        }
+
+        .task-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .task-title {
+            flex: 1;
+        }
+
+        .task-title h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .task-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .task-points {
+            background: linear-gradient(135deg, var(--rose-gold), var(--purple));
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+
+        /* Timer Display */
+        .task-timer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 160, 104, 0.2);
+        }
+
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--rose-gold-light);
+            font-family: 'Courier New', monospace;
+            min-width: 80px;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .timer-btn {
+            background: var(--rose-gold-dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .timer-btn:hover {
+            background: var(--rose-gold);
+            transform: scale(1.05);
+        }
+
+        .timer-btn.pause {
+            background: var(--priority-medium);
+            color: var(--black);
+        }
+
+        .timer-btn.resume {
+            background: var(--success);
+        }
+
+        /* Task Actions */
+        .task-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--rose-gold-dark);
+        }
+
+        /* Task Notes */
+        .task-notes {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 160, 104, 0.2);
+            display: none;
+        }
+
+        .task-notes.show {
+            display: block;
+        }
+
+        .task-notes textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.5rem;
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 0.875rem;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .task-notes textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .task-steps {
+            margin-top: 1rem;
+            padding-left: 1rem;
+            display: none;
+        }
+
+        .task-card.expanded .task-steps {
+            display: block;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .step-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--purple-light);
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .step-checkbox.checked {
+            background: var(--purple);
+            border-color: var(--purple);
+        }
+
+        .step-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 0.75rem;
+            display: block;
+            text-align: center;
+            line-height: 16px;
+        }
+
+        .task-progress {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .task-progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .task-progress-fill {
+            background: linear-gradient(90deg, var(--success), var(--purple-light));
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .expand-btn {
+            background: none;
+            border: 1px solid var(--rose-gold-dark);
+            color: var(--rose-gold-light);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .expand-btn:hover {
+            background: var(--rose-gold-dark);
+            color: white;
+        }
+
+        /* Bottom Navigation */
+        .main-tabs {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 0;
+            padding: 0.75rem 0.5rem;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+            background: linear-gradient(180deg, rgba(26, 15, 10, 0.95) 0%, rgba(13, 8, 6, 0.98) 100%);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(212, 160, 104, 0.2);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
+            z-index: 200;
+        }
+
+        .main-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .main-tab-icon {
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .main-tab.active {
+            color: var(--rose-gold-light);
+        }
+
+        .main-tab.active .main-tab-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 2px 8px rgba(212, 160, 104, 0.6));
+        }
+
+        .main-tab:active {
+            transform: scale(0.95);
+        }
+
+        .reward-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, var(--purple-dark), var(--rose-gold-dark));
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .reward-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .reward-popup h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .reward-popup .points {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+
+            .stat-card {
+                min-width: calc(50% - 0.5rem);
+            }
+
+            .task-card {
+                padding: 1rem;
+            }
+
+            .task-title h3 {
+                font-size: 1rem;
+            }
+
+            .main-tab {
+                font-size: 0.7rem;
+                padding: 0.5rem;
+            }
+
+            .main-tab-icon {
+                font-size: 1.25rem;
+            }
+        }
+
+        .main-section {
+            display: none;
+        }
+
+        .main-section.active {
+            display: block;
+        }
+
+        /* Reminder notification */
+        .reminder-notification {
+            position: fixed;
+            top: 80px;
+            right: 1rem;
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--purple-dark));
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 150;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .reminder-notification.show {
+            transform: translateX(0);
+        }
+
+        .reminder-notification .close-btn {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1.25rem;
+            opacity: 0.7;
+        }
+
+        .reminder-notification .close-btn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <h1>✨ Jovi's ADHD Organizer</h1>
+            <div class="header-controls">
+                <button class="icon-btn" id="focus-mode-btn" title="Focus Mode">🎯</button>
+                <button class="icon-btn" id="sound-btn" title="Sound Effects">🔊</button>
+                <button class="icon-btn" id="reminder-btn" title="Daily Reminder">🔔</button>
+            </div>
+        </div>
+        <div class="user-stats">
+            <div class="stat-card">
+                <div class="label">Points</div>
+                <div class="value" id="total-points">1,250</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Level</div>
+                <div class="value" id="level">5</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Streak</div>
+                <div class="value" id="streak">7 🔥</div>
+            </div>
+        </div>
+        <div class="level-progress">
+            <div class="level-info">
+                <span>Level 5</span>
+                <span>650 / 1000 XP</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 65%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Badges -->
+    <div class="achievements-banner">
+        <div class="achievement-badge unlocked">
+            <div class="badge-icon">🎯</div>
+            <div class="badge-label">First Task</div>
+        </div>
+        <div class="achievement-badge unlocked">
+            <div class="badge-icon">🔥</div>
+            <div class="badge-label">7-Day Streak</div>
+        </div>
+        <div class="achievement-badge">
+            <div class="badge-icon">⭐</div>
+            <div class="badge-label">Level 10</div>
+        </div>
+        <div class="achievement-badge">
+            <div class="badge-icon">👑</div>
+            <div class="badge-label">100 Tasks</div>
+        </div>
+        <div class="achievement-badge">
+            <div class="badge-icon">💎</div>
+            <div class="badge-label">Perfect Week</div>
+        </div>
+        <div class="achievement-badge">
+            <div class="badge-icon">🏆</div>
+            <div class="badge-label">Champion</div>
+        </div>
+    </div>
+
+    <!-- Reminder Notification -->
+    <div class="reminder-notification" id="reminder-notification">
+        <button class="close-btn" onclick="document.getElementById('reminder-notification').classList.remove('show')">&times;</button>
+        <div style="font-weight: bold; margin-bottom: 0.5rem;">⏰ Daily Reminder</div>
+        <div>Time to tackle your tasks! You've got this! 💪</div>
+    </div>
+
+    <div class="container">
+        <!-- View Toggle -->
+        <div class="view-toggle">
+            <button class="view-btn active" data-view="daily">📅 Daily</button>
+            <button class="view-btn" data-view="weekly">📊 Weekly</button>
+            <button class="view-btn" data-view="monthly">📆 Monthly</button>
+        </div>
+
+        <!-- HOME SECTION -->
+        <div class="main-section active" id="home">
+            <!-- Calendar Widget -->
+            <div class="calendar-widget">
+                <div class="calendar-header" id="calendar-header">December 2024</div>
+                <div class="calendar-days" id="calendar-days"></div>
+            </div>
+
+            <!-- Task Grid -->
+            <div class="task-grid">
+                <div class="task-card" data-points="50" data-priority="high">
+                    <span class="priority-badge priority-high">High</span>
+                    <div class="task-header">
+                        <div class="task-checkbox"></div>
+                        <div class="task-title">
+                            <h3>Deep Clean Kitchen</h3>
+                            <div class="task-meta">
+                                <span>⏱️ 45 min</span>
+                                <span class="task-points">+50 pts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timer -->
+                    <div class="task-timer">
+                        <div class="timer-display">45:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start">▶ Start</button>
+                            <button class="timer-btn pause" style="display:none;">⏸ Pause</button>
+                        </div>
+                    </div>
+
+                    <div class="task-progress">
+                        <span>Progress: 0/5 steps</span>
+                        <div class="task-progress-bar">
+                            <div class="task-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Task Actions -->
+                    <div class="task-actions">
+                        <button class="action-btn notes-toggle">📝 Notes</button>
+                        <button class="action-btn expand-toggle">📋 Steps</button>
+                    </div>
+
+                    <!-- Task Notes -->
+                    <div class="task-notes">
+                        <textarea placeholder="Add notes or reminders..."></textarea>
+                    </div>
+
+                    <div class="task-steps">
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Clear and wipe countertops</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Clean stovetop and backsplash</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Scrub sink and faucet</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Mop floors</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Take out trash and recycling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-card" data-points="30" data-priority="medium">
+                    <span class="priority-badge priority-medium">Medium</span>
+                    <div class="task-header">
+                        <div class="task-checkbox"></div>
+                        <div class="task-title">
+                            <h3>Vacuum Living Room</h3>
+                            <div class="task-meta">
+                                <span>⏱️ 20 min</span>
+                                <span class="task-points">+30 pts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-timer">
+                        <div class="timer-display">20:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start">▶ Start</button>
+                            <button class="timer-btn pause" style="display:none;">⏸ Pause</button>
+                        </div>
+                    </div>
+
+                    <div class="task-progress">
+                        <span>Progress: 0/3 steps</span>
+                        <div class="task-progress-bar">
+                            <div class="task-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="task-actions">
+                        <button class="action-btn notes-toggle">📝 Notes</button>
+                        <button class="action-btn expand-toggle">📋 Steps</button>
+                    </div>
+
+                    <div class="task-notes">
+                        <textarea placeholder="Add notes or reminders..."></textarea>
+                    </div>
+
+                    <div class="task-steps">
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Pick up items from floor</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Vacuum all carpeted areas</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Dust furniture surfaces</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-card" data-points="15" data-priority="low">
+                    <span class="priority-badge priority-low">Low</span>
+                    <div class="task-header">
+                        <div class="task-checkbox"></div>
+                        <div class="task-title">
+                            <h3>Organize Mail</h3>
+                            <div class="task-meta">
+                                <span>⏱️ 10 min</span>
+                                <span class="task-points">+15 pts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-timer">
+                        <div class="timer-display">10:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start">▶ Start</button>
+                            <button class="timer-btn pause" style="display:none;">⏸ Pause</button>
+                        </div>
+                    </div>
+
+                    <div class="task-progress">
+                        <span>Progress: 0/2 steps</span>
+                        <div class="task-progress-bar">
+                            <div class="task-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="task-actions">
+                        <button class="action-btn notes-toggle">📝 Notes</button>
+                        <button class="action-btn expand-toggle">📋 Steps</button>
+                    </div>
+
+                    <div class="task-notes">
+                        <textarea placeholder="Add notes or reminders..."></textarea>
+                    </div>
+
+                    <div class="task-steps">
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Sort mail into categories</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Recycle junk mail</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SHOP SECTION -->
+        <div class="main-section" id="shop">
+            <div class="calendar-widget">
+                <div class="calendar-header" id="calendar-header-shop">December 2024</div>
+                <div class="calendar-days" id="calendar-days-shop"></div>
+            </div>
+
+            <div class="task-grid">
+                <div class="task-card" data-points="45" data-priority="high">
+                    <span class="priority-badge priority-high">High</span>
+                    <div class="task-header">
+                        <div class="task-checkbox"></div>
+                        <div class="task-title">
+                            <h3>Sanitize Salon Tools</h3>
+                            <div class="task-meta">
+                                <span>⏱️ 30 min</span>
+                                <span class="task-points">+45 pts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-timer">
+                        <div class="timer-display">30:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start">▶ Start</button>
+                            <button class="timer-btn pause" style="display:none;">⏸ Pause</button>
+                        </div>
+                    </div>
+
+                    <div class="task-progress">
+                        <span>Progress: 0/4 steps</span>
+                        <div class="task-progress-bar">
+                            <div class="task-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="task-actions">
+                        <button class="action-btn notes-toggle">📝 Notes</button>
+                        <button class="action-btn expand-toggle">📋 Steps</button>
+                    </div>
+
+                    <div class="task-notes">
+                        <textarea placeholder="Add notes or reminders..."></textarea>
+                    </div>
+
+                    <div class="task-steps">
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Collect all used tools</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Wash with soap and water</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Disinfect in barbicide solution</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Dry and store properly</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIFE SECTION -->
+        <div class="main-section" id="life">
+            <div class="calendar-widget">
+                <div class="calendar-header" id="calendar-header-life">December 2024</div>
+                <div class="calendar-days" id="calendar-days-life"></div>
+            </div>
+
+            <div class="task-grid">
+                <div class="task-card" data-points="40" data-priority="medium">
+                    <span class="priority-badge priority-medium">Medium</span>
+                    <div class="task-header">
+                        <div class="task-checkbox"></div>
+                        <div class="task-title">
+                            <h3>Morning Self-Care</h3>
+                            <div class="task-meta">
+                                <span>⏱️ 30 min</span>
+                                <span class="task-points">+40 pts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-timer">
+                        <div class="timer-display">30:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start">▶ Start</button>
+                            <button class="timer-btn pause" style="display:none;">⏸ Pause</button>
+                        </div>
+                    </div>
+
+                    <div class="task-progress">
+                        <span>Progress: 0/5 steps</span>
+                        <div class="task-progress-bar">
+                            <div class="task-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="task-actions">
+                        <button class="action-btn notes-toggle">📝 Notes</button>
+                        <button class="action-btn expand-toggle">📋 Steps</button>
+                    </div>
+
+                    <div class="task-notes">
+                        <textarea placeholder="Add notes or reminders..."></textarea>
+                    </div>
+
+                    <div class="task-steps">
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>10 minutes meditation or journaling</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Skincare routine</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Healthy breakfast</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Review daily goals</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-checkbox"></div>
+                            <span>Light stretching or yoga</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="main-tabs">
+        <div class="main-tab active" data-main="home">
+            <div class="main-tab-icon">🏠</div>
+            <div>Home</div>
+        </div>
+        <div class="main-tab" data-main="shop">
+            <div class="main-tab-icon">💅</div>
+            <div>Shop</div>
+        </div>
+        <div class="main-tab" data-main="life">
+            <div class="main-tab-icon">✨</div>
+            <div>Life</div>
+        </div>
+    </div>
+
+    <div class="reward-popup" id="reward-popup">
+        <h2>🎉 Task Complete!</h2>
+        <div class="points">+<span id="reward-points">0</span></div>
+        <p style="margin-top: 1rem; color: var(--text-muted);">Keep up the great work!</p>
+    </div>
+
+    <script>
+        let totalPoints = 1250;
+        let currentLevel = 5;
+        let currentXP = 650;
+        let xpToNextLevel = 1000;
+        let soundEnabled = true;
+        let focusModeEnabled = false;
+        let activeTimers = new Map();
+        const streakDays = [24, 25, 26, 27, 28, 29, 30]; // Example streak days
+
+        // Sound effects
+        function playSound(type) {
+            if (!soundEnabled) return;
+
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            if (type === 'complete') {
+                oscillator.frequency.value = 800;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } else if (type === 'tick') {
+                oscillator.frequency.value = 600;
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            }
+        }
+
+        // Initialize calendar with streak tracking
+        function initCalendar(containerId, headerId) {
+            const container = document.getElementById(containerId);
+            const header = document.getElementById(headerId);
+            const today = new Date();
+            const currentDay = today.getDate();
+            const currentMonth = today.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+            header.textContent = currentMonth;
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+
+                if (date.getDate() === currentDay && date.getMonth() === today.getMonth()) {
+                    dayDiv.classList.add('today');
+                }
+
+                if (streakDays.includes(date.getDate())) {
+                    dayDiv.classList.add('streak');
+                }
+
+                dayDiv.innerHTML = `
+                    <div class="calendar-day-name">${days[i]}</div>
+                    <div class="calendar-day-number">${date.getDate()}</div>
+                `;
+
+                container.appendChild(dayDiv);
+            }
+        }
+
+        initCalendar('calendar-days', 'calendar-header');
+        initCalendar('calendar-days-shop', 'calendar-header-shop');
+        initCalendar('calendar-days-life', 'calendar-header-life');
+
+        // Header controls
+        document.getElementById('focus-mode-btn').addEventListener('click', function() {
+            focusModeEnabled = !focusModeEnabled;
+            document.body.classList.toggle('focus-mode', focusModeEnabled);
+            this.classList.toggle('active', focusModeEnabled);
+            playSound('tick');
+        });
+
+        document.getElementById('sound-btn').addEventListener('click', function() {
+            soundEnabled = !soundEnabled;
+            this.classList.toggle('active', soundEnabled);
+            this.textContent = soundEnabled ? '🔊' : '🔇';
+        });
+
+        document.getElementById('reminder-btn').addEventListener('click', function() {
+            document.getElementById('reminder-notification').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('reminder-notification').classList.remove('show');
+            }, 5000);
+        });
+
+        // View toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                playSound('tick');
+            });
+        });
+
+        // Main tab switching
+        document.querySelectorAll('.main-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.main).classList.add('active');
+                playSound('tick');
+            });
+        });
+
+        // Task actions - Notes toggle
+        document.querySelectorAll('.notes-toggle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.task-card');
+                const notes = card.querySelector('.task-notes');
+                notes.classList.toggle('show');
+                this.textContent = notes.classList.contains('show') ? '❌ Close' : '📝 Notes';
+            });
+        });
+
+        // Task actions - Expand toggle
+        document.querySelectorAll('.expand-toggle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.task-card');
+                card.classList.toggle('expanded');
+                this.textContent = card.classList.contains('expanded') ? '⬆ Hide' : '📋 Steps';
+            });
+        });
+
+        // Timer functionality
+        document.querySelectorAll('.timer-btn.start').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.task-card');
+                const timerDisplay = card.querySelector('.timer-display');
+                const startBtn = this;
+                const pauseBtn = card.querySelector('.timer-btn.pause');
+
+                // Mark as active task for focus mode
+                document.querySelectorAll('.task-card').forEach(c => c.classList.remove('active-task'));
+                card.classList.add('active-task');
+
+                startBtn.style.display = 'none';
+                pauseBtn.style.display = 'inline-block';
+                pauseBtn.classList.remove('resume');
+                pauseBtn.textContent = '⏸ Pause';
+
+                const duration = timerDisplay.textContent.split(':').reduce((acc, time) => (60 * acc) + +time, 0);
+                let timeLeft = duration;
+
+                const timerId = setInterval(() => {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        playSound('complete');
+                        showNotification('⏰ Time\'s Up!', 'Great job staying focused!');
+                        startBtn.style.display = 'inline-block';
+                        pauseBtn.style.display = 'none';
+                        card.classList.remove('active-task');
+                    }
+                }, 1000);
+
+                activeTimers.set(card, { timerId, timeLeft });
+
+                pauseBtn.addEventListener('click', function pauseTimer() {
+                    const timer = activeTimers.get(card);
+                    if (timer) {
+                        clearInterval(timer.timerId);
+                        card.classList.add('paused');
+                        this.classList.add('resume');
+                        this.textContent = '▶ Resume';
+
+                        this.removeEventListener('click', pauseTimer);
+                        this.addEventListener('click', function resumeTimer() {
+                            card.classList.remove('paused');
+                            // Resume timer logic would go here
+                            this.classList.remove('resume');
+                            this.textContent = '⏸ Pause';
+                        });
+                    }
+                });
+            });
+        });
+
+        // Step checkbox functionality
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('click', () => {
+                const checkbox = step.querySelector('.step-checkbox');
+                checkbox.classList.toggle('checked');
+                updateTaskProgress(step.closest('.task-card'));
+                playSound('tick');
+            });
+        });
+
+        // Task checkbox functionality
+        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = checkbox.closest('.task-card');
+                const points = parseInt(card.dataset.points);
+
+                if (!checkbox.classList.contains('checked')) {
+                    checkbox.classList.add('checked');
+                    card.classList.add('completed');
+                    card.querySelectorAll('.step-checkbox').forEach(sc => sc.classList.add('checked'));
+                    updateTaskProgress(card);
+                    awardPoints(points);
+                    playSound('complete');
+                } else {
+                    checkbox.classList.remove('checked');
+                    card.classList.remove('completed');
+                    card.querySelectorAll('.step-checkbox').forEach(sc => sc.classList.remove('checked'));
+                    updateTaskProgress(card);
+                }
+            });
+        });
+
+        function updateTaskProgress(card) {
+            const steps = card.querySelectorAll('.step-checkbox');
+            const checkedSteps = card.querySelectorAll('.step-checkbox.checked');
+            const progress = (checkedSteps.length / steps.length) * 100;
+
+            const progressText = card.querySelector('.task-progress span');
+            const progressBar = card.querySelector('.task-progress-fill');
+
+            progressText.textContent = `Progress: ${checkedSteps.length}/${steps.length} steps`;
+            progressBar.style.width = `${progress}%`;
+
+            if (checkedSteps.length === steps.length && !card.classList.contains('completed')) {
+                const taskCheckbox = card.querySelector('.task-checkbox');
+                if (!taskCheckbox.classList.contains('checked')) {
+                    taskCheckbox.classList.add('checked');
+                    card.classList.add('completed');
+                    const points = parseInt(card.dataset.points);
+                    awardPoints(points);
+                }
+            }
+        }
+
+        function awardPoints(points) {
+            totalPoints += points;
+            currentXP += points;
+
+            document.getElementById('total-points').textContent = totalPoints.toLocaleString();
+
+            if (currentXP >= xpToNextLevel) {
+                currentLevel++;
+                currentXP -= xpToNextLevel;
+                xpToNextLevel = Math.floor(xpToNextLevel * 1.5);
+                document.getElementById('level').textContent = currentLevel;
+                showNotification('🎊 Level Up!', `You reached level ${currentLevel}!`);
+            }
+
+            const xpProgress = (currentXP / xpToNextLevel) * 100;
+            document.querySelector('.progress-fill').style.width = `${xpProgress}%`;
+            document.querySelector('.level-info span:last-child').textContent =
+                `${currentXP} / ${xpToNextLevel} XP`;
+
+            showReward(points);
+        }
+
+        function showReward(points) {
+            const popup = document.getElementById('reward-popup');
+            document.getElementById('reward-points').textContent = points;
+            popup.classList.add('show');
+
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 2000);
+        }
+
+        function showNotification(title, message) {
+            const notification = document.getElementById('reminder-notification');
+            notification.querySelector('div:first-of-type').textContent = title;
+            notification.querySelector('div:last-of-type').textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Initialize - show reminder after 2 seconds
+        setTimeout(() => {
+            showNotification('👋 Welcome Back, Jovi!', 'Ready to tackle your tasks? Let\'s make today productive! 💪');
+        }, 2000);
+    </script>
+</body>
+</html>

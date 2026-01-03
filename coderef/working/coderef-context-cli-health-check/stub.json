@@ -9,9 +9,13 @@
     "effort": "Low (2 hours)",
     "impact": "High - Eliminates single point of failure risk",
     "target_server": "coderef-context",
-    "related_stubs": ["coderef-context-session-memoization", "coderef-context-graceful-degradation"],
+    "related_stubs": [
+      "coderef-context-session-memoization",
+      "coderef-context-graceful-degradation"
+    ],
     "blocking_issue": "If @coderef/core CLI unavailable, entire coderef-context fails with generic error. No way to know if CLI exists before first tool call."
   },
   "created": "2025-12-25T16:30:00Z",
-  "status": "stub"
+  "status": "stub",
+  "target_project": "coderef-context"
 }

@@ -1,0 +1,11 @@
+{
+  "stub_id": "STUB-076",
+  "feature_name": "gitignore-coderef-directory",
+  "description": "Add .coderef/ directory to .gitignore across all projects to prevent committing generated analysis files (index.json, context.md, diagrams, exports) to version control.",
+  "category": "infrastructure",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "all-projects",
+  "tags": ["gitignore", "coderef", "version-control", "cleanup"]
+}

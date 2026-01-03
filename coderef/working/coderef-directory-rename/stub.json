@@ -50,5 +50,7 @@
   ],
   "priority": "medium",
   "status": "pending",
-  "created_by": "Archer"
+  "created_by": "Archer",
+  "feature_name": "coderef-directory-rename",
+  "target_project": "unknown"
 }

@@ -1,0 +1,84 @@
+{
+  "test_category": "TEST-ROUTING",
+  "test_date": "2026-01-03",
+  "critical_requirement": "CR-1: 100% MCP tool invocation",
+  "overall_result": "FAIL",
+
+  "tests": [
+    {
+      "test_id": "ROUTE-001",
+      "test_name": "Slash Command Routes to MCP Tool",
+      "status": "FAIL",
+      "priority": "critical",
+
+      "what_was_tested": "Verified that /create-resource-sheet slash command invokes mcp__coderef-docs__generate_resource_sheet MCP tool",
+
+      "evidence": {
+        "slash_command_file": "C:\\Users\\willh\\.claude\\commands\\create-resource-sheet.md",
+        "mcp_tool_definition": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\server.py:294",
+        "tool_handler": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\tool_handlers.py:1206"
+      },
+
+      "findings": {
+        "mcp_tool_exists": true,
+        "mcp_tool_registered": true,
+        "slash_command_exists": true,
+        "slash_command_routes_to_mcp": false
+      },
+
+      "actual_behavior": "Slash command file contains legacy template instructions (240 lines of markdown template) instead of invoking the MCP tool. Users receive template-based instructions, not the enhanced MCP tool with detection, graph integration, and validation.",
+
+      "expected_behavior": "Slash command should invoke mcp__coderef-docs__generate_resource_sheet with parameters passed through (element_type, name, scope)",
+
+      "impact": "CRITICAL - Users cannot access Phase 2-3 enhancements (element type detection, graph integration auto-fill, 4-gate validation). System is still using deprecated template approach.",
+
+      "root_cause": "Phase 2 implementation did not update the slash command file. MCP tool exists and is fully implemented, but routing layer was not modified.",
+
+      "recommendation": "Update C:\\Users\\willh\\.claude\\commands\\create-resource-sheet.md to call the MCP tool instead of providing template instructions"
+    },
+
+    {
+      "test_id": "ROUTE-002",
+      "test_name": "Element Type Parameter Passthrough",
+      "status": "NOT_TESTED",
+      "priority": "critical",
+
+      "reason_not_tested": "Cannot test parameter passthrough because slash command does not route to MCP tool (ROUTE-001 blocked)"
+    },
+
+    {
+      "test_id": "ROUTE-003",
+      "test_name": "Backward Compatibility",
+      "status": "NOT_TESTED",
+      "priority": "high",
+
+      "reason_not_tested": "Cannot test backward compatibility because slash command does not route to MCP tool (ROUTE-001 blocked)"
+    }
+  ],
+
+  "summary": {
+    "tests_total": 3,
+    "tests_passed": 0,
+    "tests_failed": 1,
+    "tests_not_tested": 2,
+    "pass_rate": "0%",
+    "critical_requirement_met": false
+  },
+
+  "go_no_go_decision": {
+    "decision": "NO_GO",
+    "reason": "Critical requirement CR-1 failed. Slash command does not route to MCP tool. Users cannot access Phase 2-3 enhancements. System still using deprecated template approach.",
+    "blocking_issues": [
+      "ROUTE-001: Slash command file not updated to invoke MCP tool"
+    ]
+  },
+
+  "next_steps": {
+    "required_before_retesting": [
+      "Update slash command file to invoke mcp__coderef-docs__generate_resource_sheet",
+      "Add parameter passing (--element-type, --name, --scope)",
+      "Test that MCP tool receives parameters correctly",
+      "Verify resource sheet generation works end-to-end"
+    ]
+  }
+}

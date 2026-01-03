@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRef Scripts Reference - Industrial Design</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Header (loaded from components.js) -->
+    <div id="header-container"></div>
+
+    <!-- Sidebar Navigation (loaded from components.js) -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+    <div class="container">
+        <h1>CodeRef Scripts Reference</h1>
+        <p class="subtitle"><strong>Complete inventory of all scripts in the CodeRef ecosystem</strong></p>
+        <p class="subtitle"><strong>Last Updated:</strong> 2025-12-31</p>
+
+        <div class="stats">
+            <strong>Total Scripts: 50+</strong> across 7 locations
+        </div>
+
+        <hr>
+
+        <h2>Structure Creators <span class="category-count">3 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">create-coderef-structure.py</td>
+                    <td>Create <code>coderef/</code> directory structure (workorder/, archived/, foundation/, user/, standards/)</td>
+                    <td><span class="component-badge comp-orchestrator">Orchestrator</span></td>
+                    <td class="used-in">Project initialization, workorder setup</td>
+                    <td class="location">C:\Users\willh\Desktop\assistant\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">scan-all.py</td>
+                    <td>Generate minimal <code>.coderef/</code> structure (2-3 files: index.json, context.md)</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Quick context generation, MCP server scans, v2 refactor</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">populate-coderef.py</td>
+                    <td>Generate complete <code>.coderef/</code> structure (all 16 files: reports/, diagrams/, exports/)</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Full documentation pipeline, foundation docs, standards generation</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Documentation Generators <span class="category-count">9 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">generate_docs.py</td>
+                    <td>Generate foundation docs from <code>.coderef/</code> data (README, ARCHITECTURE, API, SCHEMA, COMPONENTS)</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Documentation pipeline (stage 3), per-project doc generation</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\.coderef\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">foundation_generator.py</td>
+                    <td>Generate foundation docs (traditional approach - reads source files directly)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span> <span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">coderef_foundation_docs MCP tool, legacy doc generation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\ & C:\Users\willh\.mcp-servers\coderef-docs\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">coderef_foundation_generator.py</td>
+                    <td>Generate foundation docs (hybrid approach - uses <code>.coderef/</code> data + source analysis)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span> <span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">coderef_foundation_docs MCP tool (preferred), v2 refactor</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\ & C:\Users\willh\.mcp-servers\coderef-docs\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">enhance-standards.py</td>
+                    <td>Generate UI/behavior/UX standards using <code>.coderef/</code> data (COMPONENT-INDEX, UI-STANDARDS, BEHAVIOR-STANDARDS, UX-PATTERNS)</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Documentation pipeline (stage 2), /establish-standards workflow</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">standards_generator.py</td>
+                    <td>Generate standards (MCP tool integration with .coderef/ fast path)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">establish_standards MCP tool, consistency checking</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">diagram-generator.py</td>
+                    <td>Generate visual diagrams from codebase structure (Mermaid/DOT)</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Documentation pipeline (stage 4), coderef_diagram MCP tool</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">mermaid_formatter.py</td>
+                    <td>Format Mermaid diagrams</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Diagram formatting, visual dependency graphs</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Data Processing <span class="category-count">4 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">parse_coderef_data.py</td>
+                    <td>Preprocess large index files (summarizes .coderef/index.json for large codebases)</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Documentation pipeline (stage 2), large codebase optimization</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\packages\ (149 LOC) & C:\Users\willh\Desktop\projects\coderef-system\scripts\ (492 LOC)</td>
+                </tr>
+                <tr>
+                    <td class="script-name">extract-context.py</td>
+                    <td>Extract context from files</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Context generation, file analysis</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">extractors.py</td>
+                    <td>Extract data from existing documentation</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">Doc parsing, metadata extraction</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-docs\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">export_processor.py</td>
+                    <td>Export coderef data to JSON/JSON-LD/Mermaid formats</td>
+                    <td><span class="component-badge comp-context">Context</span></td>
+                    <td class="used-in">coderef_export MCP tool, graph visualization</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-context\processors\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Validation & Quality <span class="category-count">6 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">validate-docs.py</td>
+                    <td>Validate generated documentation (completeness, accuracy, cross-refs, broken links, markdown, diagrams)</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Documentation pipeline (stage 5), CI/CD validation</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">validate-stubs.py</td>
+                    <td>Validate stub.json files against schema</td>
+                    <td><span class="component-badge comp-orchestrator">Orchestrator</span></td>
+                    <td class="used-in">Stub creation, dashboard validation, schema enforcement</td>
+                    <td class="location">C:\Users\willh\Desktop\assistant\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">plan_validator.py</td>
+                    <td>Validate implementation plans (0-100 score)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">validate_implementation_plan MCP tool, /create-plan workflow</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">plan_format_validator.py</td>
+                    <td>Validate plan format</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Plan JSON structure validation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">schema_validator.py</td>
+                    <td>Validate schemas</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">JSON schema validation, UDS enforcement</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">validation.py</td>
+                    <td>General validation helpers</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Cross-cutting validation utilities</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Planning & Workflow <span class="category-count">15 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">planning_analyzer.py</td>
+                    <td>Analyze project for planning (discovers foundation docs, standards, patterns)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">analyze_project_for_planning MCP tool, /create-plan workflow (section 0)</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">planning_generator.py</td>
+                    <td>Generate 10-section implementation plans</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">create_plan MCP tool, /create-plan workflow</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">quick_plan_generator.py</td>
+                    <td>Quick planning workflow</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">generate_todo_list MCP tool, rapid plan creation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\src\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">interactive_plan_executor.py</td>
+                    <td>Execute plans interactively</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">execute_plan_interactive MCP tool, step-by-step execution</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\src\executors\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">plan_execution_tracker.py</td>
+                    <td>Track plan execution progress</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">track_plan_execution MCP tool, progress monitoring</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\src\trackers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">changelog_generator.py</td>
+                    <td>Auto-detect git changes and generate changelog entries</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">add_changelog_entry MCP tool, /record-changes workflow</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">quickref_generator.py</td>
+                    <td>Interactive quickref workflow (interview-based guide generation)</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_quickref_interactive MCP tool, user guide creation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">handoff_generator.py</td>
+                    <td>Generate agent handoff context files</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_handoff_context MCP tool, agent delegation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">risk_generator.py</td>
+                    <td>Risk assessment across 5 dimensions</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">assess_risk MCP tool, change impact analysis</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">audit_generator.py</td>
+                    <td>Audit all plans in workorder/ directory</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">audit_plans MCP tool, plan health checks</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">consistency_checker.py</td>
+                    <td>Check code against established standards</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">check_consistency MCP tool, pre-commit validation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">review_formatter.py</td>
+                    <td>Generate plan review reports</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_plan_review_report MCP tool, plan quality assessment</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">features_inventory_generator.py</td>
+                    <td>Generate feature inventory from workorder/ and archived/</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">generate_features_inventory MCP tool, /features-inventory command</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">todo_list_generator.py</td>
+                    <td>Generate TodoWrite task lists from plans</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">generate_todo_list MCP tool, /execute-plan workflow</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\src\generators\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Personas & Agents <span class="category-count">2 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">persona_manager.py</td>
+                    <td>Persona activation and management</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">use_persona MCP tool, /coderef-assistant command</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\src\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">persona_generator.py</td>
+                    <td>Create custom personas</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">create_custom_persona MCP tool, persona authoring</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\src\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Testing <span class="category-count">5 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">test_runner.py</td>
+                    <td>Run tests and analyze results</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">run_tests MCP tool, test automation workflows</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-testing\src\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">framework_detector.py</td>
+                    <td>Detect testing framework (pytest/jest/vitest/etc)</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">Automatic test framework detection, test runner initialization</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-testing\src\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">result_analyzer.py</td>
+                    <td>Parse test results</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">Test result parsing, coverage analysis</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-testing\src\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">proof_generator.py</td>
+                    <td>Generate completion proof</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">Test completion verification, DELIVERABLES.md generation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-testing\src\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">test_scan_all.py</td>
+                    <td>Test suite for scan-all.py</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">CI/CD validation, scan-all.py regression testing</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Build & Utilities <span class="category-count">11 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">build-exe.py</td>
+                    <td>Build standalone executable using PyInstaller</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Distribution, standalone builds</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">update_lloyd.py</td>
+                    <td>Update Lloyd persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">Persona maintenance, version updates</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\build_scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">build_phase2.py</td>
+                    <td>Build phase 2</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">Persona build pipeline</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\build_scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">build_phase3.py</td>
+                    <td>Build phase 3</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">Persona build pipeline</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\build_scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">create_research_scout.py</td>
+                    <td>Create research scout persona</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">Research assistant creation (STUB-024)</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\build_scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">scan-emojis.py</td>
+                    <td>Scan for emoji usage in codebase</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Code quality analysis, emoji audits</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">remove-emojis.py</td>
+                    <td>Remove emoji characters from files</td>
+                    <td><span class="component-badge comp-orchestrator">Orchestrator</span></td>
+                    <td class="used-in">Documentation cleanup, professional formatting</td>
+                    <td class="location">C:\Users\willh\Desktop\assistant\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">scan-gui.py</td>
+                    <td>GUI wrapper for CodeRef scanner</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Desktop UI for scan-all.py</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">scan-all-fixed.py</td>
+                    <td>Fixed version of scan-all.py</td>
+                    <td><span class="component-badge comp-system">System</span></td>
+                    <td class="used-in">Bugfix testing, scan-all.py improvements</td>
+                    <td class="location">C:\Users\willh\Desktop\projects\coderef-system\scripts\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">cli_utils.py</td>
+                    <td>CLI helper utilities</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">Command-line interface utilities</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-docs\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>MCP Server Core <span class="category-count">6 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">server.py (coderef-context)</td>
+                    <td>Code Intelligence MCP server entry point</td>
+                    <td><span class="component-badge comp-context">Context</span></td>
+                    <td class="used-in">13 tools: scan, query, impact, complexity, patterns, coverage, context, validate, drift, diagram, tag, export</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-context\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">server.py (coderef-workflow)</td>
+                    <td>Planning & Orchestration MCP server entry point</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">28 tools: planning, execution, tracking, changelog, archival, multi-agent coordination</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">server.py (coderef-docs)</td>
+                    <td>Documentation MCP server entry point</td>
+                    <td><span class="component-badge comp-docs">Docs</span></td>
+                    <td class="used-in">12 tools: foundation docs, standards, validation, changelog, quickref generation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-docs\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">server.py (coderef-personas)</td>
+                    <td>Expert Agents MCP server entry point</td>
+                    <td><span class="component-badge comp-personas">Personas</span></td>
+                    <td class="used-in">8 tools: persona activation, custom creation, plan execution, todo generation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-personas\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">server.py (coderef-testing)</td>
+                    <td>Test Automation MCP server entry point</td>
+                    <td><span class="component-badge comp-testing">Testing</span></td>
+                    <td class="used-in">Test runner, framework detection, result analysis, proof generation</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-testing\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">tool_handlers.py</td>
+                    <td>All 28 MCP tool implementations</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Core handler implementations for all workflow MCP tools</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Helpers & Support <span class="category-count">8 scripts</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Description</th>
+                    <th>Component</th>
+                    <th>Used In</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="script-name">base_generator.py</td>
+                    <td>Base class for all generator scripts</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">All generator scripts, shared utilities</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\generators\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">handler_helpers.py</td>
+                    <td>Handler helper functions</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">MCP tool handlers, request processing</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">handler_decorators.py</td>
+                    <td>Handler decorators</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Error handling, logging, validation decorators</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">uds_helpers.py</td>
+                    <td>Universal Documentation Standards helpers</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">UDS metadata, document headers/footers, workorder tracking</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">logger_config.py</td>
+                    <td>Logging configuration</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Centralized logging, debug output, audit trails</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">error_responses.py</td>
+                    <td>Error response handling</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Standardized error messages, exception formatting</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+                <tr>
+                    <td class="script-name">constants.py</td>
+                    <td>Constants definitions</td>
+                    <td><span class="component-badge comp-workflow">Workflow</span></td>
+                    <td class="used-in">Shared constants, enums, configuration values</td>
+                    <td class="location">C:\Users\willh\.mcp-servers\coderef-workflow\helpers\</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    </div>
+
+    <script src="components.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

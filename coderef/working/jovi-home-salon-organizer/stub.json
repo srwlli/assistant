@@ -1,0 +1,12 @@
+{
+  "stub_id": "STUB-064",
+  "feature_name": "jovi-home-salon-organizer",
+  "description": "Gamified task management app for household cleaning, laundry, clutter organization, and salon care with step-by-step breakdowns, progress tracking, and rewards system",
+  "category": "feature",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2025-12-30",
+  "target_project": "new-standalone",
+  "tags": ["gamification", "task-management", "household", "salon", "organization", "rewards"],
+  "notes": "User: Jovi. Design: rose gold, black, purple. Features: task lists, step-by-step breakdowns, progress tracking, rewards/points system, cleaning/laundry/clutter/salon categories"
+}

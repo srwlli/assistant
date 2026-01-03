@@ -1,0 +1,189 @@
+{
+  "workorder_id": "WO-RESOURCE-SHEET-CONSOLIDATION-001-TESTING",
+  "execution_date": "2026-01-03",
+  "total_tests": 5,
+  "tests_passed": 0,
+  "tests_failed": 0,
+  "critical_requirements": {
+    "CR-1": {
+      "name": "Routing",
+      "status": "pending",
+      "threshold": "100%"
+    },
+    "CR-2": {
+      "name": "Detection",
+      "status": "pending",
+      "threshold": "80%+"
+    },
+    "CR-3": {
+      "name": "Auto-fill",
+      "status": "pending",
+      "threshold": "60-80%"
+    },
+    "CR-4": {
+      "name": "Validation",
+      "status": "pending",
+      "threshold": "100%"
+    },
+    "CR-5": {
+      "name": "Performance",
+      "status": "pending",
+      "threshold": "<2s"
+    }
+  },
+  "test_results": [
+    {
+      "test_id": "TEST-ROUTING",
+      "category": "Routing Validation",
+      "critical_requirement": "CR-1",
+      "status": "manual_verification_required",
+      "instructions": [
+        "1. Open Claude Code",
+        "2. Run: /create-resource-sheet --element-type='custom_hook' --name='useAuth'",
+        "3. Check logs for: 'mcp__coderef-docs__generate_resource_sheet'",
+        "4. Verify element_type parameter passed through",
+        "5. Confirm resource sheet generated"
+      ],
+      "pass_criteria": "100% of invocations call MCP tool",
+      "manual_verification": true,
+      "evidence_required": "Screenshot or log showing MCP tool invocation"
+    },
+    {
+      "test_id": "TEST-DETECTION",
+      "category": "Element Type Detection",
+      "critical_requirement": "CR-2",
+      "status": "automated_test_needed",
+      "element_types_to_test": {
+        "priority_1": [
+          "top_level_widgets",
+          "stateful_containers",
+          "global_state",
+          "custom_hooks",
+          "api_clients"
+        ],
+        "priority_2": [
+          "data_models",
+          "utility_modules",
+          "constants",
+          "error_definitions",
+          "type_definitions"
+        ],
+        "priority_3": [
+          "validation",
+          "middleware",
+          "transformers",
+          "event_handlers",
+          "services"
+        ],
+        "priority_4": [
+          "configuration",
+          "context_providers",
+          "decorators",
+          "factories",
+          "observers"
+        ]
+      },
+      "total_types": 20,
+      "instructions": [
+        "1. Import detection_module.py from:",
+        "   C:\\Users\\willh\\.mcp-servers\\coderef-docs\\generators\\detection_module.py",
+        "2. For each of 20 element types, create test case with:",
+        "   - Sample filename (e.g., 'useAuth.ts' for custom_hooks)",
+        "   - Sample code snippet",
+        "3. Run: result = detect_element_type(filename, code_sample)",
+        "4. Record: detected_type, confidence_score, detection_stage",
+        "5. Calculate average confidence per priority tier"
+      ],
+      "pass_criteria": "\u226580% average confidence across all 20 types",
+      "test_script": "testing/test_detection.py",
+      "evidence_file": "testing/detection-results.json"
+    },
+    {
+      "test_id": "TEST-AUTOFILL",
+      "category": "Graph Integration Auto-Fill",
+      "critical_requirement": "CR-3",
+      "status": "automated_test_needed",
+      "instructions": [
+        "1. Import graph-helpers from coderef-system:",
+        "   from packages/core/src/analyzer/graph-helpers import *",
+        "2. Choose 5 test elements (mix of components, hooks, utilities)",
+        "3. For each element, run:",
+        "   - getImportsForElement(element_name)",
+        "   - getExportsForElement(element_name)",
+        "   - getConsumersForElement(element_name)",
+        "   - getDependenciesForElement(element_name)",
+        "4. Count auto-filled lines vs total section lines",
+        "5. Calculate: (auto_filled / total) * 100 per section"
+      ],
+      "target_rates": {
+        "imports": "90%",
+        "exports": "95%",
+        "consumers": "70%",
+        "dependencies": "75%",
+        "overall": "60-80%"
+      },
+      "pass_criteria": "60-80% average completion rate",
+      "test_script": "testing/test_autofill.py",
+      "evidence_file": "testing/autofill-results.json"
+    },
+    {
+      "test_id": "TEST-VALIDATION",
+      "category": "Validation Pipeline",
+      "critical_requirement": "CR-4",
+      "status": "automated_test_needed",
+      "instructions": [
+        "1. Import validation_pipeline.py from:",
+        "   C:\\Users\\willh\\.mcp-servers\\coderef-docs\\generators\\validation_pipeline.py",
+        "2. Create 5 test resource sheets:",
+        "   - Good sheet (all sections complete)",
+        "   - Incomplete sheet (missing purpose/usage)",
+        "   - Minimal sheet (only name/type)",
+        "   - Edge case 1 (empty sections)",
+        "   - Edge case 2 (malformed content)",
+        "3. Run: score, result = validate_resource_sheet(sheet)",
+        "4. Verify all 4 gates execute correctly"
+      ],
+      "validation_gates": {
+        "gate_1": "Structural integrity (required sections present)",
+        "gate_2": "Content completeness (sections not empty)",
+        "gate_3": "Quality standards (writing_standards.py)",
+        "gate_4": "Auto-fill validation (60%+ from graph)"
+      },
+      "scoring": {
+        "pass": "\u226590 points",
+        "warn": "70-89 points",
+        "reject": "<70 points"
+      },
+      "pass_criteria": "Good sheets PASS (\u226590), bad sheets REJECT (<70)",
+      "test_script": "testing/test_validation.py",
+      "evidence_file": "testing/validation-results.json"
+    },
+    {
+      "test_id": "TEST-PERFORMANCE",
+      "category": "Performance Benchmarks",
+      "critical_requirement": "CR-5",
+      "status": "automated_test_needed",
+      "instructions": [
+        "1. Use Python timeit module for 10 iterations",
+        "2. Measure end-to-end: /create-resource-sheet \u2192 final output",
+        "3. Breakdown timing by stage:",
+        "   - Detection: <50ms",
+        "   - Graph queries: <200ms (4 queries @ <50ms each)",
+        "   - Template rendering: <500ms",
+        "   - Validation: <100ms",
+        "4. Calculate: average, p95, max",
+        "5. Verify p95 \u22642000ms"
+      ],
+      "performance_targets": {
+        "detection_ms": 50,
+        "graph_queries_ms": 200,
+        "template_rendering_ms": 500,
+        "validation_ms": 100,
+        "total_ms": 2000
+      },
+      "pass_criteria": "p95 \u22642000ms, average \u22641500ms",
+      "test_script": "testing/test_performance.py",
+      "evidence_file": "testing/performance-results.json"
+    }
+  ]
+}

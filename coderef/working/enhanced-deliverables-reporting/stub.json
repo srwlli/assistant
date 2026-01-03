@@ -1,0 +1,9 @@
+{
+  "feature_name": "enhanced-deliverables-reporting",
+  "description": "Replace DELIVERABLES.md with a comprehensive summary including workorder metadata, validation scores, files changed/created/edited, components added, plan phase breakdown, priority checklist, and git commit reference.",
+  "project": "assistant",
+  "created": "2025-12-30T00:00:00Z",
+  "status": "stub",
+  "category": "feature",
+  "priority": "medium"
+}

@@ -1,6 +1,58 @@
 {
-  "last_updated": "2025-12-20",
+  "last_updated": "2025-12-30",
   "active_workorders": [
+    {
+      "workorder_id": "WO-STUB-PROJECT-DISPLAY-004",
+      "stub_id": null,
+      "feature_name": "stub-project-display",
+      "target_project": "coderef-dashboard",
+      "location": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\coderef\\workorder\\stub-project-display\\communication.json",
+      "status": "pending_plan",
+      "next_action": "Agent: Add subtitle={stub.target_project} to StubCard",
+      "created": "2025-12-30",
+      "type": "delegated",
+      "priority": "high",
+      "scope": "Display target_project field on stub cards (1-line change)"
+    },
+    {
+      "workorder_id": "WO-STATS-CARD-003",
+      "stub_id": null,
+      "feature_name": "stats-card-enhancement",
+      "target_project": "coderef-dashboard",
+      "location": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\coderef\\workorder\\stats-card-enhancement\\communication.json",
+      "status": "pending_plan",
+      "next_action": "Agent: Run /create-plan workflow",
+      "created": "2025-12-30",
+      "type": "delegated",
+      "priority": "low",
+      "scope": "Make stats cards smaller and add status/priority breakdown to stub card"
+    },
+    {
+      "workorder_id": "WO-FILTER-BAR-002",
+      "stub_id": null,
+      "feature_name": "filter-bar-component",
+      "target_project": "coderef-dashboard",
+      "location": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\coderef\\workorder\\filter-bar-component\\communication.json",
+      "status": "pending_plan",
+      "next_action": "Agent: Run /create-plan workflow",
+      "created": "2025-12-29",
+      "type": "delegated",
+      "priority": "medium",
+      "scope": "Add inline sort and filter controls next to tabs (project, time, status, priority, category) - no badges"
+    },
+    {
+      "workorder_id": "WO-STUB-SCHEMA-001",
+      "stub_id": null,
+      "feature_name": "stub-schema-integration",
+      "target_project": "coderef-dashboard",
+      "location": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\coderef\\workorder\\stub-schema-integration\\communication.json",
+      "status": "pending_plan",
+      "next_action": "Agent: Run /create-plan workflow",
+      "created": "2025-12-29",
+      "type": "delegated",
+      "priority": "high",
+      "scope": "Integrate canonical stub-schema.json from orchestrator into dashboard validation"
+    },
     {
       "workorder_id": "WO-TERMINAL-SETTINGS-SYNC-001",
       "stub_id": "STUB-020",
@@ -159,6 +211,27 @@
     }
   ],
   "completed_workorders": [
+    {
+      "workorder_id": "WO-UNIFIED-CARD-COMPONENT-001",
+      "type": "delegated",
+      "stub_id": null,
+      "feature_name": "unified-card-component",
+      "target_project": "coderef-dashboard",
+      "location": "C:\\Users\\willh\\Desktop\\coderef-dashboard\\coderef\\archived\\unified-card-component\\communication.json",
+      "status": "verified",
+      "completed": "2025-12-29",
+      "created": "2025-12-29",
+      "delegated": "2025-12-29",
+      "scope": "Create unified card component shared by StubCard and WorkorderCard for consistent UI",
+      "summary": "Successfully created UnifiedCard component (78 lines) and refactored StubCard and WorkorderCard to use it as wrapper. Eliminated 97 lines of code duplication, established single source of truth for card styling. Zero breaking changes, implementation time: ~15 minutes.",
+      "deliverables": [
+        "Created UnifiedCard component in src/components/UnifiedCard/index.tsx",
+        "Refactored StubCard from 91 to 81 lines (uses UnifiedCard)",
+        "Refactored WorkorderCard from 84 to 77 lines (uses UnifiedCard)",
+        "Eliminated 97 lines of duplicate styling logic",
+        "All builds passing, zero visual regression"
+      ]
+    },
     {
       "workorder_id": "WO-PERSONA-MANAGEMENT-001",
       "type": "delegated",

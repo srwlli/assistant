@@ -5,7 +5,10 @@
   "description": "Track plan.json and workorders that originate inside projects without orchestrator involvement. Projects create their own plans - orchestrator should still be able to discover and track them.",
   "category": "feature",
   "priority": "high",
-  "tags": ["orchestrator", "workflow"],
+  "tags": [
+    "orchestrator",
+    "workflow"
+  ],
   "created": "2025-12-16T00:00:00Z",
   "status": "stub",
   "problem": "Some work starts inside projects directly (not delegated from orchestrator). These plans exist but aren't tracked in workorders.json.",
@@ -20,5 +23,6 @@
     "3. Creates workorder entry with type: 'internal'",
     "4. Tracks status via plan.json progress field",
     "5. Updates orchestration.json with discovery log"
-  ]
+  ],
+  "target_project": "assistant"
 }

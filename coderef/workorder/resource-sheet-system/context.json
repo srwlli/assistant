@@ -1,0 +1,96 @@
+{
+  "workorder_id": "WO-RESOURCE-SHEET-SYSTEM-001",
+  "feature_name": "resource-sheet-system",
+  "created": "2026-01-02",
+  "status": "complete",
+  "target_project": "assistant",
+  "description": "Agent instruction system for generating authoritative technical resource sheets",
+  "requirements": [
+    "Base template slash command (/create-resource-sheet)",
+    "Classification catalog with 20 element types",
+    "Element-specific focus area checklists",
+    "Refactor-safety validation checklist",
+    "Master checklist for comprehensive coverage",
+    "Integration with existing documentation workflows"
+  ],
+  "constraints": [
+    "Must follow Explorer Sidebar documentation pattern",
+    "Templates must be element-agnostic (components, services, tools, workflows)",
+    "Checklists must enforce exhaustiveness (state, persistence, errors, testing)",
+    "Documentation must be refactor-safe (new dev can change code without breaking contracts)"
+  ],
+  "deliverables": [
+    "/.claude/commands/create-resource-sheet.md - Base agent instruction template",
+    "/.claude/commands/resource-sheet-catalog.md - 20 element classification + templates",
+    "State ownership table patterns",
+    "Persistence contract specifications",
+    "Event/callback contract tables",
+    "Performance consideration guidelines",
+    "Accessibility audit frameworks",
+    "Testing strategy templates"
+  ],
+  "technical_context": {
+    "element_types": [
+      "Top-level widgets/pages",
+      "Stateful containers/controllers",
+      "Global state layer",
+      "Custom hooks library",
+      "API client layer",
+      "Data model & schemas",
+      "Persistence subsystem",
+      "Eventing/messaging",
+      "Routing & navigation",
+      "File/tree domain primitives",
+      "Context menu/command system",
+      "Permission & authZ layer",
+      "Error handling system",
+      "Logging/telemetry/analytics",
+      "Performance-critical UI",
+      "Design system components",
+      "Theming & styling",
+      "Build & tooling scripts",
+      "CI/CD pipelines",
+      "Testing harness & utilities"
+    ],
+    "documentation_sections": [
+      "Executive Summary",
+      "Audience & Intent",
+      "Architecture Overview",
+      "State Ownership & Source of Truth",
+      "Persistence Contract",
+      "State Lifecycle",
+      "Behaviors (Events & Side Effects)",
+      "Event & Callback Contracts",
+      "Performance Considerations",
+      "Accessibility",
+      "Testing Strategy",
+      "Non-Goals",
+      "Common Pitfalls"
+    ],
+    "validation_rules": [
+      "No ambiguous 'should' statements",
+      "Tables for structured data",
+      "Diagrams marked illustrative",
+      "Failure modes documented",
+      "Recovery paths specified",
+      "Non-goals explicit",
+      "Refactor-safe contracts"
+    ]
+  },
+  "related_work": {
+    "inspired_by": "Explorer Sidebar authoritative documentation pattern",
+    "integrates_with": [
+      "coderef-docs foundation docs workflow",
+      "coderef-workflow planning system",
+      "Claude Code slash commands"
+    ],
+    "use_cases": [
+      "Onboarding new developers",
+      "Refactoring complex systems",
+      "Maintaining institutional knowledge",
+      "Preventing architectural drift",
+      "Documenting technical debt",
+      "Creating handoff materials"
+    ]
+  }
+}

@@ -51,7 +51,9 @@
         "mcpServers": {
           "scriptboard-mcp": {
             "command": "python",
-            "args": ["C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\server.py"],
+            "args": [
+              "C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\server.py"
+            ],
             "env": {}
           }
         }
@@ -95,5 +97,6 @@
     "C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\server.py",
     "C:\\Users\\willh\\.mcp-servers\\scriptboard-mcp\\http_client.py"
   ],
-  "notes": "This is blocking STUB-001 (scriptboard-assistant-integration). Need to enable scriptboard-mcp before agents can use Scriptboard as visual UI."
+  "notes": "This is blocking STUB-001 (scriptboard-assistant-integration). Need to enable scriptboard-mcp before agents can use Scriptboard as visual UI.",
+  "status": "planning"
 }

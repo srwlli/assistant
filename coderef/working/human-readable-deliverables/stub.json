@@ -1,0 +1,11 @@
+{
+  "stub_id": "STUB-074",
+  "feature_name": "human-readable-deliverables",
+  "description": "Transform DELIVERABLES.md format from technical git metrics to human-readable workorder summaries with clear progress indicators, accomplishments, and outcomes for non-technical stakeholders.",
+  "category": "enhancement",
+  "priority": "medium",
+  "status": "planning",
+  "created": "2026-01-01",
+  "target_project": "coderef-workflow",
+  "tags": ["documentation", "ux", "reporting"]
+}

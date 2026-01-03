@@ -1,0 +1,17 @@
+{
+  "stub_id": "STUB-063",
+  "feature_name": "todo-list-widget",
+  "description": "Reusable todo list component for coderef-dashboard with file system persistence",
+  "category": "feature",
+  "priority": "medium",
+  "status": "ready",
+  "target_project": "coderef-dashboard",
+  "created": "2025-12-30",
+  "tags": ["dashboard", "ui", "todo", "widget", "component"],
+  "requirements": {
+    "scope": "Simple task list - basic add/remove/complete tasks",
+    "placement": "Reusable component that can be imported anywhere",
+    "persistence": "File system (JSON) - save to todos.json using existing file system API"
+  },
+  "notes": "User wants a simple, reusable todo list component with file-based persistence. Should leverage existing file system API patterns from the dashboard."
+}

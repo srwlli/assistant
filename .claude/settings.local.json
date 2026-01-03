@@ -41,13 +41,29 @@
       "Bash(taskkill:*)",
       "Bash(npm install:*)",
       "Bash(npm start)",
-      "Bash(netstat:*)"
+      "Bash(netstat:*)",
+      "mcp__coderef-personas__use_persona",
+      "Bash(del \"C:\\Users\\willh\\Desktop\\coderef-dashboard\\packages\\dashboard\\.next\\dev\\lock\")",
+      "Bash(start \"C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\jovi-home-salon-organizer\\index.html\")",
+      "Bash(del \"C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\jovi-home-salon-organizer\\FEATURES.txt\")",
+      "mcp__coderef-context__coderef_scan",
+      "WebSearch",
+      "Bash(pip show:*)",
+      "mcp__coderef-context__coderef_query",
+      "SlashCommand(/coderef-assistant)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(del nul)",
+      "Bash(git push)",
+      "Bash(rm:*)",
+      "Bash(.gitignore)"
     ]
   },
   "enabledMcpjsonServers": [
     "coderef-context",
     "coderef-personas",
     "coderef-docs",
-    "coderef-workflow"
+    "coderef-workflow",
+    "filesystem"
   ]
 }
