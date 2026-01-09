@@ -1,0 +1,7 @@
+{
+  "feature_name": "papertrail-jinja2-extensions-skill",
+  "description": "Create a Tier B skill document for Papertrail's Jinja2 template extensions (git, coderef_context, workflow) teaching agents how to use template tags for automated documentation generation with real-time git stats, code intelligence, and workflow data.",
+  "project": "papertrail",
+  "created": "2026-01-04T23:45:00Z",
+  "status": "stub"
+}

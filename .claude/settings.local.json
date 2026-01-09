@@ -56,7 +56,14 @@
       "Bash(del nul)",
       "Bash(git push)",
       "Bash(rm:*)",
-      "Bash(.gitignore)"
+      "Bash(.gitignore)",
+      "Bash(find:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File:*)",
+      "mcp__coderef-workflow__gather_context",
+      "Bash(move \"C:\\Users\\willh\\Desktop\\coderef-dashboard\\ASSISTANT_UI_MOCKUP.md\" \"C:\\Users\\willh\\Desktop\\assistant\\coderef\\archived\\coderef-dashboard-docs\"\" && move \"C:UserswillhDesktopcoderef-dashboardcoderef-document-io-inventory.json\" \"C:UserswillhDesktopassistantcoderefarchivedcoderef-dashboard-docs\"\")",
+      "Bash(move \"C:\\Users\\willh\\Desktop\\coderef-dashboard\\IMPLEMENTATION_SUMMARY.md\" \"C:\\Users\\willh\\Desktop\\assistant\\coderef\\archived\\coderef-dashboard-docs\"\" && move \"C:UserswillhDesktopcoderef-dashboardPERSISTENCE_ANALYSIS.md\" \"C:UserswillhDesktopassistantcoderefarchivedcoderef-dashboard-docs\"\")",
+      "Bash(move \"C:\\Users\\willh\\Desktop\\coderef-dashboard\\PHASE_2_COMPONENT_CHECKLIST.md\" \"C:\\Users\\willh\\Desktop\\assistant\\coderef\\archived\\coderef-dashboard-docs\"\" && move \"C:UserswillhDesktopcoderef-dashboardREADME_DASHBOARD_SETUP.md\" \"C:UserswillhDesktopassistantcoderefarchivedcoderef-dashboard-docs\"\")",
+      "Bash(rsms \")"
     ]
   },
   "enabledMcpjsonServers": [

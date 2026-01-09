@@ -1,0 +1,7 @@
+{
+  "feature_name": "ai-context-improvements",
+  "description": "Complete overhaul to match AI context documentation standards: runbooks, glossary, ADR improvements, freshness automation",
+  "project": "assistant",
+  "created": "2026-01-08T00:00:00Z",
+  "status": "stub"
+}

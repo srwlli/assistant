@@ -1,0 +1,18 @@
+{
+  "feature_name": "reference-sheet-future-fix",
+  "description": "Future improvements and fixes for the reference sheet system based on archive analysis and TypeScript/Python consolidation learnings.",
+  "project": "coderef-docs",
+  "created": "2026-01-04T18:21:00Z",
+  "status": "stub",
+  "context": {
+    "related_files": [
+      "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\resource_sheet\\",
+      "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\archived\\specifications\\resource-sheet-typescript-spec\\"
+    ],
+    "related_workorders": [
+      "WO-RESOURCE-SHEET-CONSOLIDATION-001",
+      "WO-RESOURCE-SHEET-MCP-TOOL-001"
+    ],
+    "notes": "Archive analysis revealed TypeScript spec superseded by Python implementation. Future work may involve enhancing Python implementation with insights from archived TypeScript design."
+  }
+}

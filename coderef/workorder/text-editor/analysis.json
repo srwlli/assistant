@@ -1,0 +1,250 @@
+{
+  "foundation_docs": {
+    "available": [
+      "README.md (root)",
+      "API.md (coderef/foundation-docs)",
+      "ARCHITECTURE.md (coderef/foundation-docs)",
+      "COMPONENTS.md (coderef/foundation-docs)",
+      "SCHEMA.md (coderef/foundation-docs)"
+    ],
+    "missing": [
+      "USER-GUIDE.md"
+    ]
+  },
+  "foundation_doc_content": {
+    "ARCHITECTURE.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# Architecture\n\n\n\n## Core Components\n\n### Functions (10)\n\n- **`isFolder()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:311\n- **`isFile()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:318\n- **`isFileSystemAccessSupported()`** - C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:325\n- **`isBrowsedDirectory()`** - C:/Users/willh/Desktop/assistant/web/cod",
+      "headers": [
+        "Architecture",
+        "Core Components",
+        "Functions (10)",
+        "Classes (0)",
+        "Components (0)",
+        "Module Organization",
+        "`C:\\Users\\willh\\Desktop\\assistant\\web\\coderef\\workorder\\migrate-to-coderef-dashboard/`",
+        "Design Patterns"
+      ],
+      "size": 1667
+    },
+    "API.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# API Reference\n\n**Total Functions:** 10\n\n## Functions\n\n### `isFolder()`\n\n- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`\n- **Line:** 311\n- **Type:** Function\n\n### `isFile()`\n\n- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts`\n- **Line:** 318\n- **Type:** Function\n\n### `isFileSystemAccessSupported()`\n\n- **File:** `C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-code",
+      "headers": [
+        "API Reference",
+        "Functions",
+        "`isFolder()`",
+        "`isFile()`",
+        "`isFileSystemAccessSupported()`",
+        "`isBrowsedDirectory()`",
+        "`extractDirectoryName()`",
+        "`generateProjectId()`",
+        "`formatFileSize()`",
+        "`formatDate()`"
+      ],
+      "size": 1853
+    },
+    "COMPONENTS.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# Project Components\n\n## Summary\n\n- **Total Elements:** 3 (from coderef scan)\n- **Functions:** 3\n\n## Dependency Diagram\n\n<!-- AGENT: Generate Mermaid diagram from relationships -->\n\n## Services (0 detected)\n\n*No *Service classes found*\n\n## Utilities (3 detected)\n\n| Utility | File | Purpose |\n|---------|------|---------|\n| to | `C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/DELIVERABLES.md` | <!-- AGENT: Purpose --> |\n| to | `C:/Users/willh/Desktop/assistant/coderef/",
+      "headers": [
+        "Project Components",
+        "Summary",
+        "Dependency Diagram",
+        "Services (0 detected)",
+        "Utilities (3 detected)"
+      ],
+      "size": 730
+    },
+    "SCHEMA.md": {
+      "location": "coderef\\foundation-docs",
+      "preview": "# Schema Reference\n\n**Total Types:** 0\n\n## Interfaces\n\n_No interfaces found_\n\n## Type Definitions\n\n_No type definitions found_\n\n## Enums\n\n_No enums found_\n\n---\n**Generated from:** `.coderef/index.json`\n**Date:** 2025-12-31\n",
+      "headers": [
+        "Schema Reference",
+        "Interfaces",
+        "Type Definitions",
+        "Enums"
+      ],
+      "size": 223
+    },
+    "README.md": {
+      "location": "root",
+      "preview": "# CodeRef Ecosystem\n\n**An AI-powered code intelligence and development orchestration system**\n\n> Transform how you build, understand, and document software with autonomous AI agents backed by deep code analysis.\n\n---\n\n## What Is It?\n\n**CodeRef** is a complete MCP (Model Context Protocol) ecosystem that gives AI agents superhuman understanding of your codebase. It combines code analysis, automated planning, expert personas, and intelligent documentation to create a development environment where A",
+      "headers": [
+        "CodeRef Ecosystem",
+        "What Is It?"
+      ],
+      "size": 984
+    }
+  },
+  "inventory_data": {
+    "index_data": [
+      {
+        "type": "function",
+        "name": "isFolder",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 311,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "isFile",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 318,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "isFileSystemAccessSupported",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 325,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "isBrowsedDirectory",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 332,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "extractDirectoryName",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 340,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "generateProjectId",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 353,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "formatFileSize",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 361,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "formatDate",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 371,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "getFileExtension",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 383,
+        "exported": true
+      },
+      {
+        "type": "function",
+        "name": "getFileType",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 391,
+        "exported": true
+      },
+      {
+        "type": "constant",
+        "name": "INDEXEDDB_CONFIG",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 278,
+        "exported": true
+      },
+      {
+        "type": "constant",
+        "name": "API_ENDPOINTS",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 287,
+        "exported": true
+      },
+      {
+        "type": "constant",
+        "name": "FILE_TYPES",
+        "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+        "line": 297,
+        "exported": true
+      }
+    ],
+    "source": "coderef_index",
+    "total_elements": 13,
+    "by_type": {
+      "function": 10,
+      "constant": 3
+    },
+    "files": 1,
+    "utilization": ".coderef/index.json (preprocessed)"
+  },
+  "coding_standards": {
+    "available": [],
+    "missing": [
+      "BEHAVIOR-STANDARDS.md",
+      "COMPONENT-PATTERN.md",
+      "UI-STANDARDS.md",
+      "UX-PATTERNS.md",
+      "COMPONENT-INDEX.md"
+    ]
+  },
+  "reference_components": {
+    "primary": null,
+    "secondary": [],
+    "total_found": 0,
+    "note": "Using fallback - coderef tools unavailable"
+  },
+  "key_patterns_identified": [
+    "Naming: camelCase for functions (25/25 functions)"
+  ],
+  "technology_stack": {
+    "language": "unknown",
+    "framework": "unknown",
+    "database": "unknown",
+    "testing": "unknown",
+    "build": "unknown"
+  },
+  "project_structure": {
+    "main_directories": [
+      "web",
+      "coderef\\user",
+      "docs\\handoffs",
+      "web\\coderef\\workorder\\migrate-to-coderef-dashboard",
+      "coderef\\working\\mcp-docs-workflow-refactor",
+      "coderef\\workorder\\coderef-ecosystem-discovery",
+      "coderef\\workorder\\resource-sheet-consolidation",
+      "coderef\\workorder\\resource-sheet-consolidation\\testing"
+    ],
+    "file_counts": {
+      "coderef\\working\\mcp-docs-workflow-refactor": 15,
+      "web": 14,
+      "coderef\\workorder\\resource-sheet-consolidation\\testing": 14,
+      "web\\coderef\\workorder\\migrate-to-coderef-dashboard": 13,
+      "coderef\\workorder\\resource-sheet-consolidation": 13,
+      "coderef\\user": 12,
+      "docs\\handoffs": 12,
+      "coderef\\workorder\\coderef-ecosystem-discovery": 10,
+      "coderef\\foundation-docs": 7,
+      "coderef\\workorder\\coderef-ecosystem-discovery\\exports": 7
+    },
+    "organization_pattern": "unknown"
+  },
+  "gaps_and_risks": [
+    "Missing foundation docs: USER-GUIDE.md",
+    "No coding standards directory found (coderef/standards/)",
+    "No test directory found (tests/, test/, or __tests__/)",
+    "No CI configuration found (.github/workflows/, .gitlab-ci.yml, etc.)"
+  ],
+  "_uds": {
+    "generated_by": "coderef-workflow v2.0.0",
+    "document_type": "Project Analysis",
+    "workorder_id": "WO-TEXT-EDITOR-001",
+    "feature_id": "text-editor",
+    "last_updated": "2026-01-04",
+    "ai_assistance": true,
+    "status": "DRAFT",
+    "next_review": "2026-02-03"
+  }
+}
