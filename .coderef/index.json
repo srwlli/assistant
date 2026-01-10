@@ -1,93 +1,399 @@
-[
-  {
-    "type": "function",
-    "name": "isFolder",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 311,
-    "exported": true
+{
+  "version": "2.0.0",
+  "generatedAt": "2026-01-10T02:19:44.804Z",
+  "projectPath": "C:\\Users\\willh\\Desktop\\assistant",
+  "totalElements": 55,
+  "elementsByType": {
+    "component": 1,
+    "method": 38,
+    "constant": 6,
+    "function": 10
   },
-  {
-    "type": "function",
-    "name": "isFile",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 318,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "isFileSystemAccessSupported",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 325,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "isBrowsedDirectory",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 332,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "extractDirectoryName",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 340,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "generateProjectId",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 353,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "formatFileSize",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 361,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "formatDate",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 371,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "getFileExtension",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 383,
-    "exported": true
-  },
-  {
-    "type": "function",
-    "name": "getFileType",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 391,
-    "exported": true
-  },
-  {
-    "type": "constant",
-    "name": "INDEXEDDB_CONFIG",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 278,
-    "exported": true
-  },
-  {
-    "type": "constant",
-    "name": "API_ENDPOINTS",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 287,
-    "exported": true
-  },
-  {
-    "type": "constant",
-    "name": "FILE_TYPES",
-    "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
-    "line": 297,
-    "exported": true
-  }
-]
+  "elements": [
+    {
+      "type": "component",
+      "name": "Components",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 3,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "addEventListener",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 33,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 36,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 42,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "line": 47,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "initNavigation",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 4,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "closeDrawer",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 22,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 10,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "addEventListener",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 16,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 36,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "addEventListener",
+      "file": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "line": 47,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "init",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 2,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "renderDocList",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 28,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "loadDocument",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 40,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 13,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 16,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 42,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 47,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "line": 76,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "initializeSidebarToggle",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 16,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "init",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 51,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "renderDocList",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 80,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "loadDocument",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 97,
+      "exported": false
+    },
+    {
+      "type": "constant",
+      "name": "STATE_KEY",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 21,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 28,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 64,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 67,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 99,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 104,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "catch",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "line": 132,
+      "exported": false
+    },
+    {
+      "type": "constant",
+      "name": "PORT",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 5,
+      "exported": false
+    },
+    {
+      "type": "constant",
+      "name": "ROOT_DIR",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 6,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 11,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 29,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "line": 30,
+      "exported": false
+    },
+    {
+      "type": "function",
+      "name": "isFolder",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 311,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "isFile",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 318,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "isFileSystemAccessSupported",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 325,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "isBrowsedDirectory",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 332,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "extractDirectoryName",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 340,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "generateProjectId",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 353,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "formatFileSize",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 361,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "formatDate",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 371,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "getFileExtension",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 383,
+      "exported": true
+    },
+    {
+      "type": "function",
+      "name": "getFileType",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 391,
+      "exported": true
+    },
+    {
+      "type": "constant",
+      "name": "INDEXEDDB_CONFIG",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 278,
+      "exported": true
+    },
+    {
+      "type": "constant",
+      "name": "API_ENDPOINTS",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 287,
+      "exported": true
+    },
+    {
+      "type": "constant",
+      "name": "FILE_TYPES",
+      "file": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "line": 297,
+      "exported": true
+    },
+    {
+      "type": "method",
+      "name": "startPythonServer",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 13,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "stopPythonServer",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 35,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "createWindow",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 42,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 36,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 77,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 87,
+      "exported": false
+    },
+    {
+      "type": "method",
+      "name": "if",
+      "file": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "line": 108,
+      "exported": false
+    }
+  ]
+}

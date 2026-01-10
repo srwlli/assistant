@@ -1,38 +1,936 @@
 {
+  "version": "2.0.0",
+  "generatedAt": "2026-01-10T02:19:44.809Z",
+  "projectPath": "C:\\Users\\willh\\Desktop\\assistant",
   "nodes": [
     {
-      "id": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/DELIVERABLES.md:84:to",
-      "type": "function",
-      "name": "to",
-      "file": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/DELIVERABLES.md",
-      "line": 84
+      "id": "file:C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "type": "file",
+      "label": "components.js",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/components.js"
     },
     {
-      "id": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/plan.json:114:to",
-      "type": "function",
-      "name": "to",
-      "file": "C:/Users/willh/Desktop/assistant/coderef/working/file-discovery-enhancement/plan.json",
-      "line": 114
+      "id": "file:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "type": "file",
+      "label": "navigation.js",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js"
     },
     {
-      "id": "C:/Users/willh/Desktop/assistant/HANDOFF-WO-FILE-DISCOVERY-ENHANCEMENT-001.md:43:to",
-      "type": "function",
-      "name": "to",
-      "file": "C:/Users/willh/Desktop/assistant/HANDOFF-WO-FILE-DISCOVERY-ENHANCEMENT-001.md",
-      "line": 43
+      "id": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "type": "file",
+      "label": "app.js",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js"
+    },
+    {
+      "id": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "type": "file",
+      "label": "app.js",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js"
+    },
+    {
+      "id": "file:C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "type": "file",
+      "label": "server.js",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/server.js"
+    },
+    {
+      "id": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "type": "file",
+      "label": "types.ts",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts"
+    },
+    {
+      "id": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "type": "file",
+      "label": "main.js",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js"
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:Components",
+      "type": "element",
+      "label": "Components",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "elementType": "component",
+      "metadata": {
+        "line": 3,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:addEventListener",
+      "type": "element",
+      "label": "addEventListener",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 33,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 36,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 42,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 47,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:initNavigation",
+      "type": "element",
+      "label": "initNavigation",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 4,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:closeDrawer",
+      "type": "element",
+      "label": "closeDrawer",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 22,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 10,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:addEventListener",
+      "type": "element",
+      "label": "addEventListener",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 16,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 36,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:addEventListener",
+      "type": "element",
+      "label": "addEventListener",
+      "path": "C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 47,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:init",
+      "type": "element",
+      "label": "init",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 2,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:renderDocList",
+      "type": "element",
+      "label": "renderDocList",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 28,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:loadDocument",
+      "type": "element",
+      "label": "loadDocument",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 40,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 13,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:catch",
+      "type": "element",
+      "label": "catch",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 16,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 42,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:catch",
+      "type": "element",
+      "label": "catch",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 47,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:catch",
+      "type": "element",
+      "label": "catch",
+      "path": "C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 76,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:initializeSidebarToggle",
+      "type": "element",
+      "label": "initializeSidebarToggle",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 16,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:init",
+      "type": "element",
+      "label": "init",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 51,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:renderDocList",
+      "type": "element",
+      "label": "renderDocList",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 80,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:loadDocument",
+      "type": "element",
+      "label": "loadDocument",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 97,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:STATE_KEY",
+      "type": "element",
+      "label": "STATE_KEY",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "constant",
+      "metadata": {
+        "line": 21,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 28,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 64,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:catch",
+      "type": "element",
+      "label": "catch",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 67,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 99,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:catch",
+      "type": "element",
+      "label": "catch",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 104,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:catch",
+      "type": "element",
+      "label": "catch",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 132,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:PORT",
+      "type": "element",
+      "label": "PORT",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "elementType": "constant",
+      "metadata": {
+        "line": 5,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:ROOT_DIR",
+      "type": "element",
+      "label": "ROOT_DIR",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "elementType": "constant",
+      "metadata": {
+        "line": 6,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 11,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 29,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 30,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isFolder",
+      "type": "element",
+      "label": "isFolder",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 311,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isFile",
+      "type": "element",
+      "label": "isFile",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 318,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isFileSystemAccessSupported",
+      "type": "element",
+      "label": "isFileSystemAccessSupported",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 325,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isBrowsedDirectory",
+      "type": "element",
+      "label": "isBrowsedDirectory",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 332,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:extractDirectoryName",
+      "type": "element",
+      "label": "extractDirectoryName",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 340,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:generateProjectId",
+      "type": "element",
+      "label": "generateProjectId",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 353,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:formatFileSize",
+      "type": "element",
+      "label": "formatFileSize",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 361,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:formatDate",
+      "type": "element",
+      "label": "formatDate",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 371,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:getFileExtension",
+      "type": "element",
+      "label": "getFileExtension",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 383,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:getFileType",
+      "type": "element",
+      "label": "getFileType",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "function",
+      "metadata": {
+        "line": 391,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:INDEXEDDB_CONFIG",
+      "type": "element",
+      "label": "INDEXEDDB_CONFIG",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "constant",
+      "metadata": {
+        "line": 278,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:API_ENDPOINTS",
+      "type": "element",
+      "label": "API_ENDPOINTS",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "constant",
+      "metadata": {
+        "line": 287,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:FILE_TYPES",
+      "type": "element",
+      "label": "FILE_TYPES",
+      "path": "C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "elementType": "constant",
+      "metadata": {
+        "line": 297,
+        "exported": true
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/main.js:startPythonServer",
+      "type": "element",
+      "label": "startPythonServer",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 13,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/main.js:stopPythonServer",
+      "type": "element",
+      "label": "stopPythonServer",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 35,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/main.js:createWindow",
+      "type": "element",
+      "label": "createWindow",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 42,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 36,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 77,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 87,
+        "exported": false
+      }
+    },
+    {
+      "id": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "element",
+      "label": "if",
+      "path": "C:/Users/willh/Desktop/assistant/web/main.js",
+      "elementType": "method",
+      "metadata": {
+        "line": 108,
+        "exported": false
+      }
     }
   ],
-  "edges": [],
-  "metadata": {
-    "source_dir": "C:\\Users\\willh\\Desktop\\assistant",
-    "languages": [
-      "py",
-      "js",
-      "json",
-      "md"
-    ],
-    "analyzer": "ast",
-    "element_count": 3,
-    "scanned_at": "2025-12-19T23:33:21.522589"
+  "edges": [
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:Components",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:addEventListener",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/components.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/components.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:initNavigation",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:closeDrawer",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:addEventListener",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/coderef/user/navigation.js:addEventListener",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:init",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:renderDocList",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:loadDocument",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:catch",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:catch",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/docs/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/docs/js/app.js:catch",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:initializeSidebarToggle",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:init",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:renderDocList",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:loadDocument",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:STATE_KEY",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:catch",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:catch",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/js/app.js:catch",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:PORT",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:ROOT_DIR",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/documentation-site/server.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/documentation-site/server.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isFolder",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isFile",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isFileSystemAccessSupported",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:isBrowsedDirectory",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:extractDirectoryName",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:generateProjectId",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:formatFileSize",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:formatDate",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:getFileExtension",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:getFileType",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:INDEXEDDB_CONFIG",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:API_ENDPOINTS",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/coderef/workorder/migrate-to-coderef-dashboard/types.ts:FILE_TYPES",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/main.js:startPythonServer",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/main.js:stopPythonServer",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/main.js:createWindow",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "imports"
+    },
+    {
+      "source": "file:C:/Users/willh/Desktop/assistant/web/main.js",
+      "target": "element:C:/Users/willh/Desktop/assistant/web/main.js:if",
+      "type": "imports"
+    }
+  ],
+  "statistics": {
+    "totalNodes": 62,
+    "totalEdges": 55,
+    "filesWithDependencies": 7
   }
 }
