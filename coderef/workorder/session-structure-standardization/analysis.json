@@ -1,0 +1,110 @@
+{
+  "workorder_id": "WO-SESSION-STRUCTURE-001",
+  "feature_name": "session-structure-standardization",
+  "analyzed_at": "2026-01-15",
+  "project_analysis": {
+    "project_type": "orchestrator-cli",
+    "primary_language": "markdown",
+    "tech_stack": ["PowerShell", "JSON Schema", "ajv-cli", "git"],
+    "architecture_pattern": "multi-agent-coordination"
+  },
+  "existing_structure": {
+    "schemas_location": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\",
+    "existing_schemas": [
+      "communication-schema.json"
+    ],
+    "validators_location": "C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\",
+    "existing_validators": [
+      "validate.ps1"
+    ],
+    "session_command": "C:\\Users\\willh\\.claude\\commands\\create-session.md"
+  },
+  "reference_implementation": {
+    "location": "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\scanner-context-enhancement\\",
+    "structure": {
+      "session_level": [
+        "communication.json (master roster)",
+        "instructions.json (orchestrator coordination)",
+        "README.md",
+        "planning documents"
+      ],
+      "agent_subdirectories": [
+        "coderef-context/",
+        "coderef-core/"
+      ],
+      "per_agent_files": [
+        "communication.json (agent tasks)",
+        "instructions.json (execution steps)",
+        "resources/index.md (resource links)",
+        "outputs/ (agent work products)"
+      ]
+    },
+    "key_patterns": [
+      "Hierarchical agent isolation",
+      "Two-tier communication tracking",
+      "Resources as indexes (not copies)",
+      "Phase-based gates",
+      "context.json templates for workorder delegation"
+    ]
+  },
+  "integration_points": {
+    "papertrail": {
+      "role": "Schema validation and document health scoring",
+      "impact": "Must create new schemas that integrate with existing UDS validation",
+      "files_to_modify": [
+        "schemas/sessions/communication-schema.json",
+        "validators/sessions/validate.ps1"
+      ],
+      "files_to_create": [
+        "schemas/sessions/agent-communication-schema.json",
+        "schemas/sessions/agent-instructions-schema.json",
+        "validators/sessions/validate-agent-resources.ps1"
+      ]
+    },
+    "coderef_sessions": {
+      "role": "Session storage and execution",
+      "impact": "New sessions will follow hierarchical pattern",
+      "location": "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\"
+    },
+    "claude_commands": {
+      "role": "Session creation workflow",
+      "impact": "Must update /create-session command documentation",
+      "file": "C:\\Users\\willh\\.claude\\commands\\create-session.md"
+    }
+  },
+  "coding_standards": {
+    "schema_version": "JSON Schema Draft 07",
+    "naming_convention": "kebab-case for files, snake_case for JSON fields",
+    "validation_tool": "ajv-cli",
+    "documentation_style": "Markdown with YAML frontmatter"
+  },
+  "gaps_and_risks": {
+    "gaps": [
+      "No agent-level schemas exist yet",
+      "No agent subdirectory validation exists",
+      "No documentation of new pattern",
+      "agent_id enum is fixed to 9 agents"
+    ],
+    "risks": [
+      {
+        "risk": "Breaking existing sessions",
+        "mitigation": "Maintain backward compatibility, dual validation paths"
+      },
+      {
+        "risk": "Schema complexity",
+        "mitigation": "Clear documentation, validation examples"
+      },
+      {
+        "risk": "Validator performance with nested directories",
+        "mitigation": "Efficient directory traversal, schema caching"
+      }
+    ]
+  },
+  "effort_estimate": {
+    "schemas": "4-6 hours (2 new schemas + 1 update)",
+    "validators": "4-6 hours (1 new validator + 1 update)",
+    "documentation": "2-3 hours (SESSION-PATTERN.md + /create-session update)",
+    "testing": "2-3 hours (validation tests, example sessions)",
+    "total": "12-18 hours"
+  }
+}

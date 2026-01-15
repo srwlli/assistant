@@ -1,0 +1,46 @@
+{
+  "workorder_id": "WO-SESSION-STRUCTURE-001",
+  "feature_name": "session-structure-standardization",
+  "description": "Standardize the new hierarchical agent-subdirectory pattern for multi-agent sessions across the coderef ecosystem. This replaces the flat structure (one shared instructions.json) with agent subdirectories where each agent has isolated workspace with communication.json, instructions.json, and resources/.",
+  "goal": "Make the hierarchical session structure (implemented in scanner-context-enhancement session) the official standard for all future multi-agent sessions.",
+  "requirements": [
+    "Create new schemas: agent-communication-schema.json, agent-instructions-schema.json",
+    "Update existing communication-schema.json to support phases field and expanded agent_id enum",
+    "Create new validator: validate-agent-resources.ps1 for checking agent subdirectory structure",
+    "Update existing validate.ps1 to detect and validate both session-level and agent-level files",
+    "Update /create-session command to use new hierarchical pattern",
+    "Add SESSION-PATTERN.md documentation explaining the new structure",
+    "Support 1 to N agents (not fixed at 9)",
+    "Resources as indexes (links to sources, not copies)",
+    "Two-tier tracking: session-level communication.json + agent-level communication.json"
+  ],
+  "out_of_scope": [
+    "Creating actual generator code (templates + manual orchestrator synthesis is sufficient)",
+    "Migrating existing sessions (will be handled separately)",
+    "MCP tool automation for session generation"
+  ],
+  "constraints": [
+    "Must maintain backward compatibility with existing session validation",
+    "Must follow UDS (Universal Documentation Standards) schema patterns",
+    "Must integrate with existing papertrail validation infrastructure",
+    "Schemas must be JSON Schema Draft 07 compliant",
+    "Must support flexible agent count (1-20 agents, not fixed roster)"
+  ],
+  "technical_context": {
+    "current_implementation": "C:\\Users\\willh\\.claude\\commands\\create-session.md",
+    "reference_session": "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\scanner-context-enhancement\\",
+    "schema_location": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\",
+    "validator_location": "C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\",
+    "related_servers": ["coderef-workflow", "coderef-docs", "papertrail"]
+  },
+  "success_criteria": [
+    "New schemas validate correctly with ajv-cli",
+    "Validators detect and validate both session-level and agent-level files",
+    "/create-session command updated with new pattern",
+    "Documentation clearly explains hierarchical structure",
+    "Backward compatibility maintained for existing sessions",
+    "Pattern supports 1-20 agents flexibly"
+  ],
+  "created_at": "2026-01-15",
+  "created_by": "Assistant (Orchestrator)"
+}

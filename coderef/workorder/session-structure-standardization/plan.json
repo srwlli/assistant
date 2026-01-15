@@ -1,0 +1,565 @@
+{
+  "META_DOCUMENTATION": {
+    "workorder_id": "WO-SESSION-STRUCTURE-001",
+    "feature_name": "session-structure-standardization",
+    "created_at": "2026-01-15",
+    "plan_version": "1.0.0",
+    "description": "Standardize hierarchical agent-subdirectory pattern for multi-agent sessions",
+    "estimated_duration": "12-18 hours",
+    "complexity": "medium",
+    "priority": "high"
+  },
+
+  "1_FEATURE_OVERVIEW": {
+    "summary": "Replace flat session structure (one shared instructions.json) with hierarchical agent-subdirectory pattern where each agent has isolated workspace",
+    "business_value": "Enables scalable multi-agent sessions (1-N agents) with clear ownership, better autonomy, and flexible resource management",
+    "user_stories": [
+      "As an orchestrator, I want to create sessions with 1-20 agents so that I can scale coordination flexibly",
+      "As an agent, I want my own subdirectory with communication.json and instructions.json so that I have clear autonomy and ownership",
+      "As a developer, I want validated session structure so that I can trust session files are correctly formatted"
+    ],
+    "success_metrics": [
+      "New schemas validate correctly with ajv-cli",
+      "Validators detect both session-level and agent-level files",
+      "Pattern documented in SESSION-PATTERN.md",
+      "Backward compatibility maintained (existing sessions still validate)",
+      "Reference implementation (scanner-context-enhancement) validates successfully"
+    ]
+  },
+
+  "2_TECHNICAL_APPROACH": {
+    "architecture_changes": [
+      {
+        "component": "Papertrail Schemas",
+        "change": "Add agent-communication-schema.json and agent-instructions-schema.json for agent subdirectory validation",
+        "rationale": "Agent-level files have different structure than session-level files (tasks array, success_metrics, phase tracking)"
+      },
+      {
+        "component": "Papertrail Validators",
+        "change": "Update validate.ps1 to detect file depth and choose correct schema; create validate-agent-resources.ps1 for structure checks",
+        "rationale": "Need to validate both session-level and agent-level files, plus check required subdirectory structure"
+      },
+      {
+        "component": "/create-session Command",
+        "change": "Update documentation to show hierarchical pattern with agent subdirectories",
+        "rationale": "Orchestrators need clear guidance on new structure"
+      }
+    ],
+    "technology_stack": [
+      "JSON Schema Draft 07 (schema validation)",
+      "PowerShell (validation scripts)",
+      "ajv-cli (JSON schema validator)",
+      "Markdown (documentation)"
+    ],
+    "integration_points": [
+      {
+        "system": "papertrail",
+        "interface": "Schema validation via ajv-cli",
+        "dependencies": ["communication-schema.json", "UDS frontmatter patterns"]
+      },
+      {
+        "system": "coderef-sessions",
+        "interface": "File system (sessions directory structure)",
+        "dependencies": ["agent subdirectories", "communication.json files"]
+      }
+    ]
+  },
+
+  "3_IMPLEMENTATION_PHASES": {
+    "phase_1": {
+      "name": "Schema Creation",
+      "duration": "4-6 hours",
+      "deliverables": [
+        "agent-communication-schema.json (new)",
+        "agent-instructions-schema.json (new)",
+        "Updated communication-schema.json (phases field + flexible agent_id)"
+      ],
+      "dependencies": [],
+      "gate_criteria": ["All schemas validate with ajv-cli", "Reference implementation validates successfully"]
+    },
+    "phase_2": {
+      "name": "Validator Updates",
+      "duration": "4-6 hours",
+      "deliverables": [
+        "Updated validate.ps1 (dual-path validation)",
+        "validate-agent-resources.ps1 (new structure checker)"
+      ],
+      "dependencies": ["phase_1"],
+      "gate_criteria": ["Validators run without errors", "Both session-level and agent-level files validate", "Required structure detected correctly"]
+    },
+    "phase_3": {
+      "name": "Documentation",
+      "duration": "2-3 hours",
+      "deliverables": [
+        "SESSION-PATTERN.md (new)",
+        "Updated /create-session command"
+      ],
+      "dependencies": ["phase_1", "phase_2"],
+      "gate_criteria": ["Documentation clearly explains pattern", "Examples show both 1-agent and N-agent cases", "/create-session updated with new steps"]
+    },
+    "phase_4": {
+      "name": "Testing & Validation",
+      "duration": "2-3 hours",
+      "deliverables": [
+        "Validation test suite",
+        "Example session structures"
+      ],
+      "dependencies": ["phase_1", "phase_2", "phase_3"],
+      "gate_criteria": ["Reference implementation validates", "Test sessions with 1, 3, and 9 agents all validate", "Backward compatibility confirmed"]
+    }
+  },
+
+  "4_KEY_FEATURES": {
+    "feature_1": {
+      "name": "Agent Communication Schema",
+      "description": "JSON schema for agent-specific communication.json files in agent subdirectories",
+      "technical_spec": {
+        "file": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\agent-communication-schema.json",
+        "required_fields": [
+          "workorder_id (pattern: ^WO-[A-Z0-9-]+-\\\\d{3}-[A-Z0-9-]+$)",
+          "parent_session (pattern: ^WO-[A-Z0-9-]+-\\\\d{3}$)",
+          "agent_id",
+          "agent_path",
+          "phase (pattern: ^phase_[1-9]$)",
+          "role",
+          "status (enum: not_started, in_progress, complete)",
+          "tasks (array with task_id, description, status)",
+          "success_metrics (object with baseline/target/status)",
+          "resources (object with index: 'resources/index.md')",
+          "outputs (object with primary_output, format)",
+          "phase_gate (object with required_for_phase_2, criteria)"
+        ],
+        "schema_version": "Draft 07"
+      },
+      "acceptance_criteria": [
+        "Schema validates reference implementation (scanner-context-enhancement/coderef-context/communication.json)",
+        "Required fields enforced",
+        "Pattern validation works for workorder_id and phase"
+      ]
+    },
+    "feature_2": {
+      "name": "Agent Instructions Schema",
+      "description": "JSON schema for agent-specific instructions.json files with execution steps and context templates",
+      "technical_spec": {
+        "file": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\agent-instructions-schema.json",
+        "required_fields": [
+          "workorder_id",
+          "agent_id",
+          "phase",
+          "role",
+          "context (object with problem/solution/impact)",
+          "execution_steps (object with step_N keys)",
+          "tasks (object with task definitions)",
+          "context_json_template (template for agent's own workorder creation)",
+          "success_criteria",
+          "output_requirements (file, format)",
+          "phase_gate_checklist (array)"
+        ]
+      },
+      "acceptance_criteria": [
+        "Schema validates reference implementation",
+        "Supports flexible task definitions",
+        "context_json_template structure enforced"
+      ]
+    },
+    "feature_3": {
+      "name": "Session Communication Schema Updates",
+      "description": "Add phases field and expand agent_id enum to support flexible agent count",
+      "technical_spec": {
+        "file": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\communication-schema.json",
+        "changes": [
+          "Add phases field (object with phase_N keys, each with status/progress/lead_agents)",
+          "Expand agent_id enum to include 'coderef-core' and any other needed agents",
+          "Update description to clarify 1-N agent support"
+        ]
+      },
+      "acceptance_criteria": [
+        "Phases field validates correctly",
+        "agent_id enum expanded",
+        "Backward compatibility maintained (phases field optional)"
+      ]
+    },
+    "feature_4": {
+      "name": "Dual-Path Validator",
+      "description": "Update validate.ps1 to detect file depth and use appropriate schema",
+      "technical_spec": {
+        "file": "C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\validate.ps1",
+        "logic": [
+          "Detect file depth: if parent.parent.name == 'sessions' → session-level, else → agent-level",
+          "Load appropriate schema based on depth",
+          "Report both session-level and agent-level validation results"
+        ],
+        "output": "Summary with counts for session-level (valid/invalid) and agent-level (valid/invalid)"
+      },
+      "acceptance_criteria": [
+        "Correctly detects session-level vs agent-level files",
+        "Uses correct schema for each file type",
+        "Clear reporting of validation results"
+      ]
+    },
+    "feature_5": {
+      "name": "Agent Resource Structure Validator",
+      "description": "New validator to check agent subdirectory structure (required files and directories)",
+      "technical_spec": {
+        "file": "C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\validate-agent-resources.ps1",
+        "checks": [
+          "Required files: communication.json, instructions.json, resources/index.md",
+          "Required directories: resources/, outputs/",
+          "resources/index.md contains links (not copied content)"
+        ],
+        "output": "Pass/fail per agent subdirectory with missing files/directories listed"
+      },
+      "acceptance_criteria": [
+        "Detects agent subdirectories correctly",
+        "Reports missing files/directories",
+        "Warns about copied content in resources/"
+      ]
+    },
+    "feature_6": {
+      "name": "SESSION-PATTERN Documentation",
+      "description": "Comprehensive documentation of hierarchical session pattern",
+      "technical_spec": {
+        "file": "C:\\Users\\willh\\.mcp-servers\\papertrail\\docs\\SESSION-PATTERN.md",
+        "sections": [
+          "Overview (hierarchical structure explanation)",
+          "Key Principles (agent autonomy, resources as indexes, two-tier tracking)",
+          "Workflow Pattern (orchestrator creates subdirs → agent executes → orchestrator aggregates)",
+          "Example Structure (visual diagram)",
+          "Integration with existing tools"
+        ]
+      },
+      "acceptance_criteria": [
+        "Clear explanation of pattern",
+        "Visual examples included",
+        "Workflow clearly documented"
+      ]
+    },
+    "feature_7": {
+      "name": "Updated /create-session Command",
+      "description": "Update command documentation to include agent subdirectory creation steps",
+      "technical_spec": {
+        "file": "C:\\Users\\willh\\.claude\\commands\\create-session.md",
+        "changes": [
+          "Add Step 5: Create Agent Subdirectories (after Step 4)",
+          "Include agent communication.json template",
+          "Include agent instructions.json template",
+          "Include resources/index.md template",
+          "Update validation step to run both validators"
+        ]
+      },
+      "acceptance_criteria": [
+        "New step clearly documented",
+        "Templates provided for all agent files",
+        "Validation updated to use both validators"
+      ]
+    }
+  },
+
+  "5_TASKS_BREAKDOWN": {
+    "SETUP": [
+      {
+        "id": "SETUP-001",
+        "description": "Create workorder directory structure at C:\\Users\\willh\\Desktop\\assistant\\coderef\\workorder\\session-structure-standardization\\",
+        "estimated_hours": 0.1,
+        "dependencies": [],
+        "files_affected": []
+      }
+    ],
+    "IMPL": [
+      {
+        "id": "IMPL-001",
+        "description": "Create agent-communication-schema.json with all required fields (workorder_id, parent_session, agent_id, phase, tasks, success_metrics, resources, outputs, phase_gate)",
+        "estimated_hours": 2,
+        "dependencies": ["SETUP-001"],
+        "files_affected": ["C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\agent-communication-schema.json"]
+      },
+      {
+        "id": "IMPL-002",
+        "description": "Create agent-instructions-schema.json with execution_steps, context, tasks, context_json_template, success_criteria, output_requirements, phase_gate_checklist",
+        "estimated_hours": 2,
+        "dependencies": ["SETUP-001"],
+        "files_affected": ["C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\agent-instructions-schema.json"]
+      },
+      {
+        "id": "IMPL-003",
+        "description": "Update communication-schema.json: add phases field (object with phase_N pattern), expand agent_id enum to include 'coderef-core', update description for 1-N agent support",
+        "estimated_hours": 1,
+        "dependencies": ["SETUP-001"],
+        "files_affected": ["C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\communication-schema.json"]
+      },
+      {
+        "id": "IMPL-004",
+        "description": "Update validate.ps1: add file depth detection logic (lines ~76-90), add schema selection based on depth, update summary reporting to show session-level vs agent-level counts",
+        "estimated_hours": 3,
+        "dependencies": ["IMPL-001", "IMPL-002"],
+        "files_affected": ["C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\validate.ps1"]
+      },
+      {
+        "id": "IMPL-005",
+        "description": "Create validate-agent-resources.ps1: detect agent subdirectories, check required files (communication.json, instructions.json, resources/index.md), check required directories (resources/, outputs/), warn about copied content in resources/",
+        "estimated_hours": 3,
+        "dependencies": ["SETUP-001"],
+        "files_affected": ["C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\validate-agent-resources.ps1"]
+      },
+      {
+        "id": "IMPL-006",
+        "description": "Create SESSION-PATTERN.md with overview, key principles, workflow pattern, example structure, integration guide sections",
+        "estimated_hours": 2,
+        "dependencies": ["IMPL-001", "IMPL-002", "IMPL-003"],
+        "files_affected": ["C:\\Users\\willh\\.mcp-servers\\papertrail\\docs\\SESSION-PATTERN.md"]
+      },
+      {
+        "id": "IMPL-007",
+        "description": "Update /create-session command: add Step 5 (Create Agent Subdirectories), include agent file templates, update Step 6 validation to run both validators",
+        "estimated_hours": 1.5,
+        "dependencies": ["IMPL-006"],
+        "files_affected": ["C:\\Users\\willh\\.claude\\commands\\create-session.md"]
+      }
+    ],
+    "TEST": [
+      {
+        "id": "TEST-001",
+        "description": "Validate agent-communication-schema.json using ajv-cli: ajv compile -s agent-communication-schema.json",
+        "estimated_hours": 0.5,
+        "dependencies": ["IMPL-001"],
+        "files_affected": []
+      },
+      {
+        "id": "TEST-002",
+        "description": "Validate agent-instructions-schema.json using ajv-cli: ajv compile -s agent-instructions-schema.json",
+        "estimated_hours": 0.5,
+        "dependencies": ["IMPL-002"],
+        "files_affected": []
+      },
+      {
+        "id": "TEST-003",
+        "description": "Test validate.ps1 on scanner-context-enhancement session: should detect 1 session-level + 2 agent-level communication.json files, use correct schemas, report all valid",
+        "estimated_hours": 1,
+        "dependencies": ["IMPL-004"],
+        "files_affected": []
+      },
+      {
+        "id": "TEST-004",
+        "description": "Test validate-agent-resources.ps1 on scanner-context-enhancement session: should detect 2 agent subdirectories (coderef-context, coderef-core), verify all required files present",
+        "estimated_hours": 1,
+        "dependencies": ["IMPL-005"],
+        "files_affected": []
+      },
+      {
+        "id": "TEST-005",
+        "description": "Test backward compatibility: run validate.ps1 on old session structure (flat, no agent subdirs), verify still validates correctly",
+        "estimated_hours": 0.5,
+        "dependencies": ["IMPL-004"],
+        "files_affected": []
+      },
+      {
+        "id": "TEST-006",
+        "description": "Create test session with 1 agent using new pattern, validate with both validators, confirm passes",
+        "estimated_hours": 1,
+        "dependencies": ["IMPL-004", "IMPL-005"],
+        "files_affected": []
+      },
+      {
+        "id": "TEST-007",
+        "description": "Create test session with 3 agents using new pattern, validate with both validators, confirm passes",
+        "estimated_hours": 1,
+        "dependencies": ["IMPL-004", "IMPL-005"],
+        "files_affected": []
+      }
+    ],
+    "DOC": [
+      {
+        "id": "DOC-001",
+        "description": "Review SESSION-PATTERN.md for clarity, ensure all sections complete, add visual examples",
+        "estimated_hours": 1,
+        "dependencies": ["IMPL-006"],
+        "files_affected": ["C:\\Users\\willh\\.mcp-servers\\papertrail\\docs\\SESSION-PATTERN.md"]
+      },
+      {
+        "id": "DOC-002",
+        "description": "Review updated /create-session command, ensure templates are complete and clear",
+        "estimated_hours": 0.5,
+        "dependencies": ["IMPL-007"],
+        "files_affected": ["C:\\Users\\willh\\.claude\\commands\\create-session.md"]
+      }
+    ]
+  },
+
+  "6_FILE_CHANGES": {
+    "new_files": [
+      {
+        "path": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\agent-communication-schema.json",
+        "purpose": "Validate agent-specific communication.json files",
+        "size_estimate": "~250 lines"
+      },
+      {
+        "path": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\agent-instructions-schema.json",
+        "purpose": "Validate agent-specific instructions.json files",
+        "size_estimate": "~200 lines"
+      },
+      {
+        "path": "C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\validate-agent-resources.ps1",
+        "purpose": "Validate agent subdirectory structure",
+        "size_estimate": "~180 lines"
+      },
+      {
+        "path": "C:\\Users\\willh\\.mcp-servers\\papertrail\\docs\\SESSION-PATTERN.md",
+        "purpose": "Document hierarchical session pattern",
+        "size_estimate": "~300 lines"
+      }
+    ],
+    "modified_files": [
+      {
+        "path": "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\sessions\\communication-schema.json",
+        "changes": ["Add phases field definition", "Expand agent_id enum", "Update description"],
+        "lines_affected": "~30 lines added"
+      },
+      {
+        "path": "C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\validate.ps1",
+        "changes": ["Add file depth detection", "Add schema selection logic", "Update summary reporting"],
+        "lines_affected": "~50 lines modified/added"
+      },
+      {
+        "path": "C:\\Users\\willh\\.claude\\commands\\create-session.md",
+        "changes": ["Add Step 5 for agent subdirectories", "Include agent file templates", "Update validation step"],
+        "lines_affected": "~150 lines added"
+      }
+    ]
+  },
+
+  "7_TESTING_STRATEGY": {
+    "unit_tests": [
+      {
+        "test": "Schema compilation",
+        "description": "All 3 schemas compile successfully with ajv-cli",
+        "passing_criteria": "ajv compile returns exit code 0"
+      }
+    ],
+    "integration_tests": [
+      {
+        "test": "Reference implementation validation",
+        "description": "scanner-context-enhancement session validates with new schemas and validators",
+        "passing_criteria": "All files validate, no errors reported"
+      },
+      {
+        "test": "1-agent session",
+        "description": "Create and validate session with single agent",
+        "passing_criteria": "Session validates successfully"
+      },
+      {
+        "test": "3-agent session",
+        "description": "Create and validate session with three agents",
+        "passing_criteria": "Session validates successfully"
+      },
+      {
+        "test": "Backward compatibility",
+        "description": "Old flat structure sessions still validate",
+        "passing_criteria": "Existing sessions pass validation"
+      }
+    ],
+    "validation_tests": [
+      {
+        "test": "Dual-path schema selection",
+        "description": "validate.ps1 chooses correct schema based on file depth",
+        "passing_criteria": "Session-level files use communication-schema.json, agent-level use agent-communication-schema.json"
+      },
+      {
+        "test": "Structure validation",
+        "description": "validate-agent-resources.ps1 detects missing files/directories",
+        "passing_criteria": "Reports missing files correctly, passes complete structures"
+      }
+    ]
+  },
+
+  "8_RISKS_AND_MITIGATIONS": {
+    "technical_risks": [
+      {
+        "risk": "Breaking existing sessions",
+        "probability": "medium",
+        "impact": "high",
+        "mitigation": "Maintain backward compatibility by making phases field optional, keeping existing agent_id enum values, testing old structure validation"
+      },
+      {
+        "risk": "Schema complexity causing validation failures",
+        "probability": "medium",
+        "impact": "medium",
+        "mitigation": "Thorough testing with reference implementation, clear error messages, validation examples"
+      },
+      {
+        "risk": "Validator performance with many agent subdirectories",
+        "probability": "low",
+        "impact": "low",
+        "mitigation": "Efficient directory traversal, limit depth scanning, schema caching"
+      }
+    ],
+    "organizational_risks": [
+      {
+        "risk": "Adoption resistance (orchestrators prefer flat structure)",
+        "probability": "low",
+        "impact": "medium",
+        "mitigation": "Clear documentation showing benefits, reference implementation demonstrates value, gradual adoption (both patterns supported)"
+      }
+    ]
+  },
+
+  "9_DEPENDENCIES": {
+    "external_dependencies": [
+      {
+        "name": "ajv-cli",
+        "version": "latest",
+        "purpose": "JSON schema validation",
+        "required": true
+      },
+      {
+        "name": "PowerShell",
+        "version": "5.1+",
+        "purpose": "Validation scripts",
+        "required": true
+      }
+    ],
+    "internal_dependencies": [
+      {
+        "component": "papertrail MCP server",
+        "reason": "Hosts schemas and validators",
+        "impact": "All schema/validator changes happen here"
+      },
+      {
+        "component": "coderef sessions directory",
+        "reason": "Stores actual session files",
+        "impact": "New sessions follow new pattern"
+      },
+      {
+        "component": "scanner-context-enhancement session",
+        "reason": "Reference implementation for testing",
+        "impact": "Used to validate schemas work correctly"
+      }
+    ]
+  },
+
+  "10_ROLLOUT_PLAN": {
+    "phase_1": {
+      "name": "Schema & Validator Development",
+      "duration": "8-12 hours",
+      "tasks": ["IMPL-001", "IMPL-002", "IMPL-003", "IMPL-004", "IMPL-005"],
+      "gate": "All schemas compile, validators run without errors"
+    },
+    "phase_2": {
+      "name": "Documentation",
+      "duration": "2-3 hours",
+      "tasks": ["IMPL-006", "IMPL-007", "DOC-001", "DOC-002"],
+      "gate": "Documentation reviewed and complete"
+    },
+    "phase_3": {
+      "name": "Testing & Validation",
+      "duration": "4-5 hours",
+      "tasks": ["TEST-001", "TEST-002", "TEST-003", "TEST-004", "TEST-005", "TEST-006", "TEST-007"],
+      "gate": "All tests pass, backward compatibility confirmed"
+    },
+    "phase_4": {
+      "name": "Rollout",
+      "duration": "1 hour",
+      "tasks": ["Commit all changes", "Update CHANGELOG", "Notify ecosystem"],
+      "gate": "All changes committed and documented"
+    }
+  }
+}
