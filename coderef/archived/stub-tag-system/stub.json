@@ -1,0 +1,43 @@
+{
+  "stub_id": "STUB-033",
+  "feature_name": "stub-tag-system",
+  "description": "Formalize tag system for stubs. Define standard tags, add validation, enable filtering by tag in dashboard (STUB-023).",
+  "category": "feature",
+  "priority": "medium",
+  "tags": [
+    "orchestrator",
+    "workflow"
+  ],
+  "created": "2025-12-16",
+  "status": "planning",
+  "standard_tags": {
+    "scriptboard": "Related to Scriptboard app",
+    "orchestrator": "Orchestrator/delegation system",
+    "mcp": "MCP server work",
+    "ui": "User interface",
+    "backend": "Backend/API work",
+    "workflow": "Process improvements",
+    "gridiron": "Gridiron football sim",
+    "scrapper": "NFL scrapper project"
+  },
+  "schema": {
+    "tags": {
+      "type": "array",
+      "items": "string",
+      "description": "Array of standard tag strings",
+      "location": "After priority field in stub.json"
+    }
+  },
+  "features": [
+    "Standard tag vocabulary",
+    "Tag validation on stub creation",
+    "Filter stubs by tag in dashboard",
+    "Tag-based grouping in projects.md",
+    "Cross-project tag search"
+  ],
+  "related_stubs": [
+    "STUB-023",
+    "STUB-027"
+  ],
+  "target_project": "coderef-dashboard"
+}

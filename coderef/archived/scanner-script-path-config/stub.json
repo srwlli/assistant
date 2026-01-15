@@ -1,0 +1,20 @@
+{
+  "feature_name": "scanner-script-path-config",
+  "description": "Extract hardcoded Python script paths (scan-all.py, populate-coderef.py) to configuration file with environment variable overrides and Electron packaging support.",
+  "project": "coderef-dashboard",
+  "created": "2026-01-03",
+  "status": "planning",
+  "references": [
+    "C:\\Users\\willh\\Desktop\\projects\\coderef-system\\coderef\\reference-sheets\\cli-command-system\\cli-command-system.md"
+  ],
+  "context": {
+    "current_issue": "Hardcoded paths in scanExecutor.ts:152-153 won't work on other machines",
+    "affected_files": [
+      "packages/dashboard/src/app/api/scanner/lib/scanExecutor.ts"
+    ],
+    "priority": "critical"
+  },
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-127"
+}

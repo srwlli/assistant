@@ -1,0 +1,134 @@
+{
+  "template_version": "1.0.0",
+  "template_purpose": "Standard requirements for ALL multi-agent sessions - ensures consistent use of .coderef/ foundation docs and coderef-context MCP tools",
+  "created": "2026-01-10",
+  "usage": "Auto-merge this template into every session's instructions.json during /create-session workflow",
+
+  "pre_session_requirements": {
+    "orchestrator_checklist": [
+      "Run coderef_scan on each participating project to generate .coderef/index.json",
+      "Verify .coderef/context.md exists for each project",
+      "Verify ARCHITECTURE.md exists (if applicable)",
+      "Verify CLAUDE.md exists for each project",
+      "Confirm .coderef/index.json timestamp is recent (within last 7 days)"
+    ],
+    "orchestrator_commands": [
+      "coderef_scan(project_path='C:\\\\Users\\\\willh\\\\.mcp-servers\\\\{project}', languages=['ts','tsx','js','jsx','py'])",
+      "Verify output: .coderef/index.json created with functions, classes, components",
+      "Repeat for each project in session"
+    ]
+  },
+
+  "agent_requirements": {
+    "context_requirements": {
+      "required_reading": [
+        "Project's .coderef/context.md - High-level project overview",
+        "Project's .coderef/index.json - Pre-generated code structure (if available)",
+        "Project's ARCHITECTURE.md (if exists) - Architecture patterns and decisions",
+        "Project's CLAUDE.md - AI agent context and workflows"
+      ],
+      "reading_order": [
+        "1. Read .coderef/context.md FIRST - provides high-level context",
+        "2. Read ARCHITECTURE.md - understand patterns before scanning",
+        "3. Read CLAUDE.md - understand existing workflows",
+        "4. THEN use coderef tools to discover specific details"
+      ]
+    },
+
+    "tools_to_use": [
+      "coderef_scan - Discover code structure (functions, classes, components)",
+      "coderef_query - Find function calls, imports, dependencies (query_type: 'calls', 'imports', 'depends-on')",
+      "coderef_complexity - Analyze complexity metrics for integration points",
+      "coderef_patterns - Find existing code patterns (validation, error handling, etc.)",
+      "coderef_impact - Analyze impact of proposed changes",
+      "Read tool - Read foundation docs and context files"
+    ],
+
+    "tools_to_avoid": [
+      "grep - Use coderef_query instead",
+      "rg - Use coderef_query instead",
+      "find - Use coderef_scan instead",
+      "ls - Use coderef_scan instead",
+      "Manual file searching - Use coderef tools for discovery"
+    ],
+
+    "rationale": {
+      "why_coderef_tools": "coderef-context tools leverage pre-generated index for fast, accurate code discovery. grep/find are slow, error-prone, and bypass ecosystem benefits.",
+      "why_foundation_docs_first": "Foundation docs provide context that reduces discovery time from 30-60 minutes to 5-10 minutes. Always read docs before scanning code.",
+      "why_no_manual_scanning": "Manual scanning misses relationships, has inconsistent results, and doesn't integrate with coderef ecosystem (validation, traceability, patterns)."
+    }
+  },
+
+  "agent_instructions_template": {
+    "step_0_read_foundation_docs": {
+      "description": "MANDATORY FIRST STEP - Read foundation docs before any code discovery",
+      "actions": [
+        "Read .coderef/context.md - Understand project purpose and architecture",
+        "Read ARCHITECTURE.md (if exists) - Understand patterns and decisions",
+        "Read CLAUDE.md - Understand existing workflows and context",
+        "Review session-specific context provided by orchestrator"
+      ],
+      "time_estimate": "15-30 minutes",
+      "output": "High-level understanding of project structure before detailed scanning"
+    },
+
+    "step_1_use_coderef_tools": {
+      "description": "Use coderef-context MCP tools for code discovery",
+      "tools": {
+        "coderef_scan": {
+          "purpose": "Discover all functions, classes, components in project",
+          "example": "coderef_scan(project_path='/path/to/project', languages=['ts','tsx','js','jsx'])"
+        },
+        "coderef_query": {
+          "purpose": "Find specific function calls, imports, dependencies",
+          "examples": [
+            "coderef_query(query_type='calls', target='functionName') - Find who calls this function",
+            "coderef_query(query_type='imports', target='moduleName') - Find who imports this module",
+            "coderef_query(query_type='depends-on', target='componentName') - Find dependencies"
+          ]
+        },
+        "coderef_complexity": {
+          "purpose": "Analyze complexity metrics for integration planning",
+          "example": "coderef_complexity(project_path='/path', element='MyClass')"
+        },
+        "coderef_patterns": {
+          "purpose": "Find existing code patterns (validation, error handling, etc.)",
+          "example": "coderef_patterns(project_path='/path', pattern_type='validation')"
+        }
+      },
+      "time_estimate": "30-60 minutes",
+      "output": "Comprehensive understanding of code structure and relationships"
+    },
+
+    "forbidden_approaches": {
+      "do_not_use_grep": "grep/rg are error-prone and bypass coderef ecosystem. Use coderef_query instead.",
+      "do_not_use_find": "find/ls miss relationships and patterns. Use coderef_scan instead.",
+      "do_not_skip_foundation_docs": "Skipping docs wastes 30-60 minutes on redundant discovery. Always read docs first."
+    }
+  },
+
+  "session_quality_checklist": {
+    "before_agent_launch": [
+      "Orchestrator ran coderef_scan on all projects",
+      ".coderef/index.json exists for each project",
+      "Foundation docs verified (context.md, ARCHITECTURE.md, CLAUDE.md)",
+      "Session instructions.json includes this requirements template"
+    ],
+    "during_agent_execution": [
+      "Agents read foundation docs before scanning",
+      "Agents use coderef-context tools (not grep/find)",
+      "Agents reference .coderef/ data in audit reports"
+    ],
+    "session_completion": [
+      "All agents produced audit reports referencing .coderef/ data",
+      "No grep/find commands in agent chat logs",
+      "Foundation docs were leveraged for context"
+    ]
+  },
+
+  "notes": {
+    "template_maintenance": "Update this template when new coderef-context tools are added or best practices change",
+    "enforcement": "Orchestrator MUST include this template in all session instructions.json files - no exceptions",
+    "benefits": "Consistent session quality, faster agent execution, better traceability, ecosystem integration"
+  }
+}

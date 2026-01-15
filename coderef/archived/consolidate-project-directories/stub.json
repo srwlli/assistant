@@ -1,0 +1,17 @@
+{
+  "stub_id": "STUB-005",
+  "feature_name": "consolidate-project-directories",
+  "description": "Organize scattered projects into a logical, consistent directory structure. Single source of truth for where projects live.",
+  "category": "refactor",
+  "priority": "medium",
+  "created": "2025-12-16",
+  "status": "planning",
+  "notes": {
+    "related_to": [
+      "reorganize-gits-projects",
+      "tool-inventory-workflow"
+    ],
+    "dependency": "Should happen before or alongside tool-inventory-workflow"
+  },
+  "target_project": "unknown"
+}

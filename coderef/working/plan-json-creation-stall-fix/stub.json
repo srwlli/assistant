@@ -1,0 +1,16 @@
+{
+  "feature_name": "plan-json-creation-stall-fix",
+  "description": "Tool stalls on return when creating plan.json but file is written successfully. Occurs in coderef-workflow/coderef/workorder/uds-compliance-coderef-workflow/. Need to fix return behavior after successful file write.",
+  "project": "coderef-workflow",
+  "created": "2026-01-10",
+  "status": "planning",
+  "context": {
+    "issue_type": "tool_stall",
+    "affected_location": "C:\\Users\\willh\\.mcp-servers\\coderef-workflow\\coderef\\workorder\\uds-compliance-coderef-workflow\\",
+    "symptom": "File written successfully but tool does not return control",
+    "tool_affected": "create_plan or similar plan.json generation tool"
+  },
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-115"
+}

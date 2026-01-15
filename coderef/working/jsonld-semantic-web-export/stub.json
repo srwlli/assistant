@@ -2,8 +2,8 @@
   "feature_name": "jsonld-semantic-web-export",
   "description": "Add JSON-LD semantic web export capability to coderef ecosystem for publishing codebases to knowledge graphs, enabling cross-repository queries via SPARQL, Wikidata integration, and Schema.org markup for search engine discovery. Supports academic research, AI training data, and external tool consumption.",
   "project": "coderef-ecosystem",
-  "created": "2025-12-31T17:45:00Z",
-  "status": "stub",
+  "created": "2025-12-31",
+  "status": "planning",
   "context": {
     "conversation_summary": "Discussed JSON-LD vs regular JSON usage - JSON-LD enables semantic web (knowledge graphs, Wikidata, RDF triple stores, Schema.org). Currently exports/graph.jsonld exists but unused by internal workflows (100% of workflow-useful outputs already consumed). JSON-LD is for EXTERNAL tools: code search engines, research queries, cross-repo linking, LLM training data.",
     "key_insights": [
@@ -27,5 +27,6 @@
     ]
   },
   "category": "feature",
-  "priority": "medium"
+  "priority": "medium",
+  "stub_id": "STUB-109"
 }

@@ -18,7 +18,7 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 
 ---
 
-## Current Profiles (11 Active)
+## Current Profiles (10 Active)
 
 ### Main Projects (1)
 
@@ -26,7 +26,7 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 |---|---------|------|----------|-----------|-------|--------|
 | 1 | **Assistant** | 🤖 | `Ctrl+Shift+1` | `Desktop/assistant` | #3B82F6 (Blue) | ✅ Active |
 
-### Coderef (Nested folder in new tab menu - 10)
+### Coderef (Nested folder in new tab menu - 9)
 
 | # | Profile | Icon | Shortcut | Directory | Color | Status |
 |---|---------|------|----------|-----------|-------|--------|
@@ -34,14 +34,13 @@ Windows Terminal profiles define quick launch tabs for projects. Each profile sp
 | 3 | **Coderef > Docs** | 📚 | (No binding) | `.mcp-servers/coderef-docs` | #EAB308 (Yellow) | ✅ Active |
 | 4 | **Coderef > MCP** | 🔌 | (No binding) | `.mcp-servers` | #EAB308 (Yellow) | ✅ Active |
 | 5 | **Coderef > Workflow** | 📋 | (No binding) | `.mcp-servers/coderef-workflow` | #EAB308 (Yellow) | ✅ Active |
-| 6 | **Coderef > System** | 💻 | (No binding) | `Desktop/projects/coderef-system` | #EAB308 (Yellow) | ✅ Active |
-| 7 | **Coderef > Dashboard** | 📊 | `Ctrl+Shift+D` | `Desktop/coderef-dashboard` | #8B5CF6 (Purple) | ✅ Active |
+| 6 | **Coderef > Dashboard** | 📊 | `Ctrl+Shift+D` | `Desktop/coderef-dashboard` | #8B5CF6 (Purple) | ✅ Active |
+| 7 | **Coderef > Scanner** | 🔬 | (No binding) | `Desktop/coderef-dashboard/packages/coderef-core` | #10B981 (Green) | ✅ Active |
 | 8 | **Coderef > Personas** | 🎭 | (No binding) | `.mcp-servers/coderef-personas` | #FBBF24 (Amber) | ✅ Active |
 | 9 | **Coderef > Testing** | 🧪 | (No binding) | `.mcp-servers/coderef-testing` | #EAB308 (Yellow) | ✅ Active |
 | 10 | **Coderef > Papertrail** | 📋 | (No binding) | `.mcp-servers/papertrail` | #EAB308 (Yellow) | ✅ Active |
-| 11 | **Coderef > Packages** | 📦 | (No binding) | `Desktop/projects/coderef-system/packages` | #EAB308 (Yellow) | ✅ Active |
 
-**Note:** The 10 Coderef-related tabs are nested in the "Coderef" folder in the new tab menu for organization.
+**Note:** The 9 Coderef-related tabs are nested in the "Coderef" folder in the new tab menu for organization.
 
 ---
 

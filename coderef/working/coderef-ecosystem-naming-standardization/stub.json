@@ -1,0 +1,75 @@
+{
+  "feature_name": "coderef-ecosystem-naming-standardization",
+  "description": "BREAKING CHANGE: Standardize naming across coderef ecosystem. Rename 'papertrail' \u2192 'coderef-validation', 'assistant' \u2192 'coderef-assistant'. Move assistant into .mcp-servers directory structure. Requires extensive path audits, import updates, and testing on separate branch.",
+  "project": "assistant",
+  "created": "2026-01-10",
+  "status": "planning",
+  "session_type": "multi-agent",
+  "breaking_changes": true,
+  "requires_branch": "naming-standardization",
+  "changes": {
+    "renames": [
+      {
+        "from": "papertrail",
+        "to": "coderef-validation",
+        "type": "project_rename",
+        "path_change": "C:\\Users\\willh\\.mcp-servers\\papertrail \u2192 C:\\Users\\willh\\.mcp-servers\\coderef-validation"
+      },
+      {
+        "from": "assistant",
+        "to": "coderef-assistant",
+        "type": "project_rename",
+        "path_change": "C:\\Users\\willh\\Desktop\\assistant \u2192 C:\\Users\\willh\\.mcp-servers\\coderef-assistant"
+      }
+    ],
+    "impact_areas": [
+      "Import statements (from papertrail.validators \u2192 from coderef_validation.validators)",
+      "File paths in all communication.json, instructions.json files",
+      "Documentation references to 'papertrail' or 'assistant'",
+      "MCP server configuration files",
+      "Windows Terminal profiles",
+      "Slash commands and tool references",
+      "Git remote URLs (if applicable)",
+      "README and CLAUDE.md files"
+    ]
+  },
+  "session_phases": [
+    "Phase 1: Audit - Identify all references to 'papertrail' and 'assistant' across ecosystem",
+    "Phase 2: Planning - Create migration plan with dependency order and rollback strategy",
+    "Phase 3: Branch Creation - Create 'naming-standardization' branch across all repos",
+    "Phase 4: Rename Projects - Move directories, update git remotes",
+    "Phase 5: Update Imports - Update all Python imports, require statements",
+    "Phase 6: Update Paths - Update all file paths in JSON, config files",
+    "Phase 7: Update Docs - Update all documentation references",
+    "Phase 8: Testing - Run full test suite across all projects",
+    "Phase 9: Verification - Verify no broken imports, paths, or references"
+  ],
+  "agents_involved": [
+    "assistant/coderef-assistant (orchestrator)",
+    "papertrail/coderef-validation",
+    "coderef-workflow",
+    "coderef-docs",
+    "coderef-context",
+    "coderef-dashboard",
+    "coderef-testing",
+    "coderef-personas"
+  ],
+  "estimated_effort": "20-30 hours (multi-day, high-risk)",
+  "risks": [
+    "Breaking all imports across ecosystem",
+    "Breaking file path references in 100+ session/workorder files",
+    "Breaking MCP server integrations",
+    "Breaking Windows Terminal profiles",
+    "Git history complexity with renames",
+    "Rollback complexity if issues found"
+  ],
+  "prerequisites": [
+    "All current workorders complete",
+    "Clean git state across all repos",
+    "Backup of all .mcp-servers directory",
+    "Test environment available for validation"
+  ],
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-095"
+}

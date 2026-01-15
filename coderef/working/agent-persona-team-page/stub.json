@@ -2,9 +2,10 @@
   "feature_name": "agent-persona-team-page",
   "description": "Create Team page showcasing agent personas as actual staff members. Each persona (CodeRef Assistant, Ava, Taylor, etc.) displayed with role, expertise, and specializations. Demonstrates AI-powered team capabilities to clients.",
   "project": "assistant",
-  "created": "2025-12-28T06:22:00Z",
-  "status": "stub",
+  "created": "2025-12-28",
+  "status": "planning",
   "category": "feature",
   "priority": "medium",
-  "target_project": "personas-mcp"
+  "target_project": "personas-mcp",
+  "stub_id": "STUB-085"
 }

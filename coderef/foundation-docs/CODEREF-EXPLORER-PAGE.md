@@ -1,3 +1,13 @@
+---
+workorder_id: WO-FOUNDATION-DOCS-001
+generated_by: coderef-docs v2.0.0
+feature_id: foundation-documentation
+doc_type: resource-sheet
+title: CodeRef Explorer Page - Resource Sheet
+version: 2.0.0
+status: APPROVED
+---
+
 # CodeRef Explorer Page - Resource Sheet
 
 **Element Type:** ui/pages

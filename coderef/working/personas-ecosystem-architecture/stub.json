@@ -5,7 +5,7 @@
   "description": "Define and implement a unified persona system where all personas are aware of the coderef ecosystem (MCP servers, scanning tools, standards, patterns). Resolve architectural questions: Are personas standalone files? Context files? Wrapped with metadata? How do they reference external knowledge?",
   "category": "feature",
   "priority": "high",
-  "status": "stub",
+  "status": "planning",
   "created_at": "2025-12-24T00:00:00Z",
   "scope": {
     "personas_involved": [
@@ -68,31 +68,31 @@
       "CodeRef Assistant": {
         "location": "C:\\Users\\willh\\.mcp-servers\\personas-mcp\\personas\\base\\coderef-assistant.json",
         "version": "2.0.1",
-        "awareness": "✅ Full coderef ecosystem (recently updated)",
+        "awareness": "\u2705 Full coderef ecosystem (recently updated)",
         "structure": "Pure JSON, context embedded in system_prompt",
         "limitation": "Orchestrator-only, not specialized for execution"
       },
       "Lloyd": {
         "location": "Unknown - need to locate",
-        "status": "❌ Needs coderef ecosystem update",
+        "status": "\u274c Needs coderef ecosystem update",
         "awareness": "Partial (doesn't know about new MCP servers)",
         "need": "Update to reference coderef-context, coderef-workflow, etc."
       },
       "Ava": {
         "location": "C:\\Users\\willh\\.claude\\commands\\ava.md",
-        "status": "❌ Needs coderef ecosystem update",
+        "status": "\u274c Needs coderef ecosystem update",
         "awareness": "Frontend-focused, unaware of orchestration system",
         "need": "Add coderef patterns, standards, testing knowledge"
       },
       "Taylor": {
         "location": "Unknown - need to locate",
-        "status": "❌ Needs coderef ecosystem update",
+        "status": "\u274c Needs coderef ecosystem update",
         "awareness": "Generic, no specialization",
         "need": "Make versatile across projects with coderef awareness"
       },
       "Devon": {
         "location": "Unknown - need to locate",
-        "status": "❌ Needs coderef ecosystem update",
+        "status": "\u274c Needs coderef ecosystem update",
         "awareness": "Project setup focused, needs bootstrap knowledge",
         "need": "Add coderef folder structure, scaffolding, standards"
       }
@@ -190,12 +190,12 @@
   },
   "specific_updates_needed": {
     "CodeRef Assistant": {
-      "status": "✅ Complete (v2.0.1)",
+      "status": "\u2705 Complete (v2.0.1)",
       "last_updated": "2025-12-24",
       "next": "Use as template for other personas"
     },
     "Lloyd": {
-      "status": "❌ TODO",
+      "status": "\u274c TODO",
       "location": "Need to find Lloyd persona file",
       "updates": [
         "Add coderef-context awareness (scanning, patterns, complexity)",
@@ -206,7 +206,7 @@
       ]
     },
     "Ava": {
-      "status": "❌ TODO",
+      "status": "\u274c TODO",
       "location": "C:\\Users\\willh\\.claude\\commands\\ava.md (needs to be .json)",
       "updates": [
         "Convert from .md to .json (standardization)",
@@ -217,7 +217,7 @@
       ]
     },
     "Taylor": {
-      "status": "❌ TODO",
+      "status": "\u274c TODO",
       "location": "Need to find Taylor persona file",
       "updates": [
         "Broaden beyond generic to coderef-aware",
@@ -227,7 +227,7 @@
       ]
     },
     "Devon": {
-      "status": "❌ TODO",
+      "status": "\u274c TODO",
       "location": "Need to find Devon persona file",
       "updates": [
         "Add project bootstrap knowledge",
@@ -240,7 +240,7 @@
   "deliverables": {
     "phase_1_standardization": [
       "Unified persona JSON schema (version, coderef_ecosystem, context_sources, etc.)",
-      "Updated personas: CodeRef Assistant (✅), Lloyd (TODO), Ava (TODO), Taylor (TODO), Devon (TODO)",
+      "Updated personas: CodeRef Assistant (\u2705), Lloyd (TODO), Ava (TODO), Taylor (TODO), Devon (TODO)",
       "Documented structure for future persona creation",
       "Context sources reference guide (how to link to coderef data)"
     ],
@@ -252,14 +252,14 @@
     ]
   },
   "success_criteria": [
-    "✅ All existing personas updated with coderef ecosystem awareness",
-    "✅ Consistent JSON structure across all personas",
-    "✅ Each persona knows which MCP tools it can use",
-    "✅ Each persona references coderef data (patterns, standards, tools)",
-    "✅ Personas can be discovered by role/capability",
-    "✅ Version tracking in place",
-    "✅ New personas (Widget Architect) follow standard structure",
-    "✅ Clear template for creating future specialized personas"
+    "\u2705 All existing personas updated with coderef ecosystem awareness",
+    "\u2705 Consistent JSON structure across all personas",
+    "\u2705 Each persona knows which MCP tools it can use",
+    "\u2705 Each persona references coderef data (patterns, standards, tools)",
+    "\u2705 Personas can be discovered by role/capability",
+    "\u2705 Version tracking in place",
+    "\u2705 New personas (Widget Architect) follow standard structure",
+    "\u2705 Clear template for creating future specialized personas"
   ],
   "related_stubs": [
     "STUB-054 (persona-role-context-system: Widget Architect proof-of-concept)"

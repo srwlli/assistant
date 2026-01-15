@@ -2,8 +2,8 @@
   "feature_name": "emerging-coderef-competitors",
   "description": "Track and analyze emerging competitors in the code analysis and semantic search space (code-graph-rag, SeaGOAT, Greptile, Buildt). Monitor their features, differentiation points, and CodeRef's competitive advantages.",
   "project": "assistant",
-  "created": "2026-01-02T12:30:00Z",
-  "status": "stub",
+  "created": "2026-01-02",
+  "status": "planning",
   "competitors": [
     {
       "name": "code-graph-rag",
@@ -34,5 +34,8 @@
       "unique_feature": "Proprietary synthetic datasets for privacy",
       "coderef_advantage": "Open source, quality analysis, documentation generation"
     }
-  ]
+  ],
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-105"
 }

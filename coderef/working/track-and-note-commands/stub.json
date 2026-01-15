@@ -1,9 +1,0 @@
-{
-  "feature_name": "track-and-note-commands",
-  "description": "Add /track for tracking something and /note for creating a note",
-  "category": "idea",
-  "priority": "medium",
-  "created": "2025-12-15T12:10:00.000Z",
-  "status": "stub",
-  "target_project": "unknown"
-}

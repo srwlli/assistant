@@ -12,8 +12,8 @@
     "collaboration",
     "dashboard"
   ],
-  "created": "2025-12-25T00:00:00Z",
-  "status": "stub",
+  "created": "2025-12-25",
+  "status": "planning",
   "problem": [
     "HTML Tools dashboard shows stale workorder/stub data - requires manual refresh",
     "Multi-agent workflows have no awareness of concurrent workorder changes",
@@ -23,7 +23,7 @@
   ],
   "solution": {
     "transport": {
-      "primary": "Server-Sent Events (SSE) - one-way server→client, simpler than WebSocket",
+      "primary": "Server-Sent Events (SSE) - one-way server\u2192client, simpler than WebSocket",
       "fallback": "Polling with exponential backoff (10s, 30s, 60s)",
       "reason": "No frame dependencies, works with vanilla JS, simpler server"
     },
@@ -43,10 +43,10 @@
       "merging": "For plan progress: merge completed tasks, detect conflicts"
     },
     "events_to_sync": [
-      "Workorder status changes (pending→implementing→complete→verified)",
+      "Workorder status changes (pending\u2192implementing\u2192complete\u2192verified)",
       "Workorder file updates (coderef/workorder/WO-*.json changes)",
       "Stub creation (coderef/workorder/stubs/*.json new files)",
-      "Stub status changes (stub→in-progress→blocked→completed)",
+      "Stub status changes (stub\u2192in-progress\u2192blocked\u2192completed)",
       "Agent assignment changes (which agent owns which workorder)",
       "Workorder metadata updates (progress, dependencies, timestamps)"
     ]

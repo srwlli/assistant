@@ -2,9 +2,10 @@
   "feature_name": "research-assistant-integration",
   "description": "Track and integrate research assistant capabilities for conducting research tasks. Enables delegating research to specialized assistant, tracking research outputs, and aggregating findings into project documentation.",
   "project": "assistant",
-  "created": "2025-12-28T06:20:00Z",
-  "status": "stub",
+  "created": "2025-12-28",
+  "status": "planning",
   "category": "feature",
   "priority": "medium",
-  "target_project": "assistant"
+  "target_project": "assistant",
+  "stub_id": "STUB-121"
 }

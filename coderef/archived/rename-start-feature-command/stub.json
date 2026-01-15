@@ -1,0 +1,16 @@
+{
+  "stub_id": "STUB-043",
+  "feature_name": "rename-start-feature-command",
+  "description": "Update all instances of /start-feature to /create-workorder across MCP servers and documentation",
+  "category": "refactor",
+  "priority": "medium",
+  "target_project": "mcp-servers",
+  "target_path": "C:\\Users\\willh\\.mcp-servers",
+  "scope": [
+    "docs-mcp",
+    "personas-mcp",
+    "coderef-mcp"
+  ],
+  "created": "2025-12-18",
+  "status": "planning"
+}

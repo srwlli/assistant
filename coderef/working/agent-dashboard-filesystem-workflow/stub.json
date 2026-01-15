@@ -2,9 +2,10 @@
   "feature_name": "agent-dashboard-filesystem-workflow",
   "description": "Workflow for agents to send files, reports, summaries, and outputs to coderef-dashboard through file system. Agents write to watched directories, dashboard auto-detects and displays new content (deliverables, logs, analysis reports).",
   "project": "assistant",
-  "created": "2025-12-28T06:37:00Z",
-  "status": "stub",
+  "created": "2025-12-28",
+  "status": "planning",
   "category": "feature",
   "priority": "medium",
-  "target_project": "coderef-workflow"
+  "target_project": "coderef-workflow",
+  "stub_id": "STUB-084"
 }

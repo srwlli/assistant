@@ -1,0 +1,209 @@
+{
+  "audit_date": "2026-01-14",
+  "project_path": "C:\\Users\\willh\\Desktop\\assistant",
+  "total_docs_found": 140,
+  "total_issues_detected": 98,
+  "validation_summary": {
+    "markdown_files": 90,
+    "html_files": 17,
+    "text_files": 33,
+    "stub_files_checked": 52,
+    "stub_files_with_issues": 1,
+    "foundation_docs_checked": 6,
+    "foundation_docs_missing_frontmatter": 6,
+    "markdown_docs_checked": 75,
+    "markdown_docs_missing_frontmatter": 74
+  },
+  "issues": {
+    "redundancy": 8,
+    "staleness": 12,
+    "broken_links": 0,
+    "schema_violations": 78
+  },
+  "critical_findings": [
+    "74 out of 75 markdown files in coderef/ missing YAML frontmatter (required for UDS compliance)",
+    "6 foundation docs missing required frontmatter fields (workorder_id, generated_by, feature_id, doc_type)",
+    "1 stub.json has invalid status value: 'pending' (should be: planning, ready, blocked, promoted, abandoned)",
+    "8 redundant summary/report files in root directory (duplicate audit reports)",
+    "12 HTML files in coderef/user/ may be outdated (no git timestamps)",
+    "Root directory cluttered with 20+ temporary report files from previous audits"
+  ],
+  "actions": [
+    {
+      "action": "ARCHIVE",
+      "files": [
+        "ARCHIVAL_EXECUTION_SUMMARY.txt",
+        "ARCHIVAL_SUMMARY.md",
+        "ARCHIVE_SCRIPT_README.md",
+        "FINAL_REPORT.md",
+        "MIGRATION_COMPLETE_SUMMARY.md",
+        "STUB_AUDIT_REPORT.md",
+        "STUB_AUDIT_SUMMARY.txt",
+        "STUB_MIGRATION_REPORT.txt"
+      ],
+      "to": "archive/audit-reports-2026-01-14/",
+      "reason": "Historical audit reports from previous cleanup operations, completed",
+      "priority": "medium"
+    },
+    {
+      "action": "ARCHIVE",
+      "files": [
+        "CRITICAL_STUBS_TO_PROMOTE.md",
+        "AGENT-HANDOFF-TRACKING-SYSTEM.md",
+        "ROOT-ORGANIZATION.md"
+      ],
+      "to": "archive/planning-docs-2026-01-14/",
+      "reason": "Planning documents from completed organizational work",
+      "priority": "medium"
+    },
+    {
+      "action": "MOVE",
+      "file": "STATE-OF-THE-UNION.md",
+      "to": "coderef/reports/STATE-OF-THE-UNION-2026-01-14.md",
+      "reason": "Portfolio assessment report, move to reports directory with date",
+      "priority": "low"
+    },
+    {
+      "action": "MOVE",
+      "file": "context.md",
+      "to": "coderef/working/context.md",
+      "reason": "Working context document, belongs in coderef structure",
+      "priority": "low"
+    },
+    {
+      "action": "MOVE",
+      "file": "resource-sheet-systems-context.md",
+      "to": "coderef/working/resource-sheet-systems-context.md",
+      "reason": "Working document, belongs in coderef structure",
+      "priority": "low"
+    },
+    {
+      "action": "DELETE",
+      "file": "claude.txt",
+      "reason": "Empty or minimal content file, likely temporary",
+      "priority": "low",
+      "backup_location": "archive/deleted-2026-01-14/"
+    },
+    {
+      "action": "DELETE",
+      "file": "Jovi.txt",
+      "reason": "Personal note file, not project documentation",
+      "priority": "low",
+      "backup_location": "archive/deleted-2026-01-14/"
+    },
+    {
+      "action": "UPDATE",
+      "file": "coderef/working/agent-completion-workflow/stub.json",
+      "issue": "Invalid status value: 'pending'",
+      "fix": "Change status from 'pending' to 'planning' (valid enum value)",
+      "validation_tool": "mcp__papertrail__validate_stub",
+      "priority": "high"
+    },
+    {
+      "action": "ADD_FRONTMATTER",
+      "files": [
+        "coderef/foundation-docs/README.md",
+        "coderef/foundation-docs/ARCHITECTURE.md",
+        "coderef/foundation-docs/API.md",
+        "coderef/foundation-docs/SCHEMA.md",
+        "coderef/foundation-docs/COMPONENTS.md",
+        "coderef/foundation-docs/CODEREF-EXPLORER-PAGE.md"
+      ],
+      "reason": "Foundation docs require YAML frontmatter with workorder_id, generated_by, feature_id, doc_type",
+      "template": "foundation-doc-frontmatter-schema.json",
+      "priority": "high",
+      "example_frontmatter": "---\nworkorder_id: WO-FOUNDATION-DOCS-001\ngenerated_by: coderef-docs v2.0.0\nfeature_id: foundation-documentation\ndoc_type: readme\ntitle: Assistant - Orchestrator CLI\nversion: 2.0.0\nstatus: APPROVED\n---"
+    },
+    {
+      "action": "REVIEW_HTML",
+      "files": [
+        "coderef/user/coderef-commands.html",
+        "coderef/user/coderef-output-capabilities.html",
+        "coderef/user/coderef-scripts.html",
+        "coderef/user/coderef-setup.html",
+        "coderef/user/coderef-tools.html",
+        "coderef/user/coderef-workflows.html",
+        "coderef/user/index.html",
+        "coderef/user/page-template.html"
+      ],
+      "reason": "HTML documentation files in coderef/user/ - verify if still relevant or should convert to Markdown",
+      "recommendation": "Consider converting to Markdown in coderef/foundation-docs/ or archiving if outdated",
+      "priority": "medium"
+    },
+    {
+      "action": "CONSOLIDATE",
+      "files": [
+        "web/README.md",
+        "web/README-ELECTRON.md"
+      ],
+      "into": "web/README.md",
+      "reason": "Two README files in web/ directory, merge Electron instructions into main README",
+      "priority": "low"
+    },
+    {
+      "action": "ADD_FRONTMATTER_BATCH",
+      "directory": "coderef/working/",
+      "pattern": "*.md",
+      "count": 65,
+      "reason": "Working documents missing YAML frontmatter for UDS compliance",
+      "template": "workorder-doc-frontmatter-schema.json",
+      "priority": "low",
+      "note": "Low priority - only required for formal workorder docs"
+    },
+    {
+      "action": "ADD_FRONTMATTER_BATCH",
+      "directory": "coderef/archived/",
+      "pattern": "*.md",
+      "count": 9,
+      "reason": "Archived documents missing YAML frontmatter",
+      "template": "workorder-doc-frontmatter-schema.json",
+      "priority": "low",
+      "note": "Low priority - archived content"
+    },
+    {
+      "action": "VALIDATE_STRUCTURE",
+      "issue": "coderef/ has unexpected directories",
+      "found": [
+        "coderef/documents/",
+        "coderef/features/",
+        "coderef/notes/",
+        "coderef/resource/",
+        "coderef/resources-sheets/",
+        "coderef/sessions/",
+        "coderef/workorder/"
+      ],
+      "expected_standard": [
+        "coderef/foundation-docs/",
+        "coderef/working/",
+        "coderef/archived/",
+        "coderef/standards/"
+      ],
+      "recommendation": "Review non-standard directories and consolidate into standard structure",
+      "priority": "medium"
+    }
+  ],
+  "priority_summary": {
+    "high_priority": [
+      "Fix stub.json schema violation (1 file)",
+      "Add frontmatter to foundation docs (6 files)"
+    ],
+    "medium_priority": [
+      "Archive completed audit reports (8 files)",
+      "Review HTML documentation relevance (8 files)",
+      "Validate coderef structure (7 non-standard directories)"
+    ],
+    "low_priority": [
+      "Move working docs to coderef/ (3 files)",
+      "Delete temporary files (2 files)",
+      "Add frontmatter to working/archived docs (74 files)"
+    ]
+  },
+  "estimated_cleanup_time": "2-3 hours",
+  "recommendations": [
+    "Start with high priority: Fix stub.json validation error and add frontmatter to foundation docs",
+    "Archive old audit reports to clean up root directory",
+    "Review coderef/ directory structure and consolidate non-standard folders",
+    "Consider converting HTML docs to Markdown for consistency",
+    "Low priority: Add frontmatter to all working/archived docs (can be automated)"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "feature_name": "assistant-to-other-projects",
+  "description": "From this assistant to other projects",
+  "category": "feature",
+  "priority": "medium",
+  "created": "2025-12-15",
+  "status": "planning",
+  "target_project": "assistant",
+  "stub_id": "STUB-089"
+}

@@ -1,0 +1,22 @@
+{
+  "stub_id": "STUB-082",
+  "feature_name": "agent-perspective-session-reports",
+  "created": "2026-01-10",
+  "status": "brainstorming",
+  "target_project": "coderef-workflow",
+  "description": "User-facing session reports where each agent writes their perspective of what they accomplished, creating a narrative story of multi-agent collaboration",
+  "purpose": "Make sessions more understandable to humans by providing agent narratives instead of just technical status tracking",
+  "use_cases": [
+    "User wants to understand what agents actually did during a session",
+    "Portfolio/showcase: demonstrate AI agent collaboration to stakeholders",
+    "Learning: new agents can read how experienced agents approached problems",
+    "Debugging: understand decision-making process when reviewing session outcomes"
+  ],
+  "integration_points": [
+    "Sessions Hub (dashboard visualization)",
+    "communication.json (reference point for agents)",
+    "Agent handoff prompts (include 'write your perspective' instruction)"
+  ],
+  "category": "feature",
+  "priority": "medium"
+}

@@ -1,7 +1,7 @@
 {
   "stub_id": "STUB-049",
   "name": "agent-completion-workflow",
-  "category": "improvement",
+  "category": "enhancement",
   "description": "Clarify agent vs orchestrator responsibilities for completing workorders - agent archives, orchestrator only verifies",
   "created": "2025-12-20",
   "scope": "workflow-documentation",
@@ -45,7 +45,7 @@
     "changes": {
       "CLAUDE.md_phase_3": "Add 'Agent must run /update-deliverables and /archive-feature before marking complete'",
       "CLAUDE.md_phase_4": "Change 'Orchestrator closes workorder' to 'Orchestrator verifies closure'",
-      "handoff_templates": "Add completion checklist: update-deliverables → archive-feature → update communication.json",
+      "handoff_templates": "Add completion checklist: update-deliverables \u2192 archive-feature \u2192 update communication.json",
       "workflow_diagrams": "Update to show agent doing archival, orchestrator doing verification only"
     }
   },
@@ -70,7 +70,7 @@
     ]
   },
   "priority": "high",
-  "status": "pending",
+  "status": "planning",
   "target_agent": "docs-mcp",
   "created_by": "Archer",
   "feature_name": "agent-completion-workflow",

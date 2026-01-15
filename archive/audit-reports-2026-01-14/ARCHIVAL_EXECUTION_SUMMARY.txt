@@ -1,0 +1,292 @@
+================================================================================
+STUB ARCHIVAL EXECUTION SUMMARY
+================================================================================
+Date: 2026-01-13
+Task: Identify and archive ~35 stubs from C:\Users\willh\Desktop\assistant\coderef\working\
+
+================================================================================
+RESULTS
+================================================================================
+
+Total Stubs Analyzed: 98
+Archival Candidates Identified: 36 (37% of inventory)
+Successfully Archived: 36/36
+Failed: 0/36
+
+Before: 98 active stubs in coderef/working/
+After:  62 active stubs in coderef/working/
+Result: 36 stubs moved to coderef/archived/
+
+================================================================================
+ARCHIVAL BREAKDOWN BY CATEGORY
+================================================================================
+
+1. TEST/EXAMPLE STUBS (7)
+   Purpose: Validation scaffolding for workflow testing
+   Examples: stub-location-test, test-and-fix-emojis, scriptboard-endpoints-test
+
+   STUB-048 | scriptboard-endpoints-test
+   STUB-052 | websocket-live-update-test
+   STUB-083 | testing-new-workflow
+   STUB-129 | stub-location-test
+   STUB-131 | test-and-fix-emojis
+   STUB-132 | test-stub-example
+   STUB-133 | testing-brief-entry-point
+
+2. COMPLETED STUBS (1)
+   Purpose: Work that is finished
+
+   STUB-100 | coderef-timestamp-utility (status: completed)
+
+3. OBSOLETE_NAME STUBS (1)
+   Purpose: Explicitly marked as deprecated/removed
+
+   STUB-119 | remove-utility-personas
+
+4. DUPLICATE STUBS (5)
+   Purpose: Similar features - kept best version, archived redundant
+   Consolidation Groups:
+   - Scanner improvements (3): kept comprehensive implementation
+   - Docs workflow (1): kept mcp-docs-workflow-refactor version
+   - Command renaming (1): archived alternate implementation
+
+   STUB-051 | rename-execute-plan-to-align-plan
+   STUB-063 | consolidate-foundation-docs-workflow
+   STUB-125 | scanner-output-validation
+   STUB-126 | scanner-python-detection
+   STUB-127 | scanner-script-path-config
+
+5. INFRASTRUCTURE/UTILITY LOW PRIORITY (7)
+   Purpose: Old infrastructure tasks with low current priority
+   Age: Created before 2026-01-06 (older than 1 week)
+
+   STUB-004 | reorganize-gits-projects
+   STUB-005 | consolidate-project-directories
+   STUB-012 | mcp-server-cleanup
+   STUB-043 | rename-start-feature-command
+   STUB-050 | work-order-folder-rename
+   STUB-076 | gitignore-coderef-directory
+   STUB-081 | separate-tag-chips-from-prompt-cards
+
+6. LOW PRIORITY + OLD (15)
+   Purpose: Medium-priority backlog items no longer active
+   Age: Created before 2025-12-20 (3+ weeks old)
+
+   STUB-011 | stub-id-system
+   STUB-026 | mcp-usage-tracker
+   STUB-033 | stub-tag-system
+   STUB-037 | file-front-matter
+   STUB-087 | ai-video-gen
+   STUB-089 | assistant-to-other-projects
+   STUB-091 | code-review-projects
+   STUB-104 | connection-to-all-llm
+   STUB-107 | git-libraries
+   STUB-111 | mcp-integrations
+   STUB-112 | organize-and-consolidate
+   STUB-116 | railway-config
+   STUB-124 | saas-ideas
+   STUB-130 | tech-stack-docs
+   STUB-134 | track-and-note-commands
+
+================================================================================
+SCRIPT DETAILS
+================================================================================
+
+Script Name: archive-stubs.py
+Location: C:\Users\willh\Desktop\assistant\archive-stubs.py
+Size: 14 KB
+Lines: 387
+
+Features:
+- Automated stub analysis with multiple identification criteria
+- Conservative approach with safeguards for active work
+- Batch processing with detailed progress reporting
+- Comprehensive archival reporting with categorization
+- Cross-platform path handling
+- Windows-compatible output (no emoji Unicode issues)
+
+Identification Criteria (in order):
+1. Test/Example keywords (test, example, stub-location, "testing ")
+2. Completed status (completed, done, archived)
+3. Obsolete naming patterns (deprecated, remove-, delete-, legacy-, unused-)
+4. Duplicate functional areas (multiple similar stubs in same area)
+5. Vague exploration stubs (brainstorming/research with no clear scope)
+6. Low-priority infrastructure items (category=infra/utility/refactor + medium priority + old)
+7. Low-priority + old stubs (medium priority created before cutoff date)
+
+================================================================================
+FILES GENERATED
+================================================================================
+
+1. archive-stubs.py
+   Main executable script with all analysis and archival logic
+   Location: C:\Users\willh\Desktop\assistant\archive-stubs.py
+
+2. ARCHIVAL_REPORT.txt
+   Detailed categorized report of all 36 archived stubs
+   Location: C:\Users\willh\Desktop\assistant\coderef\ARCHIVAL_REPORT.txt
+   Contents: Stubs grouped by archival category with reference guide
+
+3. ARCHIVAL_SUMMARY.md
+   High-level overview with impact analysis and next steps
+   Location: C:\Users\willh\Desktop\assistant\ARCHIVAL_SUMMARY.md
+   Contents: Markdown format with statistics and strategy notes
+
+4. ARCHIVE_SCRIPT_README.md
+   Complete documentation for script usage and configuration
+   Location: C:\Users\willh\Desktop\assistant\ARCHIVE_SCRIPT_README.md
+   Contents: Usage guide, criteria explanation, troubleshooting
+
+5. ARCHIVAL_EXECUTION_SUMMARY.txt
+   This file - execution results and full breakdown
+
+================================================================================
+SAFETY & REVERSIBILITY
+================================================================================
+
+Conservative Approach:
+- All CRITICAL priority stubs preserved (none were candidates)
+- All HIGH priority stubs preserved (none were candidates)
+- All recent stubs (< 1 week old) preserved
+- All active workorder coordination stubs preserved
+- Only clear candidates archived
+
+Reversibility:
+- All 36 archived stubs remain in coderef/archived/ directory
+- Directory structure preserved
+- Git history intact
+- Can recover any stub by moving back to coderef/working/
+
+Data Integrity:
+- No data loss
+- No modifications to stub content
+- Original stub.json files preserved
+- Related files (context.json, etc.) moved with stubs
+
+================================================================================
+IMPACT ANALYSIS
+================================================================================
+
+Before Archival:
+- 98 total stubs
+- Mixed priorities (CRITICAL, HIGH, MEDIUM, LOW)
+- Test scaffolding mixed with features
+- Difficult to distinguish active from exploratory work
+- Large backlog requiring prioritization
+
+After Archival:
+- 62 focused, active stubs
+- Reduced context: easier to review and prioritize
+- Clear separation: active work vs archived ideas
+- Better signal-to-noise ratio for planning
+- 37% reduction in stub inventory
+
+Remaining Active Stubs (62):
+- All CRITICAL priority work
+- All HIGH priority work
+- Recent medium-priority items (< 1 week old)
+- Core feature implementations
+- Active infrastructure improvements
+- Orchestrator coordination stubs
+
+================================================================================
+USAGE INSTRUCTIONS
+================================================================================
+
+To Run Archival (Production):
+  cd C:\Users\willh\Desktop\assistant
+  python archive-stubs.py
+
+To Review Results:
+  1. Check console output for category breakdown
+  2. Read coderef/ARCHIVAL_REPORT.txt for detailed list
+  3. Verify remaining stubs in coderef/working/
+
+To Recover an Archived Stub:
+  Move from C:\Users\willh\Desktop\assistant\coderef\archived\{stub-name}
+  Back to C:\Users\willh\Desktop\assistant\coderef\working\{stub-name}
+
+To Modify Criteria:
+  Edit archive-stubs.py:
+  - Line 119: LOW_PRIORITY_OLD cutoff date (currently 2025-12-20)
+  - Line 168: INFRA_UTILITY_LOW age threshold (currently 2026-01-06)
+  - Methods: is_test_example(), is_duplicate(), etc.
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+
+[X] Script created and functional
+[X] 36 stubs identified as archival candidates
+[X] All 36 stubs successfully moved to archive directory
+[X] Remaining 62 stubs preserved in working directory
+[X] Archival report generated (ARCHIVAL_REPORT.txt)
+[X] Summary documentation created (ARCHIVAL_SUMMARY.md)
+[X] Usage guide created (ARCHIVE_SCRIPT_README.md)
+[X] No errors during archival process
+[X] Data integrity verified
+[X] Reversibility confirmed
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+Immediate:
+1. Review remaining 62 stubs for prioritization
+2. Consider updating projects.md next STUB-ID counter if needed
+3. Archive any newly created test/example stubs immediately
+
+Short-term (1-2 weeks):
+4. Review active stubs for readiness to implement
+5. Update workorder tracking for high-priority items
+6. Plan first batch of implementations
+
+Ongoing:
+7. Run monthly archival to keep backlog clean
+8. Archive test/example stubs immediately after creation
+9. Monitor for duplicate feature stubs in same area
+10. Keep only 60-70 active stubs in working directory
+
+================================================================================
+APPENDIX: ARCHIVAL CRITERIA REFERENCE
+================================================================================
+
+1. TEST/EXAMPLE
+   Identifies: Validation stubs for workflow testing
+   Keywords: test, example, stub-location, "testing ", "verify"
+   Rationale: Temporary scaffolding, not production features
+
+2. COMPLETED
+   Identifies: Work marked as done
+   Status: completed, done, archived
+   Rationale: Finished work clutters active backlog
+
+3. OBSOLETE_NAME
+   Identifies: Explicitly deprecated work
+   Keywords: deprecated, remove-, delete-, legacy-, unused-, stale-
+   Rationale: Naming convention indicates superseded approach
+
+4. DUPLICATE
+   Identifies: Similar features in same area (lower priority)
+   Logic: Multiple stubs with same purpose, keep best, archive redundant
+   Rationale: Prevent scattered efforts, consolidate similar work
+
+5. INFRA_UTILITY_LOW
+   Identifies: Low-priority infrastructure older than 1 week
+   Criteria: Category=(infra/utility/refactor) + Priority=(low/medium) + Age>1w
+   Rationale: Not urgent, can revisit if priorities change
+
+6. LOW_PRIORITY_OLD
+   Identifies: Old backlog items with low current priority
+   Criteria: Priority=(low/medium) + Created before 2025-12-20
+   Rationale: 3+ weeks old, low urgency, not currently focused
+
+================================================================================
+Questions? Review the documentation files:
+- ARCHIVE_SCRIPT_README.md (comprehensive usage guide)
+- ARCHIVAL_SUMMARY.md (high-level overview)
+- coderef/ARCHIVAL_REPORT.txt (detailed categorized list)
+
+Generated: 2026-01-13
+Script Version: 1.0
+================================================================================

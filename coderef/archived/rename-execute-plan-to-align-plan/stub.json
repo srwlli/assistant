@@ -1,0 +1,42 @@
+{
+  "stub_id": "STUB-051",
+  "feature_name": "rename-execute-plan-to-align-plan",
+  "description": "Rename /execute-plan command to /align-plan to better reflect that it aligns the plan with the todo list for tracking, rather than executing the plan itself",
+  "category": "enhancement",
+  "priority": "low",
+  "created": "2025-12-20",
+  "status": "planning",
+  "rationale": {
+    "current_name": "/execute-plan",
+    "problem": "Misleading - sounds like it executes the implementation, but it actually just generates TodoWrite tasks from plan.json",
+    "better_name": "/align-plan",
+    "why_better": "Clearly indicates alignment between plan.json and todo list for progress tracking"
+  },
+  "what_it_actually_does": [
+    "Reads plan.json from coderef/working/{feature}/",
+    "Extracts workorder ID and tasks",
+    "Generates TodoWrite task list with 'WO-ID | TASK-ID: Description' format",
+    "Enables Lloyd's CLI checklist display",
+    "Does NOT execute implementation - just aligns tracking"
+  ],
+  "proposed_change": {
+    "command_name": "/align-plan \u2192 /execute-plan",
+    "tool_name": "execute_plan \u2192 align_plan (or keep execute_plan, just rename command)",
+    "slash_command_file": ".claude/commands/execute-plan.md \u2192 align-plan.md",
+    "aliases": "Could keep /execute-plan as alias for backward compatibility"
+  },
+  "files_affected": [
+    ".claude/commands/execute-plan.md (rename to align-plan.md)",
+    "docs-mcp documentation (if execute_plan tool referenced)",
+    "Workflow guides mentioning /execute-plan"
+  ],
+  "impact": "Low - just a naming clarity improvement, functionality unchanged",
+  "benefits": [
+    "Clearer naming: align = sync plan with todo list",
+    "Avoids confusion: doesn't sound like it runs implementation",
+    "Better UX: users understand what it does"
+  ],
+  "backward_compatibility": "Keep /execute-plan as alias or add deprecation notice",
+  "created_by": "Archer",
+  "target_project": "coderef-workflow"
+}

@@ -151,8 +151,12 @@ When user has a new idea:
   "target_project": "coderef-dashboard"
 }
 ```
-4. Update projects.md next STUB-ID counter
-5. Confirm: "Stubbed: STUB-057: wo-tracking-widget"
+4. Validate and auto-fill stub using papertrail MCP tool:
+   - Call `mcp__papertrail__validate_stub` with `auto_fill=True` and `save=True`
+   - Tool auto-fills missing required fields (category, priority, description)
+   - Returns validation results and updated stub
+5. Update projects.md next STUB-ID counter
+6. Confirm: "Stubbed: STUB-057: wo-tracking-widget"
 
 ### Workorder Handoff Protocol
 

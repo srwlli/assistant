@@ -2,9 +2,10 @@
   "feature_name": "route-based-documentation-standards",
   "description": "Auto-generate route-specific documentation and coding standards in coderef-docs by analyzing route implementations with coderef-context. Creates page-level standards (API patterns, component structure, data flow) extracted from existing code patterns per route.",
   "project": "assistant",
-  "created": "2025-12-28T06:18:00Z",
-  "status": "stub",
+  "created": "2025-12-28",
+  "status": "planning",
   "category": "feature",
   "priority": "medium",
-  "target_project": "coderef-docs"
+  "target_project": "coderef-docs",
+  "stub_id": "STUB-123"
 }

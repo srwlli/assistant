@@ -1,0 +1,208 @@
+{
+  "stub_id": "STUB-027",
+  "feature_name": "orchestrator-mcp",
+  "description": "MCP server providing orchestrator workflows as tools + assistant persona. Centralizes workorder management, delegation, and tracking.",
+  "category": "feature",
+  "priority": "high",
+  "tags": [
+    "mcp",
+    "orchestrator"
+  ],
+  "created": "2025-12-16",
+  "status": "planning",
+  "target_path": "C:\\Users\\willh\\.mcp-servers\\orchestrator-mcp",
+  "tools": [
+    {
+      "name": "create_stub",
+      "description": "Capture an idea as a stub with auto-incrementing STUB-ID",
+      "params": [
+        "name",
+        "description",
+        "category",
+        "priority"
+      ],
+      "output": "Creates coderef/working/{name}/stub.json, updates projects.md"
+    },
+    {
+      "name": "delegate_workorder",
+      "description": "Create communication.json in target project to delegate work",
+      "params": [
+        "stub_id",
+        "target_project",
+        "instructions"
+      ],
+      "output": "Creates {project}/coderef/working/{feature}/communication.json"
+    },
+    {
+      "name": "check_workorder_status",
+      "description": "Read communication.json from target project and report status",
+      "params": [
+        "workorder_id"
+      ],
+      "output": "Returns current status, last update, next action"
+    },
+    {
+      "name": "update_tracking",
+      "description": "Sync workorders.json and index.html with current status from all projects",
+      "params": [],
+      "output": "Updates workorders.json and index.html"
+    },
+    {
+      "name": "list_active_workorders",
+      "description": "List all active workorders with status",
+      "params": [],
+      "output": "Returns array of workorders from workorders.json"
+    },
+    {
+      "name": "generate_handoff_prompt",
+      "description": "Generate a formatted handoff prompt for a workorder",
+      "params": [
+        "workorder_id"
+      ],
+      "output": "Returns formatted prompt text for pasting into project agent"
+    },
+    {
+      "name": "request_features_doc",
+      "description": "Send features inventory prompt to project agent",
+      "params": [
+        "target_project"
+      ],
+      "output": "Creates prompt in project, agent generates coderef/user/features.md"
+    },
+    {
+      "name": "collect_features_docs",
+      "description": "Aggregate features.md from all projects into master inventory",
+      "params": [],
+      "output": "Returns combined features inventory"
+    },
+    {
+      "name": "create_context",
+      "description": "Create context.json with requirements, constraints, and technical context for a workorder",
+      "params": [
+        "workorder_id",
+        "requirements",
+        "constraints",
+        "technical_context"
+      ],
+      "output": "Creates {project}/coderef/working/{feature}/context.json"
+    },
+    {
+      "name": "pass_context",
+      "description": "Transfer context from one project to another (e.g., share patterns, decisions)",
+      "params": [
+        "source_project",
+        "target_project",
+        "context_type"
+      ],
+      "output": "Copies relevant context to target project's communication.json"
+    },
+    {
+      "name": "bridge_projects",
+      "description": "Coordinate work between two projects that need to share interfaces/contracts",
+      "params": [
+        "project_a",
+        "project_b",
+        "shared_interface"
+      ],
+      "output": "Creates linked communication.json in both projects with shared context"
+    },
+    {
+      "name": "broadcast_prompt",
+      "description": "Send same prompt to multiple project agents (batch delegation)",
+      "params": [
+        "prompt_template",
+        "target_projects"
+      ],
+      "output": "Creates communication.json in each target with same instructions"
+    }
+  ],
+  "persona": {
+    "name": "orchestrator-assistant",
+    "description": "Orchestrator persona - identifies work, delegates to project agents, collects results",
+    "principles": [
+      "Do not execute work in other projects",
+      "Identify, delegate, collect",
+      "Project agents have better context - delegate to them",
+      "Track workorders via communication.json",
+      "Maintain projects.md as source of truth"
+    ],
+    "does": [
+      "Capture ideas as stubs",
+      "Track projects and workorders",
+      "Generate handoff prompts",
+      "Update workorders.json and index.html",
+      "Read communication.json from projects"
+    ],
+    "does_not": [
+      "Execute code in other projects",
+      "Deep-dive explore other codebases",
+      "Make changes outside assistant folder",
+      "Generate features.md for projects"
+    ]
+  },
+  "related_stubs": [
+    "STUB-008",
+    "STUB-023",
+    "STUB-002"
+  ],
+  "workflows": {
+    "context_orchestration": {
+      "description": "Orchestrator acts as central hub for context passing between projects",
+      "flow": [
+        "1. User describes idea/task to orchestrator",
+        "2. Orchestrator captures as stub or promotes to workorder",
+        "3. Orchestrator creates context.json with requirements, constraints",
+        "4. Orchestrator creates communication.json with instructions, status tracking",
+        "5. Orchestrator generates handoff prompt for project agent",
+        "6. User pastes prompt into project agent",
+        "7. Project agent reads context.json and communication.json",
+        "8. Project agent executes, updates communication.json status",
+        "9. Orchestrator polls communication.json to track progress",
+        "10. Orchestrator updates workorders.json and index.html",
+        "11. On completion, orchestrator collects deliverables"
+      ],
+      "files_created": {
+        "in_orchestrator": [
+          "workorders.json",
+          "index.html",
+          "coderef/working/*/stub.json"
+        ],
+        "in_target_project": [
+          "coderef/working/{feature}/context.json",
+          "coderef/working/{feature}/communication.json",
+          "coderef/working/{feature}/*.md prompts"
+        ]
+      }
+    },
+    "cross_project_coordination": {
+      "description": "Orchestrator coordinates work that spans multiple projects",
+      "example": "Tool inventory workflow - send same prompt to multiple projects, collect results",
+      "flow": [
+        "1. Orchestrator identifies task requiring multiple projects",
+        "2. Creates communication.json in each target project",
+        "3. Tracks status per-project in workorders.json",
+        "4. Collects outputs from each project",
+        "5. Aggregates into unified result"
+      ]
+    },
+    "status_tracking": {
+      "description": "Orchestrator maintains single source of truth for all workorder status",
+      "files": {
+        "workorders.json": "Centralized status of all active workorders",
+        "index.html": "Visual dashboard showing projects, stubs, active WOs",
+        "projects.md": "Master list of projects and stubs"
+      },
+      "status_values": [
+        "pending_plan",
+        "plan_submitted",
+        "changes_requested",
+        "approved",
+        "implementing",
+        "complete",
+        "verified",
+        "closed"
+      ]
+    }
+  },
+  "target_project": "assistant"
+}

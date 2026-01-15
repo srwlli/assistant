@@ -4,16 +4,30 @@
       "Bash(python audit-slash-commands.py:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(find:*)",
+      "Bash(findstr:*)",
+      "Bash(python:*)",
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\coderef-dashboard\" status)",
+      "mcp__coderef-workflow__generate_foundation_docs",
+      "Bash(powershell -Command \"& ''C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\sessions\\validate.ps1'' -Verbose\")",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\Users\\willh\\Desktop\\assistant\\.claude\\commands\\'' | Select-Object Name\")",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\resource-sheet-validation-enhancement\\'' | Select-Object Name\")",
+      "Bash(powershell -Command:*)",
+      "mcp__papertrail__validate_stub",
+      "Bash(dir:*)",
+      "mcp__papertrail__check_all_docs"
     ],
     "deny": [],
     "ask": []
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "coderef-context",
     "coderef-personas",
     "coderef-docs",
     "coderef-workflow",
-    "filesystem"
+    "filesystem",
+    "coderef-testing"
   ]
 }

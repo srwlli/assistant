@@ -1,0 +1,30 @@
+{
+  "feature_name": "coderef-timestamp-utility",
+  "description": "Reusable Python timestamp utility module for generating standardized dates in YAML front matter format (YYYY-MM-DD) for all CodeRef document generation scripts. Provides functions for date strings, full timestamps, and ISO format, ensuring consistent date formatting across the ecosystem.",
+  "project": "coderef-docs",
+  "created": "2026-01-07",
+  "status": "completed",
+  "completed": "2026-01-08T09:30:00Z",
+  "implementation": {
+    "location": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\utils\\timestamp.py",
+    "integrated_in": [
+      "resource_sheet/composition/composer.py"
+    ],
+    "functions": [
+      "get_date() - YYYY-MM-DD format",
+      "get_timestamp() - ISO 8601 with timezone",
+      "get_iso_timestamp() - UTC ISO 8601",
+      "get_rsms_timestamps() - RSMS v2.0 frontmatter",
+      "get_plan_timestamps() - plan.json timestamps",
+      "validate_date_format() - YYYY-MM-DD validator",
+      "validate_iso_timestamp() - ISO 8601 validator"
+    ],
+    "schema_compliance": [
+      "Papertrail RSMS v2.0 (resource-sheet-metadata-schema.json)",
+      "Plan Schema v1.1.0 (plan.schema.json)"
+    ]
+  },
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-100"
+}

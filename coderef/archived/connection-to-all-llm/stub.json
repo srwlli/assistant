@@ -1,0 +1,10 @@
+{
+  "feature_name": "connection-to-all-llm",
+  "description": "Connection to all LLMs",
+  "category": "feature",
+  "priority": "medium",
+  "created": "2025-12-15",
+  "status": "planning",
+  "target_project": "unknown",
+  "stub_id": "STUB-104"
+}

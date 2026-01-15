@@ -1,3 +1,13 @@
+---
+workorder_id: WO-FOUNDATION-DOCS-001
+generated_by: coderef-docs v2.0.0
+feature_id: foundation-documentation
+doc_type: components
+title: Assistant - Components Documentation
+version: 2.0.0
+status: APPROVED
+---
+
 # Components Documentation
 
 **Project:** Assistant (Orchestrator CLI)

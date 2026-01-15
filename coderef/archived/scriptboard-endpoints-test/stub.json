@@ -1,0 +1,35 @@
+{
+  "stub_id": "STUB-048",
+  "name": "scriptboard-endpoints-test",
+  "category": "infrastructure",
+  "description": "Test of the Scriptboard orchestrator endpoints implemented in WO-FILE-DISCOVERY-ENHANCEMENT-001",
+  "created": "2025-12-20",
+  "scope": "Testing only - validate new endpoints work correctly",
+  "context": {
+    "related_workorder": "WO-FILE-DISCOVERY-ENHANCEMENT-001",
+    "endpoints_to_test": [
+      "GET /orchestrator/workorders-master",
+      "GET /orchestrator/internal-workorders",
+      "GET /orchestrator/stale",
+      "GET /orchestrator/plans (with stale_days parameter)",
+      "GET /orchestrator/stats (with stale_count and internal_count)",
+      "POST /orchestrator/register-internal"
+    ],
+    "prerequisite": "Backend server must be restarted to load new endpoints"
+  },
+  "test_plan": [
+    "Restart Scriptboard backend server",
+    "Test GET /workorders-master - should return data from assistant/workorders.json",
+    "Test GET /internal-workorders - should detect plans with workorder_id but no communication.json",
+    "Test GET /stale?days=7 - should detect plans older than 7 days",
+    "Test GET /plans?stale_days=7 - should include stale flag",
+    "Test GET /stats - should include stale_count and internal_count",
+    "Test POST /register-internal - should add internal workorder to workorders.json"
+  ],
+  "expected_outcome": "All endpoints return valid JSON responses with correct data",
+  "priority": "high",
+  "status": "pending",
+  "created_by": "Archer",
+  "feature_name": "scriptboard-endpoints-test",
+  "target_project": "assistant"
+}

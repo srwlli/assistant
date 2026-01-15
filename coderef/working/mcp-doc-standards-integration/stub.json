@@ -4,8 +4,8 @@
   "description": "Enhance coderef-docs MCP server to use Universal Documentation Standards (UDS) header/footer templates with workorder and MCP attribution for all generated documentation",
   "category": "enhancement",
   "priority": "high",
-  "created": "2025-12-26T10:15:00Z",
-  "status": "stub",
+  "created": "2025-12-26",
+  "status": "planning",
   "context": {
     "motivation": "Unify documentation generation across all MCP servers with consistent headers/footers that track workorders, feature IDs, and generating MCP server. Improve traceability and compliance with UDS standards.",
     "problem_statement": "Currently, generated documentation lacks:\n- Workorder/feature ID linkage\n- MCP server attribution (which server generated it?)\n- Change history tracking\n- Consistent version tracking across ecosystem\n- Integration with orchestrator tracking system",
@@ -81,7 +81,7 @@
       "classification": "INTERNAL"
     },
     "example_enhanced_footer": {
-      "copyright": "Copyright © 2025 | Assistant Project",
+      "copyright": "Copyright \u00a9 2025 | Assistant Project",
       "generated_by": "coderef-docs v1.2.0",
       "workorder": "WO-AUTH-SYSTEM-001",
       "feature": "auth-system",
@@ -95,12 +95,13 @@
       "All generated docs have valid footers with MCP attribution",
       "Docs can be traced back to originating workorder via stub.json",
       "Validation linter passes 100% of generated docs",
-      "Documentation traceability chain is unbroken (orchestrator → workorder → feature → doc)"
+      "Documentation traceability chain is unbroken (orchestrator \u2192 workorder \u2192 feature \u2192 doc)"
     ],
     "source_templates": [
       "C:\\Users\\willh\\Desktop\\ARCHIVED\\projects - back up\\Universal-Documentation-Standards\\templates\\document-templates\\standard-document-header-template.md",
       "C:\\Users\\willh\\Desktop\\ARCHIVED\\projects - back up\\Universal-Documentation-Standards\\templates\\document-templates\\standard-document-footer-template.md"
     ]
   },
-  "target_project": "coderef-docs"
+  "target_project": "coderef-docs",
+  "stub_id": "STUB-110"
 }

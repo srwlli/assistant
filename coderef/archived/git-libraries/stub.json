@@ -1,0 +1,10 @@
+{
+  "feature_name": "git-libraries",
+  "description": "Git libraries",
+  "category": "feature",
+  "priority": "medium",
+  "created": "2025-12-15",
+  "status": "planning",
+  "target_project": "unknown",
+  "stub_id": "STUB-107"
+}

@@ -2,9 +2,10 @@
   "feature_name": "tracking-plan-workflow",
   "description": "Rename /execute-plan to /tracking-plan across entire system (slash command + MCP tool + core functions) to better reflect actual purpose: creating TodoWrite task list from plan.json and tracking task completion throughout implementation. Full rename includes: mcp__coderef_workflow__tracking_plan tool, track_plan_progress() function, all documentation references, and conceptual messaging shift from 'execution' to 'progress tracking'.",
   "project": "mcp-servers",
-  "created": "2025-12-26T12:15:00Z",
-  "status": "stub",
+  "created": "2025-12-26",
+  "status": "planning",
   "category": "feature",
   "priority": "medium",
-  "target_project": "coderef-workflow"
+  "target_project": "coderef-workflow",
+  "stub_id": "STUB-088"
 }

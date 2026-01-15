@@ -1,0 +1,32 @@
+{
+  "feature_name": "coderef-ecosystem-docs-uds-compliance",
+  "description": "Multi-agent session to review, clean up, organize, and ensure UDS standards compliance for all documentation across the coderef ecosystem. Will use Assistant as orchestrator coordinating 7 project agents (coderef-workflow, coderef-docs, coderef-context, coderef-dashboard, coderef-testing, papertrail, coderef-personas) to audit and update their documentation to meet new Papertrail UDS standards.",
+  "project": "assistant",
+  "created": "2026-01-10",
+  "status": "planning",
+  "session_type": "multi-agent",
+  "agents_involved": [
+    "assistant (orchestrator)",
+    "coderef-workflow",
+    "coderef-docs",
+    "coderef-context",
+    "coderef-dashboard",
+    "coderef-testing",
+    "papertrail",
+    "coderef-personas"
+  ],
+  "scope": {
+    "audit": "Identify all documentation files (foundation, system, workorder docs)",
+    "cleanup": "Remove random/outdated docs, consolidate duplicates",
+    "organize": "Create consistent structure across all projects",
+    "validate": "Ensure all docs meet Papertrail UDS standards (score >= 90)"
+  },
+  "session_phases": [
+    "Phase 1: Inventory - Each agent audits their documentation",
+    "Phase 2: Gap Analysis - Identify UDS compliance gaps",
+    "Phase 3: Implementation - Clean up, organize, validate to UDS standards"
+  ],
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-094"
+}

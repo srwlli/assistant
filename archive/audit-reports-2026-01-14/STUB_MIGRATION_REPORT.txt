@@ -1,0 +1,21 @@
+STUB MIGRATION REPORT
+================================================================================
+Date: 2026-01-13 00:51:44
+Total stubs: 99
+Files modified: 0
+
+Changes:
+  - Status values fixed ('stub' → 'planning'): 0
+  - Date formats fixed (ISO 8601 → YYYY-MM-DD): 0
+  - Stub IDs added: 0
+  - Categories remapped: 0
+  - Errors: 0
+
+Stub ID Counter:
+  - Before: STUB-138
+  - After: STUB-138
+  - IDs assigned: 0
+
+================================================================================
+DETAILED CHANGES
+================================================================================

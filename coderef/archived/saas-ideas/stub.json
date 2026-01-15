@@ -1,0 +1,10 @@
+{
+  "feature_name": "saas-ideas",
+  "description": "SaaS ideas",
+  "category": "feature",
+  "priority": "medium",
+  "created": "2025-12-15",
+  "status": "planning",
+  "target_project": "multi-tenant",
+  "stub_id": "STUB-124"
+}

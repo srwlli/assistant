@@ -1,0 +1,10 @@
+{
+  "stub_id": "STUB-004",
+  "feature_name": "reorganize-gits-projects",
+  "description": "Consolidate and organize scattered git repositories and project folders",
+  "category": "refactor",
+  "priority": "medium",
+  "created": "2025-12-16",
+  "status": "planning",
+  "target_project": "unknown"
+}

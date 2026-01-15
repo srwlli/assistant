@@ -1,0 +1,86 @@
+================================================================================
+STUB ARCHIVAL REPORT
+================================================================================
+Generated: 2026-01-13 01:13:27
+Total stubs archived: 36
+
+
+COMPLETED (1 stubs)
+--------------------------------------------------------------------------------
+  STUB-100     | coderef-timestamp-utility
+
+DUPLICATE (5 stubs)
+--------------------------------------------------------------------------------
+  STUB-051     | rename-execute-plan-to-align-plan
+  STUB-063     | consolidate-foundation-docs-workflow
+  STUB-125     | scanner-output-validation
+  STUB-126     | scanner-python-detection
+  STUB-127     | scanner-script-path-config
+
+INFRA_UTILITY_LOW (7 stubs)
+--------------------------------------------------------------------------------
+  STUB-004     | reorganize-gits-projects
+  STUB-005     | consolidate-project-directories
+  STUB-012     | mcp-server-cleanup
+  STUB-043     | rename-start-feature-command
+  STUB-050     | work-order-folder-rename
+  STUB-076     | gitignore-coderef-directory
+  STUB-081     | separate-tag-chips-from-prompt-cards
+
+LOW_PRIORITY_OLD (15 stubs)
+--------------------------------------------------------------------------------
+  STUB-011     | stub-id-system
+  STUB-026     | mcp-usage-tracker
+  STUB-033     | stub-tag-system
+  STUB-037     | file-front-matter
+  STUB-087     | ai-video-gen
+  STUB-089     | assistant-to-other-projects
+  STUB-091     | code-review-projects
+  STUB-104     | connection-to-all-llm
+  STUB-107     | git-libraries
+  STUB-111     | mcp-integrations
+  STUB-112     | organize-and-consolidate
+  STUB-116     | railway-config
+  STUB-124     | saas-ideas
+  STUB-130     | tech-stack-docs
+  STUB-134     | track-and-note-commands
+
+OBSOLETE_NAME (1 stubs)
+--------------------------------------------------------------------------------
+  STUB-119     | remove-utility-personas
+
+TEST/EXAMPLE (7 stubs)
+--------------------------------------------------------------------------------
+  STUB-048     | scriptboard-endpoints-test
+  STUB-052     | websocket-live-update-test
+  STUB-083     | testing-new-workflow
+  STUB-129     | stub-location-test
+  STUB-131     | test-and-fix-emojis
+  STUB-132     | test-stub-example
+  STUB-133     | testing-brief-entry-point
+
+================================================================================
+ARCHIVAL CRITERIA REFERENCE
+================================================================================
+
+1. TEST/EXAMPLE
+   - Name contains: test, example, stub-location
+   - Purpose: Validation stubs for workflow testing
+
+2. COMPLETED
+   - Status marked as: completed, done, archived
+   - Purpose: Work is finished, no longer needed
+
+3. OBSOLETE_NAME
+   - Name contains: deprecated, remove-, delete-, legacy-, unused-, etc.
+   - Purpose: Old approaches no longer relevant
+
+4. LOW_PRIORITY_OLD
+   - Priority: low or medium
+   - Created: before 2025-12-01
+   - Purpose: Old backlog items with low urgency
+
+5. DUPLICATE
+   - Similar stubs in same functional area
+   - Purpose: Consolidation - keep best version, archive redundant
+        

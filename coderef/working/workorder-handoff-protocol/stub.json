@@ -5,8 +5,8 @@
   "description": "Define a standard protocol for this orchestrator to hand off workorders to embedded project agents. Currently manual (copy/paste prompt). Goal: streamlined, possibly automated.",
   "category": "feature",
   "priority": "high",
-  "created": "2025-12-16T00:00:00.000Z",
-  "status": "stub",
+  "created": "2025-12-16",
+  "status": "planning",
   "notes": {
     "current_process": {
       "step_1": "This assistant identifies task",

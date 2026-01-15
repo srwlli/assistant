@@ -2,8 +2,8 @@
   "feature_name": "reference-sheet-generator",
   "description": "Enhance Python MCP detection system by adding TypeScript's 24-category classification, confidence scoring, ambiguity detection, and improved element search with fuzzy matching. Aligns Python implementation with TypeScript reference blueprint for better resource sheet generation.",
   "project": "coderef-docs",
-  "created": "2026-01-04T00:00:00Z",
-  "status": "stub",
+  "created": "2026-01-04",
+  "status": "planning",
   "context": {
     "current_state": {
       "typescript_reference": "modules/resource-sheet/detection/ with analyzer.ts, classifier.ts, selector.ts",
@@ -28,5 +28,8 @@
       "typescript": "Well-defined categorization, ambiguity detection, confidence scoring, human-readable names",
       "python": "Graph query integration (GRAPH-001), graceful fallbacks, more characteristic flags, async analysis"
     }
-  }
+  },
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-118"
 }

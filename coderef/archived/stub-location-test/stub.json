@@ -1,0 +1,24 @@
+{
+  "feature_name": "stub-location-test",
+  "title": "Test: Verify Stub Centralization Workflow",
+  "description": "Test stub to verify all stubs are saved centrally in orchestrator (assistant/coderef/working/) regardless of feature origin project",
+  "category": "infrastructure",
+  "priority": "low",
+  "created": "2025-12-26",
+  "status": "planning",
+  "context": {
+    "purpose": "Validate stub workflow - all stubs should be created in C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\{feature-name}\\",
+    "test_case": "Create stub and verify location is ORCHESTRATOR, not in target project",
+    "expected_location": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\stub-location-test\\",
+    "incorrect_locations": [
+      "C:\\Users\\willh\\Desktop\\coderef-dashboard\\coderef\\working\\ \u274c (project-specific)",
+      "C:\\Users\\willh\\Desktop\\scrapper\\coderef\\working\\ \u274c (project-specific)",
+      "C:\\Users\\willh\\Desktop\\latest-sim\\gridiron-franchise\\coderef\\working\\ \u274c (project-specific)"
+    ],
+    "correct_location": "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\ \u2705 (centralized orchestrator)",
+    "workflow_rule": "Stubs are orchestrator artifacts, not project artifacts. Single source of truth for all feature backlog items.",
+    "implication": "When creating stub for a feature destined for ANY project, save in orchestrator location"
+  },
+  "target_project": "assistant",
+  "stub_id": "STUB-129"
+}

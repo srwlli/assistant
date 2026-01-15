@@ -1,0 +1,143 @@
+{
+  "stub_id": "STUB-063",
+  "feature_name": "consolidate-foundation-docs-workflow",
+  "title": "Consolidate Foundation Docs into Single Workflow",
+  "category": "feature",
+  "priority": "medium",
+  "description": "Currently foundation docs generation is split across multiple MCP tools and commands. Consolidate into a single, unified workflow that generates all foundation documentation (README, ARCHITECTURE, API, COMPONENTS, SCHEMA) in one cohesive operation.",
+  "problem": {
+    "current_state": [
+      "Foundation docs scattered across coderef-docs and coderef-workflow MCPs",
+      "Multiple tools: generate_foundation_docs, generate_individual_doc, coderef_foundation_docs",
+      "Inconsistent naming conventions and interfaces",
+      "User confusion about which tool to use",
+      "Duplication between MCP servers"
+    ],
+    "pain_points": [
+      "Need to remember multiple tool names",
+      "Unclear which tool does what",
+      "No single source of truth for foundation doc generation",
+      "Potential for outdated/duplicate implementations"
+    ]
+  },
+  "proposed_solution": {
+    "approach": "Single unified tool in coderef-docs MCP with coderef-context integration",
+    "consolidation_target": "One tool: generate_foundation_docs",
+    "architecture": [
+      "Prerequisites: User runs coderef_scan to generate .coderef/index.json",
+      "Tool reads .coderef/index.json (pre-generated)",
+      "Calls coderef-context query tools (query, patterns, complexity) as needed",
+      "Populates POWER framework templates with real code data",
+      "Outputs: README, ARCHITECTURE, API, SCHEMA, COMPONENTS"
+    ],
+    "features": [
+      "Generate all 5 foundation docs in one call",
+      "Optional selective generation (e.g., just README + ARCHITECTURE)",
+      "Code-driven documentation using real .coderef/ data",
+      "No scan operation - assumes .coderef/index.json exists",
+      "Error if .coderef/index.json missing: 'Run coderef_scan first'",
+      "No fallback to template-only mode",
+      "Clear success/failure reporting per document"
+    ]
+  },
+  "technical_details": {
+    "location": "coderef-docs MCP (documentation generation is its domain)",
+    "tools_to_consolidate": [
+      "coderef-docs/generate_foundation_docs (template-driven)",
+      "coderef-docs/generate_individual_doc",
+      "coderef-workflow/coderef_foundation_docs (code-driven)"
+    ],
+    "new_interface": {
+      "tool_name": "generate_foundation_docs",
+      "parameters": {
+        "project_path": "Absolute path to project directory (required)",
+        "docs": "Optional array: ['readme', 'architecture', 'api', 'components', 'schema']. Default: all",
+        "force_regenerate": "Boolean - regenerate even if exists. Default: false"
+      },
+      "removed_parameters": {
+        "use_coderef": "Removed - always uses .coderef/ data (fails if missing)",
+        "deep_extraction": "Removed - scanning handled by user before calling tool"
+      }
+    },
+    "dependency_chain": "coderef_scan (user) \u2192 read .coderef/index.json \u2192 query coderef-context \u2192 generate docs",
+    "error_handling": [
+      "If .coderef/index.json missing \u2192 Return error with instruction to run coderef_scan",
+      "If coderef-context unavailable \u2192 Return error (no graceful degradation)",
+      "Per-document errors logged but don't block other docs"
+    ],
+    "migration_strategy": [
+      "Keep old tools with deprecation warnings",
+      "Add aliases that redirect to new unified tool",
+      "Update documentation and slash commands",
+      "Remove deprecated tools in next major version"
+    ]
+  },
+  "review_scope": {
+    "mcp_servers_to_review": [
+      "coderef-docs - Current implementation, output quality, improvement opportunities",
+      "coderef-context - Capabilities, integration points, data structure quality"
+    ],
+    "documentation_types_to_standardize": [
+      "Foundation docs (README, ARCHITECTURE, API, SCHEMA, COMPONENTS)",
+      "User docs (user-guide.md, my-guide.md, quickref)",
+      "Standards docs (ui-patterns, behavior-patterns, ux-patterns, testing-patterns, etc.)",
+      "Workflow docs (context.json, plan.json, communication.json, DELIVERABLES.md)"
+    ],
+    "review_objectives": [
+      "Assess current workflow contributions from coderef-docs and coderef-context",
+      "Evaluate output quality (placeholders vs real data, completeness, accuracy)",
+      "Identify gaps where .coderef/ data and context tools could improve docs",
+      "Standardize all doc types to leverage coderef-context tools consistently",
+      "Propose improvements to documentation generation workflow"
+    ],
+    "leverage_coderef_tools": [
+      ".coderef/index.json - Source of truth (user runs coderef_scan as prerequisite)",
+      "coderef_query - Extract relationships, dependencies, call graphs",
+      "coderef_patterns - Discover UI/API/architecture/testing patterns for standards docs",
+      "coderef_complexity - Identify complex components for documentation priority",
+      "coderef_coverage - Show test coverage gaps in documentation",
+      "coderef_impact - Analyze component criticality for documentation focus"
+    ]
+  },
+  "deliverables": [
+    "Unified generate_foundation_docs tool in coderef-docs",
+    "Integration with coderef-context query/patterns/complexity tools",
+    "Standardized user docs generation (leveraging .coderef/ data)",
+    "Enhanced standards docs generation (using coderef_patterns)",
+    "Quality assessment report from coderef-docs and coderef-context",
+    "Improvement suggestions document with specific enhancements",
+    "Deprecation notices on old tools (generate_individual_doc, coderef_foundation_docs)",
+    "Updated documentation (user-guide.md, my-guide.md)",
+    "Migration guide for existing workflows",
+    "Tests for new unified tool (all doc types)"
+  ],
+  "benefits": [
+    "Single source of truth for foundation docs",
+    "Reduced user confusion - one tool, one pattern",
+    "Easier maintenance (one tool vs multiple)",
+    "Consistent behavior across all doc types",
+    "Code-driven docs with real data, not placeholders",
+    "Clean dependency chain: scan \u2192 read \u2192 query \u2192 generate",
+    "No ambiguity about .coderef usage (always required)"
+  ],
+  "related_stubs": {
+    "STUB-057": "WO-Tracking Dashboard Widget - UI for tracking workorders",
+    "STUB-060": "Dashboard API endpoints - Related workflow consolidation"
+  },
+  "implementation_notes": {
+    "complexity": "Medium-High - requires refactoring + integration + standardization across all doc types",
+    "breaking_changes": "No - old tools remain with deprecation warnings",
+    "testing_requirements": "Validate all doc types (foundation, user, standards, workflow) generate correctly with real .coderef/ data",
+    "rollout": "Phased - new tool first, deprecate old tools gradually",
+    "session_requirements": [
+      "Multi-agent session with coderef-docs and coderef-context agents",
+      "Agents review their own contributions and suggest improvements",
+      "User runs coderef_scan on both MCP servers before session (.coderef/index.json prerequisite)",
+      "Leverage coderef-context tools (query, patterns, complexity, coverage, impact) to analyze coderef-docs quality",
+      "Standardize all documentation types with consistent coderef integration"
+    ]
+  },
+  "created": "2025-12-27",
+  "status": "planning",
+  "target_project": "coderef-docs"
+}

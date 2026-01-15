@@ -2,6 +2,9 @@
   "feature_name": "coderef-personas-removal",
   "description": "Remove coderef-personas MCP server from assistant project configuration and documentation. Impact analysis shows minimal functional dependencies - only settings.local.json and documentation references need updates. Migration to personas-mcp or global persona commands recommended.",
   "project": "assistant",
-  "created": "2026-01-04T00:00:00Z",
-  "status": "stub"
+  "created": "2026-01-04",
+  "status": "planning",
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-096"
 }

@@ -1,0 +1,10 @@
+{
+  "stub_id": "STUB-003",
+  "feature_name": "saas-mvp-candidates",
+  "description": "Identify and prioritize app/SAAS ideas that can generate revenue quickly",
+  "category": "feature",
+  "priority": "high",
+  "created": "2025-12-16",
+  "status": "planning",
+  "target_project": "coderef-dashboard"
+}

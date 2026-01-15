@@ -2,9 +2,10 @@
   "feature_name": "communications-dictionary-syntax",
   "description": "Basic dictionary and syntax guide for agent-to-agent and agent-to-user communications. Defines standard terminology, message formats, status codes, and communication protocols across the coderef ecosystem.",
   "project": "assistant",
-  "created": "2025-12-28T06:35:00Z",
-  "status": "stub",
+  "created": "2025-12-28",
+  "status": "planning",
   "category": "feature",
   "priority": "medium",
-  "target_project": "coderef-dashboard"
+  "target_project": "coderef-dashboard",
+  "stub_id": "STUB-103"
 }

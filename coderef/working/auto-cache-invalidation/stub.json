@@ -2,8 +2,8 @@
   "feature_name": "auto-cache-invalidation",
   "description": "Implement automatic cache invalidation using file system watching (watchdog library). When source code files change, automatically clear extractor caches so documentation generation always uses fresh data without manual server restarts.",
   "project": "coderef-system",
-  "created": "2025-12-28T00:00:00Z",
-  "status": "stub",
+  "created": "2025-12-28",
+  "status": "planning",
   "effort_estimate": "2 hours",
   "priority": "high",
   "context": {
@@ -16,5 +16,6 @@
     ]
   },
   "category": "feature",
-  "target_project": "coderef-docs"
+  "target_project": "coderef-docs",
+  "stub_id": "STUB-090"
 }

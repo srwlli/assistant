@@ -4,8 +4,8 @@
   "description": "Extract Papertrail's UDS (Universal Documentation System) framework and integrate into coderef-docs MCP to provide formalized document type schemas, validation, and governance for all generated documentation.",
   "category": "feature",
   "priority": "high",
-  "created": "2025-12-26T14:45:00Z",
-  "status": "stub",
+  "created": "2025-12-26",
+  "status": "planning",
   "context": "CodeRef currently has UDS in practice (ARCHITECTURE.md, API.md, DELIVERABLES.md templates exist) but not formalized in code. Papertrail's uds.ts (18.8 KB, zero dependencies) defines document types, required sections, placeholder tokens, and validation rules. Integrating UDS into coderef-docs enables: (1) objective documentation governance (validate before commit), (2) guides AI Generator to create UDS-compliant docs automatically, (3) consistent structure across all document types and projects, (4) enforcement via /validate-docs MCP tool.",
   "problem_statement": "Currently: Document templates are living examples in markdown. Agents write docs without formal validation. No enforcement of structure. Consistency varies by agent. AI-generated docs have no guarantees of completeness.",
   "solution_approach": "Extract uds.ts from Papertrail (C:\\Users\\willh\\Desktop\\ARCHIVED\\projects-idle\\paper-trail-parsed-into-modules\\uds-framework\\uds.ts). Adapt for CodeRef. Integrate into coderef-docs MCP with three components: (1) UDS schema module defining README, ARCHITECTURE, API, DELIVERABLES, COMPONENTS, SCHEMA, QUICKREF types with required sections and tokens, (2) UDSValidator class for validation, (3) /validate-docs MCP tool for agents to check docs before commit.",
@@ -173,7 +173,7 @@
     "STUB-058": {
       "name": "mcp-doc-standards-integration",
       "relationship": "Complementary - STUB-064 defines document structure (what goes inside), STUB-058 defines document metadata (headers/footers with attribution)",
-      "workflow": "STUB-064 creates the document body with UDS-compliant sections → STUB-058 wraps it with standard headers/footers",
+      "workflow": "STUB-064 creates the document body with UDS-compliant sections \u2192 STUB-058 wraps it with standard headers/footers",
       "implementation_order": "Implement STUB-064 first (structure), then STUB-058 (metadata wrapper)",
       "example": {
         "step_1_uds_structure": "DELIVERABLES requires: [Overview, Phases, Checklist, Metrics, Success]",
@@ -188,5 +188,6 @@
       ]
     }
   },
-  "target_project": "coderef-docs"
+  "target_project": "coderef-docs",
+  "stub_id": "STUB-135"
 }

@@ -4,8 +4,8 @@
   "description": "Create Next.js API routes to track workorders and stubs across all projects. File system-based MVP with JSON response schemas, foundation for future WebSocket real-time updates",
   "category": "feature",
   "priority": "critical",
-  "created": "2025-12-26T11:00:00Z",
-  "status": "stub",
+  "created": "2025-12-26",
+  "status": "planning",
   "context": {
     "motivation": "Enable coderef-assistant and coderef-sources routes to display live workorder/stub data without hard-coding. Create API abstraction layer for future backend migration.",
     "problem_statement": "Currently:\n- No unified API to fetch stubs and workorders\n- Stubs centralized in assistant/coderef/working/\n- Workorders scattered across multiple projects in coderef/workorder/\n- No project registry\n- coderef-assistant route has no data source\n- No schema contracts for frontend consumption",
@@ -77,7 +77,7 @@
         "path": "/api/workorders",
         "method": "GET",
         "description": "Fetch all workorders from all projects",
-        "implementation": "1. Read projects.config.json\n2. For each active project, scan {project_path}/coderef/workorder/ (list folders)\n3. If folder exists → workorder exists\n4. Read any files in folder (communication.json, plan.json, DELIVERABLES.md)\n5. Return combined list",
+        "implementation": "1. Read projects.config.json\n2. For each active project, scan {project_path}/coderef/workorder/ (list folders)\n3. If folder exists \u2192 workorder exists\n4. Read any files in folder (communication.json, plan.json, DELIVERABLES.md)\n5. Return combined list",
         "returns": "WorkorderListResponse (array of workorders)"
       },
       "get_workorder_detail": {
@@ -192,5 +192,6 @@
       "API documentation (endpoint, params, response) complete"
     ]
   },
-  "target_project": "unknown"
+  "target_project": "unknown",
+  "stub_id": "STUB-101"
 }

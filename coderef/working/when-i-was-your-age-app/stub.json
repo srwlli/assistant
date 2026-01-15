@@ -2,10 +2,11 @@
   "feature_name": "when-i-was-your-age-app",
   "description": "Nostalgic comparison app where parents/kids enter DOB, app pulls data from when parent was kid's current age. Shows pop culture, news, sports, music, personal photos, diary entries - 'what the world was like when I was your age.'",
   "project": "assistant",
-  "created": "2025-12-28T06:45:00Z",
-  "status": "stub",
-  "category": "app-idea",
+  "created": "2025-12-28",
+  "status": "planning",
+  "category": "feature",
   "notes": "Features: DOB input, age calculation, historical data APIs (news, music charts, sports scores), photo upload, diary entries, timeline view. Target: parents sharing their childhood with kids through data.",
   "priority": "medium",
-  "target_project": "personas-mcp"
+  "target_project": "personas-mcp",
+  "stub_id": "STUB-136"
 }

@@ -2,6 +2,9 @@
   "feature_name": "coderef-ui-ux-workflow-parser",
   "description": "Adapt CodeRef workflow system to parse and extract UI/UX code patterns, component structures, and design system tokens for automated documentation and analysis",
   "project": "coderef-dashboard",
-  "created": "2026-01-01T23:47:00Z",
-  "status": "stub"
+  "created": "2026-01-01",
+  "status": "planning",
+  "category": "feature",
+  "priority": "medium",
+  "stub_id": "STUB-102"
 }

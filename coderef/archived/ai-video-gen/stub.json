@@ -1,0 +1,10 @@
+{
+  "feature_name": "ai-video-gen",
+  "description": "The AI video generation project",
+  "category": "feature",
+  "priority": "medium",
+  "created": "2025-12-15",
+  "status": "planning",
+  "target_project": "unknown",
+  "stub_id": "STUB-087"
+}

@@ -2,9 +2,10 @@
   "feature_name": "root-organization-command",
   "description": "Slash command that analyzes any coderef directory structure and generates a ROOT-ORGANIZATION.md file documenting the project layout, master files, documentation organization, and quick reference guide. Works in any directory, not just MCP server roots.",
   "project": "assistant",
-  "created": "2025-12-28T05:17:00Z",
-  "status": "stub",
+  "created": "2025-12-28",
+  "status": "planning",
   "category": "feature",
   "priority": "medium",
-  "target_project": "coderef-dashboard"
+  "target_project": "coderef-dashboard",
+  "stub_id": "STUB-122"
 }

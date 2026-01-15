@@ -1,9 +1,0 @@
-{
-  "feature_name": "code-review-projects",
-  "description": "Code review for NFL scrapers, Scriptboard, Noted, and Football Sim. Use Scriptboard workflow.",
-  "category": "idea",
-  "priority": "medium",
-  "created": "2025-12-15T12:15:00.000Z",
-  "status": "stub",
-  "target_project": "scriptboard"
-}

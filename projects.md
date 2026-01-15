@@ -1,7 +1,7 @@
 # Projects
 
-> Last updated: 2026-01-01
-> Next STUB-ID: STUB-082
+> Last updated: 2026-01-13
+> Next STUB-ID: STUB-138
 
 ---
 
@@ -49,6 +49,7 @@
 | STUB-056 | known-issues-utility | feature | Known issues registry: agents log bugs + fixes for future reference, searchable by error/tag/project |
 | STUB-057 | coderef-assistant-route | feature | AI Assistant dashboard route in coderef-dashboard with workorders, stubs, and documentation viewer |
 | STUB-058 | mcp-doc-standards-integration | enhancement | Integrate UDS document standards into MCP servers (headers/footers with workorder tracking) |
+| STUB-082 | agent-perspective-session-reports | feature | User-facing session reports where each agent writes narrative perspective of their work for human understanding |
 | STUB-059 | coderef-sources-route | feature | Knowledge base route with internal/external resources, search, filtering, and team resource management |
 | STUB-060 | coderef-tracking-api-mvp | CRITICAL | File system-based API for tracking workorders/stubs: projects.config.json + GET /api/{stubs,workorders} |
 | STUB-061 | stub-location-test | test | Validate stub centralization workflow - all stubs save to orchestrator regardless of origin project |
