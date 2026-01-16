@@ -1,0 +1,29 @@
+{
+  "feature_name": "yaml-frontmatter-timestamp-validation",
+  "description": "Ensure all generated documents use timestamp.py utility for YAML frontmatter. Validate that date and timestamp fields comply with RSMS v2.0 and UDS standards across all coderef-docs generation workflows.",
+  "project": "coderef-docs",
+  "created": "2026-01-15T19:45:00Z",
+  "status": "stub",
+  "context": {
+    "existing_utility": "C:\\Users\\willh\\.mcp-servers\\coderef-docs\\utils\\timestamp.py",
+    "functions": [
+      "get_date() - YYYY-MM-DD format for date field",
+      "get_timestamp() - ISO 8601 with timezone for timestamp field",
+      "get_rsms_timestamps() - Both date and timestamp for RSMS frontmatter",
+      "validate_date_format() - Validate YYYY-MM-DD format",
+      "validate_iso_timestamp() - Validate ISO 8601 format"
+    ],
+    "compliance_targets": [
+      "RSMS v2.0 resource sheet frontmatter",
+      "UDS foundation doc frontmatter",
+      "Plan schema timestamps (generated_at, updated_at)"
+    ]
+  },
+  "scope": [
+    "Audit all doc generation functions for timestamp usage",
+    "Ensure generate_foundation_docs uses timestamp.py",
+    "Ensure generate_resource_sheet uses timestamp.py",
+    "Add validation checks before writing YAML frontmatter",
+    "Update templates to import and use timestamp utility"
+  ]
+}
