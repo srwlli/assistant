@@ -1,0 +1,51 @@
+{
+  "stub_id": "STUB-RSMS-WORKORDER-001",
+  "feature_name": "rsms-workorder-schema-extension",
+  "description": "Create RSMS v2.0 extended schema variant (rsms-workorder-v2.0.json) to properly support workorder-tracked resource sheets with fields like workorder_id, feature_id, phase, complexity, etc. Currently using temporary solution with optional fields in base schema.",
+  "project": "papertrail",
+  "created": "2026-01-17T19:00:00Z",
+  "status": "stub",
+  "context": {
+    "origin_session": "WO-EXPLORER-SIDEBAR-UX-001",
+    "origin_agent": "papertrail",
+    "origin_phase": "phase_2",
+    "discovered_during": "Phase 2 validation revealed RSMS v2.0 schema incompatibility with workorder-tracked resource sheets",
+    "temporary_solution": "Added 9 workorder fields as optional to base schema (resource-sheet-metadata-schema.json) with TEMPORARY comments",
+    "problem": "Base RSMS v2.0 schema designed for static architectural docs, but ecosystem uses resource sheets as workorder deliverables requiring additional lifecycle/tracking metadata",
+    "impact": "21+ MAJOR validation errors across 6 resource sheets, 0% pass rate before temporary fix",
+    "affected_fields": [
+      "workorder_id",
+      "feature_id",
+      "phase",
+      "complexity",
+      "dependencies",
+      "related_sheets",
+      "created",
+      "updated",
+      "loc"
+    ]
+  },
+  "requirements": [
+    "Create rsms-workorder-v2.0.json schema extending base RSMS v2.0",
+    "Use allOf pattern to inherit base schema + add workorder fields",
+    "Update validator to auto-detect which schema to use (presence of workorder_id triggers extended schema)",
+    "Remove TEMPORARY comments from base schema after migration",
+    "Document when to use base vs extended schema",
+    "Provide migration guide for existing resource sheets"
+  ],
+  "effort_estimate": "2-3 hours",
+  "priority": "medium",
+  "related_files": [
+    "C:\\Users\\willh\\.mcp-servers\\papertrail\\schemas\\documentation\\resource-sheet-metadata-schema.json",
+    "C:\\Users\\willh\\.mcp-servers\\papertrail\\validators\\resource_sheet.py",
+    "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\explorer-sidebar-ux-improvements\\papertrail\\todo-resource-sheet-validation.md"
+  ],
+  "related_workorders": [
+    "WO-EXPLORER-SIDEBAR-UX-001"
+  ],
+  "references": {
+    "validation_report": "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\explorer-sidebar-ux-improvements\\papertrail\\outputs\\papertrail-phase2-validation-report.json",
+    "summary": "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\explorer-sidebar-ux-improvements\\papertrail\\outputs\\PHASE-2-VALIDATION-SUMMARY.md",
+    "todo": "C:\\Users\\willh\\.mcp-servers\\coderef\\sessions\\explorer-sidebar-ux-improvements\\papertrail\\todo-resource-sheet-validation.md"
+  }
+}

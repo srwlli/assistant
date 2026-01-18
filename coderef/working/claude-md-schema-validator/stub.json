@@ -1,0 +1,38 @@
+{
+  "feature_name": "claude-md-schema-validator",
+  "description": "Create dedicated schema, template, validator, and instructions for CLAUDE.md frontmatter to prevent validation regressions and wrong schema application (foundation-doc vs CLAUDE.md-specific).",
+  "project": "papertrail",
+  "created": "2026-01-18T00:00:00Z",
+  "status": "stub",
+  "context": {
+    "problem": "CLAUDE.md files are system documentation but don't fit foundation-doc schema pattern, causing CRITICAL validation errors when wrong schema is applied",
+    "current_issues": [
+      "Missing required fields (workorder_id, generated_by, feature_id, doc_type)",
+      "Wrong agent attribution (papertrail instead of coderef-docs)",
+      "Status enum mismatches (Production vs DRAFT|REVIEW|APPROVED|DEPRECATED)",
+      "Frontmatter regressions during updates"
+    ],
+    "solution_components": [
+      "claude-md-frontmatter-schema.json - Defines required/optional fields for CLAUDE.md",
+      "CLAUDE.md frontmatter template - Standard template for coderef-docs agent",
+      "validate_claude_md MCP tool - Papertrail validator for CLAUDE.md files",
+      "Updated coderef-docs instructions - When/how to use CLAUDE.md schema"
+    ],
+    "required_fields": [
+      "agent",
+      "date",
+      "task",
+      "project",
+      "version",
+      "status"
+    ],
+    "optional_fields": [
+      "workorder_id",
+      "feature_id",
+      "updated"
+    ],
+    "related_workorders": [
+      "WO-EXPLORER-SIDEBAR-UX-001 (CLAUDE.md regression discovered in Phase 2 validation)"
+    ]
+  }
+}
