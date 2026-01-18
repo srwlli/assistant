@@ -23,7 +23,8 @@
       "Bash(npm test:*)",
       "Bash(del tools-and-commands.csv tools-and-commands-backup.csv tools-and-commands-with-aliases.csv scanned-resources-temp.csv)",
       "Bash(git -C \"C:\\Users\\willh\\Desktop\\coderef-dashboard\" push)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" push)"
     ],
     "deny": [],
     "ask": []
