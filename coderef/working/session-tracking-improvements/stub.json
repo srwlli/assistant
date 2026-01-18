@@ -1,0 +1,25 @@
+{
+  "feature_name": "session-tracking-improvements",
+  "description": "Improve session communication.json real-time synchronization - update agent statuses, CSV metrics, and aggregation data automatically as phases complete instead of manual orchestrator edits. Enable orchestrator to read agent outputs and sync back to master tracking.",
+  "project": "assistant",
+  "created": "2026-01-18T00:00:00Z",
+  "status": "stub",
+  "context": {
+    "origin_session": "WO-CSV-ECOSYSTEM-SYNC-001",
+    "identified_issues": [
+      "Agent status fields remain 'not_started' after Phase 1 completion",
+      "CSV metrics (total_resources, resource_types) not updated after Phase 2",
+      "Aggregation data frozen at Phase 1 counts",
+      "Orchestrator updates phase-level tracking but not agent-level or metrics"
+    ],
+    "root_cause": "Read-only orchestrator pattern - agents execute autonomously, orchestrator synthesizes but doesn't sync findings back to master communication.json",
+    "proposed_solution": "Add orchestrator sync workflow: after each phase completion, read agent outputs, extract metrics, update communication.json with actual state"
+  },
+  "target_improvements": [
+    "Auto-update agent status when phase completes",
+    "Auto-refresh CSV metrics from actual CSV file",
+    "Auto-update aggregation counts based on current phase",
+    "Create sync_session_tracking() utility for orchestrator",
+    "Add validation: communication.json vs ground truth"
+  ]
+}
