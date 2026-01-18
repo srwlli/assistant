@@ -16,7 +16,14 @@
       "Bash(powershell -Command:*)",
       "mcp__papertrail__validate_stub",
       "Bash(dir:*)",
-      "mcp__papertrail__check_all_docs"
+      "mcp__papertrail__check_all_docs",
+      "Bash(npx ajv-cli:*)",
+      "Bash(ajv validate:*)",
+      "Bash(git push:*)",
+      "Bash(npm test:*)",
+      "Bash(del tools-and-commands.csv tools-and-commands-backup.csv tools-and-commands-with-aliases.csv scanned-resources-temp.csv)",
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\coderef-dashboard\" push)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []
