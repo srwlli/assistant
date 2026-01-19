@@ -25,7 +25,13 @@
       "Bash(git -C \"C:\\Users\\willh\\Desktop\\coderef-dashboard\" push)",
       "Bash(nul)",
       "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" push)",
-      "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" status)"
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" status)",
+      "Bash(mkdir:*)",
+      "WebSearch",
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" log -5 --oneline)",
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" add coderef/working/stub-context-reference-tracking/)",
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" add coderef/working/coderef-context-schema-version-support/)",
+      "Bash(git -C \"C:\\Users\\willh\\Desktop\\assistant\" add .claude/settings.local.json)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,72 @@
+{
+  "feature_name": "coderef-context-schema-version-support",
+  "description": "Fix schema version mismatch in coderef-context MCP server. Tools expect v1.0.0 schema (flat arrays, nodes as dict) but coderef_scan generates v2.0.0 schema (nested structure with metadata, nodes as list). Update all analysis tools to detect and support both schema versions with backward compatibility.",
+  "project": "coderef-context",
+  "created": "2026-01-19T00:00:00Z",
+  "status": "stub",
+  "tags": ["UPDATE", "BUGFIX", "critical"],
+  "context": {
+    "documentation": [
+      "AGENT-INVESTIGATION-REPORT.md - Complete root cause analysis with schema comparison and fix recommendations"
+    ],
+    "affected_tools": [
+      "coderef_complexity",
+      "coderef_query",
+      "coderef_impact (likely)",
+      "coderef_patterns (likely)"
+    ],
+    "error_details": {
+      "coderef_complexity": {
+        "error": "'str' object has no attribute 'get'",
+        "expected_type": "dictionary",
+        "received_type": "string",
+        "failed_components": ["GameClient", "Tetris"]
+      },
+      "coderef_query": {
+        "error": "'list' object has no attribute 'items'",
+        "issue": "Processing relationship list failed",
+        "failed_target": "GAMES_REGISTRY"
+      }
+    },
+    "root_cause_confirmed": "Schema version mismatch - coderef_scan generates v2.0.0 schema files (index.json as dict with 'elements' array, graph.json nodes as list), but analysis tools expect v1.0.0 schema (index.json as flat array, graph.json nodes as dict)",
+    "schema_mismatch_details": {
+      "index_json": {
+        "expected_v1": "Flat array of elements",
+        "actual_v2": "Dictionary with 'version', 'generatedAt', 'metadata', and 'elements' array",
+        "impact": "Server iterates over dict keys ('version', 'generatedAt', etc.) instead of elements, tries .get() on strings"
+      },
+      "graph_json": {
+        "expected_v1": "nodes as dictionary keyed by ID",
+        "actual_v2": "nodes as array of node objects",
+        "impact": "Server calls .items() on list, which fails"
+      }
+    },
+    "recommended_solution": "Update coderef-context tools to detect schema version and support both v1.0.0 and v2.0.0 formats. Add schema detection utility, convert v2 list to dict for processing, maintain backward compatibility.",
+    "required_fixes": [
+      "Add schema version detection utility (check for 'version' field in data)",
+      "Update coderef_complexity to extract 'elements' array from v2.0.0",
+      "Update coderef_query to convert nodes list to dict for v2.0.0",
+      "Update coderef_impact to support both schemas",
+      "Update coderef_patterns to support both schemas",
+      "Add error logging for schema detection",
+      "Add test cases for both schema versions"
+    ]
+  },
+  "technical_notes": {
+    "location": "C:\\Users\\willh\\.mcp-servers\\coderef-context",
+    "likely_files": [
+      "src/tools/complexity.py",
+      "src/tools/query.py",
+      "src/analyzers/ast_analyzer.py"
+    ],
+    "test_cases_needed": [
+      "Test coderef_complexity with GameClient component",
+      "Test coderef_complexity with Tetris component",
+      "Test coderef_query with GAMES_REGISTRY target",
+      "Ensure graceful degradation on type mismatches"
+    ]
+  },
+  "priority": "high",
+  "severity": "critical",
+  "impact": "Blocks AST-based analysis for complex components, reduces coderef-context reliability"
+}

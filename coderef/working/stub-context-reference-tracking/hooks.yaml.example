@@ -1,0 +1,239 @@
+# Hooks Configuration for coderef Orchestrator
+# Based on everything-claude-code patterns
+#
+# Trigger patterns:
+#   - write:path/pattern  -> File created
+#   - edit:path/pattern   -> File modified
+#   - delete:path/pattern -> File deleted
+#
+# Pattern syntax:
+#   - * matches single directory level
+#   - ** matches any directory depth
+#   - ? matches single character
+#
+# Template variables:
+#   - ${FILE_PATH} -> Full path to file
+#   - ${json.field} -> Field from JSON file
+#   - ${WORKORDER_ID} -> Extracted workorder ID
+#   - ${feature_name} -> Feature name from path
+
+hooks:
+  # ==========================================================================
+  # Phase 1: Stub Creation Hooks
+  # ==========================================================================
+
+  - name: auto-validate-stub
+    description: "Automatically validate and auto-fill stub.json on creation"
+    trigger: "write:coderef/working/*/stub.json"
+    action: mcp__papertrail__validate_stub
+    params:
+      file_path: "${FILE_PATH}"
+      auto_fill: true
+      save: true
+    log: "Stub validated: ${FILE_PATH}"
+    priority: high
+
+  - name: notify-stub-created
+    description: "Log stub creation to projects.md"
+    trigger: "write:coderef/working/*/stub.json"
+    action: "custom:update_projects_md"
+    params:
+      stub_file: "${FILE_PATH}"
+      feature_name: "${feature_name}"
+    log: "Updated projects.md with new stub: ${feature_name}"
+    priority: low
+
+  # ==========================================================================
+  # Phase 2: Workorder Promotion Hooks
+  # ==========================================================================
+
+  - name: validate-context-json
+    description: "Validate context.json when created"
+    trigger: "write:**/context.json"
+    condition: "json.workorder_id != null"
+    action: mcp__papertrail__validate_document
+    params:
+      file_path: "${FILE_PATH}"
+    log: "Validated context.json for ${json.workorder_id}"
+    priority: high
+
+  - name: validate-communication-json
+    description: "Validate communication.json when created"
+    trigger: "write:**/communication.json"
+    condition: "json.workorder_id != null"
+    action: mcp__papertrail__validate_communication
+    params:
+      file_path: "${FILE_PATH}"
+    log: "Validated communication.json for ${json.workorder_id}"
+    priority: high
+
+  - name: auto-generate-handoff
+    description: "Auto-generate handoff prompt when plan.json created"
+    trigger: "write:**/plan.json"
+    condition: "json.workorder_id != null"
+    action: mcp__coderef-docs__generate_handoff_context
+    params:
+      plan_path: "${FILE_PATH}"
+      workorder_id: "${json.workorder_id}"
+    log: "Handoff prompt generated for ${json.workorder_id}"
+    priority: high
+    debounce: 1000
+
+  # ==========================================================================
+  # Phase 3: Implementation Tracking Hooks
+  # ==========================================================================
+
+  - name: track-plan-updates
+    description: "Log plan.json task status changes"
+    trigger: "edit:**/plan.json"
+    condition: "json.workorder_id != null"
+    action: "bash:echo '[Plan Update] ${json.workorder_id} updated at ${timestamp}' >> logs/plan-updates.log"
+    log: "Plan updated: ${json.workorder_id}"
+    priority: low
+
+  - name: track-communication-updates
+    description: "Log communication.json status changes"
+    trigger: "edit:**/communication.json"
+    condition: "json.workorder_id != null"
+    action: "bash:echo '[Status Change] ${json.workorder_id}: ${json.status}' >> logs/status-changes.log"
+    log: "Status changed: ${json.workorder_id} -> ${json.status}"
+    priority: medium
+
+  # ==========================================================================
+  # Phase 4: Completion & Verification Hooks
+  # ==========================================================================
+
+  - name: auto-verify-completion
+    description: "Auto-verify workorder when marked complete and archived"
+    trigger: "edit:**/communication.json"
+    condition: |
+      json.status == "complete" &&
+      json.handoff.archived == true
+    action: "custom:verify_workorder_completion"
+    params:
+      workorder_id: "${json.workorder_id}"
+      project_path: "${project_path}"
+    log: "Workorder verified: ${json.workorder_id}"
+    priority: critical
+    debounce: 2000
+
+  - name: validate-deliverables
+    description: "Validate DELIVERABLES.md when created"
+    trigger: "write:**/DELIVERABLES.md"
+    action: mcp__papertrail__validate_document
+    params:
+      file_path: "${FILE_PATH}"
+    log: "Validated DELIVERABLES.md: ${FILE_PATH}"
+    priority: medium
+
+  - name: check-deliverables-complete
+    description: "Ensure DELIVERABLES.md has no TBD values"
+    trigger: "write:**/DELIVERABLES.md"
+    action: "bash:grep -q TBD '${FILE_PATH}' && echo 'WARNING: DELIVERABLES.md contains TBD values' || echo 'OK'"
+    log: "Checked DELIVERABLES.md completeness"
+    priority: low
+
+  # ==========================================================================
+  # Dashboard & Tracking Hooks
+  # ==========================================================================
+
+  - name: auto-update-dashboard
+    description: "Regenerate dashboard when workorders.json changes"
+    trigger: "edit:workorders.json"
+    action: "custom:regenerate_dashboard"
+    log: "Dashboard updated"
+    priority: medium
+    debounce: 2000
+
+  - name: sync-workorders-to-dashboard
+    description: "Update index.html with workorder status changes"
+    trigger: "edit:workorders.json"
+    action: "bash:node scripts/update-dashboard.js"
+    log: "Synced workorders to dashboard"
+    priority: low
+    debounce: 5000
+
+  # ==========================================================================
+  # Archive & Cleanup Hooks
+  # ==========================================================================
+
+  - name: log-feature-archived
+    description: "Log when feature is archived"
+    trigger: "write:coderef/archived/*/DELIVERABLES.md"
+    action: "bash:echo '[Archive] Feature archived: ${feature_name} at ${timestamp}' >> logs/archive.log"
+    log: "Feature archived: ${feature_name}"
+    priority: low
+
+  - name: cleanup-working-directory
+    description: "Ensure working directory cleaned after archive"
+    trigger: "write:coderef/archived/*/DELIVERABLES.md"
+    action: "bash:echo '[Cleanup Check] Verify coderef/working/${feature_name} is deleted'"
+    log: "Cleanup check: ${feature_name}"
+    priority: low
+    debounce: 5000
+
+  # ==========================================================================
+  # Validation & Quality Hooks
+  # ==========================================================================
+
+  - name: validate-yaml-frontmatter
+    description: "Validate YAML frontmatter in markdown files"
+    trigger: "write:**/*.md"
+    condition: "!FILE_PATH.includes('node_modules')"
+    action: "bash:python C:\\Users\\willh\\.mcp-servers\\coderef-docs\\utils\\validate-frontmatter.py '${FILE_PATH}'"
+    log: "Validated frontmatter: ${FILE_PATH}"
+    priority: low
+
+  - name: check-resource-sheet-naming
+    description: "Validate resource sheet naming convention"
+    trigger: "write:**/*-RESOURCE-SHEET.md"
+    action: mcp__papertrail__validate_resource_sheet
+    params:
+      file_path: "${FILE_PATH}"
+    log: "Validated resource sheet: ${FILE_PATH}"
+    priority: medium
+
+  # ==========================================================================
+  # Git Hooks Integration
+  # ==========================================================================
+
+  - name: validate-commit-message
+    description: "Ensure commit messages include WO-XXX or STUB-XXX"
+    trigger: "edit:.git/COMMIT_EDITMSG"
+    action: "bash:grep -qE 'WO-[A-Z]+-[0-9]+|STUB-[0-9]+' .git/COMMIT_EDITMSG || (echo 'ERROR: Commit message missing workorder/stub ID' && exit 1)"
+    log: "Commit message validated"
+    priority: high
+
+  # ==========================================================================
+  # Configuration Reload Hook
+  # ==========================================================================
+
+  - name: reload-hooks-on-config-change
+    description: "Reload hooks when configuration changes"
+    trigger: "edit:.claude/hooks.yaml"
+    action: "bash:echo '[Hooks] Configuration reloaded at ${timestamp}'"
+    log: "Hooks configuration reloaded"
+    priority: critical
+
+# =============================================================================
+# Hook Priority Levels
+# =============================================================================
+# critical -> Must execute, blocks on failure
+# high     -> Important, logs on failure
+# medium   -> Nice to have, silent failure
+# low      -> Informational only
+
+# =============================================================================
+# Debounce Values (milliseconds)
+# =============================================================================
+# 1000  -> 1 second (quick updates)
+# 2000  -> 2 seconds (moderate batching)
+# 5000  -> 5 seconds (significant batching)
+
+# =============================================================================
+# Common Condition Patterns
+# =============================================================================
+# json.status == "complete"
+# json.workorder_id != null
+# FILE_PATH.includes('stub.json')
+# json.status == "complete" && json.handoff.archived == true

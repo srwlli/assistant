@@ -1,0 +1,48 @@
+{
+  "feature_name": "stub-context-reference-tracking",
+  "description": "Enhancement to stub.json schema to include context and reference fields for capturing relevant links, related workorders, and contextual information. Add UPDATE tagging capability to track iterative enhancements to existing features based on insights from everything-claude-code comparison.",
+  "project": "assistant",
+  "created": "2026-01-19T00:00:00Z",
+  "status": "stub",
+  "tags": ["UPDATE", "enhancement"],
+  "context": {
+    "reference_url": "https://github.com/affaan-m/everything-claude-code",
+    "related_analysis": "Comparison between everything-claude-code and coderef system",
+    "documentation": [
+      "INTEGRATION-REFERENCE.md - Comprehensive integration guide with hooks, rules, skills, and enhanced planning",
+      "C:\\Users\\willh\\Desktop\\assistant\\coderef\\working\\stub-context-reference-tracking\\INTEGRATION-REFERENCE.md"
+    ],
+    "key_insights": [
+      "Hooks system for event-triggered automation",
+      "Rules system for always-enforced guidelines",
+      "Skills library for reusable workflow templates",
+      "Enhanced context tracking in planning phase"
+    ],
+    "implementation_phases": [
+      "Phase 1: Hooks System (Weeks 1-2) - Automate stub validation, handoff generation, completion verification",
+      "Phase 2: Rules Enforcement (Weeks 3-4) - Prevent protocol violations programmatically",
+      "Phase 3: Skills Library (Weeks 5-6) - Codify workflows as reusable templates",
+      "Phase 4: Enhanced Planning (Weeks 7-8) - Integrate AST scanning into planning phase"
+    ]
+  },
+  "proposed_schema_additions": {
+    "context": {
+      "type": "object",
+      "description": "Contextual information about the stub",
+      "properties": {
+        "reference_urls": "array of relevant links",
+        "related_workorders": "array of WO-XXX IDs",
+        "related_stubs": "array of STUB-XXX IDs",
+        "technical_notes": "string or array of notes"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Classification tags (UPDATE, NEW, ENHANCEMENT, BUGFIX, etc.)"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"]
+    }
+  }
+}
